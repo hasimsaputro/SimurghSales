@@ -18,13 +18,13 @@ public class Kabupaten {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int id;
+    private Integer id;
 
     @Column(name = "NamaKabupaten", length = 100, nullable = false)
     private String namaKabupatenKota;
 
     @Column(name = "IdProvinsi", nullable = false)
-    private int idProvinsi;
+    private Integer idProvinsi;
 
     @Column(name = "Status", nullable = false)
     private Boolean status;

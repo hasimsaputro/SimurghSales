@@ -18,7 +18,7 @@ public class Identitas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int id;
+    private Integer id;
 
     @Column(name = "NamaIdentitas", length = 100, nullable = false)
     private String namaIdentitas;
@@ -28,4 +28,7 @@ public class Identitas {
 
     @OneToMany(mappedBy = "identitas")
     private List<Debitur> debiturList;
+
+    @OneToMany(mappedBy = "identitasMitraAgen")
+    private List<MitraAgen> mitraAgenList;
 }

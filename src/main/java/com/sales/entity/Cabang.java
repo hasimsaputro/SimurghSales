@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -19,19 +20,19 @@ public class Cabang {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int id;
+    private Integer id;
 
     @Column(name = "NamaCabang", length = 50, nullable = false)
     private String namaCabang;
 
     @Column(name = "IdTipeStruktur", nullable = false)
-    private int idTipeStruktur;
+    private Integer idTipeStruktur;
 
     @Column(name = "Alamat", length = 100, nullable = false)
     private String Alamat;
 
     @Column(name = "IdKelurahan", nullable = false)
-    private int idKelurahan;
+    private Integer idKelurahan;
 
     @Column(name = "NomorTelepon", length = 20)
     private String nomorTelepon;
@@ -60,4 +61,7 @@ public class Cabang {
             inverseJoinColumns = @JoinColumn(name = "IdProduk")
     )
     private Set<Produk> produkSet;
+
+    @OneToMany(mappedBy = "cabangMitraAgen")
+    private List<MitraAgen> mitraAgenList;
 }

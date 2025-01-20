@@ -18,16 +18,16 @@ public class Kecamatan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int id;
+    private Integer id;
 
     @Column(name = "NamaKecamatan", length = 100, nullable = false)
     private String namaKecamatan;
 
     @Column(name = "IdProvinsi", nullable = false)
-    private int idProvinsi;
+    private Integer idProvinsi;
 
     @Column(name = "IdKabupaten", nullable = false)
-    private int idKabupaten;
+    private Integer idKabupaten;
 
     @Column(name = "Status", nullable = false)
     private Boolean status;

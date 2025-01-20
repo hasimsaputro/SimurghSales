@@ -16,7 +16,7 @@ public class IntervalPembayaran {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int id;
+    private Integer id;
 
     @Column(name = "NamaIntervalPembayaran", length = 50, nullable = false)
     private String namaIntervalPembayaran;

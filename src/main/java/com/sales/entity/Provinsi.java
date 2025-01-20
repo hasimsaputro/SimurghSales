@@ -18,13 +18,13 @@ public class Provinsi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int id;
+    private Integer id;
 
     @Column(name = "NamaProvinsi", length = 100, nullable = false)
     private String namaProvinsi;
 
     @Column(name = "IdNegara", nullable = false)
-    private int idNegara;
+    private Integer idNegara;
 
     @Column(name = "Status", nullable = false)
     private Boolean status;

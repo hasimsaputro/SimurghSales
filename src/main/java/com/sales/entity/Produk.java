@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -18,7 +19,7 @@ public class Produk {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int id;
+    private Integer id;
 
     @Column(name = "NamaProduk", length = 100, nullable = false)
     private String namaProduk;
@@ -28,4 +29,7 @@ public class Produk {
 
     @ManyToMany(mappedBy = "produkSet")
     private Set<Cabang> cabangSet;
+
+    @OneToMany(mappedBy = "produkMitraAgen")
+    private List<MitraAgen> mitraAgenList;
 }
