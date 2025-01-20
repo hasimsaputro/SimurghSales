@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a href="../usermanagement/master-jabatan.html"> Mitra / Agen </a>
+                <span> > </span>
+                <a href="">Ubah</a>
+            </h3>
+            <form method="post" class="upsert-form" action="/book-library/insert-update(categoryName=${categoryName})">
+                <input type="hidden" name="_csrf" value="${_csrf.token}">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td><label class="label-nama">Tipe Master *</label></td>
+                        <td>
+                            <p id="Tipe" name="tipe">[Isi tipe master]</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Produk *</label></td>
+                        <td>
+                            <p id="Produk" name="Produk">[Isi produk]</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Cabang *</label></td>
+                        <td>
+                            <p id="cabangsales" name="cabangsales">[Isi cabang]</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div id="part1" class="form-part">
+                    <button type="button" class="toggle-btn" onclick="togglePart('part1')">Data Pribadi</button>
+                    <div class="form-content">
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td><label class="identitas">Nomor Identitas*</label></td>
+                                <td>
+                                    <p id="identitas" name="identitas">[Nomor Identitas]</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Nama *</label></td>
+                                <td>
+                                    <p id="nama" name="nama">[Nama Lengkap]</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Jenis Kelamin*</label></td>
+                                <td>
+                                    <p id="kelamin" name="kelamin">[Jenis Kelamin]</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Nomor NPWP *</label></td>
+                                <td>
+                                    <p id="NPWP" name="NPWP">[Nomor NPWP]</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Alamat Identitas*</label></td>
+                                <td>
+                                    <p id="address" name="address">[Alamat Identitas]</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Kelurahan *</label></td>
+                                <td>
+                                    <p id="kelurahan" name="kelurahan">[Kelurahan]</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Kode Pos *</label></td>
+                                <td>
+                                    <p id="kodepos" name="kodepos">[Kode Pos]</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Kecamatan *</label></td>
+                                <td>
+                                    <p id="kecamantan" name="kecamantan">[Kecamatan]</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Kota / Kabupaten *</label></td>
+                                <td>
+                                    <p id="kotakabupaten" name="kotakabupaten">[Kota/Kabupaten]</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Provinsi *</label></td>
+                                <td>
+                                    <p id="provinsi" name="provinsi">[Provinsi]</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Tempat Lahir *</label></td>
+                                <td>
+                                    <p id="Cabang" name="Cabang">[Tempat Lahir]</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Tanggal Lahir *</label></td>
+                                <td>
+                                    <p id="tanggallahir" name="tanggallahir">[Tanggal Lahir]</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="nomortelepon">Nomor Telepon </label></td>
+                                <td>
+                                    <p id="nomortelepon" name="nomortelepon">[Nomor Telepon]</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="nomorhandphone">Nomor Handphone * </label></td>
+                                <td>
+                                    <p id="nomorhandphone" name="nomorhandphone">[Nomor Handphone]</p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="part2" class="form-part">
+                    <button type="button" class="toggle-btn" onclick="togglePart('part2')">Data Rekening</button>
+                    <div class="form-content">
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td><label class="label-nama">Nama Bank*</label></td>
+                                <td>
+                                    <p id="bank" name="bank">[Nama Bank]</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Nomor Rekening *</label></td>
+                                <td>
+                                    <p id="rek" name="rek">[Nomor Rekening]</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Nama Pemilik Rekening *</label></td>
+                                <td>
+                                    <p id="namarekening" name="namarekening">[Nama Pemilik Rekening]</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Status*</label></td>
+                                <td>
+                                    <p id="status" name="status">[Status]</p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>
