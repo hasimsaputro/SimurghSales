@@ -1,29 +1,12 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:fragment="head">
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simurgh</title>
-    <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/font-awesome.css">
-    <link rel="stylesheet" href="../css/font-awesome.min.css">
-    <script src="../js/script.js" defer></script>
+<head th:replace="~{layout :: head}">
 </head>
 <body>
-<header>
-    <div>
-        <h1>Simurgh</h1>
-        <span>Demo Multi Finance</span>
-    </div>
-    <div>Welcome, User</div>
+<header th:replace="~{layout :: header}">
 </header>
 <div class="container">
-    <aside class="sidebar">
-        <ul>
-            <li><a href="../portal/portal.html">Portal</a></li>
-            <li><a href="../portal/portal.html">Mitra / Agen</a></li>
-            <li><a href="../portal/portal.html">Data Lead</a></li>
-        </ul>
+    <aside class="sidebar" th:replace="~{layout :: nav}">
     </aside>
     <main>
         <div class="table-container">
