@@ -15,6 +15,7 @@ public class DataLeadsController {
 
     @GetMapping("insert")
     public String insert(Model model) { return "sales/data-leads-form";}
+
     @GetMapping("detail")
     public String detail(Model model) { return "sales/data-leads-detail";}
 }

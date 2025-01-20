@@ -11,7 +11,7 @@
     <main>
         <div class="table-container">
             <h3>
-                <a href=""> Data Leads </a> > <a href=""> Tambah </a>
+                <a th:href="@{/DataLeads}"> Data Leads </a> > <a th:href="@{/DataLeads/insert}"> Tambah </a>
             </h3>
             <form method="post" class="upsert-form" action="/book-library/insert-update(categoryName=${categoryName})">
                 <input type="hidden" name="_csrf" value="${_csrf.token}">
