@@ -20,5 +20,5 @@ public class Divisi {
     private Boolean status;
 
     @OneToMany(mappedBy = "divisi")
-    private List<Department> departements;
+    private List<Department> departments;
 }
