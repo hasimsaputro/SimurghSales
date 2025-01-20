@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="~{layout :: head}">
-</head>
+<head th:replace="~{layout :: head}"></head>
 <body>
-<header th:replace="~{layout :: header}">
-</header>
+<header th:replace="~{layout :: header}"></header>
 <div class="container">
-    <aside class="sidebar" th:replace="~{layout :: nav}">
-    </aside>
+    <aside class="sidebar" th:replace="~{layout :: nav}"></aside>
     <main>
         <div class="table-container">
             <h3>
-                <a href=""> Data Leads </a> > <a href=""> Tambah </a>
+                <a href=""> Data Leads </a> > <a href=""> Lihat </a>
             </h3>
             <form method="post" class="upsert-form" action="/book-library/insert-update(categoryName=${categoryName})">
                 <input type="hidden" name="_csrf" value="${_csrf.token}">
@@ -20,46 +17,42 @@
                     <tr>
                         <td><label class="label-nama">Product *</label></td>
                         <td>
-                            <input id="product" name="product" type="text" required value="INC">
+                            <p id="product" name="product">INC</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Tipe Debitur*</label></td>
                         <td class="input-box">
-                            <input type="radio" name="tipe-debitur-perusahaan" id="tipe-debitur-perusahaan" value="perusahaan" required>
-                            <label for="tipe-debitur-perusahaan">Perusahaan</label>
-                            <input type="radio" name="tipe-debitur-perseorangan" id="tipe-debitur-perseorangan" value="perseorangan" required>
-                            <label for="tipe-debitur-perseorangan">Perseorangan</label>
-
+                            <p name="tipe-debitur-perusahaan" id="tipe-debitur-perusahaan">Perusahaan</p>
+                            <p name="tipe-debitur-perseorangan" id="tipe-debitur-perseorangan">Perseorangan</p>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Tipe Aplikasi *</label></td>
                         <td>
-                            <input id="tipe-aplikasi" name="tipe-aplikasi" type="text" required value="INC">
+                            <p id="tipe-aplikasi" name="tipe-aplikasi">INC</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Nama Depan Debitur *</label></td>
                         <td>
-                            <input id="nama-depan-debitur" name="nama-depan-debitur" type="text" required value="INC">
+                            <p id="nama-depan-debitur" name="nama-depan-debitur">INC</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Nama Tengah Debitur </label></td>
                         <td>
-                            <input id="nama-tengah-debitur" name="nama-tengah-debitur" type="text" required value="INC">
+                            <p id="nama-tengah-debitur" name="nama-tengah-debitur">INC</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
-
                     <tr>
                         <td><label class="label-nama">Nama Akhir Debitur </label></td>
                         <td>
-                            <input id="nama-akhir-debitur" name="nama-akhir-debitur" type="text" required value="INC">
+                            <p id="nama-akhir-debitur" name="nama-akhir-debitur">INC</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -70,52 +63,49 @@
                                 <option value="ktp">KTP</option>
                                 <option value="sim">SIM</option>
                             </select>
-                            <input id="identitas" name="identitas" type="text" required placeholder="&#xf095;   081234567890">
+                            <p id="identitas" name="identitas">081234567890</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Jenis Kelamin *</label></td>
                         <td class="input-box">
-                            <input type="radio" name="laki-laki" id="laki-laki" value="laki=-laki" required>
-                            <label for="laki-laki">Laki-laki</label>
-                            <input type="radio" name="perempuan" id="perempuan" value="perempuan" required>
-                            <label for="perempuan">Perempuan</label>
-
+                            <p name="laki-laki" id="laki-laki">Laki-laki</p>
+                            <p name="perempuan" id="perempuan">Perempuan</p>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Alamat Identitas*</label></td>
                         <td>
-                            <textarea id="alamat" name="alamat" required placeholder="&#xf015;" rows="4" cols="50"></textarea>
+                            <p id="alamat" name="alamat">Alamat Identitas</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Kelurahan *</label></td>
                         <td>
-                            <input id="kelurahan" name="kelurahan" type="text" required value="INC">
+                            <p id="kelurahan" name="kelurahan">INC</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Kode Pos*</label></td>
                         <td>
-                            <input id="kode-pos" name="kode-pos" type="text" required readonly value="">
+                            <p id="kode-pos" name="kode-pos">12345</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Kecamatan*</label></td>
                         <td>
-                            <input id="kecamatan" name="kecamatan" type="text" required readonly value="">
+                            <p id="kecamatan" name="kecamatan">Kecamatan XYZ</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Kabupaten/Kota*</label></td>
                         <td>
-                            <input id="kota" name="kota" type="text" required readonly value="">
+                            <p id="kota" name="kota">Kota ABC</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -123,15 +113,14 @@
                     <tr>
                         <td><label class="label-nama">Provinsi*</label></td>
                         <td>
-                            <input id="provinsi" name="provinsi" type="text" required readonly value="">
+                            <p id="provinsi" name="provinsi">Jawa Barat</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td></td>
                         <td class="input-box">
-                            <input type="checkbox" id="" name="" required>
-                            <label for="">Sama Dengan Alamat Identitas</label>
+                            <p name="" id="">Sama Dengan Alamat Identitas</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -139,35 +128,35 @@
                     <tr>
                         <td><label class="label-nama">Alamat Domisili*</label></td>
                         <td>
-                            <textarea id="alamat-domisili" name="alamat-domisili" required placeholder="&#xf015;" rows="4" cols="50"></textarea>
+                            <p id="alamat-domisili" name="alamat-domisili">Alamat Domisili</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Kelurahan *</label></td>
                         <td>
-                            <input id="kelurahan-domisili" name="kelurahan-domisili" type="text" required value="INC">
+                            <p id="kelurahan-domisili" name="kelurahan-domisili">INC</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Kode Pos*</label></td>
                         <td>
-                            <input id="kode-pos-domisili" name="kode-pos-domisili" type="text" required readonly value="">
+                            <p id="kode-pos-domisili" name="kode-pos-domisili">12345</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Kecamatan*</label></td>
                         <td>
-                            <input id="kecamatan-domisili" name="kecamatan-domisili" type="text" required readonly value="">
+                            <p id="kecamatan-domisili" name="kecamatan-domisili">Kecamatan XYZ</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Kabupaten/Kota*</label></td>
                         <td>
-                            <input id="kota-domisili" name="kota-domisili" type="text" required readonly value="">
+                            <p id="kota-domisili" name="kota-domisili">Kota ABC</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -175,7 +164,7 @@
                     <tr>
                         <td><label class="label-nama">Provinsi*</label></td>
                         <td>
-                            <input id="provinsi-domisili" name="provinsi-domisili" type="text" required readonly value="">
+                            <p id="provinsi-domisili" name="provinsi-domisili">Jawa Barat</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -183,7 +172,7 @@
                     <tr>
                         <td><label class="label-nama">Nama Cabang Tujuan</label></td>
                         <td>
-                            <input id="nama-cabang-tujuan" name="nama-cabang-tujuan" type="text" required readonly value="">
+                            <p id="nama-cabang-tujuan" name="nama-cabang-tujuan">Cabang ABC</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -191,7 +180,7 @@
                     <tr>
                         <td><label class="label-nama">Nomor Handphone 1*</label></td>
                         <td>
-                            <input id="nomor-handphone-1" name="nomor-handphone-1" type="text" required value="">
+                            <p id="nomor-handphone-1" name="nomor-handphone-1">081234567890</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -199,7 +188,7 @@
                     <tr>
                         <td><label class="label-nama">Nomor Handphone 2</label></td>
                         <td>
-                            <input id="nomor-handphone-2" name="nomor-handphone-2" type="text" value="">
+                            <p id="nomor-handphone-2" name="nomor-handphone-2">081234567891</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -207,7 +196,7 @@
                     <tr>
                         <td><label class="label-nama">Nomor Telepon</label></td>
                         <td>
-                            <input id="nomor-telepon" name="nomor-telepon" type="text" value="">
+                            <p id="nomor-telepon" name="nomor-telepon">0212345678</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -215,7 +204,7 @@
                     <tr>
                         <td><label class="label-nama">Sumber Data Aplikasi *</label></td>
                         <td>
-                            <input id="sumber-data-aplikasi" name="sumber-data-aplikasi" type="text" value="">
+                            <p id="sumber-data-aplikasi" name="sumber-data-aplikasi">Sumber ABC</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -223,7 +212,7 @@
                     <tr>
                         <td><label class="label-nama">Referensi</label></td>
                         <td>
-                            <input id="referensi" name="referensi" type="text" value="">
+                            <p id="referensi" name="referensi">Referensi XYZ</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -231,7 +220,7 @@
                     <tr>
                         <td><label class="label-nama">Jenis Usaha</label></td>
                         <td>
-                            <input id="jenis-usaha" name="jenis-usaha" type="text" value="">
+                            <p id="jenis-usaha" name="jenis-usaha">Usaha ABC</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -239,7 +228,7 @@
                     <tr>
                         <td><label class="label-nama">Keterangan Aplikasi</label></td>
                         <td>
-                            <input id="keterangan-aplikasi" name="keterangan-aplikasi" type="text" value="">
+                            <p id="keterangan-aplikasi" name="keterangan-aplikasi">Keterangan XYZ</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -247,7 +236,7 @@
                     <tr>
                         <td><label class="label-nama">Nama Surveyor *</label></td>
                         <td>
-                            <input id="nama-surveyor" name="nama-surveyor" type="text" required readonly value="">
+                            <p id="nama-surveyor" name="nama-surveyor">Surveyor ABC</p>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -255,10 +244,8 @@
                     <tr>
                         <td><label class="label-nama">Status*</label></td>
                         <td class="input-box">
-                            <input type="radio" name="status" id="status-aktif" value="Aktif" required>
-                            <label for="status-aktif">Aktif</label>
-                            <input type="radio" name="status" id="status-tidak-aktif" value="Tidak Aktif" required>
-                            <label for="status-tidak-aktif">Tidak Aktif</label>
+                            <p name="status" id="status-aktif">Aktif</p>
+                            <p name="status" id="status-tidak-aktif">Tidak Aktif</p>
                             <div class="field-validation-error" id="error-status"></div>
                         </td>
                     </tr>
@@ -272,7 +259,7 @@
                             <tr>
                                 <td><label class="label-nama">POT (Payment of Term *</label></td>
                                 <td>
-                                    <input id="pot" name="pot" type="text" required>
+                                    <p id="pot" name="pot">MKT</p>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -280,7 +267,7 @@
                             <tr>
                                 <td><label class="label-nama">Tenor</label></td>
                                 <td>
-                                    <input id="tenor" name="tenor" type="text" required readonly value="MKT">
+                                    <p id="tenor" name="tenor">MKT</p>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -289,7 +276,7 @@
                             <tr>
                                 <td><label class="label-nama">Estimasi Nilai Funding</label></td>
                                 <td>
-                                    <input id="estimasi-nilai-funding" name="estimasi-nilai=-funding" type="text" required readonly value="MKT">
+                                    <p id="estimasi-nilai-funding" name="estimasi-nilai=-funding">MKT</p>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -305,14 +292,14 @@
                             <tr>
                                 <td><label class="label-nama">Kategori *</label></td>
                                 <td>
-                                    <input id="kategori" name="kategori" type="text" required>
+                                    <p id="kategori" name="kategori">Kategori ABC</p>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Merak</label></td>
                                 <td>
-                                    <input id="merak" name="merak" type="text" value="merak">
+                                    <p id="merak" name="merak">merak</p>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -320,7 +307,7 @@
                             <tr>
                                 <td><label class="label-nama">Tipe</label></td>
                                 <td>
-                                    <input id="tipe" name="tipe" type="text" value="">
+                                    <p id="tipe" name="tipe">Tipe ABC</p>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -328,7 +315,7 @@
                             <tr>
                                 <td><label class="label-nama">Model</label></td>
                                 <td>
-                                    <input id="model" name="model" type="text" value="">
+                                    <p id="model" name="model">Model ABC</p>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -336,7 +323,7 @@
                             <tr>
                                 <td><label class="label-nama">Tahun</label></td>
                                 <td>
-                                    <input id="tahun" name="tahun" type="text" value="">
+                                    <p id="tahun" name="tahun">2025</p>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -344,7 +331,7 @@
                             <tr>
                                 <td><label class="label-nama">Tahun Pajak STNK</label></td>
                                 <td>
-                                    <input id="tahun-pajak-stnk" name="tahun-pajak-stnk" type="text" value="">
+                                    <p id="tahun-pajak-stnk" name="tahun-pajak-stnk">2025</p>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -352,7 +339,7 @@
                             <tr>
                                 <td><label class="label-nama">Nomor BPKB</label></td>
                                 <td>
-                                    <input id="nomor-bpkb" name="nomor-bpkb" type="text" value="">
+                                    <p id="nomor-bpkb" name="nomor-bpkb">BPKB123456</p>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -360,7 +347,7 @@
                             <tr>
                                 <td><label class="label-nama">Nomor Polisi</label></td>
                                 <td>
-                                    <input id="nomor-polisi" name="nomor-polisi" type="text" value="">
+                                    <p id="nomor-polisi" name="nomor-polisi">AB123CD</p>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
