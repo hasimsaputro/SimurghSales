@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>Simurgh</title>
+    <link rel="stylesheet" th:href="@{/css/style-portal.css}" />
+    <link rel="stylesheet" th:href="@{/css/font-awesome.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
+<body>
+    <header th:fragment="header">
+        <div>
+            <h1>Simurgh</h1>
+            <span>Demo Multi Finance</span>
+        </div>
+        <div>Welcome, User</div>
+    </header>
+    <div class="container">
+        <aside class="sidebar" th:fragment="nav">
+            <ul>
+                <li><a href="../portal/portal.html">Portal</a></li>
+
+                <!-- Dropdown for Master -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Persetujuan</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../usermanagement/master-perusahaan.html">Limit Pencairan</a></li>
+                        <li><a href="../usermanagement/master-posisijabatan.html">Kondisi Non Standar</a></li>
+                    </ul>
+                </li>
+
+                <!-- Dropdown for Transaksi -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Transaksi</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../usermanagement/transaksi-delegasi.html">Delegasi</a></li>
+                        <li><a href="../usermanagement/transaksi-hirarkijabatan.html">Hirarki Jabatan</a></li>
+                        <li><a href="../usermanagement/transaksi-pemindahantask.html">Pemindahan Task</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+    </div>
+</body>
+</html>
