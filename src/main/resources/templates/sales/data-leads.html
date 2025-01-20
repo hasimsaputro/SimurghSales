@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a href="../usermanagement/master-jabatan.html"> Data Leads </a>
+            </h3>
+            <a class="black-button create-button" href="master-jabatan-form.html">
+                Tambah
+                <i class="fas fa-plus" aria-hidden="true"></i>
+            </a>
+            <form method="get" class="filter" th:action="@{/prospect}">
+                <select name="" id="">
+                    <option value="indocyber">Nomor Data Leads</option>
+                    <option value="indocyber">Nomor Aplikasi</option>
+                    <option value="indocyber">Nama Debitur</option>
+                    <option value="indocyber">Tipe Aplikasi</option>
+                    <option value="indocyber">Keterangan</option>
+                    <option value="indocyber">Status</option>
+                </select>
+                <input type="text" id="nama" name="nama" placeholder="Nama Debitur" th:attr="value=${nama}">
+                <button class="filter-button" type="submit">
+                    Search
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </form>
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Nomor Data Leads</th>
+                    <th>Nomor Aplikasi</th>
+                    <th>Nama Debitur</th>
+                    <th>Tipe Aplikasi</th>
+                    <th>Keterangan</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="action">
+                        <a href="#" class="action-button delete-button">
+                            <i class="fa fa-trash" aria-hidden="true"></i> Hapus
+                        </a>
+                        <a href="master-jabatan-form.html" class="action-button update-button">
+                            <i class="fas fa-edit" aria-hidden="true"></i> Ubah
+                        </a>
+                        <a class="action-button detail-button" href="../usermanagement/master-jabatan-detail.html">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i> Lihat
+                        </a>
+                    </td>
+                    <td>LEADS-0001</td>
+                    <td>121212121</td>
+                    <td>Michie</td>
+                    <td>New</td>
+                    <td>Prospect</td>
+                    <td>Aktif</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <div class="pagination" th:if="${numberOfPages} != 0">
+                            <div>
+                                <button>&laquo;</button>
+                                <button>&lt;</button>
+                                <span>Page 1 of 30</span>
+                                <button>&gt;</button>
+                                <button>&raquo;</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>
