@@ -9,5 +9,5 @@ public class DataLeadsIndexDTO {
     private String namaDebitur;
     private String tipeAplikasi;
     private String keterangan;
-    private String aktif;
+    private String status;
 }

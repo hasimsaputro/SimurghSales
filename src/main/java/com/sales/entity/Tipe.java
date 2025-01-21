@@ -45,4 +45,7 @@ public class Tipe {
 
     @OneToMany(mappedBy = "tipeDataLeads")
     private List<DataLeads> dataLeadsList;
+
+    @OneToMany(mappedBy = "tipePOT")
+    private List<POT> potList;
 }

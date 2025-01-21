@@ -45,4 +45,7 @@ public class Merk {
 
     @OneToMany(mappedBy = "merkDataLeads")
     private List<DataLeads> dataLeadsList;
+
+    @OneToMany(mappedBy = "merkPOT")
+    private List<POT> potList;
 }

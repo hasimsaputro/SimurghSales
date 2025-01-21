@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Controller
 @RequestMapping("dataleads")
 public class DataLeadsController {
@@ -23,16 +27,20 @@ public class DataLeadsController {
                         @RequestParam(defaultValue = "") String search,
                         @RequestParam(defaultValue = "1") int page, Model model){
         var grid = service.getAll(filter,search,page);
-//        int total = service.getTotal(fullName);
+        int total = service.getTotal(filter,search);
+        List<String> filterItem = Arrays.asList("Nomor Data Leads", "Nomor Aplikasi", "Nama Debitur", "Tipe Aplikasi", "Keterangan", "Status");
         model.addAttribute("grid", grid);
-//        model.addAttribute("totalPages",total);
+        model.addAttribute("totalPages",total);
         model.addAttribute("currentPage",page);
-//        model.addAttribute("fullName",fullName);
+        model.addAttribute("filterItem",filterItem);
+        model.addAttribute("search",search);
         return "sales/data-leads";
     }
 
     @GetMapping("insert")
-    public String insert(Model model) { return "sales/data-leads-form";}
+    public String insert(Model model) {
+
+        return "sales/data-leads-form";}
 
     @GetMapping("detail")
     public String detail(Model model) { return "sales/data-leads-detail";}

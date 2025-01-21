@@ -91,11 +91,11 @@ public class DataLeads {
 
     @ManyToOne
     @JoinColumn(name = "IdTipeAplikasi", insertable = false, updatable = false)
-    private TipeAplikasi tipeAplikasi;
+    private TipeAplikasi tipeAplikasiDataLeads;
 
     @ManyToOne
     @JoinColumn(name = "IdDebitur", insertable = false, updatable = false)
-    private Debitur debitur;
+    private Debitur debiturDataLeads;
 
     @ManyToOne
     @JoinColumn(name = "IdCabang", insertable = false, updatable = false)

@@ -73,7 +73,7 @@ public class Debitur {
     @JoinColumn(name = "IdKelurahanDomisili", insertable = false,updatable = false)
     private Kelurahan kelurahanDomisili;
 
-    @OneToMany(mappedBy = "debitur")
+    @OneToMany(mappedBy = "debiturDataLeads")
     private List<DataLeads> dataLeadsList;
 
     @OneToMany(mappedBy = "debiturReferensiDataLeads")

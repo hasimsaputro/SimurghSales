@@ -68,6 +68,15 @@ public class POT {
     @Column(name = "IdKategori", nullable = false)
     private Integer idKategori;
 
+    @Column(name = "IdMerk", length = 10, nullable = false)
+    private String idMerk;
+
+    @Column(name = "IdTipe",length = 10, nullable = false)
+    private String idTipe;
+
+    @Column(name = "IdModel",length = 10, nullable = false)
+    private String idModel;
+
     @ManyToOne
     @JoinColumn(name = "IdProduk", insertable = false, updatable = false)
     private Produk produk;
@@ -84,13 +93,17 @@ public class POT {
     @JoinColumn(name = "IdKategori", insertable = false, updatable = false)
     private Kategori kategoriPOT;
 
-    @ManyToMany
-    @JoinTable(
-            name = "POTMerk",
-            joinColumns = @JoinColumn(name = "IdPOT"),
-            inverseJoinColumns = @JoinColumn(name = "IdMerk")
-    )
-    private Set<Merk> merkSet;
+    @ManyToOne
+    @JoinColumn(name = "IdMerk", insertable = false, updatable = false)
+    private Merk merkPOT;
+
+    @ManyToOne
+    @JoinColumn(name = "IdTipe", insertable = false, updatable = false)
+    private Tipe tipePOT;
+
+    @ManyToOne
+    @JoinColumn(name = "IdModel", insertable = false, updatable = false)
+    private Model modelPOT;
 
     @ManyToMany
     @JoinTable(

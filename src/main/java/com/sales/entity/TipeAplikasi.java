@@ -20,6 +20,6 @@ public class TipeAplikasi {
     @Column(name = "Status", nullable = false)
     private Boolean status;
 
-    @OneToMany(mappedBy = "tipeAplikasi")
+    @OneToMany(mappedBy = "tipeAplikasiDataLeads")
     private List<DataLeads> dataLeadsList;
 }
