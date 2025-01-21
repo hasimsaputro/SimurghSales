@@ -3,6 +3,8 @@ package com.sales.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "KeteranganAplikasi")
@@ -17,4 +19,7 @@ public class KeteranganAplikasi {
 
     @Column(name = "Status", nullable = false)
     private Boolean status;
+
+    @OneToMany(mappedBy = "keteranganAplikasiDataLeads")
+    private List<DataLeads> dataLeadsList;
 }

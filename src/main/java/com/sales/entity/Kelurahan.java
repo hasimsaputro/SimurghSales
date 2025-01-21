@@ -58,4 +58,7 @@ public class Kelurahan {
 
     @OneToMany(mappedBy = "kelurahanDomisili")
     private List<Debitur> debiturDomisiliList;
+
+    @OneToMany(mappedBy = "kelurahanDataleads")
+    private List<DataLeads> dataLeadsList;
 }

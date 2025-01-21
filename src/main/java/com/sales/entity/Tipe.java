@@ -42,4 +42,7 @@ public class Tipe {
 
     @OneToMany(mappedBy = "tipeModel")
     private List<Model> modelList;
+
+    @OneToMany(mappedBy = "tipeDataLeads")
+    private List<DataLeads> dataLeadsList;
 }

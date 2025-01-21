@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -60,4 +61,10 @@ public class Cabang {
             inverseJoinColumns = @JoinColumn(name = "IdProduk")
     )
     private Set<Produk> produkSet;
+
+    @ManyToMany(mappedBy = "cabangSet")
+    private Set<POT> potSet;
+
+    @OneToMany(mappedBy = "cabangDataLeads")
+    private List<DataLeads> dataLeadsList;
 }

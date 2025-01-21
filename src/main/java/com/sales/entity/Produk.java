@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -28,4 +29,7 @@ public class Produk {
 
     @ManyToMany(mappedBy = "produkSet")
     private Set<Cabang> cabangSet;
+
+    @OneToMany(mappedBy = "produk")
+    private List<POT> potList;
 }
