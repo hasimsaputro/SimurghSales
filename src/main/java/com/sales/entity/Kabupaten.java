@@ -36,6 +36,6 @@ public class Kabupaten {
     @OneToMany(mappedBy = "kabupaten")
     private List<Kecamatan> kecamatanList;
 
-    @OneToMany(mappedBy = "kelurahan")
+    @OneToMany(mappedBy = "kabupaten")
     private List<Kelurahan> kelurahanList;
 }

@@ -34,7 +34,7 @@ public class Merk {
     private Negara negara;
 
     @OneToMany(mappedBy = "merkTipe")
-    private List<Merk> merkList;
+    private List<Tipe> tipeList;
 
     @OneToMany(mappedBy = "merkModel")
     private List<Model> modelList;
