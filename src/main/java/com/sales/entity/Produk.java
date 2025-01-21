@@ -27,6 +27,9 @@ public class Produk {
     @Column(name = "Status", nullable = false)
     private Boolean status;
 
+    @ManyToMany(mappedBy = "produkDataleads")
+    private Set<DataLeads> dataLeads;
+
     @ManyToMany(mappedBy = "produkSet")
     private Set<Cabang> cabangSet;
 
