@@ -13,7 +13,7 @@
             <h3>
                 <a th:href="@{/mitraAgen}"> Mitra / Agen </a>
                 <span> > </span>
-                <p>Detail</p>
+                <span>Detail</span>
             </h3>
             <form method="post" class="upsert-form" action="/book-library/insert-update(categoryName=${categoryName})">
                 <input type="hidden" name="_csrf" value="${_csrf.token}">
@@ -45,7 +45,7 @@
                         <table>
                             <tbody>
                             <tr>
-                                <td><label class="identitas">Nomor Identitas*</label></td>
+                                <td><label class="label-nama">Nomor Identitas*</label></td>
                                 <td>
                                     <p id="identitas" name="identitas" th:text="*{nomorIdentitas}"></p>
                                 </td>
@@ -105,6 +105,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td colspan="2">
+                                    <input type="checkbox" id="domisiliSama" checked th:if="*{kelurahanIdentitas}==*{kelurahanDomisili}">
+                                    <input type="checkbox" id="domisiliTidakSama" th:if="*{kelurahanIdentitas}!=*{kelurahanDomisili}">
+                                </td>
+                            </tr>
+                            <tr>
                                 <td><label class="label-nama">Kelurahan *</label></td>
                                 <td>
                                     <p id="kelurahanDomisili" name="kelurahan" th:text="*{kelurahanDomisili}"></p>
@@ -137,7 +143,7 @@
                             <tr>
                                 <td><label class="label-nama">Tempat Lahir *</label></td>
                                 <td>
-                                    <p id="Cabang" name="Cabang" th:text="*{tempatLahir}"></p>
+                                    <p id="tempatlahir" name="tempatlahir" th:text="*{tempatLahir}"></p>
                                 </td>
                             </tr>
                             <tr>
@@ -147,13 +153,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><label class="nomortelepon">Nomor Telepon </label></td>
+                                <td><label class="label-nama">Nomor Telepon </label></td>
                                 <td>
                                     <p id="nomortelepon" name="nomortelepon" th:text="*{nomorTelepon}"></p>
                                 </td>
                             </tr>
                             <tr>
-                                <td><label class="nomorhandphone">Nomor Handphone * </label></td>
+                                <td><label class="label-nama">Nomor Handphone * </label></td>
                                 <td>
                                     <p id="nomorhandphone" name="nomorhandphone" th:text="*{nomorHandphone}"></p>
                                 </td>
