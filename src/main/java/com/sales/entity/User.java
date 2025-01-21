@@ -27,7 +27,7 @@ public class User {
     private String idJabatan;
 
     @Column(name = "IdCabang", nullable = false)
-    private int idCabang;
+    private Integer idCabang;
 
     @Column(name = "IdPosisiJabatan", nullable = false)
     private String idPosisiJabatan;
