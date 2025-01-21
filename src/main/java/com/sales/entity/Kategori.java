@@ -35,6 +35,6 @@ public class Kategori {
     @OneToMany(mappedBy = "kategoriPOT")
     private List<POT> potList;
 
-    @OneToMany(mappedBy = "ketegoriDataLeads")
+    @OneToMany(mappedBy = "kategoriDataLeads")
     private List<DataLeads> dataLeadsList;
 }
