@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -20,7 +22,7 @@ public class Department {
     @Column(name = "IdDivisi",length = 5,nullable = false)
     private String idDivisi;
 
-    @Column(name = "Department", length = 100,nullable = false)
+    @Column(name = "NamaDepartemen", length = 100,nullable = false)
     private String namaDepartment;
 
     @Column(name = "Status",nullable = false)
@@ -29,4 +31,7 @@ public class Department {
     @ManyToOne
     @JoinColumn(name = "IdDivisi", insertable = false, updatable = false)
     private Divisi divisi;
+
+    @OneToMany(mappedBy = "department")
+    private List<Jabatan> jabatans;
 }
