@@ -19,20 +19,20 @@ public class DataLeads {
     @Column(name = "Id", length = 20)
     private String id;
 
+    @Column(name = "IdProduk", nullable = false)
+    private Integer idProduk;
+
     @Column(name = "NomorAplikasi", length = 12, nullable = false)
     private String nomorAplikasi;
 
     @Column(name = "TipeDebitur", length = 2, nullable = false)
-    private String tipeDebitur;
+    private Boolean tipeDebitur;
 
     @Column(name = "IdTipeAplikasi", nullable = false)
     private Integer idTipeAplikasi;
 
     @Column(name = "IdDebitur", length = 10, nullable = false)
     private String idDebitur;
-
-    @Column(name = "IdKelurahan", nullable = false)
-    private Integer idKelurahan;
 
     @Column(name = "IdCabang", nullable = false)
     private Integer idCabang;
@@ -86,16 +86,16 @@ public class DataLeads {
     private String nomorPolisi;
 
     @ManyToOne
+    @JoinColumn(name = "IdProduk", insertable = false, updatable = false)
+    private Produk produkDataleads;
+
+    @ManyToOne
     @JoinColumn(name = "IdTipeAplikasi", insertable = false, updatable = false)
     private TipeAplikasi tipeAplikasi;
 
     @ManyToOne
     @JoinColumn(name = "IdDebitur", insertable = false, updatable = false)
     private Debitur debitur;
-
-    @ManyToOne
-    @JoinColumn(name = "IdKelurahan", insertable = false, updatable = false)
-    private Kelurahan kelurahanDataLeads;
 
     @ManyToOne
     @JoinColumn(name = "IdCabang", insertable = false, updatable = false)
