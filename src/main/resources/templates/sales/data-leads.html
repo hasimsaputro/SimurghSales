@@ -43,10 +43,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr th:if="${#lists.size(grid)} == 0">
-                        <td>Data Tidak Ditemukan</td>
-                    </tr>
-                    <tr th:each="author:${grid}" th:object="${author}">
+                    <tr th:each="dataleads:${grid}" th:object="${dataleads}">
                         <td class="action">
                             <a href="#" class="action-button delete-button">
                                 <i class="fa fa-trash" aria-hidden="true"></i> Hapus
@@ -58,10 +55,12 @@
                                 <i class="fa fa-info-circle" aria-hidden="true"></i> Lihat
                             </a>
                         </td>
-                        <td th:text="*{fullName}"></td>
-                        <td th:text="*{age}"></td>
+                        <td th:text="*{nomorDataLeads}"></td>
+                        <td th:text="*{nomorAplikasi}"></td>
+                        <td th:text="*{namaDebitur}"></td>
+                        <td th:text="*{tipeAplikasi}"></td>
+                        <td th:text="*{keterangan}"></td>
                         <td th:text="*{status}"></td>
-                        <td th:text="*{education}"></td>
                     </tr>
                 </tbody>
                 <tfoot>
