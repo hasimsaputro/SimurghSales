@@ -124,6 +124,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                 mitraAgenDetailDTO.setKotaIdentitas(mitraAgen.getKelurahanIdentitasMitraAgen().getKecamatan().getKabupaten().getNamaKabupatenKota());
                 mitraAgenDetailDTO.setProvinsiIdentitas(mitraAgen.getKelurahanIdentitasMitraAgen().getKecamatan().getKabupaten().getProvinsi().getNamaProvinsi());
                 // Alamat Domisili
+                mitraAgenDetailDTO.setKelurahanDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getNamaKelurahan());
                 mitraAgenDetailDTO.setKodePosDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getKodePos());
                 mitraAgenDetailDTO.setKecamatanDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getKecamatan().getNamaKecamatan());
                 mitraAgenDetailDTO.setKotaDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getKecamatan().getKabupaten().getNamaKabupatenKota());
