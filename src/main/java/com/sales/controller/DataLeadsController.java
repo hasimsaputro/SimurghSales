@@ -37,11 +37,17 @@ public class DataLeadsController {
         return "sales/data-leads";
     }
 
-    @GetMapping("insert")
-    public String insert(Model model) {
-
-        return "sales/data-leads-form";}
+    @GetMapping("form")
+    public String form(Model model,@RequestParam(defaultValue = "")String dataLeadsId) {
+        var dataLeadsById = service.getDataLeadsById(dataLeadsId);
+        model.addAttribute("dataLeadsById",dataLeadsById);
+        return "sales/data-leads-form";
+    }
 
     @GetMapping("detail")
-    public String detail(Model model) { return "sales/data-leads-detail";}
+    public String detail(Model model,@RequestParam(defaultValue = "")String dataLeadsId) {
+        var dataLeadsById = service.getDataLeadsById(dataLeadsId);
+        model.addAttribute("dataLeadsById",dataLeadsById);
+        return "sales/data-leads-detail";
+    }
 }

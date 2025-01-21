@@ -13,14 +13,14 @@
             <h3>
                 <a th:href="@{/DataLeads}"> Data Leads </a> > <a th:href="@{/DataLeads/insert}"> Tambah </a>
             </h3>
-            <form method="post" class="upsert-form" action="/book-library/insert-update(categoryName=${categoryName})">
-                <input type="hidden" name="_csrf" value="${_csrf.token}">
+            <form method="post" class="upsert-form" action="@{/dataLeads/form}">
+                <input type="hidden" th:field="${dataLeadsById.id}">
                 <table>
                     <tbody>
                     <tr>
                         <td><label class="label-nama">Product *</label></td>
                         <td>
-                            <input id="product" name="product" type="text" required value="INC">
+                            <input id="product" name="product" type="text" required th:field="${dataLeadsById.id}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
