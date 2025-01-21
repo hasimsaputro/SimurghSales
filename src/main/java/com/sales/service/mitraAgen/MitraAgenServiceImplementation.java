@@ -106,6 +106,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
 
                 String nomorIdentitas = String.format("%s - %s", mitraAgen.getIdIdentitas(), mitraAgen.getNomorIdentitas());
                 mitraAgenDetailDTO.setNomorIdentitas(nomorIdentitas);
+
             } catch (Exception e){}
         }
         return mitraAgenDetailDTO;
