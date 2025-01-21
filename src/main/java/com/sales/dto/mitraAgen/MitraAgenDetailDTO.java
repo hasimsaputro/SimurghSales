@@ -7,5 +7,5 @@ import org.hibernate.event.spi.PreInsertEvent;
 public class MitraAgenDetailDTO {
     private String id;
     private String tipe;
-    private String  pro
+    private String  pro;
 }
