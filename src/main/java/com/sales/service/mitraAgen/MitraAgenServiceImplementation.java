@@ -4,6 +4,7 @@ import com.sales.dto.mitraAgen.MitraAgenDetailDTO;
 import com.sales.dto.mitraAgen.MitraAgenFormDTO;
 import com.sales.dto.mitraAgen.MitraAgenIndexDTO;
 import com.sales.entity.MitraAgen;
+import com.sales.helper.DateHelper;
 import com.sales.repository.MitraAgenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class MitraAgenServiceImplementation implements MitraAgenService{
@@ -67,7 +69,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                 mitraAgenFormDTO.setIdTipeMaster(mitraAgen.getIdTipeMaster());
                 mitraAgenFormDTO.setIdProduk(mitraAgen.getIdProduk());
                 mitraAgenFormDTO.setIdCabang(mitraAgen.getIdCabang());
-
+                // Data Pribadi
                 mitraAgenFormDTO.setIdIdentitas(mitraAgen.getIdIdentitas());
                 mitraAgenFormDTO.setNomorIdentitas(mitraAgen.getNomorIdentitas());
                 mitraAgenFormDTO.setNama(mitraAgen.getNamaMitraAgen());
@@ -81,14 +83,15 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                 mitraAgenFormDTO.setTanggalLahir(mitraAgen.getTanggalLahir());
                 mitraAgenFormDTO.setNomorTelepon(mitraAgen.getNomorTelepon());
                 mitraAgenFormDTO.setNomorHandPhone(mitraAgen.getNomorHandphone());
-
+                // Bank
                 mitraAgenFormDTO.setIdBank(mitraAgen.getIdBank());
                 mitraAgenFormDTO.setNomorRekening(mitraAgen.getNomorRekening());
                 mitraAgenFormDTO.setNamaRekening(mitraAgen.getNamaRekening());
+                // Status
                 mitraAgenFormDTO.setStatus(mitraAgen.getStatus());
 
                 return mitraAgenFormDTO;
-            } catch (Exception e){}
+            } catch (Exception ignored){}
         }
         return mitraAgenFormDTO;
     }
@@ -103,11 +106,40 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                 mitraAgenDetailDTO.setTipe(mitraAgen.getTipeMasterMitraAgen().getNamaTipeMaster());
                 mitraAgenDetailDTO.setProduk(mitraAgen.getProdukMitraAgen().getNamaProduk());
                 mitraAgenDetailDTO.setCabang(mitraAgen.getCabangMitraAgen().getNamaCabang());
-
+                // Data Pribadi
                 String nomorIdentitas = String.format("%s - %s", mitraAgen.getIdIdentitas(), mitraAgen.getNomorIdentitas());
                 mitraAgenDetailDTO.setNomorIdentitas(nomorIdentitas);
+                mitraAgenDetailDTO.setNama(mitraAgen.getNamaMitraAgen());
+                String jenisKelamin = mitraAgen.getJenisKelamin() == "L" ? "Laki-laki" : "Perempuan";
+                mitraAgenDetailDTO.setJenisKelamin(jenisKelamin);
+                mitraAgenDetailDTO.setNpwp(mitraAgen.getNpwp());
+                // Alamat Identitas
+                mitraAgenDetailDTO.setAlamatIdentitas(mitraAgen.getAlamatIdentitas());
+                mitraAgenDetailDTO.setKelurahanIdentitas(mitraAgen.getKelurahanIdentitasMitraAgen().getNamaKelurahan());
+                mitraAgenDetailDTO.setKodePosIdentitas(mitraAgen.getKelurahanIdentitasMitraAgen().getKodePos());
+                mitraAgenDetailDTO.setKecamatanIdentitas(mitraAgen.getKelurahanIdentitasMitraAgen().getKecamatan().getNamaKecamatan());
+                mitraAgenDetailDTO.setKecamatanIdentitas(mitraAgen.getKelurahanIdentitasMitraAgen().getKecamatan().getNamaKecamatan());
+                mitraAgenDetailDTO.setKotaIdentitas(mitraAgen.getKelurahanIdentitasMitraAgen().getKecamatan().getKabupaten().getNamaKabupatenKota());
+                mitraAgenDetailDTO.setProvinsiIdentitas(mitraAgen.getKelurahanIdentitasMitraAgen().getKecamatan().getKabupaten().getProvinsi().getNamaProvinsi());
+                // Alamat Domisili
+                mitraAgenDetailDTO.setKodePosDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getKodePos());
+                mitraAgenDetailDTO.setKecamatanDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getKecamatan().getNamaKecamatan());
+                mitraAgenDetailDTO.setKotaDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getKecamatan().getKabupaten().getNamaKabupatenKota());
+                mitraAgenDetailDTO.setProvinsiDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getKecamatan().getKabupaten().getProvinsi().getNamaProvinsi());
+                // TTL & Nomor Kontak
+                mitraAgenDetailDTO.setTempatLahir(mitraAgen.getTempatLahir());
+                mitraAgenDetailDTO.setTangalLahir(DateHelper.dateParse(mitraAgen.getTanggalLahir(), "dd MMMM yyyy",  new Locale("id", "ID")));
+                mitraAgenDetailDTO.setNomorTelepon(mitraAgen.getNomorTelepon());
+                mitraAgenDetailDTO.setNomorHandphone(mitraAgen.getNomorHandphone());
+                // Bank
+                mitraAgenDetailDTO.setBank(mitraAgen.getBankMitraAgen().getNamaBank());
+                mitraAgenDetailDTO.setNomorRekening(mitraAgen.getNomorRekening());
+                mitraAgenDetailDTO.setNamaRekening(mitraAgen.getNamaRekening());
 
-            } catch (Exception e){}
+                String statusMitraAgen = mitraAgen.getStatus() == false ? "Tidak Aktif" : "Aktif";
+                mitraAgenDetailDTO.setStatus(statusMitraAgen);
+
+            } catch (Exception ignored){}
         }
         return mitraAgenDetailDTO;
     }
