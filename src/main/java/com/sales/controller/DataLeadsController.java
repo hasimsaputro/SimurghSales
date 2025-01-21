@@ -23,16 +23,19 @@ public class DataLeadsController {
                         @RequestParam(defaultValue = "") String search,
                         @RequestParam(defaultValue = "1") int page, Model model){
         var grid = service.getAll(filter,search,page);
-//        int total = service.getTotal(fullName);
+        int total = service.getTotal(filter,search);
         model.addAttribute("grid", grid);
-//        model.addAttribute("totalPages",total);
+        model.addAttribute("totalPages",total);
         model.addAttribute("currentPage",page);
-//        model.addAttribute("fullName",fullName);
+        model.addAttribute("filterItem",service.getfilterAsItem());
+        model.addAttribute("search",search);
         return "sales/data-leads";
     }
 
     @GetMapping("insert")
-    public String insert(Model model) { return "sales/data-leads-form";}
+    public String insert(Model model) {
+
+        return "sales/data-leads-form";}
 
     @GetMapping("detail")
     public String detail(Model model) { return "sales/data-leads-detail";}

@@ -17,16 +17,13 @@
                 Tambah
                 <i class="fas fa-plus" aria-hidden="true"></i>
             </a>
-            <form method="get" class="filter" th:action="@{/prospect}">
-                <select name="" id="">
-                    <option value="indocyber">Nomor Data Leads</option>
-                    <option value="indocyber">Nomor Aplikasi</option>
-                    <option value="indocyber">Nama Debitur</option>
-                    <option value="indocyber">Tipe Aplikasi</option>
-                    <option value="indocyber">Keterangan</option>
-                    <option value="indocyber">Status</option>
+            <form method="get" class="filter" th:action="@{/dataleads}">
+                <select name="filter">
+                    <option th:value="null">No Specific Filter</option>
+                    <option  th:each="search:${sellerItem}" th:object="${search}"
+                             name="seller" th:value="*{value}"  th:text="*{text}"></option>
                 </select>
-                <input type="text" id="nama" name="nama" placeholder="Nama Debitur" th:attr="value=${nama}">
+                <input type="text" id="nama" name="nama" placeholder="Nama Debitur" th:attr="value=${search}">
                 <button class="filter-button" type="submit">
                     Search
                     <i class="fa fa-search" aria-hidden="true"></i>
