@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -114,11 +116,40 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
 
     @Override
     public void save(MitraAgenFormDTO mitraAgenFormDTO) {
+        MitraAgen mitraAgen = new MitraAgen();
+        mitraAgen.setId(mitraAgenFormDTO.getId());
+        mitraAgen.setIdTipeMaster(mitraAgenFormDTO.getIdTipeMaster());
+        mitraAgen.setIdProduk(mitraAgenFormDTO.getIdProduk());
+        mitraAgen.setIdCabang(mitraAgenFormDTO.getIdCabang());
+        mitraAgen.setIdIdentitas(mitraAgenFormDTO.getIdIdentitas());
+        mitraAgen.setNomorIdentitas(mitraAgenFormDTO.getNomorIdentitas());
+        mitraAgen.setNamaMitraAgen(mitraAgenFormDTO.getNama());
+        mitraAgen.setJenisKelamin(mitraAgenFormDTO.getJenisKelamin());
+        mitraAgen.setNpwp(mitraAgenFormDTO.getNpwp());
+        mitraAgen.setAlamatIdentitas(mitraAgenFormDTO.getAlamatIdentitas());
+        mitraAgen.setIdKelurahanIdentitas(mitraAgenFormDTO.getIdKelurahanIdentitas());
+        mitraAgen.setAlamatDomisili(mitraAgenFormDTO.getAlamatDomisili());
+        mitraAgen.setIdKelurahanDomisili(mitraAgenFormDTO.getIdKelurahanDomisili());
+        mitraAgen.setTempatLahir(mitraAgenFormDTO.getTempatLahir());
+        mitraAgen.setTanggalLahir(mitraAgenFormDTO.getTanggalLahir());
+        mitraAgen.setNomorTelepon(mitraAgenFormDTO.getNomorTelepon());
+        mitraAgen.setNomorHandphone(mitraAgenFormDTO.getNomorHandPhone());
+        mitraAgen.setIdBank(mitraAgenFormDTO.getIdBank());
+        mitraAgen.setNomorRekening(mitraAgenFormDTO.getNomorRekening());
+        mitraAgen.setNamaRekening(mitraAgenFormDTO.getNamaRekening());
+        mitraAgen.setStatus(mitraAgenFormDTO.getStatus());
 
+        repository.save(mitraAgen);
     }
 
     @Override
     public void delete(String id) {
-
+        if (!id.isEmpty()){
+            try {
+                MitraAgen mitraAgen = repository.findById(id).orElseThrow();
+                mitraAgen.setDeleteDate(LocalDate.now());
+                repository.save(mitraAgen);
+            }catch (Exception ignored){}
+        }
     }
 }
