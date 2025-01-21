@@ -32,7 +32,7 @@ public class Debitur {
     private String namaPanggilan;
 
     @Column(name = "IdIdentitas", nullable = false)
-    private int idIdentitas;
+    private Integer idIdentitas;
 
     @Column(name = "NomorIdentitas", length = 20, nullable = false)
     private String nomorIdentitas;
@@ -44,13 +44,13 @@ public class Debitur {
     private String alamatIdentitas;
 
     @Column(name = "IdKelurahan", nullable = false)
-    private int idKelurahan;
+    private Integer idKelurahan;
 
     @Column(name = "AlamatDomisili", length = 100, nullable = false)
     private String alamatDomisili;
 
     @Column(name = "IdKelurahanDomisili", nullable = false)
-    private int idKelurahanDomisili;
+    private Integer idKelurahanDomisili;
 
     @Column(name = "NomorHP1", length = 20, nullable = false)
     private String nomorHp1;

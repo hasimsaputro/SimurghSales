@@ -27,5 +27,5 @@ public class Jenis {
     private Kategori kategoriJenis;
 
     @OneToMany(mappedBy = "jenisTipe")
-    private List<Jenis> jenisList;
+    private List<Tipe> tipeList;
 }

@@ -20,19 +20,19 @@ public class Cabang {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int id;
+    private Integer id;
 
     @Column(name = "NamaCabang", length = 50, nullable = false)
     private String namaCabang;
 
     @Column(name = "IdTipeStruktur", nullable = false)
-    private int idTipeStruktur;
+    private Integer idTipeStruktur;
 
     @Column(name = "Alamat", length = 100, nullable = false)
     private String Alamat;
 
     @Column(name = "IdKelurahan", nullable = false)
-    private int idKelurahan;
+    private Integer idKelurahan;
 
     @Column(name = "NomorTelepon", length = 20)
     private String nomorTelepon;
@@ -62,9 +62,6 @@ public class Cabang {
     )
     private Set<Produk> produkSet;
 
-    @ManyToMany(mappedBy = "cabangSet")
-    private Set<POT> potSet;
-
-    @OneToMany(mappedBy = "cabangDataLeads")
-    private List<DataLeads> dataLeadsList;
+    @OneToMany(mappedBy = "cabangMitraAgen")
+    private List<MitraAgen> mitraAgenList;
 }

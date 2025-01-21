@@ -19,7 +19,7 @@ public class Produk {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int id;
+    private Integer id;
 
     @Column(name = "NamaProduk", length = 100, nullable = false)
     private String namaProduk;
@@ -32,4 +32,7 @@ public class Produk {
 
     @OneToMany(mappedBy = "produk")
     private List<POT> potList;
+
+    @OneToMany(mappedBy = "produkMitraAgen")
+    private List<MitraAgen> mitraAgenList;
 }

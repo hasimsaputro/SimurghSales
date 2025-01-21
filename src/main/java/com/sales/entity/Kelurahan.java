@@ -18,7 +18,7 @@ public class Kelurahan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int id;
+    private Integer id;
 
     @Column(name = "NamaKelurahan", length = 100, nullable = false)
     private String namaKelurahan;
@@ -27,13 +27,13 @@ public class Kelurahan {
     private String kodePos;
 
     @Column(name = "IdProvinsi", nullable = false)
-    private int idProvinsi;
+    private Integer idProvinsi;
 
     @Column(name = "IdKabupaten", nullable = false)
-    private int idKabupaten;
+    private Integer idKabupaten;
 
     @Column(name = "IdKecamatan", nullable = false)
-    private int idKecamatan;
+    private Integer idKecamatan;
 
     @Column(name = "Status", nullable = false)
     private Boolean status;
@@ -59,6 +59,9 @@ public class Kelurahan {
     @OneToMany(mappedBy = "kelurahanDomisili")
     private List<Debitur> debiturDomisiliList;
 
-    @OneToMany(mappedBy = "kelurahanDataleads")
-    private List<DataLeads> dataLeadsList;
+    @OneToMany(mappedBy = "kelurahanIdentitasMitraAgen")
+    private List<MitraAgen> mitraAgenIdentitasList;
+
+    @OneToMany(mappedBy = "kelurahanDomisiliMitraAgen")
+    private List<MitraAgen> mitraAgenDomisiliList;
 }
