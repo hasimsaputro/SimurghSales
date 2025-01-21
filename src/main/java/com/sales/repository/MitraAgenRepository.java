@@ -9,32 +9,32 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MitrAgenRepository extends JpaRepository<MitraAgen, String> {
-    @Query("""
-            SELECT mit
-            FROM MitraAgen mit
-            WHERE (mit.Id = :id OR :id IS NULL)
-            AND (mit.IdTipeMaster = :tipe OR :tipe IS NULL)   
-            AND (mit.NamaMitraAgen = :name OR :name IS NULL)
-            AND (mit.IdKelurahan = :kelurahan OR :kelurahan IS NULL)
-            AND (mit.IdCabang = :cabang OR :cabang IS NULL)
-            AND (mit.Status = :status OR :status IS NULL)
-            """)
-    List<MitraAgen> getAllMitraAgen(Pageable pageable, String id, Integer tipe, String name, Integer kelurahan,
-                                    Integer cabang, Boolean status);
-
+public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
     @Query("""
             SELECT COUNT(1)
             FROM MitraAgen mit
-            WHERE (mit.Id = :id OR :id IS NULL)
-            AND (mit.IdTipeMaster = :tipe OR :tipe IS NULL)   
-            AND (mit.NamaMitraAgen = :name OR :name IS NULL)
-            AND (mit.IdKelurahan = :kelurahan OR :kelurahan IS NULL)
-            AND (mit.IdCabang = :cabang OR :cabang IS NULL)
-            AND (mit.Status = :status OR :status IS NULL)
+            WHERE (mit.id = :id OR :id IS NULL)
+            AND (mit.idTipeMaster = :tipe OR :tipe IS NULL)   
+            AND (mit.namaMitraAgen = :name OR :name IS NULL)
+            AND (mit.idKelurahanDomisili = :kelurahan OR :kelurahan IS NULL)
+            AND (mit.idCabang = :cabang OR :cabang IS NULL)
+            AND (mit.status = :status OR :status IS NULL)
             """)
-    int getTotalPages(Pageable pageable, String id, Integer tipe, String name, Integer kelurahan,
+    int getTotalPages(String id, Integer tipe, String name, Integer kelurahan,
                       Integer cabang, Boolean status);
+
+    @Query("""
+            SELECT mit
+            FROM MitraAgen mit
+            WHERE (mit.id = :id OR :id IS NULL)
+            AND (mit.idTipeMaster = :tipe OR :tipe IS NULL)   
+            AND (mit.namaMitraAgen = :name OR :name IS NULL)
+            AND (mit.idKelurahanDomisili = :kelurahan OR :kelurahan IS NULL)
+            AND (mit.idCabang = :cabang OR :cabang IS NULL)
+            AND (mit.status = :status OR :status IS NULL)
+            """)
+    List<MitraAgen> getAllMitraAgen(Pageable pageable, String id, Integer tipe, String name, Integer kelurahan,
+                                    Integer cabang, Boolean status);
 //
 //    @Query("""
 //            SELECT mit
