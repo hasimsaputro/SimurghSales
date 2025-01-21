@@ -1,5 +1,6 @@
 package com.sales.service.mitraAgen;
 
+import com.sales.dto.mitraAgen.MitraAgenDetailDTO;
 import com.sales.dto.mitraAgen.MitraAgenFormDTO;
 import com.sales.dto.mitraAgen.MitraAgenIndexDTO;
 import com.sales.entity.MitraAgen;
@@ -50,6 +51,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
             mitraAgenIndexDTO.setCabang(mitraAgen.getCabangMitraAgen().getNamaCabang());
             String statusMitraAgen = mitraAgen.getStatus() == false ? "Tidak Aktif" : "Aktif";
             mitraAgenIndexDTO.setStatus(statusMitraAgen);
+
             mitraAgenIndexDTOS.add(mitraAgenIndexDTO);
         }
         return mitraAgenIndexDTOS;
@@ -57,7 +59,56 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
 
     @Override
     public MitraAgenFormDTO getMitraAgenById(String id) {
-        return null;
+        MitraAgenFormDTO mitraAgenFormDTO = new MitraAgenFormDTO();
+        if (!id.isEmpty()){
+            try {
+                MitraAgen mitraAgen = repository.findById(id).orElseThrow();
+                mitraAgenFormDTO.setId(mitraAgen.getId());
+                mitraAgenFormDTO.setIdTipeMaster(mitraAgen.getIdTipeMaster());
+                mitraAgenFormDTO.setIdProduk(mitraAgen.getIdProduk());
+                mitraAgenFormDTO.setIdCabang(mitraAgen.getIdCabang());
+
+                mitraAgenFormDTO.setIdIdentitas(mitraAgen.getIdIdentitas());
+                mitraAgenFormDTO.setNomorIdentitas(mitraAgen.getNomorIdentitas());
+                mitraAgenFormDTO.setNama(mitraAgen.getNamaMitraAgen());
+                mitraAgenFormDTO.setJenisKelamin(mitraAgen.getJenisKelamin());
+                mitraAgenFormDTO.setNpwp(mitraAgen.getNpwp());
+                mitraAgenFormDTO.setAlamatIdentitas(mitraAgen.getAlamatIdentitas());
+                mitraAgenFormDTO.setIdKelurahanIdentitas(mitraAgen.getIdKelurahanIdentitas());
+                mitraAgenFormDTO.setAlamatDomisili(mitraAgen.getAlamatDomisili());
+                mitraAgenFormDTO.setIdKelurahanDomisili(mitraAgen.getIdKelurahanDomisili());
+                mitraAgenFormDTO.setTempatLahir(mitraAgen.getTempatLahir());
+                mitraAgenFormDTO.setTanggalLahir(mitraAgen.getTanggalLahir());
+                mitraAgenFormDTO.setNomorTelepon(mitraAgen.getNomorTelepon());
+                mitraAgenFormDTO.setNomorHandPhone(mitraAgen.getNomorHandphone());
+
+                mitraAgenFormDTO.setIdBank(mitraAgen.getIdBank());
+                mitraAgenFormDTO.setNomorRekening(mitraAgen.getNomorRekening());
+                mitraAgenFormDTO.setNamaRekening(mitraAgen.getNamaRekening());
+                mitraAgenFormDTO.setStatus(mitraAgen.getStatus());
+
+                return mitraAgenFormDTO;
+            } catch (Exception e){}
+        }
+        return mitraAgenFormDTO;
+    }
+
+    @Override
+    public MitraAgenDetailDTO getDetailMitraAgenById(String id) {
+        MitraAgenDetailDTO mitraAgenDetailDTO = new MitraAgenDetailDTO();
+        if (!id.isEmpty()){
+            try {
+                MitraAgen mitraAgen = repository.findById(id).orElseThrow();
+                mitraAgenDetailDTO.setId(mitraAgen.getId());
+                mitraAgenDetailDTO.setTipe(mitraAgen.getTipeMasterMitraAgen().getNamaTipeMaster());
+                mitraAgenDetailDTO.setProduk(mitraAgen.getProdukMitraAgen().getNamaProduk());
+                mitraAgenDetailDTO.setCabang(mitraAgen.getCabangMitraAgen().getNamaCabang());
+
+                String nomorIdentitas = String.format("%s - %s", mitraAgen.getIdIdentitas(), mitraAgen.getNomorIdentitas());
+                mitraAgenDetailDTO.setNomorIdentitas(nomorIdentitas);
+            } catch (Exception e){}
+        }
+        return mitraAgenDetailDTO;
     }
 
     @Override
