@@ -4,9 +4,11 @@ import com.sales.entity.DataLeads;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface DataLeadsRepository extends JpaRepository<DataLeads, String> {
     @Query("""
             SELECT dl
@@ -15,12 +17,6 @@ public interface DataLeadsRepository extends JpaRepository<DataLeads, String> {
             """)
     DataLeads getDataLeadsById(String idDataLeads);
 
-    @Query("""
-            SELECT dl
-            FROM DataLeads dl
-            WHERE CONCAT(aut.firstName,' ',aut.lastName) LIKE %:fullName%
-            """)
-    List<DataLeads> get(String fullName, Pageable pageable);
 
     @Query("""
             SELECT dl

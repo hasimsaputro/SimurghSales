@@ -56,7 +56,7 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
             dataLeadsIndexDTO.setStatus(status);
             gridDataLeads.add(dataLeadsIndexDTO);
         }
-        return null;
+        return gridDataLeads;
     }
 
     @Override
