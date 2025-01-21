@@ -45,7 +45,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr  th:each="mitraAgen:${mitraAgenGrid}" th:object="${mitraAgen}">
                     <td class="action">
                         <a href="#" class="action-button delete-button">
                             <i class="fa fa-trash" aria-hidden="true"></i> delete
@@ -57,12 +57,15 @@
                             <i class="fa fa-info-circle" aria-hidden="true"></i> lihat
                         </a>
                     </td>
-                    <td>Agen</td>
-                    <td>A001</td>
-                    <td>Sukses Selalu</td>
-                    <td>Batu</td>
-                    <td>Jatim</td>
-                    <td>Aktif</td>
+                    <td th:text="*{tipe}"></td>
+                    <td th:text="*{kode}"></td>
+                    <td th:text="*{nama}"></td>
+                    <td th:text="*{kelurahan}"></td>
+                    <td th:text="*{cabang}"></td>
+                    <td th:text="*{status}"></td>
+                </tr>
+                <tr th:if="${#lists.size(mitraAgenGrid)}==0">
+                    <td colspan="7">Data Tidak Ditemukan</td>
                 </tr>
                 </tbody>
                 <tfoot>
@@ -72,7 +75,10 @@
                             <div>
                                 <button>&laquo;</button>
                                 <button>&lt;</button>
-                                <span>Page 1 of 30</span>
+                                <span
+                                        th:text="|Page ${currentPage} of ${totalPages}|"
+                                        th:if="${#lists.size(mitraAgenGrid)}!=0">
+                                </span>
                                 <button>&gt;</button>
                                 <button>&raquo;</button>
                             </div>
