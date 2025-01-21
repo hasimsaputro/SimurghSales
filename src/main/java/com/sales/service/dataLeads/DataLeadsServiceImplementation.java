@@ -76,27 +76,27 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
         dto.setId(dataLeads.getId());
         dto.setIdProduk(dataLeads.getIdProduk());
         dto.setTipeDebitur(dataLeads.getTipeDebitur());
-        dto.setTipeAplikasi(dataLeads.getTipeAplikasi().getNamaTipeAplikasi());
-        dto.setNamaDepanDebitur(dataLeads.getDebitur().getNamaDepan());
-        dto.setNamaTengahDebitur(dataLeads.getDebitur().getNamaTengah());
-        dto.setNamaBelakangDebitur(dataLeads.getDebitur().getNamaAkhir());
-        dto.setJenisKelamin(dataLeads.getDebitur().getJenisKelamin());
-        dto.setAlamatIdentitas(dataLeads.getDebitur().getAlamatIdentitas());
-        dto.setKelurahan(dataLeads.getDebitur().getKelurahan().getNamaKelurahan());
-        dto.setKodePos(dataLeads.getDebitur().getKelurahan().getKodePos());
-        dto.setKecamatan(dataLeads.getDebitur().getKelurahan().getKecamatan().getNamaKecamatan());
-        dto.setKotaKabupaten(dataLeads.getDebitur().getKelurahan().getKecamatan().getKabupaten().getNamaKabupatenKota());
-        dto.setProvinsi(dataLeads.getDebitur().getKelurahan().getKecamatan().getKabupaten().getProvinsi().getNamaProvinsi());
-        dto.setAlamatDomisili(dataLeads.getDebitur().getAlamatDomisili());
-        dto.setKelurahanDomisili(dataLeads.getDebitur().getKelurahan().getNamaKelurahan());
-        dto.setKodePosDomisili(dataLeads.getDebitur().getKelurahanDomisili().getKodePos());
-        dto.setKecamatanDomisili(dataLeads.getDebitur().getKelurahanDomisili().getKecamatan().getNamaKecamatan());
-        dto.setKotaKabupatenDomisili(dataLeads.getDebitur().getKelurahanDomisili().getKecamatan().getKabupaten().getNamaKabupatenKota());
-        dto.setProvinsiDomisili(dataLeads.getDebitur().getKelurahanDomisili().getKecamatan().getProvinsi().getNamaProvinsi());
+        dto.setTipeAplikasi(dataLeads.getTipeAplikasiDataLeads().getNamaTipeAplikasi());
+        dto.setNamaDepanDebitur(dataLeads.getDebiturDataLeads().getNamaDepan());
+        dto.setNamaTengahDebitur(dataLeads.getDebiturDataLeads().getNamaTengah());
+        dto.setNamaBelakangDebitur(dataLeads.getDebiturDataLeads().getNamaAkhir());
+        dto.setJenisKelamin(dataLeads.getDebiturDataLeads().getJenisKelamin());
+        dto.setAlamatIdentitas(dataLeads.getDebiturDataLeads().getAlamatIdentitas());
+        dto.setKelurahan(dataLeads.getDebiturDataLeads().getKelurahan().getNamaKelurahan());
+        dto.setKodePos(dataLeads.getDebiturDataLeads().getKelurahan().getKodePos());
+        dto.setKecamatan(dataLeads.getDebiturDataLeads().getKelurahan().getKecamatan().getNamaKecamatan());
+        dto.setKotaKabupaten(dataLeads.getDebiturDataLeads().getKelurahan().getKecamatan().getKabupaten().getNamaKabupatenKota());
+        dto.setProvinsi(dataLeads.getDebiturDataLeads().getKelurahan().getKecamatan().getKabupaten().getProvinsi().getNamaProvinsi());
+        dto.setAlamatDomisili(dataLeads.getDebiturDataLeads().getAlamatDomisili());
+        dto.setKelurahanDomisili(dataLeads.getDebiturDataLeads().getKelurahan().getNamaKelurahan());
+        dto.setKodePosDomisili(dataLeads.getDebiturDataLeads().getKelurahanDomisili().getKodePos());
+        dto.setKecamatanDomisili(dataLeads.getDebiturDataLeads().getKelurahanDomisili().getKecamatan().getNamaKecamatan());
+        dto.setKotaKabupatenDomisili(dataLeads.getDebiturDataLeads().getKelurahanDomisili().getKecamatan().getKabupaten().getNamaKabupatenKota());
+        dto.setProvinsiDomisili(dataLeads.getDebiturDataLeads().getKelurahanDomisili().getKecamatan().getProvinsi().getNamaProvinsi());
         //Kurang Nama Cabang Tujuan
-        dto.setNomorHandphone1(dataLeads.getDebitur().getNomorHp1());
-        dto.setNomorHandphone2(dataLeads.getDebitur().getNomorHP2());
-        dto.setNomorTelepon(dataLeads.getDebitur().getNomorTelepon());
+        dto.setNomorHandphone1(dataLeads.getDebiturDataLeads().getNomorHp1());
+        dto.setNomorHandphone2(dataLeads.getDebiturDataLeads().getNomorHP2());
+        dto.setNomorTelepon(dataLeads.getDebiturDataLeads().getNomorTelepon());
         dto.setSumberDataAplikasi(dataLeads.getMitraAgenDataLeads().getNamaMitraAgen());
         dto.setReferensi(dataLeads.getDebiturReferensiDataLeads().getNamaDepan().concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaTengah()).concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaAkhir()));
         dto.setJenisUsaha(dataLeads.getJenisUsaha());
@@ -106,6 +106,7 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
         dto.setPot(dataLeads.getPotDataLeads().getNamaPOT());
         dto.setTenor(dataLeads.getPotDataLeads().getTenor().toString());
         //Kurang Estimasi Nilai Faunding dan Data Unit
+        //dan unit
 
 
         return dto;
