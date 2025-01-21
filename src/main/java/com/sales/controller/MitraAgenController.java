@@ -36,7 +36,7 @@ public class MitraAgenController {
 
     @GetMapping("form")
     public String form(
-            @RequestParam(required = false) String id,
+            @RequestParam(defaultValue = "") String id,
             Model model) {
         model.addAttribute("mitraAgenByIdGrid",service.getMitraAgenById(id));
         return "sales/sales-mitraAgen-form";
