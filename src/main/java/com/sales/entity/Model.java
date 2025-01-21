@@ -3,6 +3,8 @@ package com.sales.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "Model")
@@ -37,4 +39,7 @@ public class Model {
     @ManyToOne
     @JoinColumn(name = "IdTipe", insertable = false, updatable = false)
     private Tipe tipeModel;
+
+    @OneToMany(mappedBy = "modelDataLeads")
+    private List<DataLeads> dataLeadsList;
 }

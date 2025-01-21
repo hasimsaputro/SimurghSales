@@ -31,4 +31,10 @@ public class Kategori {
 
     @OneToMany(mappedBy = "kategoriModel")
     private List<Model> modelList;
+
+    @OneToMany(mappedBy = "kategoriPOT")
+    private List<POT> potList;
+
+    @OneToMany(mappedBy = "ketegoriDataLeads")
+    private List<DataLeads> dataLeadsList;
 }

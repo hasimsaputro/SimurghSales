@@ -30,6 +30,9 @@ public class Produk {
     @ManyToMany(mappedBy = "produkSet")
     private Set<Cabang> cabangSet;
 
+    @OneToMany(mappedBy = "produk")
+    private List<POT> potList;
+
     @OneToMany(mappedBy = "produkMitraAgen")
     private List<MitraAgen> mitraAgenList;
 }

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -52,4 +54,7 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "IdPosisiJabatan",insertable = false,updatable = false)
     private PosisiJabatan posisiJabatan;
+
+    @OneToMany(mappedBy = "userDataLeads")
+    private List<DataLeads> dataLeadsList;
 }

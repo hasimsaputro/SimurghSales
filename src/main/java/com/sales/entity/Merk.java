@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -38,4 +39,10 @@ public class Merk {
 
     @OneToMany(mappedBy = "merkModel")
     private List<Model> modelList;
+
+    @ManyToMany(mappedBy = "merkSet")
+    private Set<POT> potSet;
+
+    @OneToMany(mappedBy = "merkDataLeads")
+    private List<DataLeads> dataLeadsList;
 }
