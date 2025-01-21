@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -100,4 +101,7 @@ public class MitraAgen {
     @ManyToOne
     @JoinColumn(name = "IdBank", insertable = false, updatable = false)
     private Bank bankMitraAgen;
+
+    @OneToMany(mappedBy = "mitraAgenDataLeads")
+    private List<DataLeads> dataLeadsList;
 }
