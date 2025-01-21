@@ -1,11 +1,12 @@
 package com.sales.controller;
 
+import com.sales.dto.mitraAgen.MitraAgenFormDTO;
 import com.sales.service.mitraAgen.MitraAgenService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("mitraAgen")
@@ -34,7 +35,27 @@ public class MitraAgenController {
     }
 
     @GetMapping("form")
-    public String form(Model model) { return "sales/sales-mitraAgen-form";}
+    public String form(
+            @RequestParam(required = false) String id,
+            Model model) {
+        model.addAttribute("mitraAgenByIdGrid",service.getMitraAgenById(id));
+        return "sales/sales-mitraAgen-form";
+    }
+
+    @PostMapping("form")
+    public String form(
+            @Valid @ModelAttribute("mitraAgen")
+            MitraAgenFormDTO mitraAgenFormDTO,
+            BindingResult bindingResult
+            ) {
+        if (bindingResult.hasErrors()){
+            return "mitraAgen/form";
+        } else {
+            service.save(mitraAgenFormDTO);
+            return "redirect:/mitraAgen";
+        }
+    }
+
 
     @GetMapping("detail")
     public String detail(
@@ -43,5 +64,10 @@ public class MitraAgenController {
     ){
         model.addAttribute("detailMitraAgenGrid", service.getDetailMitraAgenById(id));
         return "sales/sales-mitraAgen-detail";
+    }
+    @GetMapping("delete")
+    public String delete(String id){
+        service.delete(id);
+        return "redirect:/mitraAgen";
     }
 }

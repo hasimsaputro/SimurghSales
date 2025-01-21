@@ -47,10 +47,10 @@
                 <tbody>
                 <tr  th:each="mitraAgen:${mitraAgenGrid}" th:object="${mitraAgen}">
                     <td class="action">
-                        <a href="#" class="action-button delete-button">
+                        <a th:href="@{/mitraAgen/delete(id=*{kode})}" class="action-button delete-button">
                             <i class="fa fa-trash" aria-hidden="true"></i> delete
                         </a>
-                        <a href="master-jabatan-form.html" class="action-button update-button">
+                        <a th:href="@{/mitraAgen/form(id=*{kode})}" class="action-button update-button">
                             <i class="fas fa-edit" aria-hidden="true"></i> edit
                         </a>
                         <a class="action-button detail-button" th:href="@{/mitraAgen/detail(id=*{kode})}">
