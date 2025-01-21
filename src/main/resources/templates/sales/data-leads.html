@@ -18,12 +18,13 @@
                 <i class="fas fa-plus" aria-hidden="true"></i>
             </a>
             <form method="get" class="filter" th:action="@{/dataleads}">
-                <select name="filter">
-                    <option th:value="null">No Specific Filter</option>
-                    <option  th:each="search:${sellerItem}" th:object="${search}"
-                             name="seller" th:value="*{value}"  th:text="*{text}"></option>
+                <select name="filter" id="">
+                    <option th:value="null">No Specific Seller</option>
+                    <option th:each="filter : ${filterItem}"
+                            th:value="*{value}"
+                            th:text="*{text}"></option>
                 </select>
-                <input type="text" id="nama" name="nama" placeholder="Nama Debitur" th:attr="value=${search}">
+                <input type="text" id="search" name="search" th:attr="value=${search}">
                 <button class="filter-button" type="submit">
                     Search
                     <i class="fa fa-search" aria-hidden="true"></i>
@@ -42,25 +43,26 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td class="action">
-                        <a href="#" class="action-button delete-button">
-                            <i class="fa fa-trash" aria-hidden="true"></i> Hapus
-                        </a>
-                        <a href="master-jabatan-form.html" class="action-button update-button">
-                            <i class="fas fa-edit" aria-hidden="true"></i> Ubah
-                        </a>
-                        <a class="action-button detail-button" href="../usermanagement/master-jabatan-detail.html">
-                            <i class="fa fa-info-circle" aria-hidden="true"></i> Lihat
-                        </a>
-                    </td>
-                    <td>LEADS-0001</td>
-                    <td>121212121</td>
-                    <td>Michie</td>
-                    <td>New</td>
-                    <td>Prospect</td>
-                    <td>Aktif</td>
-                </tr>
+                    <tr th:if="${#lists.size(grid)} == 0">
+                        <td>Data Tidak Ditemukan</td>
+                    </tr>
+                    <tr th:each="author:${grid}" th:object="${author}">
+                        <td class="action">
+                            <a href="#" class="action-button delete-button">
+                                <i class="fa fa-trash" aria-hidden="true"></i> Hapus
+                            </a>
+                            <a href="master-jabatan-form.html" class="action-button update-button">
+                                <i class="fas fa-edit" aria-hidden="true"></i> Ubah
+                            </a>
+                            <a class="action-button detail-button" href="../usermanagement/master-jabatan-detail.html">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i> Lihat
+                            </a>
+                        </td>
+                        <td th:text="*{fullName}"></td>
+                        <td th:text="*{age}"></td>
+                        <td th:text="*{status}"></td>
+                        <td th:text="*{education}"></td>
+                    </tr>
                 </tbody>
                 <tfoot>
                 <tr>

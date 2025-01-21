@@ -42,4 +42,7 @@ public class Model {
 
     @OneToMany(mappedBy = "modelDataLeads")
     private List<DataLeads> dataLeadsList;
+
+    @OneToMany(mappedBy = "modelPOT")
+    private List<POT> potList;
 }
