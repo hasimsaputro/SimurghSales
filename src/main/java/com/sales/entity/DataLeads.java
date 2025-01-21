@@ -26,7 +26,7 @@ public class DataLeads {
     private String nomorAplikasi;
 
     @Column(name = "TipeDebitur", length = 2, nullable = false)
-    private String tipeDebitur;
+    private Boolean tipeDebitur;
 
     @Column(name = "IdTipeAplikasi", nullable = false)
     private Integer idTipeAplikasi;
