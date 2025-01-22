@@ -3,6 +3,7 @@ package com.sales.service.mitraAgen;
 import com.sales.dto.mitraAgen.MitraAgenDetailDTO;
 import com.sales.dto.mitraAgen.MitraAgenFormDTO;
 import com.sales.dto.mitraAgen.MitraAgenIndexDTO;
+import com.sales.dto.mitraAgen.MitraAgenIndexOptionDTO;
 import com.sales.entity.MitraAgen;
 import com.sales.helper.DateHelper;
 import com.sales.repository.MitraAgenRepository;
@@ -20,7 +21,7 @@ import java.util.Locale;
 @Service
 public class MitraAgenServiceImplementation implements MitraAgenService{
     private final MitraAgenRepository repository;
-    private final int rowInPage = 5;
+    private final int rowInPage = 1;
 
     @Autowired
     public MitraAgenServiceImplementation(MitraAgenRepository repository) {
@@ -28,14 +29,38 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
     }
 
     @Override
-    public int getTotalPages(String id, Integer tipe, String name, Integer kelurahan, Integer cabang, Boolean status) {
-        double total = repository.getTotalPages(id, tipe, name, kelurahan, cabang, status);
-        return (int) Math.ceil(total/rowInPage);
+    public int getTotalPages(String filter, String search) {
+        double page = 0;
+        if (filter.isEmpty()){
+            page = repository.getTotalPages();
+        } else {
+            switch (filter){
+                case "id":
+                    page = repository.getTotalPagesById(search);
+                    break;
+                case "tipe":
+                    page = repository.getTotalpagesByTipe(search);
+                    break;
+                case "name":
+                    page = repository.getTotalpagesByName(search);
+                    break;
+                case "kelurahan":
+                    page = repository.getTotalpagesByKelurahan(search);
+                    break;
+                case "cabang":
+                    page = repository.getTotalpagesByCabang(search);
+                    break;
+                case "status":
+                    page = repository.getTotalpagesByStatus(search);
+                    break;
+            }
+        }
+        return (int) Math.ceil(page/rowInPage);
     }
 
     @Override
-    public List<MitraAgenIndexDTO> getAll(int page, String id, Integer tipe, String name, Integer kelurahan, Integer cabang, Boolean status) {
-        int totalPages = getTotalPages(id, tipe, name, kelurahan, cabang, status);
+    public List<MitraAgenIndexDTO> getAll(int page, String filter, String search) {
+        int totalPages = getTotalPages(filter, search);
         if (page < 1) {
             page = 1;
         }
@@ -43,7 +68,33 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
             page = totalPages;
         }
         Pageable pageable = PageRequest.of(page - 1, rowInPage, Sort.by("id"));
-        List<MitraAgen> mitraAgenList = repository.getAllMitraAgen(pageable, id, tipe, name, kelurahan, cabang, status);
+
+        List<MitraAgen> mitraAgenList = new LinkedList<>();
+        if (filter.isEmpty()){
+            mitraAgenList = repository.getAllMitraAgen(pageable);
+        } else {
+            switch (filter){
+                case "id":
+                    mitraAgenList = repository.getMitraAgenById(pageable, search);
+                    break;
+                case "tipe":
+                    mitraAgenList = repository.getMitraAgenByTipe(pageable, search);
+                    break;
+                case "name":
+                    mitraAgenList = repository.getMitraAgenByName(pageable, search);
+                    break;
+                case "kelurahan":
+                    mitraAgenList = repository.getMitraAgenByKelurahan(pageable, search);
+                    break;
+                case "cabang":
+                    mitraAgenList = repository.getMitraAgenByCabang(pageable, search);
+                    break;
+                case "status":
+                    mitraAgenList = repository.getMitraAgenByStatus(pageable, search);
+                    break;
+            }
+        }
+
         List<MitraAgenIndexDTO> mitraAgenIndexDTOS = new LinkedList<>();
         for (MitraAgen mitraAgen : mitraAgenList){
             MitraAgenIndexDTO mitraAgenIndexDTO = new MitraAgenIndexDTO();
@@ -123,6 +174,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                 mitraAgenDetailDTO.setKotaIdentitas(mitraAgen.getKelurahanIdentitasMitraAgen().getKecamatan().getKabupaten().getNamaKabupatenKota());
                 mitraAgenDetailDTO.setProvinsiIdentitas(mitraAgen.getKelurahanIdentitasMitraAgen().getKecamatan().getKabupaten().getProvinsi().getNamaProvinsi());
                 // Alamat Domisili
+                mitraAgenDetailDTO.setAlamatDomisili(mitraAgen.getAlamatDomisili());
                 mitraAgenDetailDTO.setKelurahanDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getNamaKelurahan());
                 mitraAgenDetailDTO.setKodePosDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getKodePos());
                 mitraAgenDetailDTO.setKecamatanDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getKecamatan().getNamaKecamatan());
@@ -204,5 +256,50 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
         String formattedNumber = String.format("%03d", lastNumber);
 
         return prefix + formattedNumber;
+    }
+
+    @Override
+    public List<MitraAgenIndexOptionDTO> getFilterAsItem() {
+        return List.of(
+                new MitraAgenIndexOptionDTO("Tipe Master", "tipe"),
+                new MitraAgenIndexOptionDTO("Kode Mitra/Agen", "id"),
+                new MitraAgenIndexOptionDTO("Nama Mitra/Agen", "name"),
+                new MitraAgenIndexOptionDTO("Kelurahan", "kelurahan"),
+                new MitraAgenIndexOptionDTO("Cabang", "cabang"),
+                new MitraAgenIndexOptionDTO("Status", "status")
+        );
+    }
+
+    @Override
+    public List<MitraAgenIndexOptionDTO> getSearchItems(String filter) {
+        List<String> searchItems = new LinkedList<>();
+        if (!filter.isEmpty()){
+            switch (filter){
+                case "id":
+                    searchItems = repository.getMitraAgenItemsById();
+                    break;
+                case "tipe":
+                    searchItems = repository.getMitraAgenItemsByTipe();
+                    break;
+                case "name":
+                    searchItems = repository.getMitraAgenItemsByName();
+                    break;
+                case "kelurahan":
+                    searchItems = repository.getMitraAgenByItemsKelurahan();
+                    break;
+                case "cabang":
+                    searchItems = repository.getMitraAgenItemsByCabang();
+                    break;
+                case "status":
+                    searchItems = repository.getMitraAgenItemsByStatus();
+                    break;
+            }
+        }
+        List<MitraAgenIndexOptionDTO> searchsItems = new LinkedList<>();
+        for (String searchItem : searchItems){
+            MitraAgenIndexOptionDTO mitraAgenIndexOptionDTO = new MitraAgenIndexOptionDTO(searchItem, searchItem);
+            searchsItems.add(mitraAgenIndexOptionDTO);
+        }
+        return searchsItems;
     }
 }

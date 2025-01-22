@@ -1,14 +1,14 @@
 package com.sales.rest;
 
 import com.sales.dto.mitraAgen.MitraAgenDetailDTO;
+import com.sales.dto.mitraAgen.MitraAgenIndexOptionDTO;
 import com.sales.service.mitraAgen.MitraAgenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/mitraAgen")
@@ -18,6 +18,18 @@ public class MitraAgenRestController {
     @Autowired
     public MitraAgenRestController(MitraAgenService service) {
         this.service = service;
+    }
+
+    @GetMapping(value = {"/getSearchItems={filter}"})
+    public ResponseEntity<Object> getSearchItems(
+            @PathVariable String filter
+    ){
+        try{
+            List<MitraAgenIndexOptionDTO> mitraAgenIndexOptionDTOS = service.getSearchItems(filter);
+            return ResponseEntity.status(HttpStatus.OK).body(mitraAgenIndexOptionDTOS);
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     @GetMapping("detail")

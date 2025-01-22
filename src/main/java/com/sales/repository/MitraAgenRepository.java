@@ -14,29 +14,165 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             SELECT COUNT(1)
             FROM MitraAgen mit
             WHERE mit.deleteDate IS NULL
-            AND (mit.id = :id OR :id IS NULL)
-            AND (mit.idTipeMaster = :tipe OR :tipe IS NULL)   
-            AND (mit.namaMitraAgen = :name OR :name IS NULL)
-            AND (mit.idKelurahanDomisili = :kelurahan OR :kelurahan IS NULL)
-            AND (mit.idCabang = :cabang OR :cabang IS NULL)
-            AND (mit.status = :status OR :status IS NULL)
             """)
-    int getTotalPages(String id, Integer tipe, String name, Integer kelurahan,
-                      Integer cabang, Boolean status);
+    int getTotalPages();
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            AND (mit.id LIKE %:search% OR :search IS NULL)
+            """)
+    int getTotalPagesById(String search);
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            AND (mit.idTipeMaster = :search OR :search IS NULL)
+            """)
+    int getTotalpagesByTipe(String search);
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            AND (mit.namaMitraAgen LIKE %:search% OR :search IS NULL)
+            """)
+    int getTotalpagesByName(String name);
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            AND (mit.idKelurahanDomisili = :search OR :search IS NULL)
+            """)
+    int getTotalpagesByKelurahan(String search);
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            AND (mit.idCabang = :search OR :search IS NULL)
+            """)
+    int getTotalpagesByCabang(String search);
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            AND (mit.status = :search OR :search IS NULL)
+            """)
+    int getTotalpagesByStatus(String search);
+
+
 
     @Query("""
             SELECT mit
             FROM MitraAgen mit
             WHERE mit.deleteDate IS NULL
-            AND (mit.id = :id OR :id IS NULL)
-            AND (mit.idTipeMaster = :tipe OR :tipe IS NULL)   
-            AND (mit.namaMitraAgen = :name OR :name IS NULL)
-            AND (mit.idKelurahanDomisili = :kelurahan OR :kelurahan IS NULL)
-            AND (mit.idCabang = :cabang OR :cabang IS NULL)
-            AND (mit.status = :status OR :status IS NULL)
             """)
-    List<MitraAgen> getAllMitraAgen(Pageable pageable, String id, Integer tipe, String name, Integer kelurahan,
-                                    Integer cabang, Boolean status);
+    List<MitraAgen> getAllMitraAgen(Pageable pageable);
+
+    @Query("""
+            SELECT mit
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            AND mit.id LIKE %:search%
+            """)
+    List<MitraAgen> getMitraAgenById(Pageable pageable, String search);
+
+    @Query("""
+            SELECT mit
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            AND mit.idTipeMaster = :search
+            """)
+    List<MitraAgen> getMitraAgenByTipe(Pageable pageable, String search);
+
+    @Query("""
+            SELECT mit
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            AND mit.namaMitraAgen LIKE %:search%
+            """)
+    List<MitraAgen> getMitraAgenByName(Pageable pageable, String search);
+
+    @Query("""
+            SELECT mit
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            AND mit.idKelurahanDomisili = :search
+            """)
+    List<MitraAgen> getMitraAgenByKelurahan(Pageable pageable, String search);
+
+    @Query("""
+            SELECT mit
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            AND mit.idCabang = :search
+            """)
+    List<MitraAgen> getMitraAgenByCabang(Pageable pageable, String search);
+
+    @Query("""
+            SELECT mit
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            AND mit.status = :search
+            """)
+    List<MitraAgen> getMitraAgenByStatus(Pageable pageable, String search);
+
+
+
+    @Query("""
+            SELECT mit.id
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            """)
+    List<String> getMitraAgenItemsById();
+
+    @Query("""
+            SELECT tm.namaTipeMaster
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            JOIN mit.tipeMasterMitraAgen tm
+            """)
+    List<String> getMitraAgenItemsByTipe();
+
+    @Query("""
+            SELECT mit.namaMitraAgen
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            """)
+    List<String> getMitraAgenItemsByName();
+
+    @Query("""
+            SELECT kel.namaKelurahan
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            AND mit.kelurahanDomisiliMitraAgen kel
+            """)
+    List<String> getMitraAgenByItemsKelurahan();
+
+    @Query("""
+            SELECT cb.namaCabang
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            JOIN mit.cabangMitraAgen cb
+            """)
+    List<String> getMitraAgenItemsByCabang();
+
+    @Query(value = """
+            SELECT CASE
+            WHEN mit.status = 1
+            THEN 'Aktif' ELSE 'Tidak Aktif'
+            END
+            FROM MitraAgen mit
+            WHERE mit.deleteDate IS NULL
+            """, nativeQuery = true)
+    List<String> getMitraAgenItemsByStatus();
+
+
 
     @Query("""
             SELECT mit.id
@@ -45,40 +181,5 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             ORDER BY mit.id DESC
             """)
     String getLastNumberById(String prefix);
-//
-//    @Query("""
-//            SELECT mit
-//            FROM MitraAgen mit
-//            WHERE mit.IdTipeMaster = :tipe
-//            """)
-//    List<MitraAgen> getMitraAgenByTipe(Integer tipe);
-//
-//    @Query("""
-//            SELECT mit
-//            FROM MitraAgen mit
-//            WHERE mit.NamaMitraAgen = :name
-//            """)
-//    List<MitraAgen> getMitraAgenByName(String name);
-//
-//    @Query("""
-//            SELECT mit
-//            FROM MitraAgen mit
-//            WHERE mit.IdKelurahan = :kelurahan
-//            """)
-//    List<MitraAgen> getMitraAgenByKelurahan(Integer kelurahan);
-//
-//    @Query("""
-//            SELECT mit
-//            FROM MitraAgen mit
-//            WHERE mit.IdCabang = :cabang
-//            """)
-//    List<MitraAgen> getMitraAgenByCabang(Integer cabang);
-//
-//    @Query("""
-//            SELECT mit
-//            FROM MitraAgen mit
-//            WHERE mit.Status = :status
-//            """)
-//    List<MitraAgen> getMitraAgenByStatus(Boolean status);
 
 }

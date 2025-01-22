@@ -29,12 +29,14 @@
         let namaField = document.querySelector("#nama");
         let kelaminField = document.querySelector("#kelamin");
         let npwpField = document.querySelector("#NPWP");
-        let alamatField = document.querySelector("#address");
+        let alamatIdenField = document.querySelector("#alamatIdentitas");
         let kelIdenField = document.querySelector("#kelurahanIdentitas");
         let kodPosIdenField = document.querySelector("#kodeposIdentitas");
         let kecIdenField = document.querySelector("#kecamatanIdentitas");
         let kabIdenField = document.querySelector("#kotakabupatenIdentitas");
         let provIdenField = document.querySelector("#provinsiIdentitas");
+
+        let alamatDomField = document.querySelector("#alamatDomisili");
         let kelDomField = document.querySelector("#kelurahanDomisili");
         let kodPosDomField = document.querySelector("#kodeposDomisili");
         let kecDomField = document.querySelector("#kecamatanDomisili");
@@ -49,12 +51,13 @@
         namaField.textContent = detail.nama;
         kelaminField.textContent = detail.jenisKelamin;
         npwpField.textContent = detail.npwp;
-        alamatField.textContent = detail.alamatIdentitas;
+        alamatIdenField.textContent = detail.alamatIdentitas;
         kelIdenField.textContent = detail.kelurahanIdentitas;
         kodPosIdenField.textContent = detail.kodePosIdentitas;
         kecIdenField.textContent = detail.kecamatanIdentitas;
         kabIdenField.textContent = detail.kotaIdentitas;
         provIdenField.textContent = detail.provinsiIdentitas;
+        alamatDomField.textContent = detail.alamatDomisili;
         kelDomField.textContent = detail.kelurahanDomisili;
         kodPosDomField.textContent = detail.kodePosDomisili;
         kecDomField.textContent = detail.kecamatanDomisili;

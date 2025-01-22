@@ -17,16 +17,18 @@
                 Tambah
                 <i class="fas fa-plus" aria-hidden="true"></i>
             </a>
-            <form method="get" class="filter" th:action="@{/prospect}">
-                <select name="" id="">
-                    <option value="">Tipe</option>
-                    <option value="">Kode Mitra/Agen</option>
-                    <option value="">Nama Mitra/Agen</option>
-                    <option value="">Kelurahan</option>
-                    <option value="">Cabang</option>
-                    <option value="">Status</option>
+            <form method="get" class="filter" th:action="@{/mitraAgen}">
+                <select name="filter" id="filter">
+                    <option th:value="null">No Specific</option>
+                    <option th:each="filter : ${filterItem}"
+                            th:object="${filter}"
+                            th:text="*{nama}"
+                            th:value="*{value}"></option>
                 </select>
-                <input type="text" id="" name="" placeholder="" >
+                <div class="search-container">
+                    <input type="text" id="search" name="search" placeholder="" th:attr="value=${search}">
+                    <div class="suggestions"></div>
+                </div>
                 <button class="filter-button" type="submit">
                     Search
                     <i class="fa fa-search" aria-hidden="true"></i>
@@ -71,16 +73,25 @@
                 <tfoot>
                 <tr>
                     <td colspan="6">
-                        <div class="pagination" th:if="${numberOfPages} != 0">
+                        <div class="pagination" th:if="${#lists.size(mitraAgenGrid)}!=0">
                             <div>
-                                <button>&laquo;</button>
-                                <button>&lt;</button>
-                                <span
-                                        th:text="|Page ${currentPage} of ${totalPages}|"
-                                        th:if="${#lists.size(mitraAgenGrid)}!=0">
-                                </span>
-                                <button>&gt;</button>
-                                <button>&raquo;</button>
+                                <a th:href="@{/mitraAgen(page=1)}"
+                                   th:attr="onclick=${currentPage <= 1} ? 'event.preventDefault()' : ''">&laquo;</a>
+<!--                                th:href="@{/mitraAgen(page=1, id=${id}, tipe=${tipe}, nama=${nama}, kelurahan=${kelurahan}, cabang=${cabang}, status=${status})}"-->
+
+                                <a th:href="@{/mitraAgen(page=${currentPage - 1})}"
+                                   th:attr="onclick=${currentPage <= 1} ? 'event.preventDefault()' : ''">&lt;</a>
+<!--                                th:href="@{/mitraAgen(page=${currentPage - 1}, id=${id}, tipe=${tipe}, nama=${nama}, kelurahan=${kelurahan}, cabang=${cabang}, status=${status})}"-->
+
+                                <span th:text="|Page ${currentPage} of ${totalPages}|"></span>
+
+                                <a th:href="@{/mitraAgen(page=${currentPage + 1})}"
+                                   th:attr="onclick=${currentPage >= totalPages} ? 'event.preventDefault()' : ''">&gt;</a>
+<!--                                th:href="@{/mitraAgen(page=${currentPage + 1}, id=${id}, tipe=${tipe}, nama=${nama}, kelurahan=${kelurahan}, cabang=${cabang}, status=${status})}"-->
+
+                                <a th:href="@{/mitraAgen(page=${totalPages})}"
+                                   th:attr="onclick=${currentPage >= totalPages} ? 'event.preventDefault()' : ''">&raquo;</a>
+<!--                                th:href="@{/mitraAgen(page=${totalPages}, id=${id}, tipe=${tipe}, nama=${nama}, kelurahan=${kelurahan}, cabang=${cabang}, status=${status})}"-->
                             </div>
                         </div>
                     </td>
