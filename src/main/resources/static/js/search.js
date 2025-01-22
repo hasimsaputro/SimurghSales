@@ -4,7 +4,7 @@ let selectFilter = document.querySelector('.filter select')
 let urlDataleads = 'http://localhost:8082/api/dataLeads/';
 
 searchInput.addEventListener('input', function() {
-    const query = searchInput.value;
+    const query = searchInput.value.toLowerCase();
     const filterValue = selectFilter.value;
     console.log(filterValue);
     suggestionsContainer.innerHTML = '';
