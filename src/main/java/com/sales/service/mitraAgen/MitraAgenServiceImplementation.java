@@ -13,7 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -53,7 +52,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
             mitraAgenIndexDTO.setNama(mitraAgen.getNamaMitraAgen());
             mitraAgenIndexDTO.setKelurahan(mitraAgen.getKelurahanDomisiliMitraAgen().getNamaKelurahan());
             mitraAgenIndexDTO.setCabang(mitraAgen.getCabangMitraAgen().getNamaCabang());
-            String statusMitraAgen = mitraAgen.getStatus() == false ? "Tidak Aktif" : "Aktif";
+            String statusMitraAgen = !mitraAgen.getStatus() ? "Tidak Aktif" : "Aktif";
             mitraAgenIndexDTO.setStatus(statusMitraAgen);
 
             mitraAgenIndexDTOS.add(mitraAgenIndexDTO);
@@ -112,7 +111,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                 String nomorIdentitas = String.format("%s - %s", mitraAgen.getIdIdentitas(), mitraAgen.getNomorIdentitas());
                 mitraAgenDetailDTO.setNomorIdentitas(nomorIdentitas);
                 mitraAgenDetailDTO.setNama(mitraAgen.getNamaMitraAgen());
-                String jenisKelamin = mitraAgen.getJenisKelamin() == "L" ? "Laki-laki" : "Perempuan";
+                String jenisKelamin = mitraAgen.getJenisKelamin().equals("L") ? "Laki-laki" : "Perempuan";
                 mitraAgenDetailDTO.setJenisKelamin(jenisKelamin);
                 mitraAgenDetailDTO.setNpwp(mitraAgen.getNpwp());
                 // Alamat Identitas
@@ -139,7 +138,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                 mitraAgenDetailDTO.setNomorRekening(mitraAgen.getNomorRekening());
                 mitraAgenDetailDTO.setNamaRekening(mitraAgen.getNamaRekening());
 
-                String statusMitraAgen = mitraAgen.getStatus() == false ? "Tidak Aktif" : "Aktif";
+                String statusMitraAgen = !mitraAgen.getStatus() ? "Tidak Aktif" : "Aktif";
                 mitraAgenDetailDTO.setStatus(statusMitraAgen);
 
             } catch (Exception ignored){}
@@ -150,7 +149,11 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
     @Override
     public void save(MitraAgenFormDTO mitraAgenFormDTO) {
         MitraAgen mitraAgen = new MitraAgen();
-        mitraAgen.setId(mitraAgenFormDTO.getId());
+        if (mitraAgen.getId().isEmpty() && mitraAgen.getId() == null){
+            generateId(mitraAgenFormDTO.getIdTipeMaster());
+        } else {
+            mitraAgen.setId(mitraAgenFormDTO.getId());
+        }
         mitraAgen.setIdTipeMaster(mitraAgenFormDTO.getIdTipeMaster());
         mitraAgen.setIdProduk(mitraAgenFormDTO.getIdProduk());
         mitraAgen.setIdCabang(mitraAgenFormDTO.getIdCabang());
@@ -184,5 +187,22 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                 repository.save(mitraAgen);
             }catch (Exception ignored){}
         }
+    }
+
+    @Override
+    public String generateId(int tipe) {
+        String prefix = (tipe == 1) ? "MIT" : "AGN";
+        String lastId = repository.getLastNumberById(prefix + "%");
+
+        int lastNumber = 0;
+        if (lastId != null && !lastId.isEmpty()){
+            String numberPart = lastId.substring(3);
+            lastNumber = Integer.parseInt(numberPart);
+        }
+        lastNumber++;
+
+        String formattedNumber = String.format("%03d", lastNumber);
+
+        return prefix + formattedNumber;
     }
 }

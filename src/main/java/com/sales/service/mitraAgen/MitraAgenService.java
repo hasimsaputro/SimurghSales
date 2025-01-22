@@ -14,4 +14,5 @@ public interface MitraAgenService {
     MitraAgenDetailDTO getDetailMitraAgenById(String id);
     void save(MitraAgenFormDTO mitraAgenFormDTO);
     void delete(String id);
+    String generateId(int tipe);
 }
