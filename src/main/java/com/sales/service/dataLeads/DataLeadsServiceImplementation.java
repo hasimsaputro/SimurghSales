@@ -4,9 +4,8 @@ import com.sales.dto.OptionDTO;
 import com.sales.dto.dataLeads.DataLeadsDetailDTO;
 import com.sales.dto.dataLeads.DataLeadsFormDTO;
 import com.sales.dto.dataLeads.DataLeadsIndexDTO;
-import com.sales.entity.DataLeads;
-import com.sales.repository.DataLeadsRepository;
-import com.sales.repository.UserRepository;
+import com.sales.entity.*;
+import com.sales.repository.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,11 +16,21 @@ import java.util.List;
 
 @Service
 public class DataLeadsServiceImplementation implements DataLeadsService{
+    private final ModelRepository modelRepositoryl;
+    private final TipeRepository tipeRepository;
+    private final MerkRepository merkRepository;
+    private final KategoriRepository kategoriRepository;
+    private final MitraAgenRepository mitraAgenRepository;
     private final DataLeadsRepository repository;
     private final UserRepository userRepository;
     private final Integer rowInPage = 10;
 
-    public DataLeadsServiceImplementation(DataLeadsRepository repository, UserRepository userRepository) {
+    public DataLeadsServiceImplementation(ModelRepository modelRepositoryl, TipeRepository tipeRepository, MerkRepository merkRepository, KategoriRepository kategoriRepository, MitraAgenRepository mitraAgenRepository, DataLeadsRepository repository, UserRepository userRepository) {
+        this.modelRepositoryl = modelRepositoryl;
+        this.tipeRepository = tipeRepository;
+        this.merkRepository = merkRepository;
+        this.kategoriRepository = kategoriRepository;
+        this.mitraAgenRepository = mitraAgenRepository;
         this.repository = repository;
         this.userRepository = userRepository;
     }
@@ -241,7 +250,16 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
 
     @Override
     public List<OptionDTO> getOptionSumberDataAplikasi() {
-        return null;
+        List<OptionDTO> optionDTOList = new LinkedList<>();
+        List<MitraAgen> listSumberdataAplikasi = mitraAgenRepository.getAll();
+
+        for(var mitraAgen : listSumberdataAplikasi){
+            OptionDTO dto = new OptionDTO();
+            dto.setText(mitraAgen.getNamaMitraAgen());
+            dto.setValue(mitraAgen.getId());
+            optionDTOList.add(dto);
+        }
+        return optionDTOList;
     }
 
     @Override
@@ -251,7 +269,17 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
 
     @Override
     public List<OptionDTO> getOptionKeteranganAplikasi() {
-        return null;
+        OptionDTO dto1 = new OptionDTO();
+        OptionDTO dto2 = new OptionDTO();
+        List<OptionDTO> listdto = new LinkedList<>();
+        dto1.setValue("Interest");
+        dto2.setValue("Prospect");
+        dto1.setText("Interest");
+        dto2.setText("Prospect");
+        listdto.add(dto1);
+        listdto.add(dto2);
+
+        return listdto;
     }
 
     @Override
@@ -261,22 +289,58 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
 
     @Override
     public List<OptionDTO> getOptionKategori() {
-        return null;
+        List<OptionDTO> optionDTOList = new LinkedList<>();
+        List<Kategori> list = kategoriRepository.getAll();
+
+        for(var kategori : list){
+            OptionDTO dto = new OptionDTO();
+            dto.setText(kategori.getNamaKategori());
+            dto.setValue(kategori.getId().toString());
+            optionDTOList.add(dto);
+        }
+        return optionDTOList;
     }
 
     @Override
     public List<OptionDTO> getOptionMerek() {
-        return null;
+        List<OptionDTO> optionDTOList = new LinkedList<>();
+        List<Merk> list = merkRepository.getAll();
+
+        for(var merk : list){
+            OptionDTO dto = new OptionDTO();
+            dto.setText(merk.getNamaMerk());
+            dto.setValue(merk.getId());
+            optionDTOList.add(dto);
+        }
+        return optionDTOList;
     }
 
     @Override
     public List<OptionDTO> getOptionTipe() {
-        return null;
+        List<OptionDTO> optionDTOList = new LinkedList<>();
+        List<Tipe> list = tipeRepository.getAll();
+
+        for(var tipe : list){
+            OptionDTO dto = new OptionDTO();
+            dto.setText(tipe.getNamaTipe());
+            dto.setValue(tipe.getId());
+            optionDTOList.add(dto);
+        }
+        return optionDTOList;
     }
 
     @Override
     public List<OptionDTO> getOptionModel() {
-        return null;
+        List<OptionDTO> optionDTOList = new LinkedList<>();
+        List<Model> list = modelRepositoryl.getAll();
+
+        for(var tipe : list){
+            OptionDTO dto = new OptionDTO();
+            dto.setText(tipe.getNamaModel());
+            dto.setValue(tipe.getId());
+            optionDTOList.add(dto);
+        }
+        return optionDTOList;
     }
 
     @Override
