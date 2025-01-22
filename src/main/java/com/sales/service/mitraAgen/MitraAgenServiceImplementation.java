@@ -131,7 +131,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                 mitraAgenDetailDTO.setProvinsiDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getKecamatan().getKabupaten().getProvinsi().getNamaProvinsi());
                 // TTL & Nomor Kontak
                 mitraAgenDetailDTO.setTempatLahir(mitraAgen.getTempatLahir());
-                mitraAgenDetailDTO.setTangalLahir(DateHelper.dateParse(mitraAgen.getTanggalLahir(), "dd MMMM yyyy",  new Locale("id", "ID")));
+                mitraAgenDetailDTO.setTanggalLahir(DateHelper.dateParse(mitraAgen.getTanggalLahir(), "dd MMMM yyyy",  new Locale("id", "ID")));
                 mitraAgenDetailDTO.setNomorTelepon(mitraAgen.getNomorTelepon());
                 mitraAgenDetailDTO.setNomorHandphone(mitraAgen.getNomorHandphone());
                 // Bank
