@@ -24,31 +24,18 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
 
     @Override
     public List<DataLeadsIndexDTO> getAll(String filter, String search, int page) {
-        Pageable pagination = PageRequest.of(page-1,rowInPage, Sort.by("dataLeadsId"));
-        List<DataLeads> dataLeads = new LinkedList<>();
-        if(filter.equalsIgnoreCase("Nomor Data Leads")){
-            dataLeads = repository.getByIdDataLeads(search, pagination);
-        }else if (filter.equalsIgnoreCase("Nomor Aplikasi")){
-            dataLeads = repository.getByNomorAplikasi(search, pagination);
-        }else if (filter.equalsIgnoreCase("Nama Debitur")){
-            dataLeads = repository.getByDebitur(search, pagination);
-        }else if (filter.equalsIgnoreCase("Tipe Aplikasi")){
-            dataLeads = repository.getByTipeAplikasi(search, pagination);
-        }else if (filter.equalsIgnoreCase("Keterangan")){
-            dataLeads = repository.getByKeterangan(search, pagination);
-        }else if (filter.equalsIgnoreCase("Status")){
-            dataLeads = repository.getByStatus(search, pagination);
-        }
+        Pageable pagination = PageRequest.of(page-1,rowInPage, Sort.by("id"));
+        var dataLeads = repository.getAll(pagination);
         var gridDataLeads = new LinkedList<DataLeadsIndexDTO>();
         for (var datalead :dataLeads) {
-            String dataleadId = datalead.getId();
+            String id = datalead.getId();
             String nomorAplikasi = datalead.getNomorAplikasi();
             String namaDebitur = datalead.getDebiturDataLeads().getNamaDepan()+" "+datalead.getDebiturDataLeads().getNamaTengah()+" "+datalead.getDebiturDataLeads().getNamaAkhir();
             String tipeAplikasi = datalead.getTipeAplikasiDataLeads().getNamaTipeAplikasi();
-            String keterangan = datalead.getKeteranganAplikasiDataLeads().getNamaKeteranganAplikasi();
+            String keterangan = datalead.getKeteranganAplikasi().getNamaKeteranganAplikasi();
             String status = datalead.getStatus() ? "Aktif":"Tidak Akrif";
             DataLeadsIndexDTO dataLeadsIndexDTO = new DataLeadsIndexDTO();
-            dataLeadsIndexDTO.setNomorDataLeads(dataleadId);
+            dataLeadsIndexDTO.setNomorDataLeads(id);
             dataLeadsIndexDTO.setNomorAplikasi(nomorAplikasi);
             dataLeadsIndexDTO.setNamaDebitur(namaDebitur);
             dataLeadsIndexDTO.setTipeAplikasi(tipeAplikasi);

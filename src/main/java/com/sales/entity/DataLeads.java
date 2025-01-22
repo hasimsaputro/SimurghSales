@@ -111,7 +111,7 @@ public class DataLeads {
 
     @ManyToOne
     @JoinColumn(name = "IdKeteranganAplikasi", insertable = false, updatable = false)
-    private KeteranganAplikasi keteranganAplikasiDataLeads;
+    private KeteranganAplikasi keteranganAplikasi;
 
     @ManyToOne
     @JoinColumn(name = "IdUser", insertable = false, updatable = false)

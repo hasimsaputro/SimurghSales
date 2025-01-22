@@ -14,10 +14,10 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "User")
-public class User {
+public class User{
     @Id
     @Column(name = "NIK",length = 7)
-    private String NIK;
+    private String nik;
 
     @Column(name = "NamaKaryawan", length = 20, nullable = false)
     private String namaKaryawan;

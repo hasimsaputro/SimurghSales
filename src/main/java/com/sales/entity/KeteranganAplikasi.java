@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "KeteranganAplikasi")
 public class KeteranganAplikasi {
     @Id
-    @Column(name = "KeteranganAplikasi", nullable = false)
+    @Column(name = "Id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -20,6 +20,6 @@ public class KeteranganAplikasi {
     @Column(name = "Status", nullable = false)
     private Boolean status;
 
-    @OneToMany(mappedBy = "keteranganAplikasiDataLeads")
+    @OneToMany(mappedBy = "keteranganAplikasi")
     private List<DataLeads> dataLeadsList;
 }
