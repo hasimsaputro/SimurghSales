@@ -22,5 +22,5 @@ public class Jabatan {
 
     @ManyToOne
     @JoinColumn(name = "IdDepartemen", insertable = false, updatable = false)
-    private Department department;
+    private Departemen departemen;
 }

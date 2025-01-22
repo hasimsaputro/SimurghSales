@@ -18,6 +18,7 @@ public interface DataLeadsRepository extends JpaRepository<DataLeads, String> {
     DataLeads getDataLeadsById(String idDataLeads);
 
 
+
     @Query("""
             SELECT dl
             FROM DataLeads dl
@@ -63,9 +64,12 @@ public interface DataLeadsRepository extends JpaRepository<DataLeads, String> {
             """)
     List<DataLeads> getByStatus(String search, Pageable pagination);
 
+
     @Query("""
             SELECT dl
             FROM DataLeads dl
             """)
     List<DataLeads> getAll(Pageable pagination);
+
+
 }

@@ -13,8 +13,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "Department")
-public class Department {
+@Table(name = "Departemen")
+public class Departemen {
     @Id
     @Column(name = "Id",length = 5)
     private String id;
@@ -32,6 +32,6 @@ public class Department {
     @JoinColumn(name = "IdDivisi", insertable = false, updatable = false)
     private Divisi divisi;
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "departemen")
     private List<Jabatan> jabatans;
 }
