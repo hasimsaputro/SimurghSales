@@ -7,6 +7,7 @@ import com.sales.dto.dataLeads.DataLeadsIndexDTO;
 import java.util.List;
 
 public interface DataLeadsService {
+    DataLeadsFormDTO getDataLeadsById(String dataLeadsId);
     List<DataLeadsIndexDTO> getAll(String filter, String search, int page);
     int getTotal(String filter,String search);
     List<OptionDTO> getfilterAsItem();

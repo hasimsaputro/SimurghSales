@@ -1,5 +1,6 @@
 package com.sales.dto.dataLeads;
 
+import com.sales.entity.Kategori;
 import com.sales.entity.Kelurahan;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
@@ -21,7 +22,7 @@ public class DataLeadsFormDTO {
     private Boolean tipeDebitur;
 
     @NotBlank(message = "Tipe Aplikasi Tidak Boleh Kosong")
-    private Integer idTipeAplikasi;
+    private String tipeAplikasi;
 
     @NotBlank(message = "Nama Debitur tidak boleh kosong")
     @Length(max=20, message = "Nomor identitas tidak boleh melebihi 50 karakter")
@@ -58,6 +59,9 @@ public class DataLeadsFormDTO {
     @NotBlank(message = "Alamat tidak boleh Kosong")
     private String  alamatDomisili;
 
+    @NotBlank(message = "Alamat tidak boleh Kosong")
+    private String  alamatIdentitas;
+
     @NotBlank(message = "Kelurahan Tidak Boleh Kosong")
     private String  kelurahanDomisili;
 
@@ -90,22 +94,26 @@ public class DataLeadsFormDTO {
     @NotBlank(message = "Keterangan aplikasi Tidak Boleh Kosong")
     private String keteranganAplikasi;
 
-    private String idUser;
+    private String surveyor;
 
     @NotBlank(message = "Silahkan Pilih Status")
     private Boolean status;
 
     @NotBlank(message = "POT Tidak Boleh Kosong")
-    private String idpot;
+    private String pot;
+
+    private String tenor;
+
+    private String estimasiNilaiFunding;
 
     @NotBlank(message = "Kategori Tidak Boleh Kosong")
-    private Integer idKategori;
+    private String kategori;
 
-    private String idMerek;
+    private String merek;
 
-    private String idTipe;
+    private String tipe;
 
-    private String idModel;
+    private String model;
 
     private String tahun;
 
