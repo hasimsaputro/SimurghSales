@@ -1,6 +1,7 @@
 package com.sales.service.dataLeads;
 
 import com.sales.dto.OptionDTO;
+import com.sales.dto.dataLeads.DataLeadsDetailDTO;
 import com.sales.dto.dataLeads.DataLeadsFormDTO;
 import com.sales.dto.dataLeads.DataLeadsIndexDTO;
 import com.sales.entity.DataLeads;
@@ -122,6 +123,65 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
         return dto;
     }
 
+    @Override
+    public DataLeadsDetailDTO getDataLeadsByIdDetail(String dataLeadsId) {
+        DataLeads dataLeads = repository.getDataLeadsById(dataLeadsId);
+        DataLeadsDetailDTO dto = new DataLeadsDetailDTO();
+
+        if(dataLeads != null){
+
+            dto.setId(dataLeads.getId());
+            dto.setIdProduk(dataLeads.getIdProduk());
+            dto.setTipeDebitur(dataLeads.getTipeDebitur() == true ?"Perusahaan" : "Perseorangan" );
+            dto.setTipeAplikasi(dataLeads.getTipeAplikasiDataLeads().getNamaTipeAplikasi()==null ? "":dataLeads.getTipeAplikasiDataLeads().getNamaTipeAplikasi());
+            dto.setNamaDepanDebitur(dataLeads.getDebiturDataLeads().getNamaDepan());
+            dto.setNamaTengahDebitur(dataLeads.getDebiturDataLeads().getNamaTengah());
+            dto.setNamaBelakangDebitur(dataLeads.getDebiturDataLeads().getNamaAkhir());
+            switch (dataLeads.getDebiturDataLeads().getIdIdentitas()){
+                case 1:
+                    dto.setIdIdentitas("KTP - ");
+                    break;
+                case 2:
+                    dto.setIdIdentitas("SIM - ");
+                    break;
+                case 3:
+                    dto.setIdIdentitas("Passport - ");
+                default:
+                    dto.setIdIdentitas(" ");
+                    break;
+            }
+            dto.setNomorIdentitas(dataLeads.getDebiturDataLeads().getNomorIdentitas());
+            dto.setJenisKelamin(dataLeads.getDebiturDataLeads().getJenisKelamin());
+            dto.setAlamatIdentitas(dataLeads.getDebiturDataLeads().getAlamatIdentitas());
+            dto.setKelurahan(dataLeads.getDebiturDataLeads().getKelurahan().getNamaKelurahan());
+            dto.setKodePos(dataLeads.getDebiturDataLeads().getKelurahan().getKodePos());
+            dto.setKecamatan(dataLeads.getDebiturDataLeads().getKelurahan().getKecamatan().getNamaKecamatan());
+            dto.setKotaKabupaten(dataLeads.getDebiturDataLeads().getKelurahan().getKecamatan().getKabupaten().getNamaKabupatenKota());
+            dto.setProvinsi(dataLeads.getDebiturDataLeads().getKelurahan().getKecamatan().getKabupaten().getProvinsi().getNamaProvinsi());
+            dto.setAlamatDomisili(dataLeads.getDebiturDataLeads().getAlamatDomisili());
+            dto.setKelurahanDomisili(dataLeads.getDebiturDataLeads().getKelurahan().getNamaKelurahan());
+            dto.setKodePosDomisili(dataLeads.getDebiturDataLeads().getKelurahanDomisili().getKodePos());
+            dto.setKecamatanDomisili(dataLeads.getDebiturDataLeads().getKelurahanDomisili().getKecamatan().getNamaKecamatan());
+            dto.setKotaKabupatenDomisili(dataLeads.getDebiturDataLeads().getKelurahanDomisili().getKecamatan().getKabupaten().getNamaKabupatenKota());
+            dto.setProvinsiDomisili(dataLeads.getDebiturDataLeads().getKelurahanDomisili().getKecamatan().getProvinsi().getNamaProvinsi());
+            //Kurang Nama Cabang Tujuan
+            dto.setNomorHandphone1(dataLeads.getDebiturDataLeads().getNomorHp1());
+            dto.setNomorHandphone2(dataLeads.getDebiturDataLeads().getNomorHP2());
+            dto.setNomorTelepon(dataLeads.getDebiturDataLeads().getNomorTelepon());
+            dto.setSumberDataAplikasi(dataLeads.getMitraAgenDataLeads().getNamaMitraAgen());
+            dto.setReferensi(dataLeads.getIdDebiturReferensi()== null? "" : dataLeads.getDebiturReferensiDataLeads().getNamaDepan().concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaTengah()).concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaAkhir()));
+            dto.setJenisUsaha(dataLeads.getJenisUsaha());
+            dto.setKeteranganAplikasi(dataLeads.getKeteranganAplikasi().getNamaKeteranganAplikasi());
+            dto.setSurveyor(userRepository.getUserByCabangAndSurveyor(dataLeads.getIdCabang()) == null ? "Cabang Tidak Ada Surveyor" :  userRepository.getUserByCabangAndSurveyor(dataLeads.getIdCabang()).getNamaKaryawan());
+            dto.setStatus(dataLeads.getStatus());
+            dto.setPot(dataLeads.getPotDataLeads().getNamaPOT());
+            dto.setTenor(dataLeads.getPotDataLeads().getTenor().toString());
+            //Kurang Estimasi Nilai Faunding dan Data Unit
+            //dan unit
+        }
+
+        return dto;
+    }
 
 
     @Override
