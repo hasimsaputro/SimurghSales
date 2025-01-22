@@ -13,4 +13,6 @@ public interface DataLeadsService {
     List<OptionDTO> getfilterAsItem();
 
     void updateInsertDataLeads(DataLeadsFormDTO dataLeadsFormDTO);
+
+    List<OptionDTO> getSearchItems(String filter);
 }

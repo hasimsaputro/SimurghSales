@@ -29,7 +29,31 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
     @Override
     public List<DataLeadsIndexDTO> getAll(String filter, String search, int page) {
         Pageable pagination = PageRequest.of(page-1,rowInPage, Sort.by("id"));
-        var dataLeads = repository.getAll(pagination);
+        List<DataLeads> dataLeads = new LinkedList<>();
+        if(filter.equals("null") || filter.isBlank()){
+            dataLeads = repository.getAll( pagination);
+        }else {
+            switch (filter){
+                case "id":
+                    dataLeads = repository.getByIdDataLeads(search, pagination);
+                    break;
+                case "nomorAplikasi":
+                    dataLeads = repository.getByNomorAplikasi(search,pagination);
+                    break;
+                case "namaDebitur":
+                    dataLeads = repository.getByDebitur(search,pagination);
+                    break;
+                case "tipeAplikasi":
+                    dataLeads = repository.getByTipeAplikasi(search, pagination);
+                    break;
+                case "keterangan":
+                    dataLeads = repository.getByKeterangan(search, pagination);
+                    break;
+                case "status":
+                    dataLeads = repository.getByStatus(search,pagination);
+                    break;
+            }
+        }
         var gridDataLeads = new LinkedList<DataLeadsIndexDTO>();
         for (var datalead :dataLeads) {
             String id = datalead.getId();
@@ -100,12 +124,44 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
 
     @Override
     public int getTotal(String filter, String search) {
-        return 0;
+        double totalRows = 0;
+        if(filter.equals("null") || filter.isBlank()){
+            totalRows = repository.countAll();
+        }else {
+            switch (filter){
+                case "id":
+                    totalRows = repository.countById(search);
+                    break;
+                case "nomorAplikasi":
+                    totalRows = repository.countByNomorAplikasi(search);
+                    break;
+                case "namaDebitur":
+                    totalRows = repository.countByDebitur(search);
+                    break;
+                case "tipeAplikasi":
+                    totalRows = repository.countByTipeAplikasi(search);
+                    break;
+                case "keterangan":
+                    totalRows = repository.countByKeterangan(search);
+                    break;
+                case "status":
+                    totalRows = repository.countByStatus(search);
+                    break;
+            }
+        }
+        return (int)(Math.ceil(totalRows/rowInPage));
     }
 
     @Override
     public List<OptionDTO> getfilterAsItem() {
-        return List.of();
+        return List.of(
+                new OptionDTO("Nomor Data Leads", "id"),
+                new OptionDTO("Nomor Aplikasi", "nomorAplikasi"),
+                new OptionDTO("Nama Debitur", "namaDebitur"),
+                new OptionDTO("Tipe Aplikasi", "tipeAplikasi"),
+                new OptionDTO("Keterangan", "keterangan"),
+                new OptionDTO("Status", "status")
+        );
     }
 
     @Override
@@ -119,6 +175,39 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
 
 
         repository.save(dataLeads);
+    }
+
+    @Override
+    public List<OptionDTO> getSearchItems(String filter) {
+        List<String > searchItems = new LinkedList<>();
+        if(!filter.isBlank()){
+            switch (filter){
+                case "id":
+                    searchItems = repository.getItemsById();
+                    break;
+                case "nomorAplikasi":
+                    searchItems = repository.getItemsByNomorAplikasi();
+                    break;
+                case "namaDebitur":
+                    searchItems = repository.getItemsByDebitur();
+                    break;
+                case "tipeAplikasi":
+                    searchItems = repository.getItemsByTipeAplikasi();
+                    break;
+                case "keterangan":
+                    searchItems = repository.getItemsByKeterangan();
+                    break;
+                case "status":
+                    searchItems = repository.getItemsByStatus();
+                    break;
+            }
+        }
+        List<OptionDTO> searchsItems = new LinkedList<>();
+        for (var searchItem : searchItems){
+            OptionDTO item = new OptionDTO(searchItem, searchItem);
+            searchsItems.add(item);
+        }
+        return searchsItems;
     }
 
 

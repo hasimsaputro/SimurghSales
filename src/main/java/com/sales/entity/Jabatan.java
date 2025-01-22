@@ -12,7 +12,7 @@ public class Jabatan {
     private String id;
 
     @Column(name = "IdDepartemen", length = 5, nullable = false)
-    private String idDepartment;
+    private String idDepartemen;
 
     @Column(name = "NamaJabatan", length = 100, nullable = false)
     private String namaJabatan;
@@ -22,5 +22,5 @@ public class Jabatan {
 
     @ManyToOne
     @JoinColumn(name = "IdDepartemen", insertable = false, updatable = false)
-    private Department department;
+    private Departemen departemen;
 }

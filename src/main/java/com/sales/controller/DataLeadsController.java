@@ -26,13 +26,13 @@ public class DataLeadsController {
     public String index(@RequestParam(defaultValue = "") String filter,
                         @RequestParam(defaultValue = "") String search,
                         @RequestParam(defaultValue = "1") int page, Model model){
+
         var grid = service.getAll(filter,search,page);
         int total = service.getTotal(filter,search);
-        List<String> filterItem = Arrays.asList("Nomor Data Leads", "Nomor Aplikasi", "Nama Debitur", "Tipe Aplikasi", "Keterangan", "Status");
         model.addAttribute("grid", grid);
         model.addAttribute("totalPages",total);
         model.addAttribute("currentPage",page);
-        model.addAttribute("filterItem",filterItem);
+        model.addAttribute("filterItem",service.getfilterAsItem());
         model.addAttribute("search",search);
         return "sales/data-leads";
     }

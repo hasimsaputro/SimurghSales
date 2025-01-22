@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "User")
+@Table(name = "[User]")
 public class User{
     @Id
     @Column(name = "NIK",length = 7)

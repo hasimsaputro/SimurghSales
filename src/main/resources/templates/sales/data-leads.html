@@ -13,18 +13,20 @@
             <h3>
                 <a href="../usermanagement/master-jabatan.html"> Data Leads </a>
             </h3>
-            <a class="black-button create-button" th:href="@{/DataLeads/insert}">
+            <a class="black-button create-button" th:href="@{\dataleads\form}">
                 Tambah
                 <i class="fas fa-plus" aria-hidden="true"></i>
             </a>
             <form method="get" class="filter" th:action="@{/dataleads}">
                 <select name="filter" id="">
                     <option th:value="null">No Specific Seller</option>
-                    <option th:each="filter : ${filterItem}"
-                            th:value="*{value}"
-                            th:text="*{text}"></option>
+                    <option th:each="filter : ${filterItem}" th:object="${filter}"
+                            th:value="*{value}"th:text="*{text}"></option>
                 </select>
-                <input type="text" id="search" name="search" th:attr="value=${search}">
+                <div class="search-container">
+                    <input type="text" id="search" name="search" class="searchDataLeads" th:attr="value=${search}">
+                    <div class="suggestions"></div>
+                </div>
                 <button class="filter-button" type="submit">
                     Search
                     <i class="fa fa-search" aria-hidden="true"></i>
@@ -43,15 +45,18 @@
                 </tr>
                 </thead>
                 <tbody>
+                    <tr th:if="${#lists.size(grid)} == 0">
+                        <td>Data Tidak Ditemukan</td>
+                    </tr>
                     <tr th:each="dataleads:${grid}" th:object="${dataleads}">
                         <td class="action">
                             <a href="#" class="action-button delete-button">
                                 <i class="fa fa-trash" aria-hidden="true"></i> Hapus
                             </a>
-                            <a href="master-jabatan-form.html" class="action-button update-button">
+                            <a th:href="@{\dataleads\form(dataLeadsId=*{nomorDataLeads})}" class="action-button update-button">
                                 <i class="fas fa-edit" aria-hidden="true"></i> Ubah
                             </a>
-                            <a class="action-button detail-button" href="../usermanagement/master-jabatan-detail.html">
+                            <a class="action-button detail-button" th:href="@{\dataleads\detail(dataLeadsId=*{nomorDataLeads})}">
                                 <i class="fa fa-info-circle" aria-hidden="true"></i> Lihat
                             </a>
                         </td>

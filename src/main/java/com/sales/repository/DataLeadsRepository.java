@@ -1,5 +1,6 @@
 package com.sales.repository;
 
+import com.sales.dto.dataLeads.DataLeadsIndexDTO;
 import com.sales.entity.DataLeads;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -68,4 +69,92 @@ public interface DataLeadsRepository extends JpaRepository<DataLeads, String> {
             FROM DataLeads dl
             """)
     List<DataLeads> getAll(Pageable pagination);
+
+    @Query("""
+            SELECT COUNT(dl.id)
+            FROM DataLeads dl
+            """)
+    int countAll();
+
+    @Query("""
+            SELECT COUNT(dl.id)
+            FROM DataLeads dl
+            WHERE dl.id = :search
+            """)
+    int countById(String search);
+
+    @Query("""
+            SELECT COUNT(dl.id)
+            FROM DataLeads dl
+            WHERE dl.nomorAplikasi = :search
+            """)
+    int countByNomorAplikasi(String search);
+
+    @Query("""
+            SELECT COUNT(dl.id)
+            FROM DataLeads dl
+            JOIN dl.debiturDataLeads db
+            WHERE CONCAT(db.namaDepan,' ',db.namaTengah,' ',db.namaAkhir) LIKE %:search%
+            """)
+    int countByDebitur(String search);
+
+    @Query("""
+            SELECT COUNT(dl.id)
+            FROM DataLeads dl
+            JOIN dl.tipeAplikasiDataLeads ta
+            WHERE ta.namaTipeAplikasi = :search
+            """)
+    int countByTipeAplikasi(String search);
+
+
+    @Query("""
+            SELECT COUNT(dl.id)
+            FROM DataLeads dl
+            JOIN dl.keteranganAplikasi ka
+            WHERE ka.namaKeteranganAplikasi LIKE %:search%
+            """)
+    int countByKeterangan(String search);
+
+    @Query("""
+            SELECT COUNT(dl.id)
+            FROM DataLeads dl
+            WHERE dl.status = :search
+            """)
+    int countByStatus(String search);
+
+    @Query("""
+            SELECT dl.id
+            FROM DataLeads dl
+            """)
+    List<String> getItemsById();
+
+    @Query("""
+            SELECT dl.nomorAplikasi
+            FROM DataLeads dl
+            """)
+    List<String> getItemsByNomorAplikasi();
+
+    @Query("""
+            SELECT CONCAT(db.namaDepan,' ',db.namaTengah,' ',db.namaAkhir)
+            FROM DataLeads dl
+            JOIN dl.debiturDataLeads db
+            """)
+    List<String> getItemsByDebitur();
+
+    @Query("""
+            SELECT ta.namaTipeAplikasi
+            FROM DataLeads dl
+            JOIN dl.tipeAplikasiDataLeads ta
+            """)
+    List<String> getItemsByTipeAplikasi();
+
+    @Query("""
+            SELECT ka.namaKeteranganAplikasi
+            FROM DataLeads dl
+            JOIN dl.keteranganAplikasi ka
+            """)
+    List<String> getItemsByKeterangan();
+
+    @Query(value = "SELECT CASE WHEN dl.status = 1 THEN 'Aktif' ELSE 'Tidak Aktif' END FROM DataLeads dl", nativeQuery = true)
+    List<String> getItemsByStatus();
 }
