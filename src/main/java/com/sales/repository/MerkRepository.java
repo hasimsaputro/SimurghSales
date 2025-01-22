@@ -12,6 +12,7 @@ public interface MerkRepository extends JpaRepository<Merk, String> {
     @Query("""
             SELECT mer
             FROM Merk mer
+            WHERE mer.idKategori = :kategoriId
             """)
-    List<Merk> getAll();
+    List<Merk> getAll(Integer kategoriId);
 }

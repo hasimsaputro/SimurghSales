@@ -302,9 +302,9 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
     }
 
     @Override
-    public List<OptionDTO> getOptionMerek() {
+    public List<OptionDTO> getOptionMerek(Integer kategoriId) {
         List<OptionDTO> optionDTOList = new LinkedList<>();
-        List<Merk> list = merkRepository.getAll();
+        List<Merk> list = merkRepository.getAll(kategoriId);
 
         for(var merk : list){
             OptionDTO dto = new OptionDTO();
@@ -316,9 +316,9 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
     }
 
     @Override
-    public List<OptionDTO> getOptionTipe() {
+    public List<OptionDTO> getOptionTipe(Integer kategori, String merk) {
         List<OptionDTO> optionDTOList = new LinkedList<>();
-        List<Tipe> list = tipeRepository.getAll();
+        List<Tipe> list = tipeRepository.getAll(kategori,merk);
 
         for(var tipe : list){
             OptionDTO dto = new OptionDTO();
@@ -330,14 +330,14 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
     }
 
     @Override
-    public List<OptionDTO> getOptionModel() {
+    public List<OptionDTO> getOptionModel(Integer kategori, String merk, String tipe) {
         List<OptionDTO> optionDTOList = new LinkedList<>();
-        List<Model> list = modelRepositoryl.getAll();
+        List<Model> list = modelRepositoryl.getAll(kategori,merk,tipe);
 
-        for(var tipe : list){
+        for(var model : list){
             OptionDTO dto = new OptionDTO();
-            dto.setText(tipe.getNamaModel());
-            dto.setValue(tipe.getId());
+            dto.setText(model.getNamaModel());
+            dto.setValue(model.getId());
             optionDTOList.add(dto);
         }
         return optionDTOList;

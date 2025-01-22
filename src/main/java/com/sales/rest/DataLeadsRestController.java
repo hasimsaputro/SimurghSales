@@ -39,10 +39,10 @@ public class DataLeadsRestController {
         }
     }
 
-    @GetMapping("merk")
-    public ResponseEntity<Object> getOptioonMerk(){
+   @GetMapping("merk")
+    public ResponseEntity<Object> getOptioonMerk(Integer kategoriId){
         try{
-            var optionMerk= service.getOptionMerek();
+            var optionMerk= service.getOptionMerek(kategoriId);
             return ResponseEntity.status(HttpStatus.OK).body(optionMerk);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
@@ -50,9 +50,9 @@ public class DataLeadsRestController {
     }
 
     @GetMapping("model")
-    public ResponseEntity<Object> getOptioonModel(){
+    public ResponseEntity<Object> getOptioonModel(Integer idKategori, String idMerk, String tipeId){
         try{
-            var optionModel= service.getOptionModel();
+            var optionModel= service.getOptionModel(idKategori,idMerk,tipeId);
             return ResponseEntity.status(HttpStatus.OK).body(optionModel);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
@@ -60,9 +60,9 @@ public class DataLeadsRestController {
     }
 
     @GetMapping("tipe")
-    public ResponseEntity<Object> getOptioonTipe(){
+    public ResponseEntity<Object> getOptioonTipe(Integer idKategori, String idMerk){
         try{
-            var optionTipe= service.getOptionTipe();
+            var optionTipe= service.getOptionTipe( idKategori,  idMerk);
             return ResponseEntity.status(HttpStatus.OK).body(optionTipe);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
