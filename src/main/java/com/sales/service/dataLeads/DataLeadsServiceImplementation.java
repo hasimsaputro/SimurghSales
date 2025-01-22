@@ -240,6 +240,46 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
     }
 
     @Override
+    public List<OptionDTO> getOptionSumberDataAplikasi() {
+        return null;
+    }
+
+    @Override
+    public List<OptionDTO> getOptionReferensi() {
+        return null;
+    }
+
+    @Override
+    public List<OptionDTO> getOptionKeteranganAplikasi() {
+        return null;
+    }
+
+    @Override
+    public List<OptionDTO> getOptionPOT() {
+        return null;
+    }
+
+    @Override
+    public List<OptionDTO> getOptionKategori() {
+        return null;
+    }
+
+    @Override
+    public List<OptionDTO> getOptionMerek() {
+        return null;
+    }
+
+    @Override
+    public List<OptionDTO> getOptionTipe() {
+        return null;
+    }
+
+    @Override
+    public List<OptionDTO> getOptionModel() {
+        return null;
+    }
+
+    @Override
     public List<OptionDTO> getSearchItems(String filter) {
         List<String > searchItems = new LinkedList<>();
         if(!filter.isBlank()){

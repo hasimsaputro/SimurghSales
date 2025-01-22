@@ -16,5 +16,14 @@ public interface DataLeadsService {
 
     void updateInsertDataLeads(DataLeadsFormDTO dataLeadsFormDTO);
 
+    List<OptionDTO> getOptionSumberDataAplikasi();
+    List<OptionDTO> getOptionReferensi();
+    List<OptionDTO> getOptionKeteranganAplikasi();
+    List<OptionDTO> getOptionPOT();
+    List<OptionDTO> getOptionKategori();
+    List<OptionDTO> getOptionMerek();
+    List<OptionDTO> getOptionTipe();
+    List<OptionDTO> getOptionModel();
+
     List<OptionDTO> getSearchItems(String filter);
 }
