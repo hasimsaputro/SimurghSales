@@ -4,6 +4,7 @@ import com.sales.entity.MitraAgen;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             SELECT COUNT(1)
             FROM MitraAgen mit
             WHERE mit.deleteDate IS NULL
-            AND (mit.id LIKE %:search% OR :search IS NULL)
+            AND mit.id LIKE %:search%
             """)
     int getTotalPagesById(String search);
 
@@ -29,7 +30,7 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             SELECT COUNT(1)
             FROM MitraAgen mit
             WHERE mit.deleteDate IS NULL
-            AND (mit.idTipeMaster = :search OR :search IS NULL)
+            AND mit.idTipeMaster = :search
             """)
     int getTotalpagesByTipe(String search);
 
@@ -37,15 +38,15 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             SELECT COUNT(1)
             FROM MitraAgen mit
             WHERE mit.deleteDate IS NULL
-            AND (mit.namaMitraAgen LIKE %:search% OR :search IS NULL)
+            AND mit.namaMitraAgen LIKE %:search%
             """)
-    int getTotalpagesByName(String name);
+    int getTotalpagesByName(String search);
 
     @Query("""
             SELECT COUNT(1)
             FROM MitraAgen mit
             WHERE mit.deleteDate IS NULL
-            AND (mit.idKelurahanDomisili = :search OR :search IS NULL)
+            AND mit.idKelurahanDomisili = :search
             """)
     int getTotalpagesByKelurahan(String search);
 
@@ -53,7 +54,7 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             SELECT COUNT(1)
             FROM MitraAgen mit
             WHERE mit.deleteDate IS NULL
-            AND (mit.idCabang = :search OR :search IS NULL)
+            AND mit.idCabang = :search
             """)
     int getTotalpagesByCabang(String search);
 
@@ -61,7 +62,7 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             SELECT COUNT(1)
             FROM MitraAgen mit
             WHERE mit.deleteDate IS NULL
-            AND (mit.status = :search OR :search IS NULL)
+            AND mit.status = :search
             """)
     int getTotalpagesByStatus(String search);
 
@@ -80,7 +81,7 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             WHERE mit.deleteDate IS NULL
             AND mit.id LIKE %:search%
             """)
-    List<MitraAgen> getMitraAgenById(Pageable pageable, String search);
+    List<MitraAgen> getMitraAgenById(Pageable pageable, @Param("search") String search);
 
     @Query("""
             SELECT mit
@@ -88,7 +89,7 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             WHERE mit.deleteDate IS NULL
             AND mit.idTipeMaster = :search
             """)
-    List<MitraAgen> getMitraAgenByTipe(Pageable pageable, String search);
+    List<MitraAgen> getMitraAgenByTipe(Pageable pageable, @Param("search") String search);
 
     @Query("""
             SELECT mit
@@ -96,7 +97,7 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             WHERE mit.deleteDate IS NULL
             AND mit.namaMitraAgen LIKE %:search%
             """)
-    List<MitraAgen> getMitraAgenByName(Pageable pageable, String search);
+    List<MitraAgen> getMitraAgenByName(Pageable pageable, @Param("search") String search);
 
     @Query("""
             SELECT mit
@@ -104,7 +105,7 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             WHERE mit.deleteDate IS NULL
             AND mit.idKelurahanDomisili = :search
             """)
-    List<MitraAgen> getMitraAgenByKelurahan(Pageable pageable, String search);
+    List<MitraAgen> getMitraAgenByKelurahan(Pageable pageable, @Param("search") String search);
 
     @Query("""
             SELECT mit
@@ -112,7 +113,7 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             WHERE mit.deleteDate IS NULL
             AND mit.idCabang = :search
             """)
-    List<MitraAgen> getMitraAgenByCabang(Pageable pageable, String search);
+    List<MitraAgen> getMitraAgenByCabang(Pageable pageable, @Param("search") String search);
 
     @Query("""
             SELECT mit
@@ -120,7 +121,7 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             WHERE mit.deleteDate IS NULL
             AND mit.status = :search
             """)
-    List<MitraAgen> getMitraAgenByStatus(Pageable pageable, String search);
+    List<MitraAgen> getMitraAgenByStatus(Pageable pageable, @Param("search") String search);
 
 
 
@@ -134,8 +135,8 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
     @Query("""
             SELECT tm.namaTipeMaster
             FROM MitraAgen mit
-            WHERE mit.deleteDate IS NULL
             JOIN mit.tipeMasterMitraAgen tm
+            WHERE mit.deleteDate IS NULL
             """)
     List<String> getMitraAgenItemsByTipe();
 
@@ -149,16 +150,16 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
     @Query("""
             SELECT kel.namaKelurahan
             FROM MitraAgen mit
+            JOIN mit.kelurahanDomisiliMitraAgen kel
             WHERE mit.deleteDate IS NULL
-            AND mit.kelurahanDomisiliMitraAgen kel
             """)
     List<String> getMitraAgenByItemsKelurahan();
 
     @Query("""
             SELECT cb.namaCabang
             FROM MitraAgen mit
-            WHERE mit.deleteDate IS NULL
             JOIN mit.cabangMitraAgen cb
+            WHERE mit.deleteDate IS NULL
             """)
     List<String> getMitraAgenItemsByCabang();
 

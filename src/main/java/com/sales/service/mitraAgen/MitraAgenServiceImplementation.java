@@ -31,7 +31,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
     @Override
     public int getTotalPages(String filter, String search) {
         double page = 0;
-        if (filter.isEmpty()){
+        if (filter == null){
             page = repository.getTotalPages();
         } else {
             switch (filter){
@@ -70,7 +70,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
         Pageable pageable = PageRequest.of(page - 1, rowInPage, Sort.by("id"));
 
         List<MitraAgen> mitraAgenList = new LinkedList<>();
-        if (filter.isEmpty()){
+        if (filter == null){
             mitraAgenList = repository.getAllMitraAgen(pageable);
         } else {
             switch (filter){
@@ -232,7 +232,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
 
     @Override
     public void delete(String id) {
-        if (!id.isEmpty()){
+        if (!id.isBlank()){
             try {
                 MitraAgen mitraAgen = repository.findById(id).orElseThrow();
                 mitraAgen.setDeleteDate(LocalDate.now());
@@ -273,7 +273,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
     @Override
     public List<MitraAgenIndexOptionDTO> getSearchItems(String filter) {
         List<String> searchItems = new LinkedList<>();
-        if (!filter.isEmpty()){
+        if (!filter.isBlank()){
             switch (filter){
                 case "id":
                     searchItems = repository.getMitraAgenItemsById();
