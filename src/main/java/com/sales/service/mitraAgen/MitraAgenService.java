@@ -1,10 +1,7 @@
 package com.sales.service.mitraAgen;
 
 
-import com.sales.dto.mitraAgen.MitraAgenDetailDTO;
-import com.sales.dto.mitraAgen.MitraAgenFormDTO;
-import com.sales.dto.mitraAgen.MitraAgenIndexDTO;
-import com.sales.dto.mitraAgen.MitraAgenIndexOptionDTO;
+import com.sales.dto.mitraAgen.*;
 
 import java.util.List;
 
@@ -18,4 +15,9 @@ public interface MitraAgenService {
     String generateId(int tipe);
     List<MitraAgenIndexOptionDTO> getFilterAsItem();
     List<MitraAgenIndexOptionDTO> getSearchItems(String filter);
+    List<TipeMasterOptionDTO> getTipeMasterOption();
+    List<ProdukOptionDTO> getProdukOption();
+    List<KelurahanOptionDTO> getKelurahanOption();
+    List<IdentitasOptionDTO> getIdentitasOption();
+    List<BankOptionDTO> getBankOption();
 }
