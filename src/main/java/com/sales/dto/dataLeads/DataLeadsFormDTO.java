@@ -33,7 +33,7 @@ public class DataLeadsFormDTO {
     private String namaBelakangDebitur;
 
     @NotBlank(message = "Silahkan Pilih identitas")
-    private String identitas;
+    private Integer idIdentitas;
 
     @NotBlank(message = "Nomor Identitas tidak boleh kosong")
     private String  nomorIdentitas;

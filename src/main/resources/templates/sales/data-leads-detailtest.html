@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/DataLeads}"> Data Leads </a> > <a th:href="@{/DataLeads/insert}"> Tambah </a>
+            </h3>
+            <form method="post" class="upsert-form" action="@{/dataLeads/form}">
+                <input type="hidden" th:value="${dataLeadsById.id}">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td><label class="label-nama">Product *</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.id}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                        <td><label class="label-nama">Tipe Debitur*</label></td>
+                        <td class="input-box">
+                            <p th:text="${dataLeadsById.tipeDebitur}"></p>
+                            <label>Perusahaan</label>
+                            <p th:text="${dataLeadsById.tipeDebitur}"></p>
+                            <label>Perseorangan</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Tipe Aplikasi *</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.tipeAplikasi}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Nama Depan Debitur *</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.namaDepanDebitur}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Nama Tengah Debitur </label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.namaTengahDebitur}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Nama Akhir Debitur </label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.namaBelakangDebitur}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="identitas">Nomor Identitas*</label></td>
+                        <td>
+                            <div th:switch="${dataLeadsById.idIdentitas}">
+                                <p th:case="'1'">KTP</p>
+                                <p th:case="'2'">SIM</p>
+                                <p th:case="'3'">PASSPORT</p>
+                            </div>
+                            <p th:text="${dataLeadsById.nomorIdentitas}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Jenis Kelamin *</label></td>
+                        <td class="input-box">
+                            <div th:switch="${dataLeadsById.jenisKelamin}">
+                                <p th:case="'L'">Laki-laki</p>
+                                <p th:case="'P'">Perempuan</p>
+                            </div>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Alamat Identitas*</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.alamatIdentitas}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kelurahan *</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.kelurahan}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kode Pos*</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.kodePos}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kecamatan*</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.kecamatan}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kabupaten/Kota*</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.kotaKabupaten}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Provinsi*</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.provinsi}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <!-- Sama dengan alamat identitas checkbox bisa dihapus karena ini mode tampilan -->
+
+                    <tr>
+                        <td><label class="label-nama">Alamat Domisili*</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.alamatDomisili}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kelurahan *</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.kelurahanDomisili}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kode Pos*</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.kodePosDomisili}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kecamatan*</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.kecamatanDomisili}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kabupaten/Kota*</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.kotaKabupatenDomisili}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Provinsi*</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.provinsiDomisili}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Nama Cabang Tujuan</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.namaCabangTujuan}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Nomor Handphone 1*</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.nomorHandphone1}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Nomor Handphone 2</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.nomorHandphone2}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Nomor Telepon</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.nomorTelepon}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Sumber Data Aplikasi *</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.sumberDataAplikasi}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Referensi</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.referensi}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Jenis Usaha</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.jenisUsaha}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Keterangan Aplikasi</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.keteranganAplikasi}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Nama Surveyor *</label></td>
+                        <td>
+                            <p th:text="${dataLeadsById.surveyor}"></p>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Status*</label></td>
+                        <td class="input-box">
+                            <div th:switch="${dataLeadsById.status}">
+                                <p th:case="${true}">Aktif</p>
+                                <p th:case="${false}">Tidak Aktif</p>
+                            </div>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

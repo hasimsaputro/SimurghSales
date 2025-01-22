@@ -88,6 +88,8 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
             dto.setNamaDepanDebitur(dataLeads.getDebiturDataLeads().getNamaDepan());
             dto.setNamaTengahDebitur(dataLeads.getDebiturDataLeads().getNamaTengah());
             dto.setNamaBelakangDebitur(dataLeads.getDebiturDataLeads().getNamaAkhir());
+            dto.setIdIdentitas(dataLeads.getDebiturDataLeads().getIdIdentitas());
+            dto.setNomorIdentitas(dataLeads.getDebiturDataLeads().getNomorIdentitas());
             dto.setJenisKelamin(dataLeads.getDebiturDataLeads().getJenisKelamin());
             dto.setAlamatIdentitas(dataLeads.getDebiturDataLeads().getAlamatIdentitas());
             dto.setKelurahan(dataLeads.getDebiturDataLeads().getKelurahan().getNamaKelurahan());
@@ -106,10 +108,10 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
             dto.setNomorHandphone2(dataLeads.getDebiturDataLeads().getNomorHP2());
             dto.setNomorTelepon(dataLeads.getDebiturDataLeads().getNomorTelepon());
             dto.setSumberDataAplikasi(dataLeads.getMitraAgenDataLeads().getNamaMitraAgen());
-            dto.setReferensi(dataLeads.getDebiturReferensiDataLeads().getNamaDepan().concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaTengah()).concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaAkhir()));
+            dto.setReferensi(dataLeads.getIdDebiturReferensi()== null? "" : dataLeads.getDebiturReferensiDataLeads().getNamaDepan().concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaTengah()).concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaAkhir()));
             dto.setJenisUsaha(dataLeads.getJenisUsaha());
             dto.setKeteranganAplikasi(dataLeads.getKeteranganAplikasi().getNamaKeteranganAplikasi());
-            dto.setSurveyor(userRepository.getUserByCabangAndSurveyor(dataLeads.getIdCabang()).getNamaKaryawan());
+            dto.setSurveyor(userRepository.getUserByCabangAndSurveyor(dataLeads.getIdCabang()) == null ? "Cabang Tidak Ada Surveyor" :  userRepository.getUserByCabangAndSurveyor(dataLeads.getIdCabang()).getNamaKaryawan());
             dto.setStatus(dataLeads.getStatus());
             dto.setPot(dataLeads.getPotDataLeads().getNamaPOT());
             dto.setTenor(dataLeads.getPotDataLeads().getTenor().toString());

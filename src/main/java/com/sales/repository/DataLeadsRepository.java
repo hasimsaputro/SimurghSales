@@ -1,6 +1,5 @@
 package com.sales.repository;
 
-import com.sales.dto.dataLeads.DataLeadsIndexDTO;
 import com.sales.entity.DataLeads;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

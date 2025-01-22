@@ -48,6 +48,6 @@ public class DataLeadsController {
     public String detail(Model model,@RequestParam(defaultValue = "")String dataLeadsId) {
         var dataLeadsById = service.getDataLeadsById(dataLeadsId);
         model.addAttribute("dataLeadsById",dataLeadsById);
-        return "sales/data-leads-detail";
+        return "sales/data-leads-detailtest";
     }
 }

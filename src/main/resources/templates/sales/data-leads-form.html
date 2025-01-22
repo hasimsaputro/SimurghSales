@@ -23,35 +23,33 @@
                             <input id="product" name="product" type="text" required th:field="${dataLeadsById.id}">
                             <div class="field-validation-error"></div>
                         </td>
-                    </tr>
                     <tr>
                         <td><label class="label-nama">Tipe Debitur*</label></td>
                         <td class="input-box">
-                            <input type="radio" name="tipe-debitur-perusahaan" id="tipe-debitur-perusahaan" value="perusahaan" required>
+                            <input type="radio" th:field="${dataLeadsById.tipeDebitur}" value="true" id="tipe-debitur-perusahaan">
                             <label for="tipe-debitur-perusahaan">Perusahaan</label>
-                            <input type="radio" name="tipe-debitur-perseorangan" id="tipe-debitur-perseorangan" value="perseorangan" required>
+                            <input type="radio" th:field="${dataLeadsById.tipeDebitur}" value="false" id="tipe-debitur-perseorangan">
                             <label for="tipe-debitur-perseorangan">Perseorangan</label>
-
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Tipe Aplikasi *</label></td>
                         <td>
-                            <input id="tipe-aplikasi" name="tipe-aplikasi" type="text" required value="INC">
+                            <input id="tipe-aplikasi" name="tipe-aplikasi" type="text" required th:field="${dataLeadsById.tipeAplikasi}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Nama Depan Debitur *</label></td>
                         <td>
-                            <input id="nama-depan-debitur" name="nama-depan-debitur" type="text" required value="INC">
+                            <input id="nama-depan-debitur" name="nama-depan-debitur" type="text" required th:field="${dataLeadsById.namaDepanDebitur}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Nama Tengah Debitur </label></td>
                         <td>
-                            <input id="nama-tengah-debitur" name="nama-tengah-debitur" type="text" required value="INC">
+                            <input id="nama-tengah-debitur" name="nama-tengah-debitur" type="text" required th:field="${dataLeadsById.namaTengahDebitur}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -59,63 +57,66 @@
                     <tr>
                         <td><label class="label-nama">Nama Akhir Debitur </label></td>
                         <td>
-                            <input id="nama-akhir-debitur" name="nama-akhir-debitur" type="text" required value="INC">
+                            <input id="nama-akhir-debitur" name="nama-akhir-debitur" type="text" required th:field="${dataLeadsById.namaBelakangDebitur}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="identitas">Nomor Identitas*</label></td>
                         <td>
-                            <select name="divisi" id="divisi">
-                                <option value="ktp">KTP</option>
-                                <option value="sim">SIM</option>
+                            <select id="identitas" name="identitas" th:field="${dataLeadsById.idIdentitas}" required>
+                                <option value="" disabled selected>-- Pilih Identitas --</option>
+                                <option value="1">KTP</option>
+                                <option value="2">SIM</option>
+                                <option value="3">Passport</option>
                             </select>
-                            <input id="identitas" name="identitas" type="text" required placeholder="&#xf095;   081234567890">
-                            <div class="field-validation-error"></div>
+                            <input id="nomorIdentitas" name="nomorIdentitas" type="text" required th:field="${dataLeadsById.nomorIdentitas}">
+
+                            <div  class="field-validation-error"></div>
                         </td>
                     </tr>
+
                     <tr>
                         <td><label class="label-nama">Jenis Kelamin *</label></td>
                         <td class="input-box">
-                            <input type="radio" name="laki-laki" id="laki-laki" value="laki=-laki" required>
+                            <input type="radio" th:field="${dataLeadsById.jenisKelamin}" value="L" id="laki-laki" required>
                             <label for="laki-laki">Laki-laki</label>
-                            <input type="radio" name="perempuan" id="perempuan" value="perempuan" required>
+                            <input type="radio" th:field="${dataLeadsById.jenisKelamin}" value="P" id="perempuan" required>
                             <label for="perempuan">Perempuan</label>
-
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Alamat Identitas*</label></td>
                         <td>
-                            <textarea id="alamat" name="alamat" required placeholder="&#xf015;" rows="4" cols="50"></textarea>
+                            <textarea th:field="${dataLeadsById.alamatIdentitas}" id="alamat" name="alamat" required placeholder="&#xf015;" rows="4" cols="50"></textarea>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Kelurahan *</label></td>
                         <td>
-                            <input id="kelurahan" name="kelurahan" type="text" required value="INC">
+                            <input id="kelurahan" name="kelurahan" type="text" required th:field="${dataLeadsById.kelurahan}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Kode Pos*</label></td>
                         <td>
-                            <input id="kode-pos" name="kode-pos" type="text" required readonly value="">
+                            <input id="kode-pos" name="kode-pos" type="text" required readonly th:field="${dataLeadsById.kodePos}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Kecamatan*</label></td>
                         <td>
-                            <input id="kecamatan" name="kecamatan" type="text" required readonly value="">
+                            <input id="kecamatan" name="kecamatan" type="text" required readonly th:field="${dataLeadsById.kecamatan}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Kabupaten/Kota*</label></td>
                         <td>
-                            <input id="kota" name="kota" type="text" required readonly value="">
+                            <input id="kota" name="kota" type="text" required readonly th:field="${dataLeadsById.kotaKabupaten}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -123,7 +124,7 @@
                     <tr>
                         <td><label class="label-nama">Provinsi*</label></td>
                         <td>
-                            <input id="provinsi" name="provinsi" type="text" required readonly value="">
+                            <input id="provinsi" name="provinsi" type="text" required readonly th:field="${dataLeadsById.provinsi}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -146,7 +147,7 @@
                     <tr>
                         <td><label class="label-nama">Kelurahan *</label></td>
                         <td>
-                            <input id="kelurahan-domisili" name="kelurahan-domisili" type="text" required value="INC">
+                            <input id="kelurahan-domisili" name="kelurahan-domisili" type="text" required value="">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -191,7 +192,7 @@
                     <tr>
                         <td><label class="label-nama">Nomor Handphone 1*</label></td>
                         <td>
-                            <input id="nomor-handphone-1" name="nomor-handphone-1" type="text" required value="">
+                            <input id="nomor-handphone-1" name="nomor-handphone-1" type="text" required th:field="${dataLeadsById.nomorHandphone1}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -199,7 +200,7 @@
                     <tr>
                         <td><label class="label-nama">Nomor Handphone 2</label></td>
                         <td>
-                            <input id="nomor-handphone-2" name="nomor-handphone-2" type="text" value="">
+                            <input id="nomor-handphone-2" name="nomor-handphone-2" type="text" th:field="${dataLeadsById.nomorHandphone2}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -207,7 +208,7 @@
                     <tr>
                         <td><label class="label-nama">Nomor Telepon</label></td>
                         <td>
-                            <input id="nomor-telepon" name="nomor-telepon" type="text" value="">
+                            <input id="nomor-telepon" name="nomor-telepon" type="text" th:field="${dataLeadsById.nomorTelepon}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -215,7 +216,7 @@
                     <tr>
                         <td><label class="label-nama">Sumber Data Aplikasi *</label></td>
                         <td>
-                            <input id="sumber-data-aplikasi" name="sumber-data-aplikasi" type="text" value="">
+                            <input id="sumber-data-aplikasi" name="sumber-data-aplikasi" type="text" th:field="${dataLeadsById.sumberDataAplikasi}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -223,7 +224,7 @@
                     <tr>
                         <td><label class="label-nama">Referensi</label></td>
                         <td>
-                            <input id="referensi" name="referensi" type="text" value="">
+                            <input id="referensi" name="referensi" type="text" th:field="${dataLeadsById.referensi}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -231,7 +232,7 @@
                     <tr>
                         <td><label class="label-nama">Jenis Usaha</label></td>
                         <td>
-                            <input id="jenis-usaha" name="jenis-usaha" type="text" value="">
+                            <input id="jenis-usaha" name="jenis-usaha" type="text" th:field="${dataLeadsById.jenisUsaha}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -239,7 +240,7 @@
                     <tr>
                         <td><label class="label-nama">Keterangan Aplikasi</label></td>
                         <td>
-                            <input id="keterangan-aplikasi" name="keterangan-aplikasi" type="text" value="">
+                            <input id="keterangan-aplikasi" name="keterangan-aplikasi" type="text" th:field="${dataLeadsById.keteranganAplikasi}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -247,7 +248,7 @@
                     <tr>
                         <td><label class="label-nama">Nama Surveyor *</label></td>
                         <td>
-                            <input id="nama-surveyor" name="nama-surveyor" type="text" required readonly value="">
+                            <input id="nama-surveyor" name="nama-surveyor" type="text" required readonly th:field="${dataLeadsById.surveyor}">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -255,13 +256,16 @@
                     <tr>
                         <td><label class="label-nama">Status*</label></td>
                         <td class="input-box">
-                            <input type="radio" name="status" id="status-aktif" value="Aktif" required>
+                            <input type="radio" th:field="${dataLeadsById.status}" value="true" id="status-aktif" required>
                             <label for="status-aktif">Aktif</label>
-                            <input type="radio" name="status" id="status-tidak-aktif" value="Tidak Aktif" required>
+
+                            <input type="radio" th:field="${dataLeadsById.status}" value="false" id="status-tidak-aktif" required>
                             <label for="status-tidak-aktif">Tidak Aktif</label>
-                            <div class="field-validation-error" id="error-status"></div>
+
+                            <div  class="field-validation-error"></div>
                         </td>
                     </tr>
+
                     </tbody>
                 </table>
                 <div id="part1" class="form-part">
