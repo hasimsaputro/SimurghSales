@@ -76,21 +76,21 @@
                     <td colspan="6">
                         <div class="pagination" th:if="${#lists.size(mitraAgenGrid)}!=0">
                             <div>
-                                <a th:href="@{/mitraAgen(page=1)}"
+                                <a th:href="@{/mitraAgen(page=1, filter=${filter}, search=${search})}"
                                    th:attr="onclick=${currentPage <= 1} ? 'event.preventDefault()' : ''">&laquo;</a>
 <!--                                th:href="@{/mitraAgen(page=1, id=${id}, tipe=${tipe}, nama=${nama}, kelurahan=${kelurahan}, cabang=${cabang}, status=${status})}"-->
 
-                                <a th:href="@{/mitraAgen(page=${currentPage - 1})}"
+                                <a th:href="@{/mitraAgen(page=${currentPage - 1}, filter=${filter}, search=${search} )}"
                                    th:attr="onclick=${currentPage <= 1} ? 'event.preventDefault()' : ''">&lt;</a>
 <!--                                th:href="@{/mitraAgen(page=${currentPage - 1}, id=${id}, tipe=${tipe}, nama=${nama}, kelurahan=${kelurahan}, cabang=${cabang}, status=${status})}"-->
 
                                 <span th:text="|Page ${currentPage} of ${totalPages}|"></span>
 
-                                <a th:href="@{/mitraAgen(page=${currentPage + 1})}"
+                                <a th:href="@{/mitraAgen(page=${currentPage + 1}, filter=${filter}, search=${search})}"
                                    th:attr="onclick=${currentPage >= totalPages} ? 'event.preventDefault()' : ''">&gt;</a>
 <!--                                th:href="@{/mitraAgen(page=${currentPage + 1}, id=${id}, tipe=${tipe}, nama=${nama}, kelurahan=${kelurahan}, cabang=${cabang}, status=${status})}"-->
 
-                                <a th:href="@{/mitraAgen(page=${totalPages})}"
+                                <a th:href="@{/mitraAgen(page=${totalPages}, filter=${filter}, search=${search})}"
                                    th:attr="onclick=${currentPage >= totalPages} ? 'event.preventDefault()' : ''">&raquo;</a>
 <!--                                th:href="@{/mitraAgen(page=${totalPages}, id=${id}, tipe=${tipe}, nama=${nama}, kelurahan=${kelurahan}, cabang=${cabang}, status=${status})}"-->
                             </div>

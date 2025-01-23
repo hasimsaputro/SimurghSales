@@ -29,6 +29,7 @@ public class MitraAgenController {
         model.addAttribute("mitraAgenGrid", service.getAll(page, filter, search));
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", service.getTotalPages(filter, search));
+        model.addAttribute("filter", filter);
         model.addAttribute("search", search);
         model.addAttribute("filterItem", service.getFilterAsItem());
         return "sales/sales-mitraAgen";

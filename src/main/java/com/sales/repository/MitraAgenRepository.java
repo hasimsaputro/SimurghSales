@@ -67,7 +67,7 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             WHERE mit.deleteDate IS NULL
             AND mit.status = :search
             """)
-    int getTotalpagesByStatus(String search);
+    int getTotalpagesByStatus(Boolean search);
 
 
 
@@ -127,7 +127,7 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             WHERE mit.deleteDate IS NULL
             AND mit.status = :search
             """)
-    List<MitraAgen> getMitraAgenByStatus(Pageable pageable, @Param("search") String search);
+    List<MitraAgen> getMitraAgenByStatus(Pageable pageable, @Param("search") Boolean search);
 
 
 

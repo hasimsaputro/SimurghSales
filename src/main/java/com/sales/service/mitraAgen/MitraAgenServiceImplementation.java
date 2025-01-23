@@ -58,7 +58,8 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                     page = repository.getTotalpagesByCabang(search);
                     break;
                 case "status":
-                    page = repository.getTotalpagesByStatus(search);
+                    search = search.equalsIgnoreCase("Aktif") ? String.valueOf(true) : String.valueOf(false);
+                    page = repository.getTotalpagesByStatus(Boolean.parseBoolean(search));
                     break;
             }
         }
@@ -97,7 +98,8 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                     mitraAgenList = repository.getMitraAgenByCabang(pageable, search);
                     break;
                 case "status":
-                    mitraAgenList = repository.getMitraAgenByStatus(pageable, search);
+                    search = search.equalsIgnoreCase("Aktif") ? String.valueOf(true) : String.valueOf(false);
+                    mitraAgenList = repository.getMitraAgenByStatus(pageable, Boolean.parseBoolean(search));
                     break;
             }
         }
