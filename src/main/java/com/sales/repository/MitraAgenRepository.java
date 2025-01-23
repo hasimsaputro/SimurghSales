@@ -13,7 +13,8 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
     @Query("""
             SELECT COUNT(1)
             FROM MitraAgen mit
-            WHERE (mit.id = :id OR :id IS NULL)
+            WHERE mit.deleteDate IS NULL
+            AND (mit.id = :id OR :id IS NULL)
             AND (mit.idTipeMaster = :tipe OR :tipe IS NULL)   
             AND (mit.namaMitraAgen = :name OR :name IS NULL)
             AND (mit.idKelurahanDomisili = :kelurahan OR :kelurahan IS NULL)
@@ -26,7 +27,8 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
     @Query("""
             SELECT mit
             FROM MitraAgen mit
-            WHERE (mit.id = :id OR :id IS NULL)
+            WHERE mit.deleteDate IS NULL
+            AND (mit.id = :id OR :id IS NULL)
             AND (mit.idTipeMaster = :tipe OR :tipe IS NULL)   
             AND (mit.namaMitraAgen = :name OR :name IS NULL)
             AND (mit.idKelurahanDomisili = :kelurahan OR :kelurahan IS NULL)

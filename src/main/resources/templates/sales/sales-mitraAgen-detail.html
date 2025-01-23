@@ -11,30 +11,30 @@
     <main>
         <div class="table-container">
             <h3>
-                <a href="../usermanagement/master-jabatan.html"> Mitra / Agen </a>
+                <a th:href="@{/mitraAgen}"> Mitra / Agen </a>
                 <span> > </span>
-                <a href="">Ubah</a>
+                <p>Detail</p>
             </h3>
             <form method="post" class="upsert-form" action="/book-library/insert-update(categoryName=${categoryName})">
                 <input type="hidden" name="_csrf" value="${_csrf.token}">
-                <table>
+                <table th:object="${detailMitraAgenGrid}">
                     <tbody>
                     <tr>
                         <td><label class="label-nama">Tipe Master *</label></td>
                         <td>
-                            <p id="Tipe" name="tipe">[Isi tipe master]</p>
+                            <p id="Tipe" name="tipe" th:text="*{tipe}"></p>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Produk *</label></td>
                         <td>
-                            <p id="Produk" name="Produk">[Isi produk]</p>
+                            <p id="Produk" name="Produk" th:text="*{produk}"></p>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Cabang *</label></td>
                         <td>
-                            <p id="cabangsales" name="cabangsales">[Isi cabang]</p>
+                            <p id="cabangsales" name="cabangsales" th:text="*{cabang}"></p>
                         </td>
                     </tr>
                     </tbody>
@@ -47,85 +47,115 @@
                             <tr>
                                 <td><label class="identitas">Nomor Identitas*</label></td>
                                 <td>
-                                    <p id="identitas" name="identitas">[Nomor Identitas]</p>
+                                    <p id="identitas" name="identitas" th:text="*{nomorIdentitas}"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Nama *</label></td>
                                 <td>
-                                    <p id="nama" name="nama">[Nama Lengkap]</p>
+                                    <p id="nama" name="nama" th:text="*{nama}"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Jenis Kelamin*</label></td>
                                 <td>
-                                    <p id="kelamin" name="kelamin">[Jenis Kelamin]</p>
+                                    <p id="kelamin" name="kelamin" th:text="*{jenisKelamin}"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Nomor NPWP *</label></td>
                                 <td>
-                                    <p id="NPWP" name="NPWP">[Nomor NPWP]</p>
+                                    <p id="NPWP" name="NPWP" th:text="*{npwp}"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Alamat Identitas*</label></td>
                                 <td>
-                                    <p id="address" name="address">[Alamat Identitas]</p>
+                                    <p id="address" name="address" th:text="*{alamatIdentitas}"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Kelurahan *</label></td>
                                 <td>
-                                    <p id="kelurahan" name="kelurahan">[Kelurahan]</p>
+                                    <p id="kelurahanIdentitas" name="kelurahan" th:text="*{kelurahanIdentitas}"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Kode Pos *</label></td>
                                 <td>
-                                    <p id="kodepos" name="kodepos">[Kode Pos]</p>
+                                    <p id="kodeposIdentitas" name="kodepos" th:text="*{kodePosIdentitas}"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Kecamatan *</label></td>
                                 <td>
-                                    <p id="kecamantan" name="kecamantan">[Kecamatan]</p>
+                                    <p id="kecamantanIdentitas" name="kecamantan" th:text="*{kecamatanIdentitas}"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Kota / Kabupaten *</label></td>
                                 <td>
-                                    <p id="kotakabupaten" name="kotakabupaten">[Kota/Kabupaten]</p>
+                                    <p id="kotakabupatenIdentitas" name="kotakabupaten" th:text="*{kotaIdentitas}"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Provinsi *</label></td>
                                 <td>
-                                    <p id="provinsi" name="provinsi">[Provinsi]</p>
+                                    <p id="provinsiIdentitas" name="provinsi" th:text="*{provinsiIdentitas}"></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Kelurahan *</label></td>
+                                <td>
+                                    <p id="kelurahanDomisili" name="kelurahan" th:text="*{kelurahanDomisili}"></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Kode Pos *</label></td>
+                                <td>
+                                    <p id="kodeposDomilisi" name="kodepos" th:text="*{kodePosDomisili}"></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Kecamatan *</label></td>
+                                <td>
+                                    <p id="kecamantanDomilisi" name="kecamantan" th:text="*{kecamatanDomisili}"></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Kota / Kabupaten *</label></td>
+                                <td>
+                                    <p id="kotakabupatenDomisili" name="kotakabupaten" th:text="*{kotaDomisili}"></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Provinsi *</label></td>
+                                <td>
+                                    <p id="provinsiDomisili" name="provinsi" th:text="*{provinsiDomilisi}"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Tempat Lahir *</label></td>
                                 <td>
-                                    <p id="Cabang" name="Cabang">[Tempat Lahir]</p>
+                                    <p id="Cabang" name="Cabang" th:text="*{tempatLahir}"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Tanggal Lahir *</label></td>
                                 <td>
-                                    <p id="tanggallahir" name="tanggallahir">[Tanggal Lahir]</p>
+                                    <p id="tanggallahir" name="tanggallahir" th:text="*{tanggalLahir}"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="nomortelepon">Nomor Telepon </label></td>
                                 <td>
-                                    <p id="nomortelepon" name="nomortelepon">[Nomor Telepon]</p>
+                                    <p id="nomortelepon" name="nomortelepon" th:text="*{nomorTelepon}"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="nomorhandphone">Nomor Handphone * </label></td>
                                 <td>
-                                    <p id="nomorhandphone" name="nomorhandphone">[Nomor Handphone]</p>
+                                    <p id="nomorhandphone" name="nomorhandphone" th:text="*{nomorHandphone}"></p>
                                 </td>
                             </tr>
                             </tbody>
@@ -140,25 +170,25 @@
                             <tr>
                                 <td><label class="label-nama">Nama Bank*</label></td>
                                 <td>
-                                    <p id="bank" name="bank">[Nama Bank]</p>
+                                    <p id="bank" name="bank" th:text="*{bank}"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Nomor Rekening *</label></td>
                                 <td>
-                                    <p id="rek" name="rek">[Nomor Rekening]</p>
+                                    <p id="rek" name="rek" th:text="*{nomorRekening}"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Nama Pemilik Rekening *</label></td>
                                 <td>
-                                    <p id="namarekening" name="namarekening">[Nama Pemilik Rekening]</p>
+                                    <p id="namarekening" name="namarekening" th:text="*{namaRekening}"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Status*</label></td>
                                 <td>
-                                    <p id="status" name="status">[Status]</p>
+                                    <p id="status" name="status" th:text="*{status}"></p>
                                 </td>
                             </tr>
                             </tbody>
