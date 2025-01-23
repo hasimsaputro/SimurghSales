@@ -41,6 +41,13 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             FROM MitraAgen mit
             """)
     List<MitraAgen> getAll();
+
+    @Query("""
+            SELECT mit
+            FROM MitraAgen mit
+            WHERE mit.namaMitraAgen = :nama
+            """)
+    MitraAgen getByNama(String nama);
 //
 //    @Query("""
 //            SELECT mit

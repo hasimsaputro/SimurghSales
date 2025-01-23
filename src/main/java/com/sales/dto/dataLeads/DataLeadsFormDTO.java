@@ -4,6 +4,7 @@ import com.sales.entity.Kategori;
 import com.sales.entity.Kelurahan;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -18,7 +19,7 @@ public class DataLeadsFormDTO {
     @NotBlank(message = "Nomor identitas harus diisi")
     private String idProduk;
 
-    @NotBlank(message = "Pilih Debitur")
+    @NotNull(message = "Pilih Debitur")
     private Boolean tipeDebitur;
 
     @NotBlank(message = "Tipe Aplikasi Tidak Boleh Kosong")
@@ -32,7 +33,7 @@ public class DataLeadsFormDTO {
 
     private String namaBelakangDebitur;
 
-    @NotBlank(message = "Silahkan Pilih identitas")
+    @NotNull(message = "Silahkan Pilih identitas")
     private Integer idIdentitas;
 
     @NotBlank(message = "Nomor Identitas tidak boleh kosong")
@@ -41,9 +42,9 @@ public class DataLeadsFormDTO {
     @NotBlank(message = "Silahkan Pilih Jenis Kelamin")
     private String jenisKelamin;
 
-    @NotBlank(message = "Alamat Tidak Boleh Kosong")
-    @Length(max=100, message = "Alamat tidak boleh lebih dari 100 karakter")
-    private String idDebiturReferensi;
+//    @NotBlank(message = "Alamat Tidak Boleh Kosong")
+//    @Length(max=100, message = "Alamat tidak boleh lebih dari 100 karakter")
+//    private String idDebiturReferensi;
 
     @NotBlank(message = "Nama Debitur tidak boleh kosong")
     private String kelurahan;
@@ -96,7 +97,6 @@ public class DataLeadsFormDTO {
 
     private String surveyor;
 
-    @NotBlank(message = "Silahkan Pilih Status")
     private Boolean status;
 
     @NotBlank(message = "POT Tidak Boleh Kosong")
@@ -118,6 +118,7 @@ public class DataLeadsFormDTO {
     private String tahun;
 
     private String tahunPajakSTNK;
+
 
     private String nomorBPKB;
 

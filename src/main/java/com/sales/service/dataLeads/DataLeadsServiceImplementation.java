@@ -11,11 +11,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
 @Service
 public class DataLeadsServiceImplementation implements DataLeadsService{
+    private final CabangRepository cabangRepository;
+    private final KelurahanRepository kelurahanRepository;
+    private final DebiturRepository debiturRepository;
+    private final TipeAplikasiRepository tipeAplikasiRepository;
     private final ProdukRepository produkRepository;
     private final KeteranganAplikasiRepository keteranganAplikasiRepository;
     private final ModelRepository modelRepositoryl;
@@ -27,7 +32,11 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
     private final UserRepository userRepository;
     private final Integer rowInPage = 10;
 
-    public DataLeadsServiceImplementation(ProdukRepository produkRepository, KeteranganAplikasiRepository keteranganAplikasiRepository, ModelRepository modelRepositoryl, TipeRepository tipeRepository, MerkRepository merkRepository, KategoriRepository kategoriRepository, MitraAgenRepository mitraAgenRepository, DataLeadsRepository repository, UserRepository userRepository) {
+    public DataLeadsServiceImplementation(CabangRepository cabangRepository, KelurahanRepository kelurahanRepository, DebiturRepository debiturRepository, TipeAplikasiRepository tipeAplikasiRepository, ProdukRepository produkRepository, KeteranganAplikasiRepository keteranganAplikasiRepository, ModelRepository modelRepositoryl, TipeRepository tipeRepository, MerkRepository merkRepository, KategoriRepository kategoriRepository, MitraAgenRepository mitraAgenRepository, DataLeadsRepository repository, UserRepository userRepository) {
+        this.cabangRepository = cabangRepository;
+        this.kelurahanRepository = kelurahanRepository;
+        this.debiturRepository = debiturRepository;
+        this.tipeAplikasiRepository = tipeAplikasiRepository;
         this.produkRepository = produkRepository;
         this.keteranganAplikasiRepository = keteranganAplikasiRepository;
         this.modelRepositoryl = modelRepositoryl;
@@ -242,45 +251,93 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
     @Override
     public void updateInsertDataLeads(DataLeadsFormDTO dataLeadsFormDTO) {
         DataLeads dataLeads = repository.getDataLeadsById(dataLeadsFormDTO.getId());
-        Boolean isexist = dataLeads.getId() == null ? false : true;
-
-        if(isexist == false){
+        Boolean isexist = dataLeads == null ? false : true;
+        if(isexist == false) {
             dataLeads = new DataLeads();
-            List<DataLeads> listUrutan = repository.getAllOnly();
-
-            String newId;
-            if (!listUrutan.isEmpty()) {
-                DataLeads lastDataLead = listUrutan.get(listUrutan.size() - 1);
-                String lastId = lastDataLead.getId();
-
-                if (lastId != null && lastId.startsWith("LEAD-")) {
-                    try {
-                        int lastNumber = Integer.parseInt(lastId.substring(5));
-                        newId = String.format("LEAD-%05d", lastNumber + 1);
-                    } catch (NumberFormatException e) {
-                        newId = "LEAD-00001";
-                    }
-                } else {
-                    newId = "LEAD-00001";
-                }
-            } else {
-                newId = "LEAD-00001";
-            }
-
+            String newId = "LEAD-00001";
             dataLeads.setId(newId);
+        }else{
+            List<DataLeads> listUrutan = repository.getAllOnly();
+            DataLeads lastDataLead = listUrutan.get(listUrutan.size() - 1);
+            String lastId = lastDataLead.getId();
+            int lastNumber = Integer.parseInt(lastId.substring(5));
+            String newId = String.format("LEAD-%05d", lastNumber + 1);
+            dataLeads.setId(newId);
+        }
+
             dataLeads.setIdProduk(produkRepository.getProdukByName(dataLeadsFormDTO.getIdProduk()).getId());
             dataLeads.setNomorAplikasi("000000");
             dataLeads.setTipeDebitur(dataLeadsFormDTO.getTipeDebitur() == true ? "PU" : "PO");
+            dataLeads.setIdTipeAplikasi(tipeAplikasiRepository.getTipeAplikasiByName(dataLeadsFormDTO.getTipeAplikasi()).getId());
+
+            List<Debitur> debiturList = debiturRepository.getAllOnly();
+            Debitur debitur = new Debitur();
+            if(dataLeads.getIdTipeAplikasi() == 1 /*Artinya Debitur Baruu*/) {
+                if(debiturList == null){
+                    String newId = "C012400001";
+                    debitur.setId(newId);
+                }else {
+                    Debitur lastDebitur = debiturList.get(debiturList.size() - 1);
+                    String lastId = lastDebitur.getId();
+                    int lastNumber = Integer.parseInt(lastId.substring(5));
+                    String newId = String.format("C0124%05d", lastNumber + 1);
+                    debitur.setId(newId);
+                }
+
+            }else {
+                debitur.setId(debiturRepository.getDebiturByNik(dataLeadsFormDTO.getNomorIdentitas()).getId());
+
+            }
+
+            debitur.setNamaDepan(dataLeadsFormDTO.getNamaDepanDebitur());
+            debitur.setNamaTengah(dataLeadsFormDTO.getNamaTengahDebitur());
+            debitur.setNamaAkhir(dataLeadsFormDTO.getNamaBelakangDebitur());
+            debitur.setNamaPanggilan(dataLeadsFormDTO.getNamaDepanDebitur());
+            debitur.setIdIdentitas(dataLeadsFormDTO.getIdIdentitas());
+            debitur.setNomorIdentitas(dataLeadsFormDTO.getNomorIdentitas());
+            debitur.setJenisKelamin(dataLeadsFormDTO.getJenisKelamin());
+            debitur.setAlamatIdentitas(dataLeadsFormDTO.getAlamatIdentitas());
+            debitur.setIdKelurahan(kelurahanRepository.getKelurahanByNama(dataLeadsFormDTO.getKelurahan()).getId());
+            debitur.setAlamatDomisili(dataLeadsFormDTO.getAlamatDomisili());
+            debitur.setIdKelurahanDomisili(kelurahanRepository.getKelurahanByNama(dataLeadsFormDTO.getKelurahanDomisili()).getId());
+            debitur.setNomorHp1(dataLeadsFormDTO.getNomorHandphone1());
+            debitur.setNomorHP2(dataLeadsFormDTO.getNomorHandphone2());
+            debitur.setNomorTelepon(dataLeadsFormDTO.getNomorTelepon());
 
 
 
+
+
+            dataLeads.setIdDebitur(debitur.getId());
+            //dataLeads.setIdCabang(cabangRepository.getCabangByNama(dataLeadsFormDTO.getNamaCabangTujuan()).getId());
+            dataLeads.setIdCabang(1); //SEMENTARA HARD CODE
+            dataLeads.setIdMitraAgen(mitraAgenRepository.getByNama(dataLeadsFormDTO.getSumberDataAplikasi()).getId() );
+            dataLeads.setIdDebiturReferensi("-"); //sementara
+            dataLeads.setJenisUsaha(dataLeadsFormDTO.getJenisUsaha());
             dataLeads.setIdKeteranganAplikasi(keteranganAplikasiRepository.getKeteranganAplikasiByName(dataLeadsFormDTO.getKeteranganAplikasi()).getId());
+            dataLeads.setIdUser("USR0001");
+            dataLeads.setStatus(dataLeadsFormDTO.getStatus());
+            dataLeads.setIdPOT(Integer.parseInt(dataLeadsFormDTO.getPot())); // sementara hardcode
+            dataLeads.setEstimasiNilaiFunding(new BigDecimal(300000000) ); // sementara hardcode
+            dataLeads.setIdKategori(Integer.parseInt(dataLeadsFormDTO.getKategori())); // sementara hardcode
+            dataLeads.setIdMerk(dataLeadsFormDTO.getMerek()); // sementara hardcode
+            dataLeads.setIdTipe(dataLeadsFormDTO.getTipe()); // sementara hardcode
+            dataLeads.setIdModel(dataLeadsFormDTO.getModel()); // sementara hardcode
+            //dataLeads.setEstimasiNilaiFunding(dataLeadsFormDTO.getEstimasiNilaiFunding());
 
+            //kurang POT dan bawahnya yang seharusnya pakai ID
+
+
+            dataLeads.setTahun(dataLeadsFormDTO.getTahun());
+            dataLeads.setTahunPajakSTNK(dataLeadsFormDTO.getTahunPajakSTNK());
+            dataLeads.setNomorBPKB(dataLeadsFormDTO.getNomorBPKB());
+            dataLeads.setNomorPolisi(dataLeadsFormDTO.getNomorPolisi());
+            debiturRepository.save(debitur);
+            repository.save(dataLeads);
         }
 
 
-        repository.save(dataLeads);
-    }
+
 
     @Override
     public List<OptionDTO> getOptionSumberDataAplikasi() {

@@ -1,12 +1,13 @@
 package com.sales.controller;
 
+import com.sales.dto.dataLeads.DataLeadsFormDTO;
 import com.sales.service.dataLeads.DataLeadsService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +43,17 @@ public class DataLeadsController {
         var dataLeadsById = service.getDataLeadsById(dataLeadsId);
         model.addAttribute("dataLeadsById",dataLeadsById);
         return "sales/data-leads-form";
+    }
+
+    @PostMapping("form")
+    public String form(@Valid @ModelAttribute("dataLeadsById") DataLeadsFormDTO dataLeadsFormDTO, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "sales/data-leads-form";
+        }else {
+            service.updateInsertDataLeads(dataLeadsFormDTO);
+            return "redirect:/dataleads";
+        }
+
     }
 
     @GetMapping("detail")
