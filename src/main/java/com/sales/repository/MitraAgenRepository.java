@@ -37,6 +37,12 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             """)
     List<MitraAgen> getAllMitraAgen(Pageable pageable, String id, Integer tipe, String name, Integer kelurahan,
                                     Integer cabang, Boolean status);
+
+    @Query("""
+            SELECT mit
+            FROM MitraAgen mit
+            """)
+    List<MitraAgen> getAll();
 //
 //    @Query("""
 //            SELECT mit

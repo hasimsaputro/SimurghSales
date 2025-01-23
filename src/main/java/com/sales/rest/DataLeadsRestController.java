@@ -58,4 +58,75 @@ public class DataLeadsRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
         }
     }
+
+    @GetMapping("kategori")
+    public ResponseEntity<Object> getOptioonKategori(){
+        try{
+            var optionKategori= service.getOptionKategori();
+            return ResponseEntity.status(HttpStatus.OK).body(optionKategori);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+
+   @GetMapping("merk")
+    public ResponseEntity<Object> getOptioonMerk(Integer kategoriId){
+        try{
+            var optionMerk= service.getOptionMerek(kategoriId);
+            return ResponseEntity.status(HttpStatus.OK).body(optionMerk);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+
+    @GetMapping("model")
+    public ResponseEntity<Object> getOptioonModel(Integer idKategori, String idMerk, String tipeId){
+        try{
+            var optionModel= service.getOptionModel(idKategori,idMerk,tipeId);
+            return ResponseEntity.status(HttpStatus.OK).body(optionModel);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+
+    @GetMapping("tipe")
+    public ResponseEntity<Object> getOptioonTipe(Integer idKategori, String idMerk){
+        try{
+            var optionTipe= service.getOptionTipe( idKategori,  idMerk);
+            return ResponseEntity.status(HttpStatus.OK).body(optionTipe);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+
+    @GetMapping("keteranganAplikasi")
+    public ResponseEntity<Object> getOptioonKeteranganAplikasi(){
+        try{
+            var optionKeteranganAplikasi= service.getOptionKeteranganAplikasi();
+            return ResponseEntity.status(HttpStatus.OK).body(optionKeteranganAplikasi);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+
+    @GetMapping("referensi")
+    public ResponseEntity<Object> getOptioonReferensi(){
+        try{
+            var optionReferensi= service.getOptionReferensi();
+            return ResponseEntity.status(HttpStatus.OK).body(optionReferensi);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+
+    @GetMapping("sumberDataAplikasi")
+    public ResponseEntity<Object> getSumberDataApliakasi(){
+        try{
+            var optionSumberDataAplikasi= service.getOptionSumberDataAplikasi();
+            return ResponseEntity.status(HttpStatus.OK).body(optionSumberDataAplikasi);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+
 }

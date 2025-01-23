@@ -25,12 +25,7 @@
                         </td>
                     <tr>
                         <td><label class="label-nama">Tipe Debitur*</label></td>
-                        <td class="input-box">
-                            <p th:text="${dataLeadsById.tipeDebitur}"></p>
-                            <label>Perusahaan</label>
-                            <p th:text="${dataLeadsById.tipeDebitur}"></p>
-                            <label>Perseorangan</label>
-                        </td>
+                        <td ><p th:text="${dataLeadsById.tipeDebitur}"></p></td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Tipe Aplikasi *</label></td>
@@ -63,12 +58,7 @@
                     <tr>
                         <td><label class="identitas">Nomor Identitas*</label></td>
                         <td>
-                            <div th:switch="${dataLeadsById.idIdentitas}">
-                                <p th:case="'1'">KTP</p>
-                                <p th:case="'2'">SIM</p>
-                                <p th:case="'3'">PASSPORT</p>
-                            </div>
-                            <p th:text="${dataLeadsById.nomorIdentitas}"></p>
+                            <span th:text="${dataLeadsById.idIdentitas}"></span> <span th:text="${dataLeadsById.nomorIdentitas}"></span>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -242,7 +232,111 @@
                         </td>
                     </tr>
                     </tbody>
+
                 </table>
+                <div id="part1" class="form-part">
+                    <button type="button" class="toggle-btn" onclick="togglePart('part1')">Data Produk</button>
+                    <div class="form-content">
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td><label class="label-nama">POT (Payment of Term *</label></td>
+                                <td>
+                                    <p th:text="${dataLeadsById.surveyor}"></p>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><label class="label-nama">Tenor</label></td>
+                                <td>
+                                    <p th:text="${dataLeadsById.surveyor}"></p>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><label class="label-nama">Estimasi Nilai Funding</label></td>
+                                <td>
+                                    <p th:text="${dataLeadsById.estimasiNilaiFunding}"></p>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="part2" class="form-part">
+                    <button type="button" class="toggle-btn" onclick="togglePart('part2')">Data Unit</button>
+                    <div class="form-content">
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td><label class="label-nama">Kategori *</label></td>
+                                <td>
+                                    <p th:text="${dataLeadsById.kategori}"></p>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Merek</label></td>
+                                <td>
+                                    <p></p>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><label class="label-nama">Tipe</label></td>
+                                <td>
+                                    <p th:text="${dataLeadsById.tipe}"></p>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><label class="label-nama">Model</label></td>
+                                <td>
+                                    <p th:text="${dataLeadsById.model}"></p>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><label class="label-nama">Tahun</label></td>
+                                <td>
+                                    <p th:text="${dataLeadsById.tahun}"></p>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><label class="label-nama">Tahun Pajak STNK</label></td>
+                                <td>
+                                    <p ></p>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><label class="label-nama">Nomor BPKB</label></td>
+                                <td>
+                                    <p ></p>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><label class="label-nama">Nomor Polisi</label></td>
+                                <td>
+                                    <p ></p>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </form>
         </div>
     </main>

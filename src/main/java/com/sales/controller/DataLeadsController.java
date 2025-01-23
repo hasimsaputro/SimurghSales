@@ -46,7 +46,7 @@ public class DataLeadsController {
 
     @GetMapping("detail")
     public String detail(Model model,@RequestParam(defaultValue = "")String dataLeadsId) {
-        var dataLeadsById = service.getDataLeadsById(dataLeadsId);
+        var dataLeadsById = service.getDataLeadsByIdDetail(dataLeadsId);
         model.addAttribute("dataLeadsById",dataLeadsById);
         return "sales/data-leads-detailtest";
     }
