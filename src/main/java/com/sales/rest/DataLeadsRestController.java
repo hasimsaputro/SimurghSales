@@ -28,4 +28,34 @@ public class DataLeadsRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
         }
     }
+
+    @GetMapping(value = {"/getKelurahan"})
+    public ResponseEntity<Object> getKelurahanItems(){
+        try{
+            var searchItems= service.getKelurahanItems();
+            return ResponseEntity.status(HttpStatus.OK).body(searchItems);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+
+    @GetMapping(value = {"/getPOT"})
+    public ResponseEntity<Object> getPotItems(){
+        try{
+            var searchItems= service.getPotItems();
+            return ResponseEntity.status(HttpStatus.OK).body(searchItems);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+
+    @GetMapping(value = {"/getPOTData={idPOT}"})
+    public ResponseEntity<Object> getPotData(@PathVariable Integer idPOT){
+        try{
+            var searchItems= service.getPotData(idPOT);
+            return ResponseEntity.status(HttpStatus.OK).body(searchItems);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
 }

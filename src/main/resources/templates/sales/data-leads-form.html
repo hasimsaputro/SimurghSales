@@ -95,7 +95,10 @@
                     <tr>
                         <td><label class="label-nama">Kelurahan *</label></td>
                         <td>
-                            <input id="kelurahan" name="kelurahan" type="text" required th:field="${dataLeadsById.kelurahan}">
+                            <div class="search-container">
+                                <input id="kelurahan" class="searchFormKelurahan" name="kelurahan" type="text" required th:field="${dataLeadsById.kelurahan}">
+                                <div class="suggestionDataLeadsKelurahan"></div>
+                            </div>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -276,7 +279,10 @@
                             <tr>
                                 <td><label class="label-nama">POT (Payment of Term *</label></td>
                                 <td>
-                                    <input id="pot" name="pot" type="text" required>
+                                    <div class="search-container">
+                                        <input id="pot" class="searchFormPOT" name="pot" type="text" required>
+                                        <div class="suggestionDataLeadsPOT"></div>
+                                    </div>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>

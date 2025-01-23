@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,7 +28,7 @@ public class DataLeads {
     private String nomorAplikasi;
 
     @Column(name = "TipeDebitur", length = 2, nullable = false)
-    private Boolean tipeDebitur;
+    private String tipeDebitur;
 
     @Column(name = "IdTipeAplikasi", nullable = false)
     private Integer idTipeAplikasi;
@@ -84,6 +86,9 @@ public class DataLeads {
 
     @Column(name = "NomorPolisi", length = 10)
     private String nomorPolisi;
+
+    @Column(name = "DeleteDate")
+    private LocalDate deleteDate;
 
     @ManyToOne
     @JoinColumn(name = "IdProduk", insertable = false, updatable = false)

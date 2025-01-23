@@ -218,6 +218,10 @@ select {
     position: relative;
     flex-direction: column;
   }
+
+.searchFormKelurahan{
+   color: black;
+}
   .suggestions {
     position: absolute;
     top: 100%;
