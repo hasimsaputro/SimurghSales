@@ -1,12 +1,9 @@
 package com.sales.service.mitraAgen;
 
-import com.sales.dto.mitraAgen.MitraAgenDetailDTO;
-import com.sales.dto.mitraAgen.MitraAgenFormDTO;
-import com.sales.dto.mitraAgen.MitraAgenIndexDTO;
-import com.sales.dto.mitraAgen.MitraAgenIndexOptionDTO;
-import com.sales.entity.MitraAgen;
+import com.sales.dto.mitraAgen.*;
+import com.sales.entity.*;
 import com.sales.helper.DateHelper;
-import com.sales.repository.MitraAgenRepository;
+import com.sales.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,17 +18,27 @@ import java.util.Locale;
 @Service
 public class MitraAgenServiceImplementation implements MitraAgenService{
     private final MitraAgenRepository repository;
+    private final ProdukRepository produkRepository;
+    private final TipeMasterRepository tipeMasterRepository;
+    private final KelurahanRepository kelurahanRepository;
+    private final IdentitasRepository identitasRepository;
+    private final BankRepository bankRepository;
     private final int rowInPage = 1;
 
     @Autowired
-    public MitraAgenServiceImplementation(MitraAgenRepository repository) {
+    public MitraAgenServiceImplementation(MitraAgenRepository repository, ProdukRepository produkRepository, TipeMasterRepository tipeMasterRepository, KelurahanRepository kelurahanRepository, IdentitasRepository identitasRepository, BankRepository bankRepository) {
         this.repository = repository;
+        this.produkRepository = produkRepository;
+        this.tipeMasterRepository = tipeMasterRepository;
+        this.kelurahanRepository = kelurahanRepository;
+        this.identitasRepository = identitasRepository;
+        this.bankRepository = bankRepository;
     }
 
     @Override
     public int getTotalPages(String filter, String search) {
         double page = 0;
-        if (filter == null){
+        if (filter.isEmpty()){
             page = repository.getTotalPages();
         } else {
             switch (filter){
@@ -70,7 +77,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
         Pageable pageable = PageRequest.of(page - 1, rowInPage, Sort.by("id"));
 
         List<MitraAgen> mitraAgenList = new LinkedList<>();
-        if (filter == null){
+        if (filter.isEmpty()){
             mitraAgenList = repository.getAllMitraAgen(pageable);
         } else {
             switch (filter){
@@ -232,7 +239,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
 
     @Override
     public void delete(String id) {
-        if (!id.isBlank()){
+        if (!id.isEmpty()){
             try {
                 MitraAgen mitraAgen = repository.findById(id).orElseThrow();
                 mitraAgen.setDeleteDate(LocalDate.now());
@@ -273,7 +280,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
     @Override
     public List<MitraAgenIndexOptionDTO> getSearchItems(String filter) {
         List<String> searchItems = new LinkedList<>();
-        if (!filter.isBlank()){
+        if (!filter.isEmpty()){
             switch (filter){
                 case "id":
                     searchItems = repository.getMitraAgenItemsById();
@@ -302,4 +309,77 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
         }
         return searchsItems;
     }
+
+
+    @Override
+    public List<TipeMasterOptionDTO> getTipeMasterOption() {
+        List<TipeMaster> tipeMasterList = tipeMasterRepository.getAllTipeMaster();
+        List<TipeMasterOptionDTO> tipeMasterOptionDTOS = new LinkedList<>();
+        for (TipeMaster tipeMaster: tipeMasterList
+        ) {
+            TipeMasterOptionDTO tipeMasterOptionDTO = new TipeMasterOptionDTO();
+            tipeMasterOptionDTO.setId(tipeMaster.getId());
+            tipeMasterOptionDTO.setNamaTipeMaster(tipeMaster.getNamaTipeMaster());
+            tipeMasterOptionDTOS.add(tipeMasterOptionDTO);
+        }
+        return tipeMasterOptionDTOS;
+    }
+
+    @Override
+    public List<ProdukOptionDTO> getProdukOption() {
+        List<Produk> produkList = produkRepository.getAllProduk();
+        List<ProdukOptionDTO> produkOptionDTOS = new LinkedList<>();
+        for (Produk produk: produkList
+        ) {
+            ProdukOptionDTO produkOptionDTO = new ProdukOptionDTO();
+            produkOptionDTO.setId(produk.getId());
+            produkOptionDTO.setNamaProduk(produk.getNamaProduk());
+            produkOptionDTOS.add(produkOptionDTO);
+        }
+        return produkOptionDTOS;
+    }
+
+    @Override
+    public List<KelurahanOptionDTO> getKelurahanOption() {
+        List<Kelurahan> kelurahanList = kelurahanRepository.getAllKelurahan();
+        List<KelurahanOptionDTO> kelurahanOptionDTOS = new LinkedList<>();
+        for (Kelurahan kelurahan: kelurahanList
+        ) {
+            KelurahanOptionDTO kelurahanOptionDTO = new KelurahanOptionDTO();
+            kelurahanOptionDTO.setId(kelurahan.getId());
+            kelurahanOptionDTO.setNamaKelurahan(kelurahan.getNamaKelurahan());
+            kelurahanOptionDTOS.add(kelurahanOptionDTO);
+        }
+        return kelurahanOptionDTOS;
+    }
+
+    @Override
+    public List<IdentitasOptionDTO> getIdentitasOption() {
+        List<Identitas> identitasList = identitasRepository.getAllIdentitas();
+        List<IdentitasOptionDTO> identitasOptionDTOS = new LinkedList<>();
+        for (Identitas identitas: identitasList
+        ) {
+            IdentitasOptionDTO identitasOptionDTO = new IdentitasOptionDTO();
+            identitasOptionDTO.setId(identitas.getId());
+            identitasOptionDTO.setNamaIdentitas(identitas.getNamaIdentitas());
+            identitasOptionDTOS.add(identitasOptionDTO);
+        }
+        return identitasOptionDTOS;
+    }
+
+    @Override
+    public List<BankOptionDTO> getBankOption() {
+        List<Bank> bankList = bankRepository.getAllBank();
+        List<BankOptionDTO> bankOptionDTOS = new LinkedList<>();
+        for (Bank bank : bankList
+        ) {
+            BankOptionDTO bankOptionDTO = new BankOptionDTO();
+            bankOptionDTO.setId(bank.getId());
+            bankOptionDTO.setNamaBank(bank.getNamaBank());
+            bankOptionDTOS.add(bankOptionDTO);
+        }
+        return bankOptionDTOS;
+    }
+
+
 }

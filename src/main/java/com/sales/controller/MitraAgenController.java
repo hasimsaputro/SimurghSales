@@ -22,8 +22,8 @@ public class MitraAgenController {
     @GetMapping("")
     public String index(
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(required = false) String filter,
-            @RequestParam(required = false) String search,
+            @RequestParam(defaultValue = "") String filter,
+            @RequestParam(defaultValue = "") String search,
             Model model
     ){
         model.addAttribute("mitraAgenGrid", service.getAll(page, filter, search));

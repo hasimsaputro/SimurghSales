@@ -1,11 +1,12 @@
 package com.sales.rest;
 
-import com.sales.dto.mitraAgen.MitraAgenDetailDTO;
-import com.sales.dto.mitraAgen.MitraAgenIndexOptionDTO;
+import com.sales.dto.mitraAgen.*;
 import com.sales.service.mitraAgen.MitraAgenService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +41,86 @@ public class MitraAgenRestController {
             MitraAgenDetailDTO mitraAgenDetailDTO = service.getDetailMitraAgenById(id);
             return ResponseEntity.status(HttpStatus.OK).body(mitraAgenDetailDTO);
         } catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+        }
+    }
+
+    @GetMapping("form/{id}")
+    public ResponseEntity<Object> insertUpdate(
+            @PathVariable String id
+    ){
+        try {
+            MitraAgenFormDTO mitraAgenFormDTO = service.getMitraAgenById(id);
+            return ResponseEntity.status(HttpStatus.OK).body(mitraAgenFormDTO);
+        } catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+        }
+    }
+
+    @PostMapping("form")
+    public ResponseEntity<Object> insertUpdate(
+            @Valid @RequestBody MitraAgenFormDTO mitraAgenFormDTO,
+            BindingResult bindingResult
+    ){
+        try {
+            if (bindingResult.hasErrors()){
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(bindingResult.getAllErrors());
+            }else {
+                service.save(mitraAgenFormDTO);
+                return ResponseEntity.status(HttpStatus.OK).body("Success");
+            }
+        } catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+        }
+    }
+
+    @GetMapping(value = {"tipeMaster-options"})
+    public ResponseEntity<Object> getTipeMasterOptions(){
+        try{
+            List<TipeMasterOptionDTO> tipeMasterOptionDTOS = service.getTipeMasterOption();
+            return ResponseEntity.status(HttpStatus.OK).body(tipeMasterOptionDTOS);
+        }catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+        }
+    }
+
+
+    @GetMapping("/produk-options")
+    public ResponseEntity<Object> getProdukOptions(){
+        try{
+            List<ProdukOptionDTO> produkOptionDTOS = service.getProdukOption();
+            return ResponseEntity.status(HttpStatus.OK).body(produkOptionDTOS);
+        }catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+        }
+    }
+
+    @GetMapping("kelurahan-options")
+    public ResponseEntity<Object> getKelurahanOptions(){
+        try{
+            List<KelurahanOptionDTO> kelurahanOptionDTOS = service.getKelurahanOption();
+            return ResponseEntity.status(HttpStatus.OK).body(kelurahanOptionDTOS);
+        }catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+        }
+    }
+
+    @GetMapping("identitas-options")
+    public ResponseEntity<Object> getIdentitasOptions(){
+        try{
+            List<IdentitasOptionDTO> identitasOptionDTOS = service.getIdentitasOption();
+            return ResponseEntity.status(HttpStatus.OK).body(identitasOptionDTOS);
+        }catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+        }
+    }
+
+    @GetMapping("bank-options")
+    public ResponseEntity<Object> getBankOptions(){
+        try{
+            List<BankOptionDTO> bankOptionDTOS = service.getBankOption();
+            return ResponseEntity.status(HttpStatus.OK).body(bankOptionDTOS);
+        }catch (Exception ex){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
         }
     }
