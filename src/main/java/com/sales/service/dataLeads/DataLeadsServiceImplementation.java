@@ -3,14 +3,16 @@ package com.sales.service.dataLeads;
 import com.sales.dto.OptionDTO;
 import com.sales.dto.dataLeads.DataLeadsFormDTO;
 import com.sales.dto.dataLeads.DataLeadsIndexDTO;
+import com.sales.dto.dataLeads.POTDataDTO;
 import com.sales.entity.DataLeads;
-import com.sales.repository.DataLeadsRepository;
-import com.sales.repository.UserRepository;
+import com.sales.entity.POT;
+import com.sales.repository.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,11 +20,17 @@ import java.util.List;
 public class DataLeadsServiceImplementation implements DataLeadsService{
     private final DataLeadsRepository repository;
     private final UserRepository userRepository;
+    private final KelurahanRepository kelurahanRepository;
+    private final PotRepository potRepository;
+    private final MerkRepository merkRepository;
     private final Integer rowInPage = 10;
 
-    public DataLeadsServiceImplementation(DataLeadsRepository repository, UserRepository userRepository) {
+    public DataLeadsServiceImplementation(DataLeadsRepository repository, UserRepository userRepository, KelurahanRepository kelurahanRepository, PotRepository potRepository, MerkRepository merkRepository) {
         this.repository = repository;
         this.userRepository = userRepository;
+        this.kelurahanRepository = kelurahanRepository;
+        this.potRepository = potRepository;
+        this.merkRepository = merkRepository;
     }
 
 
@@ -50,26 +58,29 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
                     dataLeads = repository.getByKeterangan(search, pagination);
                     break;
                 case "status":
+                    search = search.equalsIgnoreCase("Aktif") ? String.valueOf(1) : String.valueOf(0) ;
                     dataLeads = repository.getByStatus(search,pagination);
                     break;
             }
         }
         var gridDataLeads = new LinkedList<DataLeadsIndexDTO>();
         for (var datalead :dataLeads) {
-            String id = datalead.getId();
-            String nomorAplikasi = datalead.getNomorAplikasi();
-            String namaDebitur = datalead.getDebiturDataLeads().getNamaDepan()+" "+datalead.getDebiturDataLeads().getNamaTengah()+" "+datalead.getDebiturDataLeads().getNamaAkhir();
-            String tipeAplikasi = datalead.getTipeAplikasiDataLeads().getNamaTipeAplikasi();
-            String keterangan = datalead.getKeteranganAplikasi().getNamaKeteranganAplikasi();
-            String status = datalead.getStatus() ? "Aktif":"Tidak Akrif";
-            DataLeadsIndexDTO dataLeadsIndexDTO = new DataLeadsIndexDTO();
-            dataLeadsIndexDTO.setNomorDataLeads(id);
-            dataLeadsIndexDTO.setNomorAplikasi(nomorAplikasi);
-            dataLeadsIndexDTO.setNamaDebitur(namaDebitur);
-            dataLeadsIndexDTO.setTipeAplikasi(tipeAplikasi);
-            dataLeadsIndexDTO.setKeterangan(keterangan);
-            dataLeadsIndexDTO.setStatus(status);
-            gridDataLeads.add(dataLeadsIndexDTO);
+            if(datalead.getDeleteDate() == null){
+                String id = datalead.getId();
+                String nomorAplikasi = datalead.getNomorAplikasi();
+                String namaDebitur = datalead.getDebiturDataLeads().getNamaDepan()+" "+datalead.getDebiturDataLeads().getNamaTengah()+" "+datalead.getDebiturDataLeads().getNamaAkhir();
+                String tipeAplikasi = datalead.getTipeAplikasiDataLeads().getNamaTipeAplikasi();
+                String keterangan = datalead.getKeteranganAplikasi().getNamaKeteranganAplikasi();
+                String status = datalead.getStatus() ? "Aktif":"Tidak Akrif";
+                DataLeadsIndexDTO dataLeadsIndexDTO = new DataLeadsIndexDTO();
+                dataLeadsIndexDTO.setNomorDataLeads(id);
+                dataLeadsIndexDTO.setNomorAplikasi(nomorAplikasi);
+                dataLeadsIndexDTO.setNamaDebitur(namaDebitur);
+                dataLeadsIndexDTO.setTipeAplikasi(tipeAplikasi);
+                dataLeadsIndexDTO.setKeterangan(keterangan);
+                dataLeadsIndexDTO.setStatus(status);
+                gridDataLeads.add(dataLeadsIndexDTO);
+            }
         }
         return gridDataLeads;
     }
@@ -82,8 +93,8 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
         if(dataLeads != null){
 
             dto.setId(dataLeads.getId());
-            dto.setIdProduk(dataLeads.getIdProduk());
-            dto.setTipeDebitur(dataLeads.getTipeDebitur());
+//            dto.setIdProduk(dataLeads.getIdProduk());
+//            dto.setTipeDebitur(dataLeads.getTipeDebitur());
             dto.setTipeAplikasi(dataLeads.getTipeAplikasiDataLeads().getNamaTipeAplikasi()==null ? "":dataLeads.getTipeAplikasiDataLeads().getNamaTipeAplikasi());
             dto.setNamaDepanDebitur(dataLeads.getDebiturDataLeads().getNamaDepan());
             dto.setNamaTengahDebitur(dataLeads.getDebiturDataLeads().getNamaTengah());
@@ -167,6 +178,13 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
     }
 
     @Override
+    public void deleteDataLeads(String dataLeadsId) {
+        var dataLeads = repository.findById(dataLeadsId).orElseThrow();
+        dataLeads.setDeleteDate(LocalDate.now());
+        repository.save(dataLeads);
+    }
+
+    @Override
     public void updateInsertDataLeads(DataLeadsFormDTO dataLeadsFormDTO) {
         DataLeads dataLeads = repository.getDataLeadsById(dataLeadsFormDTO.getId());
         Boolean isexist = dataLeads.getId() == null ? false : true;
@@ -210,6 +228,41 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
             searchsItems.add(item);
         }
         return searchsItems;
+    }
+
+    @Override
+    public List<OptionDTO> getKelurahanItems() {
+        var kelurahanItems = kelurahanRepository.getItemsKelurahan();
+        List<OptionDTO> kelurahans = new LinkedList<>();
+        for (var kelurahanItem : kelurahanItems){
+            OptionDTO item = new OptionDTO(kelurahanItem, kelurahanItem);
+            kelurahans.add(item);
+        }
+        return kelurahans;
+    }
+
+    @Override
+    public List<OptionDTO> getPotItems() {
+        var potItems = potRepository.getItemsPot();
+        List<OptionDTO> pots = new LinkedList<>();
+        for (var potItem : potItems){
+            OptionDTO item = new OptionDTO(potItem, potItem);
+            pots.add(item);
+        }
+        return pots;
+    }
+
+    @Override
+    public POTDataDTO getPotData(Integer idPOT) {
+        POT potData = potRepository.getPotById(idPOT);
+        POTDataDTO potDataDTO = new POTDataDTO();
+        potDataDTO.setId(potData.getId());
+        potDataDTO.setNamaPOT(potData.getNamaPOT());
+        potDataDTO.setNamaKategori(potData.getKategoriPOT().getNamaKategori());
+        if(potData.getIdMerk() == null){
+            List<String> merkData = merkRepository.getMerkByKategori(potData.getIdKategori());
+        }
+        return null;
     }
 
 
