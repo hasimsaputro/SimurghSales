@@ -29,8 +29,9 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
     @Query("""
             SELECT COUNT(1)
             FROM MitraAgen mit
+            JOIN mit.tipeMasterMitraAgen tm
             WHERE mit.deleteDate IS NULL
-            AND mit.idTipeMaster = :search
+            AND tm.namaTipeMaster = :search
             """)
     int getTotalpagesByTipe(String search);
 
@@ -45,16 +46,18 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
     @Query("""
             SELECT COUNT(1)
             FROM MitraAgen mit
+            JOIN mit.kelurahanDomisiliMitraAgen kel
             WHERE mit.deleteDate IS NULL
-            AND mit.idKelurahanDomisili = :search
+            AND kel.namaKelurahan = :search
             """)
     int getTotalpagesByKelurahan(String search);
 
     @Query("""
             SELECT COUNT(1)
             FROM MitraAgen mit
+            JOIN mit.cabangMitraAgen cb
             WHERE mit.deleteDate IS NULL
-            AND mit.idCabang = :search
+            AND cb.namaCabang = :search
             """)
     int getTotalpagesByCabang(String search);
 
@@ -86,8 +89,9 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
     @Query("""
             SELECT mit
             FROM MitraAgen mit
+            JOIN mit.tipeMasterMitraAgen tm
             WHERE mit.deleteDate IS NULL
-            AND mit.idTipeMaster = :search
+            AND tm.namaTipeMaster = :search
             """)
     List<MitraAgen> getMitraAgenByTipe(Pageable pageable, @Param("search") String search);
 
@@ -102,16 +106,18 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
     @Query("""
             SELECT mit
             FROM MitraAgen mit
+            JOIN mit.kelurahanDomisiliMitraAgen kel
             WHERE mit.deleteDate IS NULL
-            AND mit.idKelurahanDomisili = :search
+            AND kel.namaKelurahan = :search
             """)
     List<MitraAgen> getMitraAgenByKelurahan(Pageable pageable, @Param("search") String search);
 
     @Query("""
             SELECT mit
             FROM MitraAgen mit
+            JOIN mit.cabangMitraAgen cb
             WHERE mit.deleteDate IS NULL
-            AND mit.idCabang = :search
+            AND cb.namaCabang = :search
             """)
     List<MitraAgen> getMitraAgenByCabang(Pageable pageable, @Param("search") String search);
 
@@ -163,14 +169,7 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             """)
     List<String> getMitraAgenItemsByCabang();
 
-    @Query(value = """
-            SELECT CASE
-            WHEN mit.status = 1
-            THEN 'Aktif' ELSE 'Tidak Aktif'
-            END
-            FROM MitraAgen mit
-            WHERE mit.deleteDate IS NULL
-            """, nativeQuery = true)
+    @Query(value = "SELECT CASE WHEN mit.status = 1 THEN 'Aktif' ELSE 'Tidak Aktif' END FROM MitraAgen mit", nativeQuery = true)
     List<String> getMitraAgenItemsByStatus();
 
 

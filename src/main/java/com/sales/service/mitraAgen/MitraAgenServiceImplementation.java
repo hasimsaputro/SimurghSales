@@ -159,7 +159,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                 mitraAgenDetailDTO.setProduk(mitraAgen.getProdukMitraAgen().getNamaProduk());
                 mitraAgenDetailDTO.setCabang(mitraAgen.getCabangMitraAgen().getNamaCabang());
                 // Data Pribadi
-                String nomorIdentitas = String.format("%s - %s", mitraAgen.getIdIdentitas(), mitraAgen.getNomorIdentitas());
+                String nomorIdentitas = String.format("%s - %s", mitraAgen.getIdentitasMitraAgen().getNamaIdentitas(), mitraAgen.getNomorIdentitas());
                 mitraAgenDetailDTO.setNomorIdentitas(nomorIdentitas);
                 mitraAgenDetailDTO.setNama(mitraAgen.getNamaMitraAgen());
                 String jenisKelamin = mitraAgen.getJenisKelamin().equals("L") ? "Laki-laki" : "Perempuan";

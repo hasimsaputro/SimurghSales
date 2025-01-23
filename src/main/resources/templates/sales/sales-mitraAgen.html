@@ -3,6 +3,7 @@
 <head th:replace="~{layout :: head}">
 </head>
 <body>
+<script th:src="@{/js/mitraAgen-index.js}" defer></script>
 <header th:replace="~{layout :: header}">
 </header>
 <div class="container">
@@ -13,7 +14,7 @@
             <h3>
                 <a href="../usermanagement/master-jabatan.html"> Mitra / Agen </a>
             </h3>
-            <a class="black-button create-button" href="master-jabatan-form.html">
+            <a class="black-button create-button" th:href="@{/mitraAgen/form}">
                 Tambah
                 <i class="fas fa-plus" aria-hidden="true"></i>
             </a>

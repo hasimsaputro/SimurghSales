@@ -2,40 +2,42 @@
     let mainUrl = "http://localhost:8082/api/mitraAgen";
 
     let searchInput = document.querySelector("#search");
-    let suggestions = document.querySelector(".suggestions .search-container");
+    let suggestions = document.querySelector(".search-container .suggestions");
     let selectFilter = document.querySelector("#filter");
 
-    searchInput.addEventListener('input', => (){
+    searchInput.addEventListener('input', function() {
         const query = searchInput.value.toLowerCase();
         const filterValue = selectFilter.value;
-
+        console.log(filterValue);
         suggestions.innerHTML = '';
-        fetch(`${mainUrl}/getSearchItems={filterValue}`)
-            .then(response = response.json())
-            .then(data => {
-                const items = data.map(option => option.text);
-                if (query){
-                    const filteredData = items.filter(item => item.toLowerCase().includes(query));
-                    filteredData.forEach(item => {
-                        const div = document.createElement('div');
-                        div.classList.add('suggestion-item');
-                        div.textContent = item;
+        fetch(`${mainUrl}/getSearchItems=${filterValue}`)
+                .then(response => response.json())
+                .then(data => {
+                    const items = data.map(option => option.nama);
+                    console.log(items)
+                    if (query) {
+                        const filteredData = items.filter(item => item.toLowerCase().includes(query));
+                        console.log(filteredData)
+                        filteredData.forEach(item => {
+                            const div = document.createElement('div');
+                            div.classList.add('suggestion-item');
+                            div.textContent = item;
 
-                        div.addEventListener('click' => () {
-                            searchInput.value = item;
-                            suggestions.innerHTML = '';
+                            div.addEventListener('click', function() {
+                                searchInput.value = item;
+                                suggestions.innerHTML = '';
+                            });
+
+                            suggestions.appendChild(div);
                         });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+    });
 
-                        suggestions.appendChild(div);
-                    })
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            })
-    })
-
-    document.addEventListener('click' => (){
+    document.addEventListener('click',function(event){
         if(!event.target.closest('.search-container')){
             suggestions.innerHTML = '';
         }
