@@ -16,6 +16,8 @@ import java.util.List;
 
 @Service
 public class DataLeadsServiceImplementation implements DataLeadsService{
+    private final ProdukRepository produkRepository;
+    private final KeteranganAplikasiRepository keteranganAplikasiRepository;
     private final ModelRepository modelRepositoryl;
     private final TipeRepository tipeRepository;
     private final MerkRepository merkRepository;
@@ -25,7 +27,9 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
     private final UserRepository userRepository;
     private final Integer rowInPage = 10;
 
-    public DataLeadsServiceImplementation(ModelRepository modelRepositoryl, TipeRepository tipeRepository, MerkRepository merkRepository, KategoriRepository kategoriRepository, MitraAgenRepository mitraAgenRepository, DataLeadsRepository repository, UserRepository userRepository) {
+    public DataLeadsServiceImplementation(ProdukRepository produkRepository, KeteranganAplikasiRepository keteranganAplikasiRepository, ModelRepository modelRepositoryl, TipeRepository tipeRepository, MerkRepository merkRepository, KategoriRepository kategoriRepository, MitraAgenRepository mitraAgenRepository, DataLeadsRepository repository, UserRepository userRepository) {
+        this.produkRepository = produkRepository;
+        this.keteranganAplikasiRepository = keteranganAplikasiRepository;
         this.modelRepositoryl = modelRepositoryl;
         this.tipeRepository = tipeRepository;
         this.merkRepository = merkRepository;
@@ -92,8 +96,8 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
         if(dataLeads != null){
 
             dto.setId(dataLeads.getId());
-            dto.setIdProduk(dataLeads.getIdProduk());
-            dto.setTipeDebitur(dataLeads.getTipeDebitur());
+            dto.setIdProduk(dataLeads.getProdukDataleads().getNamaProduk());
+            dto.setTipeDebitur(dataLeads.getTipeDebitur() == "PU" ? true : false);
             dto.setTipeAplikasi(dataLeads.getTipeAplikasiDataLeads().getNamaTipeAplikasi()==null ? "":dataLeads.getTipeAplikasiDataLeads().getNamaTipeAplikasi());
             dto.setNamaDepanDebitur(dataLeads.getDebiturDataLeads().getNamaDepan());
             dto.setNamaTengahDebitur(dataLeads.getDebiturDataLeads().getNamaTengah());
@@ -141,7 +145,7 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
 
             dto.setId(dataLeads.getId());
             dto.setIdProduk(dataLeads.getIdProduk());
-            dto.setTipeDebitur(dataLeads.getTipeDebitur() == true ?"Perusahaan" : "Perseorangan" );
+            dto.setTipeDebitur(Boolean.TRUE.equals(dataLeads.getTipeDebitur()) ? "PU" : "PO");
             dto.setTipeAplikasi(dataLeads.getTipeAplikasiDataLeads().getNamaTipeAplikasi()==null ? "":dataLeads.getTipeAplikasiDataLeads().getNamaTipeAplikasi());
             dto.setNamaDepanDebitur(dataLeads.getDebiturDataLeads().getNamaDepan());
             dto.setNamaTengahDebitur(dataLeads.getDebiturDataLeads().getNamaTengah());
@@ -242,6 +246,36 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
 
         if(isexist == false){
             dataLeads = new DataLeads();
+            List<DataLeads> listUrutan = repository.getAllOnly();
+
+            String newId;
+            if (!listUrutan.isEmpty()) {
+                DataLeads lastDataLead = listUrutan.get(listUrutan.size() - 1);
+                String lastId = lastDataLead.getId();
+
+                if (lastId != null && lastId.startsWith("LEAD-")) {
+                    try {
+                        int lastNumber = Integer.parseInt(lastId.substring(5));
+                        newId = String.format("LEAD-%05d", lastNumber + 1);
+                    } catch (NumberFormatException e) {
+                        newId = "LEAD-00001";
+                    }
+                } else {
+                    newId = "LEAD-00001";
+                }
+            } else {
+                newId = "LEAD-00001";
+            }
+
+            dataLeads.setId(newId);
+            dataLeads.setIdProduk(produkRepository.getProdukByName(dataLeadsFormDTO.getIdProduk()).getId());
+            dataLeads.setNomorAplikasi("000000");
+            dataLeads.setTipeDebitur(dataLeadsFormDTO.getTipeDebitur() == true ? "PU" : "PO");
+
+
+
+            dataLeads.setIdKeteranganAplikasi(keteranganAplikasiRepository.getKeteranganAplikasiByName(dataLeadsFormDTO.getKeteranganAplikasi()).getId());
+
         }
 
 
@@ -272,8 +306,8 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
         OptionDTO dto1 = new OptionDTO();
         OptionDTO dto2 = new OptionDTO();
         List<OptionDTO> listdto = new LinkedList<>();
-        dto1.setValue("Interest");
-        dto2.setValue("Prospect");
+        dto1.setValue("1");
+        dto2.setValue("2");
         dto1.setText("Interest");
         dto2.setText("Prospect");
         listdto.add(dto1);

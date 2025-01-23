@@ -16,7 +16,7 @@ public class DataLeadsFormDTO {
     private String id;
 
     @NotBlank(message = "Nomor identitas harus diisi")
-    private Integer idProduk;
+    private String idProduk;
 
     @NotBlank(message = "Pilih Debitur")
     private Boolean tipeDebitur;

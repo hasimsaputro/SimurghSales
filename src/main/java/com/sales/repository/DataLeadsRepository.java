@@ -156,4 +156,10 @@ public interface DataLeadsRepository extends JpaRepository<DataLeads, String> {
 
     @Query(value = "SELECT CASE WHEN dl.status = 1 THEN 'Aktif' ELSE 'Tidak Aktif' END FROM DataLeads dl", nativeQuery = true)
     List<String> getItemsByStatus();
+
+    @Query("""
+            SELECT dl
+            FROM DataLeads dl
+            """)
+    List<DataLeads> getAllOnly();
 }
