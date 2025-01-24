@@ -37,7 +37,7 @@ public class MitraAgenController {
 
     @GetMapping("form")
     public String form(
-            @RequestParam(required = false) String id,
+            @RequestParam(defaultValue = "") String id,
             Model model
     ) {
         model.addAttribute("mitraAgenByIdGrid",service.getMitraAgenById(id));
@@ -51,7 +51,7 @@ public class MitraAgenController {
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()){
-            return "mitraAgen/form";
+            return "sales/sales-mitraAgen-from";
         } else {
             service.save(mitraAgenFormDTO);
             return "redirect:/mitraAgen";
