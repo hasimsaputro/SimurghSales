@@ -159,20 +159,10 @@
 
                             <tr>
                                 <td></td>
-                                <td th:switch="*{namaKelurahanIdentitas}">
-                                    <input type="checkbox" id="tambahAlamat"
-                                           th:checked="*{namaKelurahanIdentitas} != null"
-                                           th:if="*{namaKelurahanIdentitas} == null">
-
+                                <td>
                                     <input type="checkbox" id="alamatSama"
-                                           th:checked="*{namaKelurahanIdentitas} != null"
-                                           th:if="*{namaKelurahanIdentitas} != null and *{namaKelurahanIdentitas} == *{namaKelurahanDomisili}">
-
-                                    <input type="checkbox" id="alamatBeda"
-                                           th:checked="*{namaKelurahanIdentitas} != null"
-                                           th:if="*{namaKelurahanIdentitas} != null and *{namaKelurahanIdentitas} != *{namaKelurahanDomisili}">
-
-                                    <label>Alamat domisili sama dengan alamat identitas</label>
+                                           th:checked="*{namaKelurahanIdentitas} != null and *{namaKelurahanIdentitas} == *{namaKelurahanDomisili}">
+                                    <label for="alamatSama">Alamat domisili sama dengan alamat identitas</label>
                                 </td>
                             </tr>
 
@@ -237,14 +227,14 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><label class="nomortelepon">Nomor Telepon </label></td>
+                                <td><label class="label-nama">Nomor Telepon </label></td>
                                 <td>
                                     <input th:field="*{nomorTelepon}" id="nomortelepon" name="nomortelepon" type="text">
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
-                                <td><label class="nomorhandphone">Nomor Handphone * </label></td>
+                                <td><label class="label-nama">Nomor Handphone * </label></td>
                                 <td>
                                     <input th:field="*{nomorHandPhone}" id="nomorhandphone" name="nomorhandphone" type="text">
                                     <div class="field-validation-error"></div>
