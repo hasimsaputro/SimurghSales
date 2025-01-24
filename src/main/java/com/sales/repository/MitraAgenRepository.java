@@ -179,6 +179,7 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             FROM MitraAgen mit
             WHERE mit.Id LIKE :prefix
             ORDER BY mit.id DESC
+            LIMIT 1
             """)
     String getLastNumberById(String prefix);
 

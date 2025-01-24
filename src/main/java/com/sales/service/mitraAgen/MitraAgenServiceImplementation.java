@@ -226,7 +226,8 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
         MitraAgen mitraAgen = new MitraAgen();
         int idTipeMaster = tipeMasterRepository.getTipeMasterByName(mitraAgenFormDTO.getNamaTipeMaster()).getId();
         if (mitraAgenFormDTO.getId().isEmpty() || mitraAgenFormDTO.getId() == null){
-            mitraAgen.setId(generateId(idTipeMaster));
+            String idBaru = generateId(idTipeMaster);
+            mitraAgen.setId(idBaru);
         } else {
             mitraAgen.setId(mitraAgenFormDTO.getId());
         }
