@@ -36,7 +36,7 @@ public class MitraAgenController {
     }
 
     @GetMapping("form")
-    public String form(
+    public String insert(
             @RequestParam(defaultValue = "") String id,
             Model model
     ) {

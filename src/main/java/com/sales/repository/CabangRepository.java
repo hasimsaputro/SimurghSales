@@ -13,5 +13,5 @@ public interface CabangRepository extends JpaRepository<Cabang, Integer> {
             FROM Cabang cab
             WHERE cab.namaCabang = :namaCabang
             """)
-    Produk getCabangByName(String namaCabang);
+    Cabang getCabangByName(String namaCabang);
 }

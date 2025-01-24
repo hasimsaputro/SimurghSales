@@ -224,8 +224,8 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
     @Override
     public void save(MitraAgenFormDTO mitraAgenFormDTO) {
         MitraAgen mitraAgen = new MitraAgen();
-        if (mitraAgen.getId().isEmpty() && mitraAgen.getId() == null){
-            generateId(mitraAgenFormDTO.getIdTipeMaster());
+        if (mitraAgenFormDTO.getId().isEmpty() && mitraAgenFormDTO.getId() == null){
+            mitraAgen.setId(generateId(mitraAgenFormDTO.getIdTipeMaster()));
         } else {
             mitraAgen.setId(mitraAgenFormDTO.getId());
         }

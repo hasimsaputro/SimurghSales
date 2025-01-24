@@ -19,22 +19,24 @@
             </h3>
             <form method="post" class="upsert-form" th:attr="action=@{/mitraAgen/form}" th:object="${mitraAgenByIdGrid}" >
                 <input type="hidden" name="_csrf" value="${_csrf.token}">
-                <input type="hidden" th:field="*{id}">
+                <input th:if="*{id}==null" type="hidden" th:field="*{id}">
                 <input type="hidden" th:field="*{idTipeMaster}">
-                <input type="hidden" id="idTambah" name="idTambah" th:if="*{id}==null">
                 <table>
                     <tbody>
                     <tr th:if="*{id}!=null">
                         <td><label class="label-nama">Kode Mitra/Agen</label></td>
                         <td>
-                            <input id="idUbah" name="idUbah" type="text" th:field="*{id}" disabled >
+                            <input type="text" th:field="*{id}" readOnly >
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Tipe Master *</label></td>
                         <td>
-                            <input id="Tipe" name="tipe" type="text"  th:field="*{namaTipeMaster}" required >
+                            <div class="search-container">
+                                <input class="search-tipeMaster" id="tipeMaster" name="tipeMaster" type="text" th:field="*{namaTipeMaster}" required >
+                                <div class="suggestions tipeMaster"></div>
+                            </div>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -51,7 +53,7 @@
                     <tr>
                         <td><label class="label-nama">Cabang *</label></td>
                         <td>
-                            <input type="text" th:field="*{namaCabang}" th:value="${mitraAgenByIdGrid?.namaCabang}"  required disabled>
+                            <input type="text" th:field="*{namaCabang}" th:value="${mitraAgenByIdGrid?.namaCabang}"  required readOnly>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -159,20 +161,10 @@
 
                             <tr>
                                 <td></td>
-                                <td th:switch="*{namaKelurahanIdentitas}">
-                                    <input type="checkbox" id="tambahAlamat"
-                                           th:checked="*{namaKelurahanIdentitas} != null"
-                                           th:if="*{namaKelurahanIdentitas} == null">
-
+                                <td>
                                     <input type="checkbox" id="alamatSama"
-                                           th:checked="*{namaKelurahanIdentitas} != null"
-                                           th:if="*{namaKelurahanIdentitas} != null and *{namaKelurahanIdentitas} == *{namaKelurahanDomisili}">
-
-                                    <input type="checkbox" id="alamatBeda"
-                                           th:checked="*{namaKelurahanIdentitas} != null"
-                                           th:if="*{namaKelurahanIdentitas} != null and *{namaKelurahanIdentitas} != *{namaKelurahanDomisili}">
-
-                                    <label>Alamat domisili sama dengan alamat identitas</label>
+                                           th:checked="*{namaKelurahanIdentitas} != null and *{namaKelurahanIdentitas} == *{namaKelurahanDomisili}">
+                                    <label for="alamatSama">Alamat domisili sama dengan alamat identitas</label>
                                 </td>
                             </tr>
 
@@ -186,7 +178,7 @@
                             <tr>
                                 <td><label class="label-nama"> Kelurahan *</label></td>
                                 <td>
-                                    <div class="search-container2">
+                                    <div class="search-container">
                                         <input th:field="*{namaKelurahanDomisili}" id="kelurahanDomisili" name="kelurahanDomisili" type="text" class="search-kelurahan2" required>
                                         <div class="suggestions mitraKelurahan2"></div>
                                     </div>
@@ -237,14 +229,14 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><label class="nomortelepon">Nomor Telepon </label></td>
+                                <td><label class="label-nama">Nomor Telepon </label></td>
                                 <td>
                                     <input th:field="*{nomorTelepon}" id="nomortelepon" name="nomortelepon" type="text">
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
-                                <td><label class="nomorhandphone">Nomor Handphone * </label></td>
+                                <td><label class="label-nama">Nomor Handphone * </label></td>
                                 <td>
                                     <input th:field="*{nomorHandPhone}" id="nomorhandphone" name="nomorhandphone" type="text">
                                     <div class="field-validation-error"></div>
@@ -263,7 +255,10 @@
                             <tr>
                                 <td><label class="label-nama">Nama Bank*</label></td>
                                 <td>
-                                    <input th:field="*{namaBank}" id="bank" name="bank" type="text" required >
+                                    <div class="search-container">
+                                        <input class="search-bank" id="bank" name="bank" type="text" th:field="*{namaBank}" required >
+                                        <div class="suggestions bank"></div>
+                                    </div>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
