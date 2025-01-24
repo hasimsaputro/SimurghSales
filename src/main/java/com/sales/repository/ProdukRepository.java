@@ -22,4 +22,11 @@ public interface ProdukRepository extends JpaRepository<Produk, Integer> {
             WHERE pro.id = :id
             """)
     Produk getProdukById(Integer id);
+
+    @Query("""
+            SELECT pro
+            FROM Produk pro
+            WHERE pro.namaProduk = :namaProduk
+            """)
+    Produk getProdukByName(String namaProduk);
 }

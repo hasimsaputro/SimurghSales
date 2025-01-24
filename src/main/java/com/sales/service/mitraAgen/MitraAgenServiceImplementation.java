@@ -23,16 +23,18 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
     private final KelurahanRepository kelurahanRepository;
     private final IdentitasRepository identitasRepository;
     private final BankRepository bankRepository;
+    private final CabangRepository cabangRepository;
     private final int rowInPage = 1;
 
     @Autowired
-    public MitraAgenServiceImplementation(MitraAgenRepository repository, ProdukRepository produkRepository, TipeMasterRepository tipeMasterRepository, KelurahanRepository kelurahanRepository, IdentitasRepository identitasRepository, BankRepository bankRepository) {
+    public MitraAgenServiceImplementation(MitraAgenRepository repository, ProdukRepository produkRepository, TipeMasterRepository tipeMasterRepository, KelurahanRepository kelurahanRepository, IdentitasRepository identitasRepository, BankRepository bankRepository, CabangRepository cabangRepository) {
         this.repository = repository;
         this.produkRepository = produkRepository;
         this.tipeMasterRepository = tipeMasterRepository;
         this.kelurahanRepository = kelurahanRepository;
         this.identitasRepository = identitasRepository;
         this.bankRepository = bankRepository;
+        this.cabangRepository = cabangRepository;
     }
 
     @Override
@@ -128,26 +130,37 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                 MitraAgen mitraAgen = repository.findById(id).orElseThrow();
                 mitraAgenFormDTO.setId(mitraAgen.getId());
                 mitraAgenFormDTO.setIdTipeMaster(mitraAgen.getIdTipeMaster());
-                mitraAgenFormDTO.setIdProduk(mitraAgen.getIdProduk());
-                mitraAgenFormDTO.setIdCabang(mitraAgen.getIdCabang());
+                mitraAgenFormDTO.setNamaTipeMaster(mitraAgen.getTipeMasterMitraAgen().getNamaTipeMaster());
+                mitraAgenFormDTO.setNamaProduk(mitraAgen.getProdukMitraAgen().getNamaProduk());
+//                mitraAgenFormDTO.setIdProduk(mitraAgen.getIdProduk());
+//                mitraAgenFormDTO.setIdCabang(mitraAgen.getIdCabang());
+                mitraAgenFormDTO.setNamaCabang(mitraAgen.getCabangMitraAgen().getNamaCabang());
                 // Data Pribadi
-                mitraAgenFormDTO.setIdIdentitas(mitraAgen.getIdIdentitas());
+//                mitraAgenFormDTO.setIdIdentitas(mitraAgen.getIdIdentitas());
                 mitraAgenFormDTO.setNomorIdentitas(mitraAgen.getNomorIdentitas());
                 mitraAgenFormDTO.setNama(mitraAgen.getNamaMitraAgen());
                 mitraAgenFormDTO.setJenisKelamin(mitraAgen.getJenisKelamin());
                 mitraAgenFormDTO.setNpwp(mitraAgen.getNpwp());
                 mitraAgenFormDTO.setAlamatIdentitas(mitraAgen.getAlamatIdentitas());
-                mitraAgenFormDTO.setIdKelurahanIdentitas(mitraAgen.getIdKelurahanIdentitas());
+                mitraAgenFormDTO.setKodeposDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getKodePos());
+                mitraAgenFormDTO.setKodeposIdentitas(mitraAgen.getKelurahanIdentitasMitraAgen().getKodePos());
+                mitraAgenFormDTO.setKecamatanDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getKecamatan().getNamaKecamatan());
+                mitraAgenFormDTO.setKecamatanIdentitas(mitraAgen.getKelurahanIdentitasMitraAgen().getKecamatan().getNamaKecamatan());
+                mitraAgenFormDTO.setKotaDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getKabupaten().getNamaKabupatenKota());
+                mitraAgenFormDTO.setKotaIdentitas(mitraAgen.getKelurahanIdentitasMitraAgen().getKabupaten().getNamaKabupatenKota());
+                mitraAgenFormDTO.setProvinsiDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getProvinsi().getNamaProvinsi());
+                mitraAgenFormDTO.setProvinsiIdentitas(mitraAgen.getKelurahanIdentitasMitraAgen().getProvinsi().getNamaProvinsi());
                 mitraAgenFormDTO.setAlamatDomisili(mitraAgen.getAlamatDomisili());
-                mitraAgenFormDTO.setIdKelurahanDomisili(mitraAgen.getIdKelurahanDomisili());
+                mitraAgenFormDTO.setNamaKelurahanDomisili(mitraAgen.getKelurahanDomisiliMitraAgen().getNamaKelurahan());
+                mitraAgenFormDTO.setNamaKelurahanIdentitas(mitraAgen.getKelurahanIdentitasMitraAgen().getNamaKelurahan());
                 mitraAgenFormDTO.setTempatLahir(mitraAgen.getTempatLahir());
                 mitraAgenFormDTO.setTanggalLahir(mitraAgen.getTanggalLahir());
                 mitraAgenFormDTO.setNomorTelepon(mitraAgen.getNomorTelepon());
                 mitraAgenFormDTO.setNomorHandPhone(mitraAgen.getNomorHandphone());
                 // Bank
-                mitraAgenFormDTO.setIdBank(mitraAgen.getIdBank());
                 mitraAgenFormDTO.setNomorRekening(mitraAgen.getNomorRekening());
                 mitraAgenFormDTO.setNamaRekening(mitraAgen.getNamaRekening());
+                mitraAgenFormDTO.setNamaBank(mitraAgen.getBankMitraAgen().getNamaBank());
                 // Status
                 mitraAgenFormDTO.setStatus(mitraAgen.getStatus());
 
@@ -215,23 +228,23 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
         } else {
             mitraAgen.setId(mitraAgenFormDTO.getId());
         }
-        mitraAgen.setIdTipeMaster(mitraAgenFormDTO.getIdTipeMaster());
-        mitraAgen.setIdProduk(mitraAgenFormDTO.getIdProduk());
-        mitraAgen.setIdCabang(mitraAgenFormDTO.getIdCabang());
-        mitraAgen.setIdIdentitas(mitraAgenFormDTO.getIdIdentitas());
+        mitraAgen.setIdTipeMaster(tipeMasterRepository.getTipeMasterByName(mitraAgenFormDTO.getNamaTipeMaster()).getId());
+        mitraAgen.setIdProduk(produkRepository.getProdukByName(mitraAgenFormDTO.getNamaProduk()).getId());
+        mitraAgen.setIdCabang(cabangRepository.getCabangByName(mitraAgenFormDTO.getNamaCabang()).getId());
+        mitraAgen.setIdIdentitas(identitasRepository.getIdentitasByName(mitraAgenFormDTO.getNamaIdentitas()).getId() );
         mitraAgen.setNomorIdentitas(mitraAgenFormDTO.getNomorIdentitas());
         mitraAgen.setNamaMitraAgen(mitraAgenFormDTO.getNama());
         mitraAgen.setJenisKelamin(mitraAgenFormDTO.getJenisKelamin());
         mitraAgen.setNpwp(mitraAgenFormDTO.getNpwp());
         mitraAgen.setAlamatIdentitas(mitraAgenFormDTO.getAlamatIdentitas());
-        mitraAgen.setIdKelurahanIdentitas(mitraAgenFormDTO.getIdKelurahanIdentitas());
+        mitraAgen.setIdKelurahanIdentitas(kelurahanRepository.getKelurahanByName(mitraAgenFormDTO.getNamaKelurahanIdentitas()).getId());
         mitraAgen.setAlamatDomisili(mitraAgenFormDTO.getAlamatDomisili());
-        mitraAgen.setIdKelurahanDomisili(mitraAgenFormDTO.getIdKelurahanDomisili());
+        mitraAgen.setIdKelurahanDomisili(kelurahanRepository.getKelurahanByName(mitraAgenFormDTO.getNamaKelurahanDomisili()).getId());
         mitraAgen.setTempatLahir(mitraAgenFormDTO.getTempatLahir());
         mitraAgen.setTanggalLahir(mitraAgenFormDTO.getTanggalLahir());
         mitraAgen.setNomorTelepon(mitraAgenFormDTO.getNomorTelepon());
         mitraAgen.setNomorHandphone(mitraAgenFormDTO.getNomorHandPhone());
-        mitraAgen.setIdBank(mitraAgenFormDTO.getIdBank());
+        mitraAgen.setIdBank(bankRepository.getBankByName(mitraAgenFormDTO.getNamaBank()).getId());
         mitraAgen.setNomorRekening(mitraAgenFormDTO.getNomorRekening());
         mitraAgen.setNamaRekening(mitraAgenFormDTO.getNamaRekening());
         mitraAgen.setStatus(mitraAgenFormDTO.getStatus());

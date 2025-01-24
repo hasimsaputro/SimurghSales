@@ -9,10 +9,14 @@ import java.time.LocalDate;
 @Data
 public class MitraAgenFormDTO {
     private String id;
+    private String namaTipeMaster;
     private Integer idTipeMaster;
-    private Integer idProduk;
-    private Integer idCabang;
-    private Integer idIdentitas;
+    //    private Integer idProduk;
+    private String namaProduk;
+    //    private Integer idCabang;
+    private String namaCabang;
+    //    private Integer idIdentitas;
+    private String namaIdentitas;
 
     @NotBlank(message = "Nomor identitas harus diisi")
     @Length(max=20, message = "Nomor identitas tidak boleh melebihi 20 karakter")
@@ -32,21 +36,33 @@ public class MitraAgenFormDTO {
     @Length(max = 200, message = "Alamat identitas tidak boleh melebihi 200 karakter")
     private String alamatIdentitas;
 
-    @NotBlank(message = "Kelurahan identitas harus diisi")
-    private Integer idKelurahanIdentitas;
+//    @NotBlank(message = "Kelurahan identitas harus diisi")
+//    private Integer idKelurahanIdentitas;
+
+    private String namaKelurahanIdentitas;
+    private String kodeposIdentitas;
+    private String kecamatanIdentitas;
+    private String kotaIdentitas;
+    private String provinsiIdentitas;
 
     @NotBlank(message = "Alamat domisili harus diisi")
     @Length(max = 200, message = "Alamat domisili tidak boleh melebihi 200 karakter")
     private String alamatDomisili;
 
-    @NotBlank(message = "Kelurahan domisili harus diisi")
-    private Integer idKelurahanDomisili;
+//    @NotBlank(message = "Kelurahan domisili harus diisi")
+//    private Integer idKelurahanDomisili;
+
+    private String namaKelurahanDomisili;
+    private String kodeposDomisili;
+    private String kecamatanDomisili;
+    private String kotaDomisili;
+    private String provinsiDomisili;
 
     @NotBlank(message = "Tempat lahir harus diisi")
     @Length(max = 50, message = "Tempat lahir tidak boleh melebihi 50 karakter")
     private String tempatLahir;
 
-    @NotBlank(message = "Tanggal lahir harus diisi")
+    //    @NotBlank(message = "Tanggal lahir harus diisi")
     private LocalDate tanggalLahir;
 
     @Length(max = 20, message = "Nomor telepon tidak boleh melebihi 20 angka")
@@ -56,8 +72,10 @@ public class MitraAgenFormDTO {
     @Length(max = 20, message = "Nomor handphone tidak boleh melebihi 20 angka")
     private String nomorHandPhone;
 
-    @NotBlank(message = "Bank tidak boleh kosong")
-    private Integer idBank;
+//    @NotBlank(message = "Bank tidak boleh kosong")
+//    private Integer idBank;
+
+    private String namaBank;
 
     @NotBlank(message = "Nomor rekening harus diisi")
     @Length(max = 20, message = "Nomor rekening tidak boleh melebihi 20 angka")
@@ -67,6 +85,6 @@ public class MitraAgenFormDTO {
     @Length(max = 100, message = "Nama rekening tidak boleh melebihi 100 karakter")
     private String namaRekening;
 
-    @NotBlank(message = "Status harus diisi")
+    //    @NotBlank(message = "Status harus diisi")
     private Boolean status;
 }

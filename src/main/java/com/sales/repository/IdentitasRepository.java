@@ -22,4 +22,11 @@ public interface IdentitasRepository extends JpaRepository<Identitas, Integer> {
             WHERE ide.id = :id
             """)
     Identitas getIdentitasById(Integer id);
+
+    @Query("""
+            SELECT ide
+            FROM Identitas ide
+            WHERE ide.namaIdentitas = :namaIdentitas
+            """)
+    Identitas getIdentitasByName(String namaIdentitas);
 }

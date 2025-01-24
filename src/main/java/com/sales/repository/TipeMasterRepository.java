@@ -23,4 +23,11 @@ public interface TipeMasterRepository extends JpaRepository<TipeMaster, Integer>
             WHERE tip.id = :id
             """)
     TipeMaster getTipeMasterById(Integer id);
+
+    @Query("""
+            SELECT tip
+            FROM TipeMaster tip
+            WHERE tip.namaTipeMaster = :namaTipeMaster
+            """)
+    TipeMaster getTipeMasterByName(String namaTipeMaster);
 }

@@ -22,4 +22,11 @@ public interface BankRepository extends JpaRepository<Bank, Integer> {
             WHERE ba.id = :id
             """)
     Produk getBankById(Integer id);
+
+    @Query("""
+            SELECT ba
+            FROM Bank ba
+            WHERE ba.namaBank = :namaBank
+            """)
+    Produk getBankByName(String namaBank);
 }
