@@ -9,8 +9,8 @@ import java.time.LocalDate;
 @Data
 public class MitraAgenFormDTO {
     private String id;
-    private String namaTipeMaster;
     private Integer idTipeMaster;
+    private String namaTipeMaster;
     private Integer idProduk;
     private String namaProduk;
     private Integer idCabang;

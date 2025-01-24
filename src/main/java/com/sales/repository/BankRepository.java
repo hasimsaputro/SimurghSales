@@ -28,5 +28,5 @@ public interface BankRepository extends JpaRepository<Bank, Integer> {
             FROM Bank ba
             WHERE ba.namaBank = :namaBank
             """)
-    Produk getBankByName(String namaBank);
+    Bank getBankByName(String namaBank);
 }

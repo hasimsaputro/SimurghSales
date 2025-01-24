@@ -1,11 +1,12 @@
 (()=>{
-    let mainUrl = "http://localhost:8082/api/mitraAgen";
+    document.addEventListener('DOMContentLoaded', function() {
+        let mainUrl = "http://localhost:8082/api/mitraAgen";
 
-    let produkInput = document.querySelector("div.search-container input.search-produk");
-    let suggestionsProdukContainer = document.querySelector("div.search-container .suggestions.mitraProduk");
+        let produkInput = document.querySelector("div.search-container input.search-produk");
+        let suggestionsProdukContainer = document.querySelector("div.search-container .suggestions.mitraProduk");
 
-    let kelurahanInput = document.querySelector("div.search-container input.search-kelurahan");
-    let suggestionsKelurahanContainer = document.querySelector("div.search-container .suggestions.mitraKelurahan");
+        let kelurahanInput = document.querySelector("div.search-container input.search-kelurahan");
+        let suggestionsKelurahanContainer = document.querySelector("div.search-container .suggestions.mitraKelurahan");
 
     let kelurahanInput2 = document.querySelector("div.search-container input.search-kelurahan2");
     let suggestionsKelurahanContainer2 = document.querySelector(".suggestions.mitraKelurahan2");
@@ -17,31 +18,47 @@
     let suggestionsBankContainer = document.querySelector("div.search-container .suggestions.bank")
 
     tipeMasterInput.addEventListener("input",()=> {
-              const query = tipeMasterInput.value.toLowerCase();
-              suggestionsTipeMasterContainer.innerHTML ="";
-              fetch(`${mainUrl}/tipeMaster-options`).then(response => response.json()).then(data => {
-              const items = data.map(option => option.namaTipeMaster);
-              if (query) {
-                                  const filteredData = items.filter(item => item.toLowerCase().includes(query));
-                                  console.log(filteredData)
-                                  filteredData.forEach(item => {
-                                      const div = document.createElement('div');
-                                      div.classList.add('suggestion-item');
-                                      div.textContent = item;
+                  const query = tipeMasterInput.value.toLowerCase();
+                  suggestionsTipeMasterContainer.innerHTML ="";
+                  fetch(`${mainUrl}/tipeMaster-options`).then(response => response.json()).then(data => {
+                  const items = data.map(option => option.namaTipeMaster);
+                  if (query) {
+                                      const filteredData = items.filter(item => item.toLowerCase().includes(query));
+                                      console.log(filteredData)
+                                      filteredData.forEach(item => {
+                                          const div = document.createElement('div');
+                                          div.classList.add('suggestion-item');
+                                          div.textContent = item;
 
-                                      div.addEventListener('click', function() {
-                                          tipeMasterInput.value = item;
-                                          suggestionsTipeMasterContainer.innerHTML = '';
+                                          div.addEventListener('click', function() {
+                                              tipeMasterInput.value = item;
+                                              suggestionsTipeMasterContainer.innerHTML = '';
+                                          });
+
+                                          suggestionsTipeMasterContainer.appendChild(div);
                                       });
+                                  }
+                  })
+                  .catch(error => {
+                                  console.error('Error fetching data:', error);
+                              });
+            })
 
-                                      suggestionsTipeMasterContainer.appendChild(div);
-                                  });
-                              }
-              })
-              .catch(error => {
-                              console.error('Error fetching data:', error);
-                          });
-        })
+        const alamatSamaCheckbox = document.getElementById('alamatSama');
+
+        const address = document.getElementById('address');
+        const kelurahanIdentitas = document.getElementById('kelurahanIdentitas');
+        const kodeposIdentitas = document.getElementById('kodeposIdentitas');
+        const kecamatanIdentitas = document.getElementById('kecamatanIdentitas');
+        const kotakabupatenIdentitas = document.getElementById('kotakabupatenIdentitas');
+        const provinsiIdentitas = document.getElementById('provinsiIdentitas');
+
+        const alamatDomisili = document.getElementById('alamatDomisili');
+        const kelurahanDomisili = document.getElementById('kelurahanDomisili');
+        const kodeposDomisili = document.getElementById('kodeposDomisili');
+        const kecamatanDomisili = document.getElementById('kecamatanDomisili');
+        const kotakabupatenDomisili = document.getElementById('kotakabupatenDomisili');
+        const provinsiDomisili = document.getElementById('provinsiDomisili');
 
     produkInput.addEventListener("input",()=> {
           const query = produkInput.value.toLowerCase();
@@ -174,11 +191,45 @@ kelurahanInput2.addEventListener("input", () => {
         }
     });
 
-//    document.addEventListener('click',function(event){
-//        if(!event.target.closest('.search-container')){
-//            suggestionsKelurahanContainer.innerHTML ='';
-//        }
-//    })
+        let populateUbah2 = (ubah) => {
+            let bankField = document.querySelector("#bank");
+            let rekField = document.querySelector("#rek");
+            let namaRekField = document.querySelector("#namarekening");
 
+            bankField.textContent = ubah.bank;
+            rekField.textContent = ubah.nomorRekening;
+            namaRekField.textContent = ubah.namaRekening;
+        }
 
+        if (alamatSamaCheckbox.checked){
+            alamatDomisili.readOnly = true;
+            kelurahanDomisili.readOnly = true;
+        }
+
+        function copyIdentitasToDomisili() {
+            if (alamatSamaCheckbox.checked) {
+                alamatDomisili.value = address.value;
+                kelurahanDomisili.value = kelurahanIdentitas.value;
+                kodeposDomisili.value = kodeposIdentitas.value;
+                kecamatanDomisili.value = kecamatanIdentitas.value;
+                kotakabupatenDomisili.value = kotakabupatenIdentitas.value;
+                provinsiDomisili.value = provinsiIdentitas.value;
+
+                alamatDomisili.readOnly = true;
+                kelurahanDomisili.readOnly = true;
+            } else {
+                alamatDomisili.value = '';
+                kelurahanDomisili.value = '';
+                kodeposDomisili.value = '';
+                kecamatanDomisili.value = '';
+                kotakabupatenDomisili.value = '';
+                provinsiDomisili.value = '';
+
+                alamatDomisili.readOnly = false;
+                kelurahanDomisili.readOnly = false;
+            }
+        }
+
+        alamatSamaCheckbox.addEventListener('change', copyIdentitasToDomisili);
+    });
 })()

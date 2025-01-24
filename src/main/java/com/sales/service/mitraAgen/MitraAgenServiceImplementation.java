@@ -224,15 +224,20 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
     @Override
     public void save(MitraAgenFormDTO mitraAgenFormDTO) {
         MitraAgen mitraAgen = new MitraAgen();
-        if (mitraAgenFormDTO.getId().isEmpty() && mitraAgenFormDTO.getId() == null){
-            mitraAgen.setId(generateId(mitraAgenFormDTO.getIdTipeMaster()));
+        int idTipeMaster = tipeMasterRepository.getTipeMasterByName(mitraAgenFormDTO.getNamaTipeMaster()).getId();
+        if (mitraAgenFormDTO.getId().isEmpty() || mitraAgenFormDTO.getId() == null){
+            mitraAgen.setId(generateId(idTipeMaster));
         } else {
             mitraAgen.setId(mitraAgenFormDTO.getId());
         }
-        mitraAgen.setIdTipeMaster(tipeMasterRepository.getTipeMasterByName(mitraAgenFormDTO.getNamaTipeMaster()).getId());
+        mitraAgen.setIdTipeMaster(idTipeMaster);
         mitraAgen.setIdProduk(produkRepository.getProdukByName(mitraAgenFormDTO.getNamaProduk()).getId());
-        mitraAgen.setIdCabang(cabangRepository.getCabangByName(mitraAgenFormDTO.getNamaCabang()).getId());
-        mitraAgen.setIdIdentitas(identitasRepository.getIdentitasByName(mitraAgenFormDTO.getNamaIdentitas()).getId() );
+        if (mitraAgenFormDTO.getIdCabang()==null){
+            mitraAgen.setIdCabang(1);
+        } else {
+            mitraAgen.setIdCabang(cabangRepository.getCabangByName(mitraAgenFormDTO.getNamaCabang()).getId());
+        }
+        mitraAgen.setIdIdentitas(mitraAgenFormDTO.getIdIdentitas());
         mitraAgen.setNomorIdentitas(mitraAgenFormDTO.getNomorIdentitas());
         mitraAgen.setNamaMitraAgen(mitraAgenFormDTO.getNama());
         mitraAgen.setJenisKelamin(mitraAgenFormDTO.getJenisKelamin());
