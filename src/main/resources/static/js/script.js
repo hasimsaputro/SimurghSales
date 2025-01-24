@@ -24,10 +24,10 @@ function togglePart(partId) {
 //});
 
 
-  $(document).ready(function() {
+$(document).ready(function() {
+    // Inisialisasi datepicker
     $("#tanggal").datepicker({
-      dateFormat: "dd MM yy", // Format: 01 Januari 2025
-      regional: "id" // Mengatur bahasa Indonesia
+        dateFormat: "dd MM yy", // Format: 01 Januari 2025
+        regional: "id" // Mengatur bahasa Indonesia
     });
-  });
-
+});

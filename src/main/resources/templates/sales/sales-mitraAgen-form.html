@@ -13,7 +13,7 @@
             <h3>
                 <a th:href="@{/mitraAgen}"> Mitra / Agen </a>
                 <span th:switch="*{id}">
-                    <span case="null"> > Tambah</span>
+                    <span th:case="null"> > Tambah</span>
                     <span th:case="*{id}"> > Ubah</span>
                 </span>
             </h3>
@@ -76,9 +76,11 @@
                             <tr>
                                 <td><label class="identitas" >Nomor Identitas*</label></td>
                                 <td>
-                                    <select name="idIdentitas" id="idIdentitas" >
-                                        <option th:field="*{namaIdentitas}" value="*{KTP}">KTP</option>
-                                        <option th:field="*{namaIdentitas}" value="*{SIM}">SIM</option>
+                                    <select name="idIdentitas" id="idIdentitas">
+                                        <option th:each="identitas : ${identitasGrid}"
+                                                th:object="${identitas}"
+                                                th:text="*{namaIdentitas}"
+                                                th:value="*{id}"></option>
                                     </select>
 
                                     <input th:field="*{nomorIdentitas}" id="identitas" name="identitas" type="number" required placeholder="&#xf095;   081234567890">
@@ -157,9 +159,20 @@
 
                             <tr>
                                 <td></td>
-                                <td>
-                                    <input type="checkbox" id="domisiliSama" checked th:if="*{namaKelurahanIdentitas}==*{namaKelurahanDomisili}">
-                                    <label for="domisiliSama">Alamat domisili sama dengan alamat identitas</label>
+                                <td th:switch="*{namaKelurahanIdentitas}">
+                                    <input type="checkbox" id="tambahAlamat"
+                                           th:checked="*{namaKelurahanIdentitas} != null"
+                                           th:if="*{namaKelurahanIdentitas} == null">
+
+                                    <input type="checkbox" id="alamatSama"
+                                           th:checked="*{namaKelurahanIdentitas} != null"
+                                           th:if="*{namaKelurahanIdentitas} != null and *{namaKelurahanIdentitas} == *{namaKelurahanDomisili}">
+
+                                    <input type="checkbox" id="alamatBeda"
+                                           th:checked="*{namaKelurahanIdentitas} != null"
+                                           th:if="*{namaKelurahanIdentitas} != null and *{namaKelurahanIdentitas} != *{namaKelurahanDomisili}">
+
+                                    <label>Alamat domisili sama dengan alamat identitas</label>
                                 </td>
                             </tr>
 
@@ -212,14 +225,14 @@
                             <tr>
                                 <td><label class="label-nama">Tempat Lahir *</label></td>
                                 <td>
-                                    <input th:field="*{tempatLahir}" id="tempatlahir" name="tempatLahir" type="text" required >
+                                    <input th:field="*{tempatLahir}" id="tempatLahir" name="tempatLahir" type="text" required >
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Tanggal Lahir *</label></td>
                                 <td>
-                                    <input th:field="*{tanggalLahir}" id="tanggalLahir" name="tanggalLahir" type="date" required>
+                                    <input th:value="*{tanggalLahir}" id="tanggalLahir" name="tanggalLahir" type="date" required>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>

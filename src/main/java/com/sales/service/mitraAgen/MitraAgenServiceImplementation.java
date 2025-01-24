@@ -137,6 +137,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                 mitraAgenFormDTO.setNamaCabang(mitraAgen.getCabangMitraAgen().getNamaCabang());
                 // Data Pribadi
                 mitraAgenFormDTO.setIdIdentitas(mitraAgen.getIdIdentitas());
+//                mitraAgenFormDTO.setNamaIdentitas(mitraAgen.getIdentitasMitraAgen().getNamaIdentitas());
                 mitraAgenFormDTO.setNomorIdentitas(mitraAgen.getNomorIdentitas());
                 mitraAgenFormDTO.setNama(mitraAgen.getNamaMitraAgen());
                 mitraAgenFormDTO.setJenisKelamin(mitraAgen.getJenisKelamin());

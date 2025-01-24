@@ -41,6 +41,7 @@ public class MitraAgenController {
             Model model
     ) {
         model.addAttribute("mitraAgenByIdGrid",service.getMitraAgenById(id));
+        model.addAttribute("identitasGrid", service.getIdentitasOption());
         return "sales/sales-mitraAgen-form";
     }
 
@@ -51,7 +52,7 @@ public class MitraAgenController {
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()){
-            return "sales/sales-mitraAgen-from";
+            return "sales/sales-mitraAgen-form";
         } else {
             service.save(mitraAgenFormDTO);
             return "redirect:/mitraAgen";
