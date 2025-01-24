@@ -1,6 +1,7 @@
 package com.sales.service.dataLeads;
 
 import com.sales.dto.OptionDTO;
+import com.sales.dto.OptionKelurahanDTO;
 import com.sales.dto.dataLeads.DataLeadsDetailDTO;
 import com.sales.dto.dataLeads.DataLeadsFormDTO;
 import com.sales.dto.dataLeads.DataLeadsIndexDTO;
@@ -20,6 +21,9 @@ public interface DataLeadsService {
     void updateInsertDataLeads(DataLeadsFormDTO dataLeadsFormDTO);
 
     List<OptionDTO> getOptionSumberDataAplikasi();
+    List<OptionKelurahanDTO> getOptionKelurahan();
+    List<OptionDTO> getOptionProduk();
+    List<OptionDTO> getOptionTipeAplikasi();
     List<OptionDTO> getOptionReferensi();
     List<OptionDTO> getOptionKeteranganAplikasi();
     List<OptionDTO> getOptionPOT();

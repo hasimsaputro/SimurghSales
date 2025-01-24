@@ -20,7 +20,11 @@
                     <tr>
                         <td><label class="label-nama">Product *</label></td>
                         <td>
-                            <input id="product" name="product" type="text" required th:field="${dataLeadsById.idProduk}">
+                            <div class="search-container">
+                                <input class="search-produk" id="product" name="product" type="text" required th:field="${dataLeadsById.idProduk}">
+                                <div class="suggestions-produk" ></div>
+                            </div>
+
                             <div class="field-validation-error"></div>
                         </td>
                     <tr>
@@ -35,8 +39,11 @@
                     <tr>
                         <td><label class="label-nama">Tipe Aplikasi *</label></td>
                         <td>
-                            <input id="tipe-aplikasi" name="tipe-aplikasi" type="text" required th:field="${dataLeadsById.tipeAplikasi}">
-                            <div class="field-validation-error"></div>
+                            <div class="search-container">
+                                <input id="tipe-aplikasi" name="tipe-aplikasi" type="text" required th:field="${dataLeadsById.tipeAplikasi}">
+                                <div class="suggestions-tipeAplikasi"></div>
+                                <div class="field-validation-error"></div>
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -95,7 +102,9 @@
                     <tr>
                         <td><label class="label-nama">Kelurahan *</label></td>
                         <td>
+                            <div class="search-container"></div>
                             <input id="kelurahan" name="kelurahan" type="text" required th:field="${dataLeadsById.kelurahan}">
+                            <div class="suggestions-kelurahan"></div>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -131,7 +140,7 @@
                     <tr>
                         <td></td>
                         <td class="input-box">
-                            <input type="checkbox" id="" name="" required>
+                            <input type="checkbox" id="" name="" >
                             <label for="">Sama Dengan Alamat Identitas</label>
                             <div class="field-validation-error"></div>
                         </td>
@@ -147,7 +156,9 @@
                     <tr>
                         <td><label class="label-nama">Kelurahan *</label></td>
                         <td>
+                            <div class="search-container"></div>
                             <input id="kelurahan-domisili" name="kelurahan-domisili" type="text" required th:field="${dataLeadsById.kelurahanDomisili}">
+                            <div class="suggestions-kelurahanDomisili"></div>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -216,16 +227,24 @@
                     <tr>
                         <td><label class="label-nama">Sumber Data Aplikasi *</label></td>
                         <td>
-                            <input id="sumber-data-aplikasi" name="sumber-data-aplikasi" type="text" th:field="${dataLeadsById.sumberDataAplikasi}">
-                            <div class="field-validation-error"></div>
+                            <div class="search-container">
+                                <input id="sumber-data-aplikasi" name="sumber-data-aplikasi" type="text" th:field="${dataLeadsById.sumberDataAplikasi}">
+                                <div class="suggestions-sumberDataAplikasi"></div>
+                                <div class="field-validation-error"></div>
+                            </div>
+
                         </td>
                     </tr>
 
                     <tr>
                         <td><label class="label-nama">Referensi</label></td>
                         <td>
-                            <input id="referensi" name="referensi" type="text" th:field="${dataLeadsById.referensi}">
-                            <div class="field-validation-error"></div>
+                            <div class="search-container">
+                                <input id="referensi" name="referensi" type="text" th:field="${dataLeadsById.referensi}">
+                                <div class="suggestions-referensi"></div>
+                                <div class="field-validation-error"></div>
+                            </div>
+
                         </td>
                     </tr>
 
@@ -240,8 +259,12 @@
                     <tr>
                         <td><label class="label-nama">Keterangan Aplikasi</label></td>
                         <td>
-                            <input id="keterangan-aplikasi" name="keterangan-aplikasi" type="text" th:field="${dataLeadsById.keteranganAplikasi}">
-                            <div class="field-validation-error"></div>
+                            <div class="search-container">
+                                <input id="keterangan-aplikasi" name="keterangan-aplikasi" type="text" th:field="${dataLeadsById.keteranganAplikasi}">
+                                <div class="suggestions-keterangan-aplikasi"></div>
+                                <div class="field-validation-error"></div>
+                            </div>
+
                         </td>
                     </tr>
 

@@ -78,6 +78,15 @@ public class DataLeadsRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
         }
     }
+    @GetMapping("tipeAplikasi")
+    public ResponseEntity<Object> getOptioonTipeAplikasi(){
+        try{
+            var optionKeteranganAplikasi= service.getOptionTipeAplikasi();
+            return ResponseEntity.status(HttpStatus.OK).body(optionKeteranganAplikasi);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
 
     @GetMapping("referensi")
     public ResponseEntity<Object> getOptioonReferensi(){
@@ -89,11 +98,31 @@ public class DataLeadsRestController {
         }
     }
 
+    @GetMapping("produk")
+    public ResponseEntity<Object> getOptioonProduk(){
+        try{
+            var optionReferensi= service.getOptionProduk();
+            return ResponseEntity.status(HttpStatus.OK).body(optionReferensi);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+
     @GetMapping("sumberDataAplikasi")
     public ResponseEntity<Object> getSumberDataApliakasi(){
         try{
             var optionSumberDataAplikasi= service.getOptionSumberDataAplikasi();
             return ResponseEntity.status(HttpStatus.OK).body(optionSumberDataAplikasi);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+
+    @GetMapping("kelurahan")
+    public ResponseEntity<Object> getKelurahan(){
+        try{
+            var optionKelurahan= service.getOptionKelurahan();
+            return ResponseEntity.status(HttpStatus.OK).body(optionKelurahan);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
         }

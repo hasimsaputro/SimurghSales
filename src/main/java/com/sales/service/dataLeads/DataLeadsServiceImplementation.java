@@ -1,6 +1,7 @@
 package com.sales.service.dataLeads;
 
 import com.sales.dto.OptionDTO;
+import com.sales.dto.OptionKelurahanDTO;
 import com.sales.dto.dataLeads.DataLeadsDetailDTO;
 import com.sales.dto.dataLeads.DataLeadsFormDTO;
 import com.sales.dto.dataLeads.DataLeadsIndexDTO;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class DataLeadsServiceImplementation implements DataLeadsService{
@@ -131,13 +133,21 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
             dto.setNomorHandphone2(dataLeads.getDebiturDataLeads().getNomorHP2());
             dto.setNomorTelepon(dataLeads.getDebiturDataLeads().getNomorTelepon());
             dto.setSumberDataAplikasi(dataLeads.getMitraAgenDataLeads().getNamaMitraAgen());
-            dto.setReferensi(dataLeads.getIdDebiturReferensi()== null? "" : dataLeads.getDebiturReferensiDataLeads().getNamaDepan().concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaTengah()).concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaAkhir()));
+            dto.setReferensi("");
             dto.setJenisUsaha(dataLeads.getJenisUsaha());
             dto.setKeteranganAplikasi(dataLeads.getKeteranganAplikasi().getNamaKeteranganAplikasi());
             dto.setSurveyor(userRepository.getUserByCabangAndSurveyor(dataLeads.getIdCabang()) == null ? "Cabang Tidak Ada Surveyor" :  userRepository.getUserByCabangAndSurveyor(dataLeads.getIdCabang()).getNamaKaryawan());
             dto.setStatus(dataLeads.getStatus());
             dto.setPot(dataLeads.getPotDataLeads().getNamaPOT());
             dto.setTenor(dataLeads.getPotDataLeads().getTenor().toString());
+            dto.setKategori(dataLeads.getKategoriDataLeads().getNamaKategori());
+            dto.setMerek(dataLeads.getMerkDataLeads().getNamaMerk());
+            dto.setModel(dataLeads.getModelDataLeads().getNamaModel());
+            dto.setTipe(dataLeads.getTipeDataLeads().getNamaTipe());
+            dto.setTahun(dataLeads.getTahun());
+            dto.setTahunPajakSTNK(dataLeads.getTahunPajakSTNK());
+            dto.setNomorBPKB(dataLeads.getNomorBPKB());
+            dto.setNomorPolisi(dataLeads.getNomorPolisi());
             //Kurang Estimasi Nilai Faunding dan Data Unit
             //dan unit
         }
@@ -191,10 +201,10 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
             dto.setNomorHandphone2(dataLeads.getDebiturDataLeads().getNomorHP2());
             dto.setNomorTelepon(dataLeads.getDebiturDataLeads().getNomorTelepon());
             dto.setSumberDataAplikasi(dataLeads.getMitraAgenDataLeads().getNamaMitraAgen());
-            dto.setReferensi(dataLeads.getIdDebiturReferensi()== null? "" : dataLeads.getDebiturReferensiDataLeads().getNamaDepan().concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaTengah()).concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaAkhir()));
+            dto.setReferensi("");
             dto.setJenisUsaha(dataLeads.getJenisUsaha());
             dto.setKeteranganAplikasi(dataLeads.getKeteranganAplikasi().getNamaKeteranganAplikasi());
-            dto.setSurveyor(userRepository.getUserByCabangAndSurveyor(dataLeads.getIdCabang()) == null ? "Cabang Tidak Ada Surveyor" :  userRepository.getUserByCabangAndSurveyor(dataLeads.getIdCabang()).getNamaKaryawan());
+            dto.setSurveyor(userRepository.getUserByCabangAndSurveyor(dataLeads.getIdCabang()) == null ? "Belum Memiliki Surveyor" :  userRepository.getUserByCabangAndSurveyor(dataLeads.getIdCabang()).getNamaKaryawan());
             dto.setStatus(dataLeads.getStatus());
             dto.setPot(dataLeads.getPotDataLeads().getNamaPOT());
             dto.setTenor(dataLeads.getPotDataLeads().getTenor().toString());
@@ -253,16 +263,24 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
         DataLeads dataLeads = repository.getDataLeadsById(dataLeadsFormDTO.getId());
         Boolean isexist = dataLeads == null ? false : true;
         if(isexist == false) {
-            dataLeads = new DataLeads();
-            String newId = "LEAD-00001";
-            dataLeads.setId(newId);
+            List<DataLeads> list = repository.findAll();
+
+            if(list.size() == 0){
+                dataLeads = new DataLeads();
+                String newId = "LEAD-00001";
+                dataLeads.setId(newId);
+            }else {
+                dataLeads = new DataLeads();
+                List<DataLeads> listUrutan = repository.getAllOnly();
+                DataLeads lastDataLead = listUrutan.get(listUrutan.size() - 1);
+                String lastId = lastDataLead.getId();
+                int lastNumber = Integer.parseInt(lastId.substring(5));
+                String newId = String.format("LEAD-%05d", lastNumber + 1);
+                dataLeads.setId(newId);
+            }
+
         }else{
-            List<DataLeads> listUrutan = repository.getAllOnly();
-            DataLeads lastDataLead = listUrutan.get(listUrutan.size() - 1);
-            String lastId = lastDataLead.getId();
-            int lastNumber = Integer.parseInt(lastId.substring(5));
-            String newId = String.format("LEAD-%05d", lastNumber + 1);
-            dataLeads.setId(newId);
+            dataLeads.setId(dataLeadsFormDTO.getId());
         }
 
             dataLeads.setIdProduk(produkRepository.getProdukByName(dataLeadsFormDTO.getIdProduk()).getId());
@@ -273,7 +291,7 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
             List<Debitur> debiturList = debiturRepository.getAllOnly();
             Debitur debitur = new Debitur();
             if(dataLeads.getIdTipeAplikasi() == 1 /*Artinya Debitur Baruu*/) {
-                if(debiturList == null){
+                if(debiturList.size() == 0){
                     String newId = "C012400001";
                     debitur.setId(newId);
                 }else {
@@ -285,7 +303,22 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
                 }
 
             }else {
-                debitur.setId(debiturRepository.getDebiturByNik(dataLeadsFormDTO.getNomorIdentitas()).getId());
+                Debitur debiturByNik = debiturRepository.getDebiturByNik(dataLeadsFormDTO.getNomorIdentitas());
+
+                if (debiturByNik == null || debiturByNik.getId() == null) {
+                    // Tidak ditemukan debitur, buat ID baru untuk debitur
+                    Debitur lastDebitur = debiturList.get(debiturList.size() - 1);
+                    String lastId = lastDebitur.getId();
+                    int lastNumber = Integer.parseInt(lastId.substring(5));
+                    String newId = String.format("C0124%05d", lastNumber + 1);
+                    debitur.setId(newId);
+                    dataLeads.setIdTipeAplikasi(1);
+                } else {
+                    // Ditemukan debitur, gunakan ID yang ada
+                    debitur.setId(debiturByNik.getId());
+                }
+
+
 
             }
 
@@ -354,21 +387,70 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
     }
 
     @Override
+    public List<OptionKelurahanDTO> getOptionKelurahan() {
+        List<Kelurahan> listKelurahan = kelurahanRepository.findAll();
+        List<OptionKelurahanDTO> optionKelurahanDTOS = new LinkedList<>();
+
+        for (var kelurahan : listKelurahan){
+            OptionKelurahanDTO dto = new OptionKelurahanDTO();
+            dto.setValue(kelurahan.getId());
+            dto.setKelurahan(kelurahan.getNamaKelurahan());
+            dto.setKecamatan(kelurahan.getKecamatan().getNamaKecamatan());
+            dto.setKotaKabupaten(kelurahan.getKecamatan().getKabupaten().getNamaKabupatenKota());
+            dto.setProvinsi(kelurahan.getKecamatan().getKabupaten().getProvinsi().getNamaProvinsi());
+            dto.setKodePos(kelurahan.getKodePos());
+            optionKelurahanDTOS.add(dto);
+        }
+        return optionKelurahanDTOS;
+    }
+
+    @Override
+    public List<OptionDTO> getOptionProduk() {
+
+        List<Produk> listProduk = produkRepository.getAll();
+        List<OptionDTO> listDto = new LinkedList<>();
+        for(var pro : listProduk){
+            OptionDTO dto1 = new OptionDTO();
+            dto1.setText(pro.getNamaProduk());
+            dto1.setValue(pro.getId().toString());
+            listDto.add(dto1);
+        }
+
+        return listDto;
+    }
+
+    @Override
+    public List<OptionDTO> getOptionTipeAplikasi() {
+        List<OptionDTO> optionDTOList = new LinkedList<>();
+        List<TipeAplikasi> list = tipeAplikasiRepository.findAll();
+
+        for(var tipe : list){
+            OptionDTO dto = new OptionDTO();
+            dto.setText(tipe.getNamaTipeAplikasi());
+            dto.setValue(tipe.getId().toString());
+            optionDTOList.add(dto);
+        }
+        return optionDTOList;
+    }
+
+    @Override
     public List<OptionDTO> getOptionReferensi() {
+
         return null;
     }
 
     @Override
     public List<OptionDTO> getOptionKeteranganAplikasi() {
-        OptionDTO dto1 = new OptionDTO();
-        OptionDTO dto2 = new OptionDTO();
+        List<KeteranganAplikasi> listket = keteranganAplikasiRepository.findAll();
+
         List<OptionDTO> listdto = new LinkedList<>();
-        dto1.setValue("1");
-        dto2.setValue("2");
-        dto1.setText("Interest");
-        dto2.setText("Prospect");
-        listdto.add(dto1);
-        listdto.add(dto2);
+
+        for (var ket : listket){
+            OptionDTO dto = new OptionDTO();
+            dto.setText(ket.getNamaKeteranganAplikasi());
+            dto.setValue(ket.getId().toString());
+            listdto.add(dto);
+        }
 
         return listdto;
     }
