@@ -132,11 +132,11 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                 mitraAgenFormDTO.setIdTipeMaster(mitraAgen.getIdTipeMaster());
                 mitraAgenFormDTO.setNamaTipeMaster(mitraAgen.getTipeMasterMitraAgen().getNamaTipeMaster());
                 mitraAgenFormDTO.setNamaProduk(mitraAgen.getProdukMitraAgen().getNamaProduk());
-//                mitraAgenFormDTO.setIdProduk(mitraAgen.getIdProduk());
-//                mitraAgenFormDTO.setIdCabang(mitraAgen.getIdCabang());
+                mitraAgenFormDTO.setIdProduk(mitraAgen.getIdProduk());
+                mitraAgenFormDTO.setIdCabang(mitraAgen.getIdCabang());
                 mitraAgenFormDTO.setNamaCabang(mitraAgen.getCabangMitraAgen().getNamaCabang());
                 // Data Pribadi
-//                mitraAgenFormDTO.setIdIdentitas(mitraAgen.getIdIdentitas());
+                mitraAgenFormDTO.setIdIdentitas(mitraAgen.getIdIdentitas());
                 mitraAgenFormDTO.setNomorIdentitas(mitraAgen.getNomorIdentitas());
                 mitraAgenFormDTO.setNama(mitraAgen.getNamaMitraAgen());
                 mitraAgenFormDTO.setJenisKelamin(mitraAgen.getJenisKelamin());

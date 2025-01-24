@@ -11,11 +11,11 @@ public class MitraAgenFormDTO {
     private String id;
     private String namaTipeMaster;
     private Integer idTipeMaster;
-    //    private Integer idProduk;
+    private Integer idProduk;
     private String namaProduk;
-    //    private Integer idCabang;
+    private Integer idCabang;
     private String namaCabang;
-    //    private Integer idIdentitas;
+    private Integer idIdentitas;
     private String namaIdentitas;
 
     @NotBlank(message = "Nomor identitas harus diisi")

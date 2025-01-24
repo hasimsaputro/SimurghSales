@@ -1,16 +1,15 @@
 (()=>{
     let mainUrl = "http://localhost:8082/api/mitraAgen";
-    let endPointUbah = "/form";
-
-    let accordionData1 = document.querySelector("#part1");
-    let accordionData2 = document.querySelector("#part2");
-    let id = document.querySelector("#idUbah").textContent;
 
     let produkInput = document.querySelector("div.search-container input.search-produk");
     let suggestionsProdukContainer = document.querySelector("div.search-container .suggestions.mitraProduk");
 
     let kelurahanInput = document.querySelector("div.search-container input.search-kelurahan");
     let suggestionsKelurahanContainer = document.querySelector("div.search-container .suggestions.mitraKelurahan");
+
+    let kelurahanInput2 = document.querySelector("div.search-container2 input.search-kelurahan2");
+    let suggestionsKelurahanContainer2 = document.querySelector("div.search-container2 .suggestions.mitraKelurahan2");
+
 
     produkInput.addEventListener("input",()=> {
           const query = produkInput.value.toLowerCase();
@@ -65,29 +64,55 @@
                           });
         })
 
+    kelurahanInput2.addEventListener("input",()=> {
+
+                  const query = kelurahanInput2.value.toLowerCase();
+                  suggestionsKelurahanContainer2.innerHTML ="";
+                  fetch(`${mainUrl}/kelurahan-options`).then(response => response.json()).then(data => {
+                  const items = data.map(option => option.namaKelurahan);
+                  if (query) {
+                                      const filteredData = items.filter(item => item.toLowerCase().includes(query));
+                                      console.log(filteredData)
+                                      filteredData.forEach(item => {
+                                          const div = document.createElement('div');
+                                          div.classList.add('suggestion-item');
+                                          div.textContent = item;
+                                          div.addEventListener('click', function() {
+                                              kelurahanInput2.value = item;
+                                              suggestionsKelurahanContainer2.innerHTML = '';
+                                          });
+                                          suggestionsKelurahanContainer2.appendChild(div);
+                                      });
+                                  }
+                  })
+                  .catch(error => {
+                                  console.error('Error fetching data:', error);
+                              });
+            })
+
     document.addEventListener('click',function(event){
         if(!event.target.closest('.search-container')){
             suggestionsContainer.innerHTML = '';
         }
     })
 
-    accordionData1.addEventListener("click", () => {
-        let request = new XMLHttpRequest();
-        request.open("GET", `${mainUrl}${endPointUbah}?id=${id}`);
-        request.send();
-        request.onload = () => {
-            populateUbah1(JSON.parse(request.response));
-        }
-    })
-
-    accordionData2.addEventListener("click", () => {
-        let request = new XMLHttpRequest();
-        request.open("GET", `${mainUrl}${endPointUbah}?id=${id}`);
-        request.send();
-        request.onload = () => {
-            populateDetail2(JSON.parse(request.response));
-        }
-    })
+//    accordionData1.addEventListener("click", () => {
+//        let request = new XMLHttpRequest();
+//        request.open("GET", `${mainUrl}${endPointUbah}?id=${id}`);
+//        request.send();
+//        request.onload = () => {
+//            populateUbah1(JSON.parse(request.response));
+//        }
+//    })
+//
+//    accordionData2.addEventListener("click", () => {
+//        let request = new XMLHttpRequest();
+//        request.open("GET", `${mainUrl}${endPointUbah}?id=${id}`);
+//        request.send();
+//        request.onload = () => {
+//            populateDetail2(JSON.parse(request.response));
+//        }
+//    })
 //
 //    let populateUbah1 = (ubah) => {
 //        let idIdentitasField = document.querySelector("#idIdentitas")
