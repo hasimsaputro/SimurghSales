@@ -19,15 +19,14 @@
             </h3>
             <form method="post" class="upsert-form" th:attr="action=@{/mitraAgen/form}" th:object="${mitraAgenByIdGrid}" >
                 <input type="hidden" name="_csrf" value="${_csrf.token}">
-                <input type="hidden" th:field="*{id}">
+                <input th:if="*{id}==null" type="hidden" th:field="*{id}">
                 <input type="hidden" th:field="*{idTipeMaster}">
-                <input type="hidden" id="idTambah" name="idTambah" th:if="*{id}==null">
                 <table>
                     <tbody>
                     <tr th:if="*{id}!=null">
                         <td><label class="label-nama">Kode Mitra/Agen</label></td>
                         <td>
-                            <input id="idUbah" name="idUbah" type="text" th:field="*{id}" disabled >
+                            <input type="text" th:field="*{id}" readOnly >
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -51,7 +50,7 @@
                     <tr>
                         <td><label class="label-nama">Cabang *</label></td>
                         <td>
-                            <input type="text" th:field="*{namaCabang}" th:value="${mitraAgenByIdGrid?.namaCabang}"  required disabled>
+                            <input type="text" th:field="*{namaCabang}" th:value="${mitraAgenByIdGrid?.namaCabang}"  required readOnly>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
