@@ -1,13 +1,11 @@
 package com.sales.rest;
 
+import com.sales.dto.dataLeads.EstimasiNilaiFundingDTO;
 import com.sales.service.dataLeads.DataLeadsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/dataLeads")
@@ -59,41 +57,11 @@ public class DataLeadsRestController {
         }
     }
 
-    @GetMapping("kategori")
-    public ResponseEntity<Object> getOptioonKategori(){
+    @PostMapping(value = {"/estimasiNilai"})
+    public ResponseEntity<Object> getEstimasiNilaiFunding(@RequestBody EstimasiNilaiFundingDTO dto){
         try{
-            var optionKategori= service.getOptionKategori();
-            return ResponseEntity.status(HttpStatus.OK).body(optionKategori);
-        }catch (Exception exception){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
-        }
-    }
-
-   @GetMapping("merk")
-    public ResponseEntity<Object> getOptioonMerk(Integer kategoriId){
-        try{
-            var optionMerk= service.getOptionMerek(kategoriId);
-            return ResponseEntity.status(HttpStatus.OK).body(optionMerk);
-        }catch (Exception exception){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
-        }
-    }
-
-    @GetMapping("model")
-    public ResponseEntity<Object> getOptioonModel(Integer idKategori, String idMerk, String tipeId){
-        try{
-            var optionModel= service.getOptionModel(idKategori,idMerk,tipeId);
-            return ResponseEntity.status(HttpStatus.OK).body(optionModel);
-        }catch (Exception exception){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
-        }
-    }
-
-    @GetMapping("tipe")
-    public ResponseEntity<Object> getOptioonTipe(Integer idKategori, String idMerk){
-        try{
-            var optionTipe= service.getOptionTipe( idKategori,  idMerk);
-            return ResponseEntity.status(HttpStatus.OK).body(optionTipe);
+            var estimasiNilaiFunding= service.getEstimasiNilaiFunding(dto);
+            return ResponseEntity.status(HttpStatus.OK).body(estimasiNilaiFunding);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
         }

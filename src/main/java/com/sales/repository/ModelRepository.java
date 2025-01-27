@@ -12,7 +12,21 @@ public interface ModelRepository extends JpaRepository<Model, String> {
     @Query("""
             SELECT mod
             FROM Model mod
+            WHERE mod.idKategori = :kategoriId
+            """)
+    List<Model> getAll(Integer kategoriId);
+
+    @Query("""
+            SELECT mod
+            FROM Model mod
             WHERE mod.idKategori = :kategoriId AND mod.idMerk = :merkId AND mod.idTipe = :tipeId
             """)
-    List<Model> getAll(Integer kategoriId, String merkId, String tipeId);
+    List<Model> getAllByMerkTipe(Integer kategoriId, String merkId, String tipeId);
+
+    @Query("""
+            SELECT mod
+            FROM Model mod
+            WHERE mod.idKategori = :kategoriId AND mod.idMerk = :merkId
+            """)
+    List<Model> getAllByMerk(Integer kategoriId, String merkId);
 }

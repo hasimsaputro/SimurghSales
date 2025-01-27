@@ -290,7 +290,7 @@
                             <tr>
                                 <td><label class="label-nama">Tenor</label></td>
                                 <td>
-                                    <input id="tenor" name="tenor" type="text" required readonly th:field="${dataLeadsById.status}">
+                                    <input id="tenor" name="tenor" class="tenorInput" type="text" required readonly th:field="${dataLeadsById.status}">
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -299,7 +299,7 @@
                             <tr>
                                 <td><label class="label-nama">Estimasi Nilai Funding</label></td>
                                 <td>
-                                    <input id="estimasi-nilai-funding" name="estimasi-nilai=-funding" type="text" required readonly th:field="${dataLeadsById.status}">
+                                    <input id="estimasi-nilai-funding" class="nilaiFundingInput" name="estimasi-nilai=-funding" type="text" required readonly th:field="${dataLeadsById.status}">
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -315,14 +315,17 @@
                             <tr>
                                 <td><label class="label-nama">Kategori *</label></td>
                                 <td>
-                                    <input id="kategori" name="kategori" type="text" required th:field="${dataLeadsById.status}">
+                                    <input id="kategori" name="kategori" class="kategoriInput" type="text" required th:field="${dataLeadsById.status}">
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
-                                <td><label class="label-nama">Merak</label></td>
+                                <td><label class="label-nama">Merek</label></td>
                                 <td>
-                                    <input id="merak" name="merak" type="text" th:field="${dataLeadsById.status}">
+                                    <div class="search-container">
+                                        <input id="merk" name="merk" class="merkInput" type="text" th:field="${dataLeadsById.status}">
+                                        <div class="suggestionDataLeadsMerk"></div>
+                                    </div>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -330,7 +333,10 @@
                             <tr>
                                 <td><label class="label-nama">Tipe</label></td>
                                 <td>
-                                    <input id="tipe" name="tipe" type="text" th:field="${dataLeadsById.status}">
+                                    <div class="search-container">
+                                        <input id="tipe" name="tipe" class="tipeInput" type="text" th:field="${dataLeadsById.status}">
+                                        <div class="suggestionDataLeadsTipe"></div>
+                                    </div>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -338,7 +344,10 @@
                             <tr>
                                 <td><label class="label-nama">Model</label></td>
                                 <td>
-                                    <input id="model" name="model" type="text" th:field="${dataLeadsById.status}">
+                                    <div class="search-container">
+                                        <input id="model" name="model" class="modelInput" type="text" th:field="${dataLeadsById.status}">
+                                        <div class="suggestionDataLeadsModel"></div>
+                                    </div>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>

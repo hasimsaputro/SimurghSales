@@ -9,10 +9,10 @@ import java.util.List;
 @Repository
 public interface PotRepository extends JpaRepository<POT, Integer> {
     @Query("""
-            SELECT pot.namaPOT
+            SELECT pot
             FROM POT pot
             """)
-    List<String> getItemsPot();
+    List<POT> getItemsPot();
 
     @Query("""
             SELECT pot

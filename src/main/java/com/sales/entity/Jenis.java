@@ -28,4 +28,7 @@ public class Jenis {
 
     @OneToMany(mappedBy = "jenisTipe")
     private List<Tipe> tipeList;
+
+    @OneToMany(mappedBy = "jenisHargaPasar")
+    private List<HargaPasar> hargaPasarList;
 }

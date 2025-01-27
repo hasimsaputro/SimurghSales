@@ -23,6 +23,12 @@ public class Kategori {
     @OneToMany(mappedBy = "kategoriJenis")
     private List<Jenis> jenisList;
 
+    @OneToMany(mappedBy = "kategoriWilayah")
+    private List<WilayahHargaPasar> wilayahHargaPasarList;
+
+    @OneToMany(mappedBy = "kategoriHargaPasar")
+    private List<HargaPasar> hargaPasarList;
+
     @OneToMany(mappedBy = "kategoriMerk")
     private List<Merk> merkList;
 

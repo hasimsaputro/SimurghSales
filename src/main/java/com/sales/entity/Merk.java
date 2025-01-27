@@ -37,6 +37,9 @@ public class Merk {
     @OneToMany(mappedBy = "merkTipe")
     private List<Tipe> tipeList;
 
+    @OneToMany(mappedBy = "merkHargaPasar")
+    private List<HargaPasar> hargaPasarList;
+
     @OneToMany(mappedBy = "merkModel")
     private List<Model> modelList;
 

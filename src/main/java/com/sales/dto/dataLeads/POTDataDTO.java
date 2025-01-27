@@ -1,5 +1,6 @@
 package com.sales.dto.dataLeads;
 
+import com.sales.dto.OptionDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +16,10 @@ import java.util.List;
 public class POTDataDTO {
     private Integer id;
     private String namaPOT;
-    private String namaKategori;
-    private List<String> namaMerk;
-    private List<String> namaTipe;
-    private List<String> namaModel;
+    private String tenor;
+    private String estimasiNilaiFunding;
+    private OptionDTO kategori;
+    private List<OptionDTO> merk;
+    private List<OptionDTO> tipe;
+    private List<OptionDTO> model;
 }

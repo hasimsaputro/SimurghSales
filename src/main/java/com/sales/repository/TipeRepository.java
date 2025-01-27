@@ -11,7 +11,14 @@ public interface TipeRepository extends JpaRepository<Tipe, String > {
     @Query("""
             SELECT tip
             FROM Tipe tip
+            WHERE tip.idKategori = :kategoriId
+            """)
+    List<Tipe> getAll(Integer kategoriId);
+
+    @Query("""
+            SELECT tip
+            FROM Tipe tip
             WHERE tip.idKategori = :kategoriId AND tip.idMerk = :merkId
             """)
-    List<Tipe> getAll(Integer kategoriId, String merkId);
+    List<Tipe> getAllByMerk(Integer kategoriId, String merkId);
 }
