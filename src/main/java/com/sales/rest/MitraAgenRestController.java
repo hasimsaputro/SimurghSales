@@ -96,12 +96,12 @@ public class MitraAgenRestController {
     }
 
     @GetMapping("kelurahan-options")
-    public ResponseEntity<Object> getKelurahanOptions(){
+    public ResponseEntity<Object> getKelurahan(){
         try{
-            List<KelurahanOptionDTO> kelurahanOptionDTOS = service.getKelurahanOption();
-            return ResponseEntity.status(HttpStatus.OK).body(kelurahanOptionDTOS);
-        }catch (Exception ex){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+            var optionKelurahan= service.getKelurahanOption();
+            return ResponseEntity.status(HttpStatus.OK).body(optionKelurahan);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
         }
     }
 

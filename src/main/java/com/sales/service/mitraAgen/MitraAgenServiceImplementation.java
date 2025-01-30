@@ -370,6 +370,10 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
             KelurahanOptionDTO kelurahanOptionDTO = new KelurahanOptionDTO();
             kelurahanOptionDTO.setId(kelurahan.getId());
             kelurahanOptionDTO.setNamaKelurahan(kelurahan.getNamaKelurahan());
+            kelurahanOptionDTO.setKecamatan(kelurahan.getKecamatan().getNamaKecamatan());
+            kelurahanOptionDTO.setProvinsi(kelurahan.getProvinsi().getNamaProvinsi());
+            kelurahanOptionDTO.setKodePos(kelurahan.getKodePos());
+            kelurahanOptionDTO.setKotaKabupaten(kelurahan.getKabupaten().getNamaKabupatenKota());
             kelurahanOptionDTOS.add(kelurahanOptionDTO);
         }
         return kelurahanOptionDTOS;
