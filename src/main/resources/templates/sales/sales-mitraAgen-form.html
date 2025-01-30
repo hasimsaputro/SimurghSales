@@ -35,6 +35,7 @@
                         <td>
                             <div class="search-container">
                                 <input class="search-tipeMaster" id="tipeMaster" name="tipeMaster" type="text" th:field="*{namaTipeMaster}" required >
+                                <i class="fas fa-search search-icon" data-target="tipeMaster"></i>
                                 <div class="suggestions tipeMaster"></div>
                             </div>
                             <div class="field-validation-error"></div>
@@ -44,8 +45,9 @@
                         <td><label class="label-nama">Produk *</label></td>
                         <td>
                             <div class="search-container">
-                                <input class="search-produk" id="Produk" name="Produk" type="text" th:field="*{namaProduk}" required >
-                                <div class="suggestions mitraProduk"></div>
+                                <input class="search-produk" id="produk" name="produk" type="text" th:field="*{namaProduk}" required >
+                                <i class="fas fa-search search-icon" data-target="produk"></i>
+                                <div class="suggestions produk"></div>
                             </div>
                             <div class="field-validation-error"></div>
                         </td>
@@ -124,8 +126,9 @@
                                 <td><label class="label-nama"> Kelurahan *</label></td>
                                 <td>
                                     <div class="search-container">
-                                        <input th:field="*{namaKelurahanIdentitas}" id="kelurahanIdentitas" name="kelurahanIdentitas" type="text" class="search-kelurahan" required>
-                                        <div class="suggestions mitraKelurahan"></div>
+                                        <input th:field="*{namaKelurahanIdentitas}" id="kelurahanIdentitas" name="kelurahanIdentitas" type="text" class="search-kelurahanIdentitas" required>
+                                        <i class="fas fa-search search-icon" data-target="kelurahanIdentitas"></i>
+                                        <div class="suggestions kelurahanIdentitas"></div>
                                     </div>
                                     <div class="field-validation-error"></div>
                                 </td>
@@ -179,8 +182,9 @@
                                 <td><label class="label-nama"> Kelurahan *</label></td>
                                 <td>
                                     <div class="search-container">
-                                        <input th:field="*{namaKelurahanDomisili}" id="kelurahanDomisili" name="kelurahanDomisili" type="text" class="search-kelurahan2" required>
-                                        <div class="suggestions mitraKelurahan2"></div>
+                                        <input th:field="*{namaKelurahanDomisili}" id="kelurahanDomisili" name="kelurahanDomisili" type="text" class="search-kelurahanDomisili" required>
+                                        <i class="fas fa-search search-icon" data-target="kelurahanDomisili"></i>
+                                        <div class="suggestions kelurahanDomisili"></div>
                                     </div>
                                     <div class="field-validation-error"></div>
                                 </td>
@@ -257,6 +261,7 @@
                                 <td>
                                     <div class="search-container">
                                         <input class="search-bank" id="bank" name="bank" type="text" th:field="*{namaBank}" required >
+                                        <i class="fas fa-search search-icon" data-target="bank"></i>
                                         <div class="suggestions bank"></div>
                                     </div>
                                     <div class="field-validation-error"></div>

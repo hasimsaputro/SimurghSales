@@ -217,15 +217,20 @@ select {
     display: flex;
     position: relative;
     flex-direction: column;
-  }
+    width: 100%;
+}
+
+.search-container-filter{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+}
   .suggestions {
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
     background-color: #fff;
-    border: 1px solid #ccc;
-    border-top: none;
     z-index: 1000;
     max-height: 200px;
     overflow-y: auto;
@@ -663,4 +668,33 @@ h3 a:hover {
 .warning-text {
     font-size: 16px;
     line-height: 1.5;
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-tipeMaster,
+.search-produk,
+.search-kelurahan,
+.search-kelurahan2,
+.search-bank,
+.search-filter{
+    width: 100%;
+    padding-right: 30px;
+    padding-left: 10px;
+    height: 40px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 45%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #aaa;
+    cursor: pointer;
 }

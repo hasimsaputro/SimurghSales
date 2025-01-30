@@ -85,7 +85,7 @@ public class MitraAgenRestController {
     }
 
 
-    @GetMapping("/produk-options")
+    @GetMapping(value = {"produk-options"})
     public ResponseEntity<Object> getProdukOptions(){
         try{
             List<ProdukOptionDTO> produkOptionDTOS = service.getProdukOption();
