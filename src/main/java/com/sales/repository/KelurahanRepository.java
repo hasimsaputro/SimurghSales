@@ -28,4 +28,10 @@ public interface KelurahanRepository extends JpaRepository<Kelurahan, Integer> {
             WHERE kel.namaKelurahan = :namaKelurahan
             """)
     Kelurahan getKelurahanByName(String namaKelurahan);
+
+    @Query("""
+            SELECT kel.namaKelurahan
+            FROM Kelurahan kel
+            """)
+    List<String> getKelurahanItems();
 }

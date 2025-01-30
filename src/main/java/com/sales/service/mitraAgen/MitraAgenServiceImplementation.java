@@ -24,7 +24,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
     private final IdentitasRepository identitasRepository;
     private final BankRepository bankRepository;
     private final CabangRepository cabangRepository;
-    private final int rowInPage = 1;
+    private final int rowInPage = 4;
 
     @Autowired
     public MitraAgenServiceImplementation(MitraAgenRepository repository, ProdukRepository produkRepository, TipeMasterRepository tipeMasterRepository, KelurahanRepository kelurahanRepository, IdentitasRepository identitasRepository, BankRepository bankRepository, CabangRepository cabangRepository) {
@@ -308,16 +308,16 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                     searchItems = repository.getMitraAgenItemsById();
                     break;
                 case "tipe":
-                    searchItems = repository.getMitraAgenItemsByTipe();
+                    searchItems = tipeMasterRepository.getTipeMasterItems();
                     break;
                 case "name":
                     searchItems = repository.getMitraAgenItemsByName();
                     break;
                 case "kelurahan":
-                    searchItems = repository.getMitraAgenByItemsKelurahan();
+                    searchItems = kelurahanRepository.getKelurahanItems();
                     break;
                 case "cabang":
-                    searchItems = repository.getMitraAgenItemsByCabang();
+                    searchItems = cabangRepository.getCabangItems();
                     break;
                 case "status":
                     searchItems = repository.getMitraAgenItemsByStatus();
