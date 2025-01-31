@@ -64,4 +64,7 @@ public class Cabang {
 
     @OneToMany(mappedBy = "cabangMitraAgen")
     private List<MitraAgen> mitraAgenList;
+
+    @ManyToMany(mappedBy = "cabangSet")
+    private Set<WilayahHargaPasar> wilayahHargaPasarSet;
 }

@@ -1,6 +1,7 @@
 package com.sales.rest;
 
 import com.sales.dto.dataLeads.SumberDataAplikasiFilterDTO;
+import com.sales.dto.dataLeads.EstimasiNilaiFundingDTO;
 import com.sales.service.dataLeads.DataLeadsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,41 +28,41 @@ public class DataLeadsRestController {
         }
     }
 
-    @GetMapping("kategori")
-    public ResponseEntity<Object> getOptioonKategori(){
+    @GetMapping(value = {"/getKelurahan"})
+    public ResponseEntity<Object> getKelurahanItems(){
         try{
-            var optionKategori= service.getOptionKategori();
-            return ResponseEntity.status(HttpStatus.OK).body(optionKategori);
+            var searchItems= service.getKelurahanItems();
+            return ResponseEntity.status(HttpStatus.OK).body(searchItems);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
         }
     }
 
-   @GetMapping("merk")
-    public ResponseEntity<Object> getOptioonMerk(Integer kategoriId){
+    @GetMapping(value = {"/getPOT"})
+    public ResponseEntity<Object> getPotItems(){
         try{
-            var optionMerk= service.getOptionMerek(kategoriId);
-            return ResponseEntity.status(HttpStatus.OK).body(optionMerk);
+            var searchItems= service.getPotItems();
+            return ResponseEntity.status(HttpStatus.OK).body(searchItems);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
         }
     }
 
-    @GetMapping("model")
-    public ResponseEntity<Object> getOptioonModel(Integer idKategori, String idMerk, String tipeId){
+    @GetMapping(value = {"/getPOTData={idPOT}"})
+    public ResponseEntity<Object> getPotData(@PathVariable Integer idPOT){
         try{
-            var optionModel= service.getOptionModel(idKategori,idMerk,tipeId);
-            return ResponseEntity.status(HttpStatus.OK).body(optionModel);
+            var searchItems= service.getPotData(idPOT);
+            return ResponseEntity.status(HttpStatus.OK).body(searchItems);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
         }
     }
 
-    @GetMapping("tipe")
-    public ResponseEntity<Object> getOptioonTipe(Integer idKategori, String idMerk){
+    @PostMapping(value = {"/estimasiNilai"})
+    public ResponseEntity<Object> getEstimasiNilaiFunding(@RequestBody EstimasiNilaiFundingDTO dto){
         try{
-            var optionTipe= service.getOptionTipe( idKategori,  idMerk);
-            return ResponseEntity.status(HttpStatus.OK).body(optionTipe);
+            var estimasiNilaiFunding= service.getEstimasiNilaiFunding(dto);
+            return ResponseEntity.status(HttpStatus.OK).body(estimasiNilaiFunding);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
         }

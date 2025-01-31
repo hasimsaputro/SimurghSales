@@ -10,4 +10,5 @@ public class DataLeadsIndexDTO {
     private String tipeAplikasi;
     private String keterangan;
     private String status;
+    private String deleteDate;
 }

@@ -61,7 +61,7 @@ public interface DataLeadsRepository extends JpaRepository<DataLeads, String> {
             FROM DataLeads dl
             WHERE dl.status = :search
             """)
-    List<DataLeads> getByStatus(String search, Pageable pagination);
+    List<DataLeads> getByStatus(Boolean search, Pageable pagination);
 
     @Query("""
             SELECT dl

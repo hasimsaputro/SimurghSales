@@ -43,6 +43,9 @@ public class Model {
     @OneToMany(mappedBy = "modelDataLeads")
     private List<DataLeads> dataLeadsList;
 
+    @OneToMany(mappedBy = "modelHargaPasar")
+    private List<HargaPasar> hargaPasarList;
+
     @OneToMany(mappedBy = "modelPOT")
     private List<POT> potList;
 }

@@ -62,4 +62,10 @@ public class DataLeadsController {
         model.addAttribute("dataLeadsById",dataLeadsById);
         return "sales/data-leads-detailtest";
     }
+
+    @GetMapping("delete")
+    public String indexDelete(@RequestParam(defaultValue = "") String dataLeadsId){
+        service.deleteDataLeads(dataLeadsId);
+        return "redirect:/dataleads";
+    }
 }

@@ -74,6 +74,9 @@ public class MitraAgen {
     @Column(name = "Status", nullable = false)
     private Boolean status;
 
+    @Column(name = "DeleteDate")
+    private LocalDate deleteDate;
+
     @ManyToOne
     @JoinColumn(name = "IdTipeMaster", insertable = false, updatable = false)
     private TipeMaster tipeMasterMitraAgen;

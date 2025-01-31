@@ -50,7 +50,7 @@
                     </tr>
                     <tr th:each="dataleads:${grid}" th:object="${dataleads}">
                         <td class="action">
-                            <a href="#" class="action-button delete-button">
+                            <a th:href="@{\dataleads\delete(dataLeadsId=*{nomorDataLeads})}" class="action-button delete-button">
                                 <i class="fa fa-trash" aria-hidden="true"></i> Hapus
                             </a>
                             <a th:href="@{\dataleads\form(dataLeadsId=*{nomorDataLeads})}" class="action-button update-button">

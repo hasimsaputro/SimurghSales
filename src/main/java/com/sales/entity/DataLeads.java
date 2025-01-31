@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -84,6 +86,9 @@ public class DataLeads {
 
     @Column(name = "NomorPolisi", length = 10)
     private String nomorPolisi;
+
+    @Column(name = "DeleteDate")
+    private LocalDate deleteDate;
 
     @ManyToOne
     @JoinColumn(name = "IdProduk", insertable = false, updatable = false)
