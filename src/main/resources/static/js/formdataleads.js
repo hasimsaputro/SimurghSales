@@ -3,6 +3,11 @@ let mainUrl = "http://localhost:8082/api/dataLeads";
 // Produk Input
 let produkInput = document.querySelector("input#product.search-produk");
 let suggestionsProdukContainer = document.querySelector(".suggestions-produk");
+let produkName = "";
+let dataDTO = {
+
+}
+let sumberDataAplikasi = [];
 produkInput.addEventListener("input", () => {
     const query = produkInput.value.toLowerCase();
     suggestionsProdukContainer.innerHTML = "";
@@ -48,41 +53,77 @@ tipeAplikasiInput.addEventListener("input", () => {
     }).catch(error => console.error('Error fetching data:', error));
 });
 
-// Sumber Data Aplikasi Input
-let sumberDataAplikasiInput = document.querySelector("input#sumber-data-aplikasi");
-let suggestionsSumberDataAplikasiContainer = document.querySelector(".suggestions-sumberDataAplikasi");
-let selectedSumberDataAplikasiValue = null;
-sumberDataAplikasiInput.addEventListener("input", () => {
-    const query = sumberDataAplikasiInput.value.toLowerCase();
-    suggestionsSumberDataAplikasiContainer.innerHTML = "";
-    fetch(`${mainUrl}/sumberDataAplikasi`).then(response => response.json()).then(data => {
-        const items = data.map(option => ({ text: option.text, value: option.value }));
-        if (query) {
-            const filteredData = items.filter(item => item.text.toLowerCase().includes(query));
-            filteredData.forEach(item => {
+
+produkInput.addEventListener("change", () => {
+    setTimeout(() => {
+        produkName = produkInput.value;
+        dataDTO = {
+            produkName: produkName,
+            cabangId: cabangId
+         }
+        const url = new URL(`${mainUrl}/sumberDataAplikasi`);
+        const searchParams = new URLSearchParams(dataDTO);
+        url.search = searchParams.toString();
+        fetch(url).then(response => response.json()).then(data => {
+            const items = data.map(option => ({ text: option.text, value: option.value }));
+            items.forEach(item => {
+                sumberDataAplikasi.push(item)
+            });
+        }).catch(error => console.error('Error fetching data:', error));
+    }, 1000)
+})
+ cabang = document.querySelector("#nama-cabang-tujuan");
+ cabangId = cabang.value;
+ let sumberDataAplikasiInput = document.querySelector("input#sumber-data-aplikasi");
+ let suggestionsSumberDataAplikasiContainer = document.querySelector(".suggestions-sumberDataAplikasi");
+ let selectedSumberDataAplikasiValue = null;
+
+ sumberDataAplikasiInput.addEventListener("focus", () => {
+    let suggestionsCount = suggestionsSumberDataAplikasiContainer.querySelectorAll(".suggestion-item")
+    if(suggestionsCount.length == 0){
+        sumberDataAplikasi.forEach(item => {
                 const div = document.createElement('div');
                 div.classList.add('suggestion-item');
                 div.textContent = item.text;
                 div.addEventListener('click', function() {
-                    sumberDataAplikasiInput.value = item.text;
-                    selectedSumberDataAplikasiValue = item.value;
-                    suggestionsSumberDataAplikasiContainer.innerHTML = '';
-                });
-                suggestionsSumberDataAplikasiContainer.appendChild(div);
+                sumberDataAplikasiInput.value = item.text;
+                selectedSumberDataAplikasiValue = item.value;
+                suggestionsSumberDataAplikasiContainer.innerHTML = '';
             });
-        }
-    }).catch(error => console.error('Error fetching data:', error));
+            suggestionsSumberDataAplikasiContainer.appendChild(div);
+        })
+    }
+ })
+
+// Sumber Data Aplikasi Input
+sumberDataAplikasiInput.addEventListener("input", () => {
+    const query = sumberDataAplikasiInput.value.toLowerCase();
+    items = sumberDataAplikasi
+    suggestionsSumberDataAplikasiContainer.innerHTML = "";
+    const filteredData = items.filter(item => item.text.toLowerCase().includes(query));
+    filteredData.forEach(item => {
+        const div = document.createElement('div');
+        div.classList.add('suggestion-item');
+        div.textContent = item.text;
+        div.addEventListener('click', function() {
+            sumberDataAplikasiInput.value = item.text;
+            selectedSumberDataAplikasiValue = item.value;
+            suggestionsSumberDataAplikasiContainer.innerHTML = '';
+        });
+        suggestionsSumberDataAplikasiContainer.appendChild(div);
+    });
 });
 
 // Keterangan Aplikasi Input
 let keteranganAplikasiInput = document.querySelector("input#keterangan-aplikasi");
 let suggestionsKeteranganAplikasiContainer = document.querySelector(".suggestions-keterangan-aplikasi");
+let surveyorInput = document.querySelector("input#nama-surveyor");
 let selectedKeteranganAplikasiValue = null;
 keteranganAplikasiInput.addEventListener("input", () => {
     const query = keteranganAplikasiInput.value.toLowerCase();
     suggestionsKeteranganAplikasiContainer.innerHTML = "";
-    fetch(`${mainUrl}/keteranganAplikasi`).then(response => response.json()).then(data => {
-        const items = data.map(option => ({ text: option.text, value: option.value }));
+    fetch(`${mainUrl}/keteranganAplikasi?cabangId=${cabangId}`).then(response => response.json()).then(data => {
+        const items = data.map(option => ({ text: option.text, value: option.value, surveyor: option.surveyor, idSurveyor: option.idSurveyor  }));
         if (query) {
             const filteredData = items.filter(item => item.text.toLowerCase().includes(query));
             filteredData.forEach(item => {
@@ -93,8 +134,35 @@ keteranganAplikasiInput.addEventListener("input", () => {
                     keteranganAplikasiInput.value = item.text;
                     selectedKeteranganAplikasiValue = item.value;
                     suggestionsKeteranganAplikasiContainer.innerHTML = '';
+                    surveyorInput.value = item.surveyor
                 });
                 suggestionsKeteranganAplikasiContainer.appendChild(div);
+            });
+        }
+    }).catch(error => console.error('Error fetching data:', error));
+});
+
+// Referensi
+let referensiInput = document.querySelector("input#referensi");
+let suggestionsReferensiContainer = document.querySelector(".suggestions-referensi");
+let referensiValueInput = document.querySelector("input#referensiValue")
+referensiInput.addEventListener("input", () => {
+    const query = referensiInput.value.toLowerCase();
+    suggestionsReferensiContainer.innerHTML = "";
+    fetch(`${mainUrl}/referensi`).then(response => response.json()).then(data => {
+        const items = data.map(option => ({ text: option.text, value: option.value }));
+        if (query) {
+            const filteredData = items.filter(item => item.text.toLowerCase().includes(query));
+            filteredData.forEach(item => {
+                const div = document.createElement('div');
+                div.classList.add('suggestion-item');
+                div.textContent = item.text;
+                div.addEventListener('click', function() {
+                    referensiInput.value = item.text;
+                    referensiValueInput.value = item.value;
+                    suggestionsReferensiContainer.innerHTML = '';
+                });
+                suggestionsReferensiContainer.appendChild(div);
             });
         }
     }).catch(error => console.error('Error fetching data:', error));
@@ -203,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const kecamatanDomisili = document.getElementById('kecamatan-domisili');
     const kotakabupatenDomisili = document.getElementById('kota-domisili');
     const provinsiDomisili = document.getElementById('provinsi-domisili');
-    
+
     const alamatIdentitas = document.getElementById('alamat');
     const kelurahanIdentitas = document.getElementById('kelurahan');
     const kodeposIdentitas = document.getElementById('kode-pos');

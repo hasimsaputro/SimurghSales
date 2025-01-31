@@ -195,10 +195,12 @@
                     <tr>
                         <td><label class="label-nama">Nama Cabang Tujuan</label></td>
                         <td>
-                            <input id="nama-cabang-tujuan" name="nama-cabang-tujuan" type="text" required readonly th:field="${dataLeadsById.namaCabangTujuan}">
+                            <input id="nama-cabang-tujuan" name="nama-cabang-tujuan" type="text" required readonly
+                                   th:value="1">
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
+
 
                     <tr>
                         <td><label class="label-nama">Nomor Handphone 1*</label></td>
@@ -241,6 +243,7 @@
                         <td>
                             <div class="search-container">
                                 <input id="referensi" name="referensi" type="text" th:field="${dataLeadsById.referensi}">
+                                <input type="hidden" id="referensiValue" name="referensiValue" th:value="${dataLeadsById.referensiValue}">
                                 <div class="suggestions-referensi"></div>
                                 <div class="field-validation-error"></div>
                             </div>

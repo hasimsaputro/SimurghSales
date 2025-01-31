@@ -90,6 +90,8 @@ public class DataLeadsFormDTO {
 
     private String referensi;
 
+    private String referensiValue;
+
     private String jenisUsaha;
 
     @NotBlank(message = "Keterangan aplikasi Tidak Boleh Kosong")

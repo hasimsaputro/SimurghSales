@@ -1,13 +1,11 @@
 package com.sales.rest;
 
+import com.sales.dto.dataLeads.SumberDataAplikasiFilterDTO;
 import com.sales.service.dataLeads.DataLeadsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/dataLeads")
@@ -70,9 +68,9 @@ public class DataLeadsRestController {
     }
 
     @GetMapping("keteranganAplikasi")
-    public ResponseEntity<Object> getOptioonKeteranganAplikasi(){
+    public ResponseEntity<Object> getOptioonKeteranganAplikasi(@RequestParam Integer cabangId){
         try{
-            var optionKeteranganAplikasi= service.getOptionKeteranganAplikasi();
+            var optionKeteranganAplikasi= service.getOptionKeteranganAplikasi(cabangId);
             return ResponseEntity.status(HttpStatus.OK).body(optionKeteranganAplikasi);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
@@ -109,9 +107,9 @@ public class DataLeadsRestController {
     }
 
     @GetMapping("sumberDataAplikasi")
-    public ResponseEntity<Object> getSumberDataApliakasi(){
+    public ResponseEntity<Object> getSumberDataApliakasi(@RequestParam String produkName,@RequestParam Integer cabangId){
         try{
-            var optionSumberDataAplikasi= service.getOptionSumberDataAplikasi();
+            var optionSumberDataAplikasi= service.getOptionSumberDataAplikasi(produkName,cabangId);
             return ResponseEntity.status(HttpStatus.OK).body(optionSumberDataAplikasi);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
