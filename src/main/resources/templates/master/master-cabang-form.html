@@ -56,26 +56,26 @@
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
+                    <tr>
+                        <td><label class="label-nama"> Kelurahan </label></td>
+                        <td>
+                            <input th:field="*{kelurahan}" id="kelurahan" name="kelurahan" type="text" required>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
 
                     <tr>
                         <td><label class="label-nama">Kode Pos *</label></td>
                         <td>
-                            <input type="text" th:field="*{kodePos}"  required readOnly>
+                            <input type="text" th:field="*{kodePos}"  required readonly >
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
 
                     <tr>
-                        <td><label class="label-nama"> Kelurahan </label></td>
-                        <td>
-                            <input th:field="*{kelurahan}" id="kelurahan" name="kelurahan" type="text" required readonly>
-                            <div class="field-validation-error"></div>
-                        </td>
-                    </tr>
-                    <tr>
                         <td><label class="label-nama">Kecamatan </label></td>
                         <td>
-                            <input th:field="*{kecamatan}" id="kecamatan" name="kecamantan" type="text" required readonly>
+                            <input th:field="*{kecamatan}" id="kecamatan" name="kecamantan" type="text" required readonly >
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
