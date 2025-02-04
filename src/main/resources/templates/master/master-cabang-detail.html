@@ -100,6 +100,27 @@
                     </tr>
 
                     <tr>
+                        <table >
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Kode Produk</th>
+                                    <th>Nama Produk</th>
+                                </tr>
+                            </thead>
+                            <tbody >
+                                <tr th:each="produk:${detailProdukByCabang}" th:object="${produk}">
+                                    <td>
+                                        <input type="checkbox" checked disabled>
+                                    </td>
+                                    <td th:text="*{id}"></td>
+                                    <td th:text="*{nama}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </tr>
+
+                    <tr>
                         <td><label class="label-nama">Status*</label></td>
                         <td class="input-box">
                             <p th:text="*{status} == 1 ? 'Aktif' : 'Tidak Aktif'"></p>

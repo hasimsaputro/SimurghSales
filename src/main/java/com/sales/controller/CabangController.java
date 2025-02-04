@@ -1,6 +1,7 @@
 package com.sales.controller;
 
 import com.sales.dto.cabang.CabangFormDTO;
+import com.sales.dto.cabang.CabangProdukDTO;
 import com.sales.service.cabang.CabangService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Comparator;
+import java.util.List;
 
 @Controller
 @RequestMapping("cabang")
@@ -40,7 +44,10 @@ public class CabangController {
             @RequestParam(required = false) Integer id,
             Model model
     ){
+        List<CabangProdukDTO> cabangProdukDTOS = service.getProdukByCabang(id);
+        cabangProdukDTOS.sort(Comparator.comparing(CabangProdukDTO::getNama));
         model.addAttribute("detailCabangGrid", service.getDetailCabangById(id));
+        model.addAttribute("detailProdukByCabang",cabangProdukDTOS);
         return "master/master-cabang-detail";
     }
 

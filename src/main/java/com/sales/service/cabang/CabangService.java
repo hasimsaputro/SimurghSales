@@ -17,4 +17,5 @@ public interface CabangService {
     List<CabangIndexOptionDTO> getFilterAsItem();
     List<CabangIndexOptionDTO> getSearchItems(String filter);
     List<CabangProdukDTO> getProdukByCabang(Integer id);
+
 }
