@@ -14,6 +14,7 @@ public interface KelurahanRepository extends JpaRepository<Kelurahan, Integer> {
             SELECT kel
             FROM Kelurahan kel
             WHERE kel.deleteDate IS NULL
+            AND kel.status = true
             """)
     List<Kelurahan> getAllKelurahanOption();
 

@@ -15,6 +15,7 @@ public interface ProvinsiRepository extends JpaRepository<Provinsi, Integer> {
             SELECT prov
             FROM Provinsi prov
             WHERE prov.deleteDate IS NULL
+            AND prov.status = true
             """)
     List<Provinsi> getAllProvinsiOption();
 
