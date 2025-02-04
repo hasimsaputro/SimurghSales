@@ -138,12 +138,12 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             """)
     List<String> getMitraAgenItemsById();
 
-    @Query("""
-            SELECT DISTINCT tm.namaTipeMaster
-            FROM MitraAgen mit
-            JOIN mit.tipeMasterMitraAgen tm
-            """)
-    List<String> getMitraAgenItemsByTipe();
+//    @Query("""
+//            SELECT DISTINCT tm.namaTipeMaster
+//            FROM MitraAgen mit
+//            JOIN mit.tipeMasterMitraAgen tm
+//            """)
+//    List<String> getMitraAgenItemsByTipe();
 
     @Query("""
             SELECT DISTINCT mit.namaMitraAgen
@@ -152,19 +152,19 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             """)
     List<String> getMitraAgenItemsByName();
 
-    @Query("""
-            SELECT DISTINCT kel.namaKelurahan
-            FROM MitraAgen mit
-            JOIN mit.kelurahanDomisiliMitraAgen kel
-            """)
-    List<String> getMitraAgenByItemsKelurahan();
-
-    @Query("""
-            SELECT DISTINCT cb.namaCabang
-            FROM MitraAgen mit
-            JOIN mit.cabangMitraAgen cb
-            """)
-    List<String> getMitraAgenItemsByCabang();
+//    @Query("""
+//            SELECT DISTINCT kel.namaKelurahan
+//            FROM MitraAgen mit
+//            JOIN mit.kelurahanDomisiliMitraAgen kel
+//            """)
+//    List<String> getMitraAgenByItemsKelurahan();
+//
+//    @Query("""
+//            SELECT DISTINCT cb.namaCabang
+//            FROM MitraAgen mit
+//            JOIN mit.cabangMitraAgen cb
+//            """)
+//    List<String> getMitraAgenItemsByCabang();
 
     @Query(value = "SELECT DISTINCT CASE WHEN mit.status = 1 THEN 'Aktif' ELSE 'Tidak Aktif' END FROM MitraAgen mit", nativeQuery = true)
     List<String> getMitraAgenItemsByStatus();

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @NoArgsConstructor
@@ -28,6 +29,9 @@ public class Provinsi {
 
     @Column(name = "Status", nullable = false)
     private Boolean status;
+
+    @Column(name = "DeleteDate")
+    private LocalDate deleteDate;
 
     @ManyToOne
     @JoinColumn(name = "IdNegara", insertable = false,updatable = false)

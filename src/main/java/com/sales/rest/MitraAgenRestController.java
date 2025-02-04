@@ -86,9 +86,12 @@ public class MitraAgenRestController {
 
 
     @GetMapping(value = {"produk-options"})
-    public ResponseEntity<Object> getProdukOptions(){
+    public ResponseEntity<Object> getProdukOptions(
+            @RequestParam int page,
+            @RequestParam int size
+    ){
         try{
-            List<ProdukOptionDTO> produkOptionDTOS = service.getProdukOption();
+            List<ProdukOptionDTO> produkOptionDTOS = service.getProdukOption(page, size);
             return ResponseEntity.status(HttpStatus.OK).body(produkOptionDTOS);
         }catch (Exception ex){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());

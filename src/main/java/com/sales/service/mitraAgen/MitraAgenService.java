@@ -16,7 +16,7 @@ public interface MitraAgenService {
     List<MitraAgenIndexOptionDTO> getFilterAsItem();
     List<MitraAgenIndexOptionDTO> getSearchItems(String filter);
     List<TipeMasterOptionDTO> getTipeMasterOption();
-    List<ProdukOptionDTO> getProdukOption();
+    List<ProdukOptionDTO> getProdukOption(int page, int size);
     List<KelurahanOptionDTO> getKelurahanOption();
     List<IdentitasOptionDTO> getIdentitasOption();
     List<BankOptionDTO> getBankOption();

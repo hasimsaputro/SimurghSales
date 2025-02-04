@@ -2,6 +2,9 @@
     document.addEventListener('DOMContentLoaded', function() {
         let mainUrl = "http://localhost:8082/api/mitraAgen";
 
+        let currentPage = 0;
+        let isLoading = false;
+
         const alamatSamaCheckbox = document.getElementById('alamatSama');
         const address = document.getElementById('address');
         const kelurahanIdentitas = document.getElementById('kelurahanIdentitas');
@@ -17,6 +20,9 @@
         const provinsiDomisili = document.getElementById('provinsiDomisili');
 
         function fetchSuggestions(query = '', target) {
+            if (isLoading) return;
+            isLoading = true;
+
             let apiUrl = "";
             if (target === "kelurahanIdentitas" || target === "kelurahanDomisili") {
                 apiUrl = "kelurahan-options";
@@ -24,11 +30,12 @@
                 apiUrl = `${target}-options`;
             }
 
-            fetch(`${mainUrl}/${apiUrl}`)
+            fetch(`${mainUrl}/${apiUrl}?page=${currentPage}&size=5`)
                 .then(response => response.json())
                 .then(data => {
-                    let items;
-                    let filteredData;
+                    isLoading = false;
+                    let items = [];
+                    let filteredData = [];
 
                     if (target === 'kelurahanIdentitas' || target === 'kelurahanDomisili') {
                         items = data.map(option => ({
@@ -62,7 +69,7 @@
                                 inputField.value = item.namaKelurahan || item;
 
                                 if (target === 'kelurahanIdentitas' || target === 'kelurahanDomisili') {
-                                    const jenis = target.substring(target.indexOf('kelurahan') + 'kelurahan'.length);
+                                    const jenis = target.substring(target.indexOf('kelurahan') + 'kelurahan'.length); // Ambil "Identitas" atau "Domisili"
                                     const selectedItem = items.find(i => i.namaKelurahan === item.namaKelurahan);
                                     if (selectedItem) {
                                         document.querySelector(`#kodepos${capitalizeFirstLetter(jenis)}`).value = selectedItem.kodePos;
@@ -80,12 +87,22 @@
                                         provinsiDomisili.value = provinsiIdentitas.value;
                                     }
                                 }
-
                                 suggestionsContainer.innerHTML = '';
                             });
 
                             suggestionsContainer.appendChild(div);
                         });
+
+//                        if (filteredData.length > currentPage * 5) {
+//                            const loadMoreButton = document.createElement('div');
+//                            loadMoreButton.classList.add('load-more');
+//                            loadMoreButton.textContent = 'Muat Lebih Banyak';
+//                            loadMoreButton.addEventListener('click', function () {
+//                                currentPage++;
+//                                fetchSuggestions(query, target);
+//                            });
+//                            suggestionsContainer.appendChild(loadMoreButton);
+//                        }
                     } else {
                         const noResultMessage = document.createElement('div');
                         noResultMessage.classList.add('suggestion-item');
@@ -97,6 +114,7 @@
                     console.error('Terjadi kesalahan saat mengambil data:', error);
                     const suggestionsContainer = document.querySelector(`.suggestions.${target}`);
                     suggestionsContainer.innerHTML = '<div class="suggestion-item">Terjadi kesalahan saat memuat data.</div>';
+                    isLoading = false;
                 });
         }
 
@@ -104,6 +122,7 @@
             inputField.addEventListener('input', () => {
                 const query = inputField.value;
                 const target = inputField.classList[0].replace('search-', '');
+                currentPage = 0;
                 fetchSuggestions(query, target);
             });
         });
@@ -112,6 +131,7 @@
             searchIcon.addEventListener('click', () => {
                 const target = searchIcon.getAttribute('data-target');
                 const query = document.querySelector(`input#${target}`).value;
+                currentPage = 0;
                 fetchSuggestions(query, target);
             });
         });

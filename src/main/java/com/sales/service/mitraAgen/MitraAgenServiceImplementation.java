@@ -244,9 +244,9 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
         mitraAgen.setJenisKelamin(mitraAgenFormDTO.getJenisKelamin());
         mitraAgen.setNpwp(mitraAgenFormDTO.getNpwp());
         mitraAgen.setAlamatIdentitas(mitraAgenFormDTO.getAlamatIdentitas());
-        mitraAgen.setIdKelurahanIdentitas(kelurahanRepository.getKelurahanByName(mitraAgenFormDTO.getNamaKelurahanIdentitas()).getId());
+        mitraAgen.setIdKelurahanIdentitas(kelurahanRepository.getKelurahanFormByName(mitraAgenFormDTO.getNamaKelurahanIdentitas()).getId());
         mitraAgen.setAlamatDomisili(mitraAgenFormDTO.getAlamatDomisili());
-        mitraAgen.setIdKelurahanDomisili(kelurahanRepository.getKelurahanByName(mitraAgenFormDTO.getNamaKelurahanDomisili()).getId());
+        mitraAgen.setIdKelurahanDomisili(kelurahanRepository.getKelurahanFormByName(mitraAgenFormDTO.getNamaKelurahanDomisili()).getId());
         mitraAgen.setTempatLahir(mitraAgenFormDTO.getTempatLahir());
         mitraAgen.setTanggalLahir(mitraAgenFormDTO.getTanggalLahir());
         mitraAgen.setNomorTelepon(mitraAgenFormDTO.getNomorTelepon());
@@ -348,8 +348,9 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
     }
 
     @Override
-    public List<ProdukOptionDTO> getProdukOption() {
-        List<Produk> produkList = produkRepository.getAllProduk();
+    public List<ProdukOptionDTO> getProdukOption(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<Produk> produkList = produkRepository.getAllProduk(pageable);
         List<ProdukOptionDTO> produkOptionDTOS = new LinkedList<>();
         for (Produk produk: produkList
         ) {
@@ -363,7 +364,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
 
     @Override
     public List<KelurahanOptionDTO> getKelurahanOption() {
-        List<Kelurahan> kelurahanList = kelurahanRepository.getAllKelurahan();
+        List<Kelurahan> kelurahanList = kelurahanRepository.getAllKelurahanOption();
         List<KelurahanOptionDTO> kelurahanOptionDTOS = new LinkedList<>();
         for (Kelurahan kelurahan: kelurahanList
         ) {

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<header th:replace="~{layout :: header}"></header>
+<script th:src="@{/js/kelurahan-detail.js}" defer></script>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/kelurahan}">Kelurahan</a>
+                <span> > </span>
+                <span>Detail</span>
+            </h3>
+            <form method="post" class="upsert-form" action="">
+                <input type="hidden" name="_csrf" value="${_csrf.token}">
+                <table th:object="${detailKelurahanGrid}">
+                    <tbody>
+                    <tr>
+                        <td><label class="label-nama">Provinsi</label></td>
+                        <td>
+                            <p id="provinsi" name="provinsi" th:text="*{provinsi}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kota/Kabupaten</label></td>
+                        <td>
+                            <p id="kabupaten" name="kabupaten" th:text="*{kabupaten}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kecamatan</label></td>
+                        <td>
+                            <p id="kecamatan" name="kecamatan" th:text="*{kecamatan}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kode Kelurahan</label></td>
+                        <td>
+                            <p id="kode" name="kode" th:text="*{kode}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Nama Kelurahan</label></td>
+                        <td>
+                            <p id="kelurahan" name="kelurahan" th:text="*{kelurahan}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kode Pos</label></td>
+                        <td>
+                            <p id="kodePos" name="kodePos" th:text="*{kodePos}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Status</label></td>
+                        <td>
+                            <p id="status" name="status" th:text="*{status}"></p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>
