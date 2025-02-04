@@ -19,5 +19,5 @@ public interface KecamatanService {
     List<FilterIndexOptionDTO> getFilterAsItem();
     List<FilterIndexOptionDTO> getSearchItems(String filter);
     List<FilterOptionDTO> getProvinsiOption();
-    List<FilterOptionDTO> getKabupatenOption();
+    List<FilterOptionDTO> getKabupatenOption(Integer id);
 }

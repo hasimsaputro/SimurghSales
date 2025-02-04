@@ -246,8 +246,8 @@ public class KelurahanServiceImplementation implements KelurahanService{
     }
 
     @Override
-    public List<FilterOptionDTO> getKabupatenOption() {
-        List<Kabupaten> kabupatenList = kabupatenRepository.getAllKabupatenOption();
+    public List<FilterOptionDTO> getKabupatenOption(Integer id) {
+        List<Kabupaten> kabupatenList = kabupatenRepository.getAllKabupatenOption(id);
         List<FilterOptionDTO> filterOptionDTOS = new LinkedList<>();
         for (Kabupaten kabupaten : kabupatenList){
             FilterOptionDTO filterOptionDTO = new FilterOptionDTO();
@@ -259,8 +259,8 @@ public class KelurahanServiceImplementation implements KelurahanService{
     }
 
     @Override
-    public List<FilterOptionDTO> getKecamatanOption() {
-        List<Kecamatan> kecamatanList    = kecamatanRepository.getAllKecamatanOption();
+    public List<FilterOptionDTO> getKecamatanOption(Integer id) {
+        List<Kecamatan> kecamatanList    = kecamatanRepository.getAllKecamatanOption(id);
         List<FilterOptionDTO> filterOptionDTOS = new LinkedList<>();
         for (Kecamatan kecamatan : kecamatanList){
             FilterOptionDTO filterOptionDTO = new FilterOptionDTO();

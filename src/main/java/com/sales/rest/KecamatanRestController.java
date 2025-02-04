@@ -4,12 +4,10 @@ import com.sales.dto.FilterIndexOptionDTO;
 import com.sales.dto.FilterOptionDTO;
 import com.sales.service.kecamatan.KecamatanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -46,12 +44,16 @@ public class KecamatanRestController {
     }
 
     @GetMapping("kabupaten-options")
-    public ResponseEntity<Object> getKabupaten(){
-        try{
-            List<FilterOptionDTO> optionKabupaten= service.getKabupatenOption();
+    public ResponseEntity<Object> getKabupaten(
+            @RequestParam(required = false) Integer parent
+    ){
+        try {
+            List<FilterOptionDTO> optionKabupaten = service.getKabupatenOption(parent);
             return ResponseEntity.status(HttpStatus.OK).body(optionKabupaten);
-        }catch (Exception exception){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        } catch (ConfigDataNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Data tidak ditemukan");
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Terjadi kesalahan pada server");
         }
     }
 }

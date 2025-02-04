@@ -15,8 +15,9 @@ public interface KecamatanRepository extends JpaRepository<Kecamatan, Integer> {
             SELECT kec
             FROM Kecamatan kec
             WHERE kec.deleteDate IS NULL
+            AND kec.idKabupaten = :id
             """)
-    List<Kecamatan> getAllKecamatanOption();
+    List<Kecamatan> getAllKecamatanOption(Integer id);
 
     @Query("""
             SELECT kec

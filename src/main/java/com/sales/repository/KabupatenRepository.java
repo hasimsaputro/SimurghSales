@@ -15,8 +15,9 @@ public interface KabupatenRepository extends JpaRepository<Kabupaten, Integer> {
             SELECT kab
             FROM Kabupaten kab
             WHERE kab.deleteDate IS NULL
+            AND kab.idProvinsi = :id
             """)
-    List<Kabupaten> getAllKabupatenOption();
+    List<Kabupaten> getAllKabupatenOption(Integer id);
 
     @Query("""
             SELECT kab

@@ -228,8 +228,8 @@ public class KecamatanServiceImplementation implements KecamatanService{
     }
 
     @Override
-    public List<FilterOptionDTO> getKabupatenOption() {
-        List<Kabupaten> kabupatenList = kabupatenRepository.getAllKabupatenOption();
+    public List<FilterOptionDTO> getKabupatenOption(Integer id) {
+        List<Kabupaten> kabupatenList = kabupatenRepository.getAllKabupatenOption(id);
         List<FilterOptionDTO> filterOptionDTOS = new LinkedList<>();
         for (Kabupaten kabupaten : kabupatenList){
             FilterOptionDTO filterOptionDTO = new FilterOptionDTO();

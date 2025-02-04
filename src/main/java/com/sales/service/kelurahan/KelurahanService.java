@@ -17,6 +17,6 @@ public interface KelurahanService {
     List<FilterIndexOptionDTO> getFilterAsItem();
     List<FilterIndexOptionDTO> getSearchItems(String filter);
     List<FilterOptionDTO> getProvinsiOption();
-    List<FilterOptionDTO> getKabupatenOption();
-    List<FilterOptionDTO> getKecamatanOption();
+    List<FilterOptionDTO> getKabupatenOption(Integer id);
+    List<FilterOptionDTO> getKecamatanOption(Integer id);
 }
