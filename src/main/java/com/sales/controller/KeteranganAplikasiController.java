@@ -1,20 +1,21 @@
 package com.sales.controller;
 
-import com.sales.dto.master.TipeAplikasiDTO;
-import com.sales.service.master.TipeAplikasiService;
-import jakarta.validation.Valid;
+import com.sales.dto.master.KeteranganAplikasiFormDTO;
+
+import com.sales.service.master.KeteranganAplikasiService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("tipeAplikasi")
-public class TipeAplikasiController {
-    private final TipeAplikasiService service;
+@RequestMapping("keteranganAplikasi")
+public class KeteranganAplikasiController {
+    private final KeteranganAplikasiService service;
 
 
-    public TipeAplikasiController(TipeAplikasiService service) {
+    public KeteranganAplikasiController(KeteranganAplikasiService service) {
         this.service = service;
     }
 
@@ -25,50 +26,51 @@ public class TipeAplikasiController {
         model.addAttribute("listFilter",listFilter);
         model.addAttribute("filterSelected",filter);
         model.addAttribute("search",search);
-        model.addAttribute("gridTipeAplikasi",grid);
-        model.addAttribute("totalPage",service.totalPage(id, name, status));
+        model.addAttribute("gridKeteranganAplikasi",grid);
+        model.addAttribute("totalPages",service.totalPage(id, name, status));
         model.addAttribute("id",id);
         model.addAttribute("name",name);
         model.addAttribute("status",status);
+        model.addAttribute("currentPage",page);
 
 
 
 
-        return "sales/tipe-aplikasi";
+        return "sales/keterangan-aplikasi";
     }
 
     @GetMapping("form")
     public String form( @RequestParam(required = false) Integer id, Model model){
-        var tipeAplikasiDto = service.getTipeAplikasiById(id);
-        model.addAttribute("tipeAplikasiDto",tipeAplikasiDto);
+        var dto = service.getKeteranganAplikasiById(id);
+        model.addAttribute("dto",dto);
 
 
 
-        return "sales/tipeaplikasi-form";
+        return "sales/keterangan-aplikasi-form";
     }
 
     @PostMapping("form")
-    public String updateInsert(@ModelAttribute("tipeAplikasiDto") TipeAplikasiDTO tipeAplikasiDTO, BindingResult bindingResult) {
+    public String updateInsert(@ModelAttribute("dto") KeteranganAplikasiFormDTO keteranganAplikasiFormDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "sales/tipeaplikasi-form";
+            return "sales/keterangan-aplikasi-form";
         } else {
-            service.updateInsert(tipeAplikasiDTO);
-            return "redirect:/tipeAplikasi";
+            service.updateInsert(keteranganAplikasiFormDTO);
+            return "redirect:/keteranganAplikasi";
         }
     }
 
     @GetMapping("detail")
     public String detail( @RequestParam(required = false) Integer id, Model model){
-        var tipeAplikasiDto = service.getTipeAplikasiById(id);
-        model.addAttribute("tipeAplikasiDto",tipeAplikasiDto);
+        var dto = service.getKeteranganAplikasiById(id);
+        model.addAttribute("dto",dto);
 
-        return "sales/tipeaplikasi-detail";
+        return "sales/keterangan-aplikasi-detail";
     }
 
     @GetMapping("delete")
     public String delete( @RequestParam(required = false) Integer id, Model model){
         service.delete(id);
-        return "redirect:/tipeAplikasi";
+        return "redirect:/keteranganAplikasi";
     }
 
 

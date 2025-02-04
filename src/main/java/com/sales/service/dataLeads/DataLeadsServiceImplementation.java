@@ -6,17 +6,20 @@ import com.sales.dto.dataLeads.*;
 import com.sales.dto.dataLeads.KeteranganAplikasiSurveyorDTO;
 import com.sales.entity.*;
 import com.sales.repository.*;
+import com.sales.service.master.UserService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 @Service
-public class DataLeadsServiceImplementation implements DataLeadsService{
+public class DataLeadsServiceImplementation implements DataLeadsService {
     private final ReferensiRepository referensiRepository;
     private final CabangRepository cabangRepository;
     private final KelurahanRepository kelurahanRepository;
@@ -31,12 +34,11 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
     private final MitraAgenRepository mitraAgenRepository;
     private final DataLeadsRepository repository;
     private final UserRepository userRepository;
-    private final KelurahanRepository kelurahanRepository;
     private final PotRepository potRepository;
     private final HargaPasarRepository hargaPasarRepository;
     private final Integer rowInPage = 10;
 
-    public DataLeadsServiceImplementation(ReferensiRepository referensiRepository, CabangRepository cabangRepository, KelurahanRepository kelurahanRepository, DebiturRepository debiturRepository, TipeAplikasiRepository tipeAplikasiRepository, ProdukRepository produkRepository, HargaPasarRepository hargaPasarRepository, KeteranganAplikasiRepository keteranganAplikasiRepository, ModelRepository modelRepository, TipeRepository tipeRepository, MerkRepository merkRepository, KategoriRepository kategoriRepository, MitraAgenRepository mitraAgenRepository, DataLeadsRepository repository, UserRepository userRepository, KelurahanRepository kelurahanRepository, PotRepository potRepository) {
+    public DataLeadsServiceImplementation(ReferensiRepository referensiRepository, CabangRepository cabangRepository, DebiturRepository debiturRepository, TipeAplikasiRepository tipeAplikasiRepository, ProdukRepository produkRepository, HargaPasarRepository hargaPasarRepository, KeteranganAplikasiRepository keteranganAplikasiRepository, ModelRepository modelRepository, TipeRepository tipeRepository, MerkRepository merkRepository, KategoriRepository kategoriRepository, MitraAgenRepository mitraAgenRepository, DataLeadsRepository repository, UserRepository userRepository, KelurahanRepository kelurahanRepository, PotRepository potRepository) {
         this.referensiRepository = referensiRepository;
         this.cabangRepository = cabangRepository;
         this.kelurahanRepository = kelurahanRepository;
@@ -51,7 +53,6 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
         this.mitraAgenRepository = mitraAgenRepository;
         this.repository = repository;
         this.userRepository = userRepository;
-        this.kelurahanRepository = kelurahanRepository;
         this.potRepository = potRepository;
         this.hargaPasarRepository = hargaPasarRepository;
     }
@@ -142,10 +143,15 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
             dto.setNomorHandphone2(dataLeads.getDebiturDataLeads().getNomorHP2());
             dto.setNomorTelepon(dataLeads.getDebiturDataLeads().getNomorTelepon());
             dto.setSumberDataAplikasi(dataLeads.getMitraAgenDataLeads().getNamaMitraAgen());
-            dto.setReferensi(referensiRepository.getReferenceById(dataLeads.getIdDebiturReferensi()).getNamaDepan() );
+            dto.setReferensi(referensiRepository.getReferenceById(dataLeads.getIdDebiturReferensi()).getNamaDepan());
             dto.setJenisUsaha(dataLeads.getJenisUsaha());
             dto.setKeteranganAplikasi(dataLeads.getKeteranganAplikasi().getNamaKeteranganAplikasi());
-            dto.setSurveyor(dataLeads.getUserDataLeads().getNamaKaryawan());
+            if(dataLeads.getUserDataLeads() == null){
+
+            }else {
+                dto.setSurveyor(dataLeads.getUserDataLeads().getNamaKaryawan());
+            }
+
             dto.setStatus(dataLeads.getStatus());
             dto.setPot(dataLeads.getPotDataLeads().getNamaPOT());
             dto.setTenor(dataLeads.getPotDataLeads().getTenor().toString());
@@ -291,7 +297,8 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
                 dataLeads = new DataLeads();
                 List<DataLeads> listUrutan = repository.getAllOnly();
                 DataLeads lastDataLead = listUrutan.get(listUrutan.size() - 1);
-                Integer newNomorAplikasi = Integer.parseInt(lastDataLead.getNomorAplikasi()) + 1;
+                BigDecimal lastNomorAplikasi = new BigDecimal(lastDataLead.getNomorAplikasi());
+                BigDecimal newNomorAplikasi = lastNomorAplikasi.add(BigDecimal.ONE);
                 String stringNomorAplikasi = newNomorAplikasi.toString();
                 dataLeads.setNomorAplikasi(stringNomorAplikasi);
                 String lastId = lastDataLead.getId();
@@ -369,8 +376,11 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
             dataLeads.setIdDebiturReferensi(dataLeadsFormDTO.getReferensiValue()); //sementara
             dataLeads.setJenisUsaha(dataLeadsFormDTO.getJenisUsaha());
             dataLeads.setIdKeteranganAplikasi(keteranganAplikasiRepository.getKeteranganAplikasiByName(dataLeadsFormDTO.getKeteranganAplikasi()).getId());
-
-            dataLeads.setIdUser(userRepository.getUserByName(dataLeadsFormDTO.getSurveyor()).getNik());
+            if (dataLeadsFormDTO.getSurveyor().isBlank() || dataLeadsFormDTO.getSurveyor().equals(null)){
+                dataLeads.setIdUser(null);
+            }else {
+                dataLeads.setIdUser(userRepository.getUserByName(dataLeadsFormDTO.getSurveyor()).getNik());
+            }
             dataLeads.setStatus(dataLeadsFormDTO.getStatus());
             dataLeads.setIdPOT(Integer.parseInt(dataLeadsFormDTO.getPot())); // sementara hardcode
             dataLeads.setEstimasiNilaiFunding(new BigDecimal(300000000) ); // sementara hardcode
@@ -695,6 +705,18 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
         var totalEstimasi = pokokHutang.add(biayaProvisi).add(biayaAsuransi).subtract(totalDp);
 
         return String.valueOf(totalEstimasi);
+    }
+
+    @Override
+    public OptionDTO getRandomSurveyor(Integer cabangId) {
+        OptionDTO randomSurveyor = new OptionDTO();
+        List<User> listSurveyor = userRepository.getUserByCabangAndSurveyor(cabangId);
+        Random random = new Random();
+        Integer randomIndex = random.nextInt(listSurveyor.size());
+        User surveyor = listSurveyor.get(randomIndex);
+        randomSurveyor.setValue(surveyor.getNik());
+        randomSurveyor.setText(surveyor.getNamaKaryawan());
+        return randomSurveyor;
     }
 
 }

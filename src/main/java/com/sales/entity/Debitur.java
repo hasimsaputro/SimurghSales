@@ -78,4 +78,7 @@ public class Debitur {
 
     @OneToMany(mappedBy = "debiturReferensiDataLeads")
     private List<DataLeads> dataLeadsReferensiList;
+
+    @OneToOne(mappedBy = "debitur")
+    private Referensi referensi;
 }

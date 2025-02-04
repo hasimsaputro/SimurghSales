@@ -140,11 +140,13 @@
                     <tr>
                         <td></td>
                         <td class="input-box">
-                            <input type="checkbox" id="" name="" >
+                            <input type="checkbox" id="" name=""
+                                   th:checked="${dataLeadsById.kelurahanDomisili == dataLeadsById.kelurahan}">
                             <label for="">Sama Dengan Alamat Identitas</label>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
+
 
                     <tr>
                         <td><label class="label-nama">Alamat Domisili*</label></td>

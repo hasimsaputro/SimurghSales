@@ -1,27 +1,23 @@
 package com.sales.service.master;
 
 import com.sales.dto.OptionDTO;
-import com.sales.dto.OptionKelurahanDTO;
-import com.sales.dto.dataLeads.DataLeadsDetailDTO;
-import com.sales.dto.dataLeads.DataLeadsFormDTO;
-import com.sales.dto.dataLeads.DataLeadsIndexDTO;
-import com.sales.dto.dataLeads.KeteranganAplikasiSurveyorDTO;
+import com.sales.dto.master.KeteranganAplikasiDTO;
+import com.sales.dto.master.KeteranganAplikasiFormDTO;
 import com.sales.dto.master.TipeAplikasiDTO;
-import com.sales.entity.*;
+import com.sales.entity.KeteranganAplikasi;
+import com.sales.entity.TipeAplikasi;
 import com.sales.repository.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 @Service
-public class TipeAplikasiServiceImplementation implements TipeAplikasiService {
+public class KeteranganAplikasiServiceImplementation implements KeteranganAplikasiService {
     private final ReferensiRepository referensiRepository;
     private final CabangRepository cabangRepository;
     private final KelurahanRepository kelurahanRepository;
@@ -38,7 +34,7 @@ public class TipeAplikasiServiceImplementation implements TipeAplikasiService {
     private final UserRepository userRepository;
     private final Integer rowInPage = 5;
 
-    public TipeAplikasiServiceImplementation(ReferensiRepository referensiRepository, CabangRepository cabangRepository, KelurahanRepository kelurahanRepository, DebiturRepository debiturRepository, TipeAplikasiRepository tipeAplikasiRepository, ProdukRepository produkRepository, KeteranganAplikasiRepository keteranganAplikasiRepository, ModelRepository modelRepositoryl, TipeRepository tipeRepository, MerkRepository merkRepository, KategoriRepository kategoriRepository, MitraAgenRepository mitraAgenRepository, DataLeadsRepository repository, UserRepository userRepository) {
+    public KeteranganAplikasiServiceImplementation(ReferensiRepository referensiRepository, CabangRepository cabangRepository, KelurahanRepository kelurahanRepository, DebiturRepository debiturRepository, TipeAplikasiRepository tipeAplikasiRepository, ProdukRepository produkRepository, KeteranganAplikasiRepository keteranganAplikasiRepository, ModelRepository modelRepositoryl, TipeRepository tipeRepository, MerkRepository merkRepository, KategoriRepository kategoriRepository, MitraAgenRepository mitraAgenRepository, DataLeadsRepository repository, UserRepository userRepository) {
         this.referensiRepository = referensiRepository;
         this.cabangRepository = cabangRepository;
         this.kelurahanRepository = kelurahanRepository;
@@ -57,11 +53,11 @@ public class TipeAplikasiServiceImplementation implements TipeAplikasiService {
 
 
     @Override
-    public List<TipeAplikasiDTO> getAll(Integer id ,String name,Boolean status, Integer page,String filter, String search) {
+    public List<KeteranganAplikasiDTO> getAll(Integer id , String name, Boolean status, Integer page, String filter, String search) {
         if (filter.isBlank()){
         }else {
             switch (filter){
-                case "kodeTipeAplikasi" :
+                case "id" :
                     try{
                         id = Integer.parseInt(search);
                     }catch (Exception exception){
@@ -91,13 +87,13 @@ public class TipeAplikasiServiceImplementation implements TipeAplikasiService {
             }
         }
 
-        List<TipeAplikasi> tipeAplikasiList = tipeAplikasiRepository.getAllBySearch(pagination, id, name, status);
-        var gridTipeApl = new LinkedList<TipeAplikasiDTO>();
-        for (var tipeApl :tipeAplikasiList) {
-            TipeAplikasiDTO dto = new TipeAplikasiDTO();
-            dto.setKodeTipeAplikasi(tipeApl.getId());
-            dto.setNamaTipeAplikasi(tipeApl.getNamaTipeAplikasi());
-            dto.setStatus(tipeApl.getStatus());
+        List<KeteranganAplikasi> keteranganAplikasis = keteranganAplikasiRepository.getAllBySearch(pagination, id, name, status);
+        var gridTipeApl = new LinkedList<KeteranganAplikasiDTO>();
+        for (var ket :keteranganAplikasis) {
+            KeteranganAplikasiDTO dto = new KeteranganAplikasiDTO();
+            dto.setId(ket.getId());
+            dto.setName(ket.getNamaKeteranganAplikasi());
+            dto.setStatus(ket.getStatus());
             gridTipeApl.add(dto);
         }
         return gridTipeApl;
@@ -111,20 +107,20 @@ public class TipeAplikasiServiceImplementation implements TipeAplikasiService {
             }
         }
 
-        Integer totalPage = (int) Math.ceil(((double)tipeAplikasiRepository.countAllBySearch( id, name, status)) / rowInPage);
+        Integer totalPage = (int) Math.ceil(((double)keteranganAplikasiRepository.countAllBySearch( id, name, status)) / rowInPage);
 
         return  totalPage;
     }
 
     @Override
-    public TipeAplikasiDTO getTipeAplikasiById(Integer id) {
-        TipeAplikasiDTO dto = new TipeAplikasiDTO();
-        TipeAplikasi tipeAplikasi = tipeAplikasiRepository.getTipeAplikasiById(id);
+    public KeteranganAplikasiDTO getKeteranganAplikasiById(Integer id) {
+        KeteranganAplikasiDTO dto = new KeteranganAplikasiDTO();
+        KeteranganAplikasi keteranganAplikasi = keteranganAplikasiRepository.getKeteranganAplikasiById(id);
 
-        if(tipeAplikasi != null){
-            dto.setStatus(tipeAplikasi.getStatus());
-            dto.setKodeTipeAplikasi(tipeAplikasi.getId());
-            dto.setNamaTipeAplikasi(tipeAplikasi.getNamaTipeAplikasi());
+        if(keteranganAplikasi != null){
+            dto.setStatus(keteranganAplikasi.getStatus());
+            dto.setName(keteranganAplikasi.getNamaKeteranganAplikasi());
+            dto.setId(keteranganAplikasi.getId());
         }
 
         return dto;
@@ -136,9 +132,9 @@ public class TipeAplikasiServiceImplementation implements TipeAplikasiService {
         OptionDTO dto2 = new OptionDTO();
         OptionDTO dto3 = new OptionDTO();
         List<OptionDTO> dtoList = new LinkedList<>();
-        dto1.setText("Kode Tipe Aplikasi");
-        dto1.setValue("kodeTipeAplikasi");
-        dto2.setText("Nama Tipe Aplikasi");
+        dto1.setText("Id");
+        dto1.setValue("id");
+        dto2.setText("Nama Keterangan Aplikasi");
         dto2.setValue("namaTipeAplikasi");
         dto3.setText("Status");
         dto3.setValue("status");
@@ -151,13 +147,13 @@ public class TipeAplikasiServiceImplementation implements TipeAplikasiService {
     @Override
     public List<OptionDTO> getSearchFilter(String filter) {
         List<OptionDTO> searchItem = new LinkedList<>();
-        List<TipeAplikasi> tipeAplikasiList = tipeAplikasiRepository.findAll();
+        List<KeteranganAplikasi> keteranganAplikasis = keteranganAplikasiRepository.findAll();
         if (filter.isBlank()){
         }else {
             switch (filter){
-                case "kodeTipeAplikasi" :
+                case "id" :
 
-                    for (var tipeAplikasi : tipeAplikasiList){
+                    for (var tipeAplikasi : keteranganAplikasis){
                         OptionDTO dto = new OptionDTO();
                         dto.setValue(tipeAplikasi.getId().toString());
                         dto.setText(tipeAplikasi.getId().toString());
@@ -166,16 +162,16 @@ public class TipeAplikasiServiceImplementation implements TipeAplikasiService {
                     break;
                 case  "namaTipeAplikasi":
 
-                    for (var tipeAplikasi : tipeAplikasiList){
+                    for (var tipeAplikasi : keteranganAplikasis){
                         OptionDTO dto = new OptionDTO();
-                        dto.setValue(tipeAplikasi.getNamaTipeAplikasi());
-                        dto.setText(tipeAplikasi.getNamaTipeAplikasi());
+                        dto.setValue(tipeAplikasi.getNamaKeteranganAplikasi());
+                        dto.setText(tipeAplikasi.getNamaKeteranganAplikasi());
                         searchItem.add(dto);
                     }
                     break;
                 case "status" :
 
-                    for (var tipeAplikasi : tipeAplikasiList){
+                    for (var tipeAplikasi : keteranganAplikasis){
                         OptionDTO dto = new OptionDTO();
                         dto.setValue(tipeAplikasi.getStatus().toString());
                         dto.setText(tipeAplikasi.getStatus().toString());
@@ -188,19 +184,19 @@ public class TipeAplikasiServiceImplementation implements TipeAplikasiService {
     }
 
     @Override
-    public void updateInsert(TipeAplikasiDTO tipeAplikasiDTO) {
-        TipeAplikasi tipeAplikasi = new TipeAplikasi();
-        tipeAplikasi.setNamaTipeAplikasi(tipeAplikasiDTO.getNamaTipeAplikasi());
-        tipeAplikasi.setId(tipeAplikasiDTO.getKodeTipeAplikasi());
-        tipeAplikasi.setStatus(tipeAplikasiDTO.getStatus());
-        tipeAplikasiRepository.save(tipeAplikasi);
+    public void updateInsert(KeteranganAplikasiFormDTO keteranganAplikasiFormDTO) {
+        KeteranganAplikasi keteranganAplikasi = new KeteranganAplikasi();
+        keteranganAplikasi.setNamaKeteranganAplikasi(keteranganAplikasiFormDTO.getName());
+        keteranganAplikasi.setId(keteranganAplikasiFormDTO.getId());
+        keteranganAplikasi.setStatus(keteranganAplikasiFormDTO.getStatus());
+        keteranganAplikasiRepository.save(keteranganAplikasi);
     }
 
     @Override
     public void delete(Integer id) {
-        TipeAplikasi tipeAplikasi = tipeAplikasiRepository.getTipeAplikasiById(id);
-        tipeAplikasi.setDeleteDate(LocalDate.now());
-        tipeAplikasiRepository.save(tipeAplikasi);
+        KeteranganAplikasi keteranganAplikasi = keteranganAplikasiRepository.getKeteranganAplikasiById(id);
+
+        keteranganAplikasiRepository.delete(keteranganAplikasi);
     }
 
 

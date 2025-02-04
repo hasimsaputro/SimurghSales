@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{layout :: head}">
+
+</head>
 </head>
 <body>
 <header th:replace="~{layout :: header}">
@@ -11,20 +13,20 @@
     <main>
         <div class="table-container">
             <h3>
-                <a href="../usermanagement/master-jabatan.html"> Data Leads </a>
+                <a > Keterangan Aplikasi </a>
             </h3>
-            <a class="black-button create-button" th:href="@{\dataleads\form}">
+            <a class="black-button create-button" th:href="@{\keteranganAplikasi\form}">
                 Tambah
                 <i class="fas fa-plus" aria-hidden="true"></i>
             </a>
-            <form method="get" class="filter" th:action="@{/dataleads}">
+            <form method="get" class="filter" th:action="@{/keteranganAplikasi}">
                 <select name="filter" id="">
                     <option th:value="null">No Specific Seller</option>
-                    <option th:each="filter : ${filterItem}" th:object="${filter}"
-                            th:value="*{value}"th:text="*{text}"></option>
+                    <option th:each="filter : ${listFilter}" th:object="${filter}"
+                            th:value="*{value}"th:text="*{text}"><input type="hidden" th:value="${filterSelected} = *{value}"></option>
                 </select>
                 <div class="search-container">
-                    <input type="text" id="search" name="search" class="searchDataLeads" th:attr="value=${search}">
+                    <input type="text" id="search" name="search" class="searchKeteranganAplikasi" th:attr="value=${search}">
                     <div class="suggestions"></div>
                 </div>
                 <button class="filter-button" type="submit">
@@ -36,36 +38,34 @@
                 <thead>
                 <tr>
                     <th></th>
-                    <th>Nomor Data Leads</th>
-                    <th>Nomor Aplikasi</th>
-                    <th>Nama Debitur</th>
-                    <th>Tipe Aplikasi</th>
-                    <th>Keterangan</th>
+                    <th>ID</th>
+                    <th>Nama Keterangan Aplikasi</th>
                     <th>Status</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr th:if="${#lists.size(grid)} == 0">
+                    <tr th:if="${#lists.size(gridKeteranganAplikasi)} == 0">
                         <td>Data Tidak Ditemukan</td>
                     </tr>
-                    <tr th:each="dataleads:${grid}" th:object="${dataleads}">
+                    <tr th:each="tp:${gridKeteranganAplikasi}" th:object="${tp}">
                         <td class="action">
-                            <a th:href="@{\dataleads\delete(dataLeadsId=*{nomorDataLeads})}" class="action-button delete-button">
+                            <a th:href="@{\keteranganAplikasi\delete(id=*{id})}" class="action-button delete-button">
                                 <i class="fa fa-trash" aria-hidden="true"></i> Hapus
                             </a>
-                            <a th:href="@{\dataleads\form(dataLeadsId=*{nomorDataLeads})}" class="action-button update-button">
+                            <a th:href="@{\keteranganAplikasi\form(id=*{id})}" class="action-button update-button">
                                 <i class="fas fa-edit" aria-hidden="true"></i> Ubah
                             </a>
-                            <a class="action-button detail-button" th:href="@{\dataleads\detail(dataLeadsId=*{nomorDataLeads})}">
+                            <a class="action-button detail-button" th:href="@{\keteranganAplikasi\detail(id=*{id})}">
                                 <i class="fa fa-info-circle" aria-hidden="true"></i> Lihat
                             </a>
                         </td>
-                        <td th:text="*{nomorDataLeads}"></td>
-                        <td th:text="*{nomorAplikasi}"></td>
-                        <td th:text="*{namaDebitur}"></td>
-                        <td th:text="*{tipeAplikasi}"></td>
-                        <td th:text="*{keterangan}"></td>
-                        <td th:text="*{status}"></td>
+                        <td th:text="*{id}"></td>
+                        <td th:text="*{name}"></td>
+                        <td> <p id="status-aplikasi" name="tipe-aplikasi" type="text" required th:field="${tp.status}">
+                            <span th:if="${tp.status}">Aktif</span>
+                            <span th:if="${not tp.status}">Tidak Aktif</span>
+                            </p>
+                        </td>
                     </tr>
                 </tbody>
                 <tfoot>

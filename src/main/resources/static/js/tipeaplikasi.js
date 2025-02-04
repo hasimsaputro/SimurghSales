@@ -1,61 +1,54 @@
-let searchInput = document.querySelector('input.searchDataLeads');
+let urlTipeAplikasi = 'http://localhost:8082/api/tipeAplikasi/getSearchItems/'; // URL yang mengarah ke controller baru
+let searchInput = document.querySelector('input.searchTipeAplikasi');
 let suggestionsContainer = document.querySelector('.search-container .suggestions');
-let selectFilter = document.querySelector('.filter select');
-let urlTipeAplikasi = 'http://localhost:8082/api/tipeAplikasi/';
+let selectFilter = document.querySelector('.filter select'); // Elemen select filter
+suggestionsContainer.style.display = 'none';
 
-searchInput.addEventListener('input', function() {
-    const query = searchInput.value.toLowerCase();
+if (searchInput) {
+    searchInput.addEventListener('input', function () {
+        const query = searchInput.value.toLowerCase(); // Mengambil input yang dimasukkan oleh pengguna
+        const filterValue = selectFilter.value; // Mengambil nilai filter yang dipilih
+        suggestionsContainer.innerHTML = ''; // Menghapus daftar suggestion sebelumnya
 
-    // Mendapatkan opsi yang dipilih di dropdown
-    const selectedOption = selectFilter.options[selectFilter.selectedIndex];
+        // Menyembunyikan suggestion jika input kosong
+        if (!query) {
+            suggestionsContainer.style.display = 'none';
+            return; // Tidak melanjutkan proses pencarian jika input kosong
+        }
 
-    // Mendapatkan nilai filter dari option yang dipilih
-    const filterValue = selectedOption.value;
+        // Menampilkan suggestion container jika ada input
+        suggestionsContainer.style.display = 'block';
 
-    // Mendapatkan nilai dari input hidden yang ada di dalam option
-    const hiddenInputValue = selectedOption.querySelector('input[type="hidden"]')?.value;
-    console.log('Selected filter value:', filterValue);
-    console.log('Hidden input value:', hiddenInputValue);
-
-    // Clear previous suggestions
-    suggestionsContainer.innerHTML = '';
-
-    // Cek jika ada query untuk pencarian
-    if (query) {
-        // Kirim request ke API berdasarkan filter dan pencarian
-        fetch(`${urlTipeAplikasi}getSearchItems/${filterValue}`)
-            .then(response => response.json())
+        // Melakukan request ke API dengan menambahkan filter sebagai bagian dari URL
+        fetch(`${urlTipeAplikasi}${filterValue}`)
+            .then(response => response.json()) // Mengonversi response menjadi format JSON
             .then(data => {
-                const items = data.map(option => option.text);
-                console.log(items);
-
-                // Filter data berdasarkan query pencarian
+                const items = data.map(option => option.text); // Asumsikan response data memiliki properti 'text'
+                // Filter hasil berdasarkan query
                 const filteredData = items.filter(item => item.toLowerCase().includes(query));
-                console.log(filteredData);
 
-                // Tampilkan saran pencarian
                 filteredData.forEach(item => {
                     const div = document.createElement('div');
                     div.classList.add('suggestion-item');
                     div.textContent = item;
 
-                    div.addEventListener('click', function() {
-                        searchInput.value = item;
-                        suggestionsContainer.innerHTML = '';
+                    // Menambahkan event listener untuk memilih suggestion
+                    div.addEventListener('click', function () {
+                        searchInput.value = item; // Mengisi input dengan item yang dipilih
+                        suggestionsContainer.innerHTML = ''; // Menghapus suggestion setelah dipilih
+                        suggestionsContainer.style.display = 'none'; // Menyembunyikan suggestion setelah dipilih
                     });
 
-                    suggestionsContainer.appendChild(div);
+                    suggestionsContainer.appendChild(div); // Menambahkan suggestion ke container
                 });
+
+                // Jika tidak ada hasil yang cocok, menyembunyikan suggestion
+                if (filteredData.length === 0) {
+                    suggestionsContainer.innerHTML = '<div class="no-results">No results found</div>';
+                }
             })
             .catch(error => {
-                console.error('Error fetching data:', error);
+                console.error('Error fetching data:', error); // Menangani error jika request gagal
             });
-    }
-});
-
-// Menyembunyikan saran saat klik di luar container pencarian
-document.addEventListener('click', function(event) {
-    if (!event.target.closest('.search-container')) {
-        suggestionsContainer.innerHTML = '';
-    }
-});
+    });
+}

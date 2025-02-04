@@ -21,7 +21,7 @@ public interface TipeAplikasiService {
 
 
     public void updateInsert(TipeAplikasiDTO tipeAplikasiDTO);
-    public void delete(TipeAplikasiDTO tipeAplikasiDTO);
+    public void delete(Integer id);
 
 }
 

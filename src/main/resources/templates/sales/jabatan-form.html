@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/jabatan}"> Master Jabatan </a> > <a th:href="@{/jabatan/form}"> Tambah </a>
+            </h3>
+            <form method="post" class="upsert-form" th:action="@{/jabatan/form}">
+
+                <table>
+                    <tbody>
+                    <tr>
+                        <td><label class="label-nama"> Jabatan ID *</label></td>
+                        <td>
+                                <input id="tipe-aplikasii" name="tipe-aplikasi" type="text" required th:field="${dto.id}">
+                                <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Nama Jabatan *</label></td>
+                        <td>
+                                <input id="tipe-aplikasi" name="tipe-aplikasi" type="text" required th:field="${dto.name}">
+                                <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Status*</label></td>
+                        <td class="input-box">
+                            <input type="radio" th:field="${dto.status}" value="true" id="status-aktif" required>
+                            <label for="status-aktif">Aktif</label>
+
+                            <input type="radio" th:field="${dto.status}" value="false" id="status-tidak-aktif" required>
+                            <label for="status-tidak-aktif">Tidak Aktif</label>
+
+                            <div  class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="submit-button" type="submit">Simpan</button>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

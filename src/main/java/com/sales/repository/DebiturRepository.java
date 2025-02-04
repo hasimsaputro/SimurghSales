@@ -22,4 +22,11 @@ public interface DebiturRepository extends JpaRepository<Debitur, String> {
             WHERE de.nomorIdentitas = :nomorId
             """)
     Debitur getDebiturByNik(String nomorId);
+
+    @Query("""
+    SELECT de
+    FROM Debitur de LEFT JOIN de.referensi r
+            """)
+    List<Debitur> getDebiturReferensi();
+
 }
