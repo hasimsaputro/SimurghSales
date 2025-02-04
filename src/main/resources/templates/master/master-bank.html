@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<script th:src="@{/js/bank-index.js}" defer></script>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/bank}"> Master Bank </a>
+            </h3>
+            <a class="black-button create-button" th:href="@{/bank/form}">
+                Tambah
+                <i class="fas fa-plus" aria-hidden="true"></i>
+            </a>
+            <form method="get" class="filter" th:action="@{/bank}">
+                <select name="filter" id="filter">
+                    <option th:value="null">No Specific</option>
+                    <option th:each="filter : ${filterItem}"
+                            th:object="${filter}"
+                            th:text="*{nama}"
+                            th:value="*{value}"></option>
+                </select>
+                <div class="search-container">
+                    <input type="text" id="search" name="search" placeholder="" th:attr="value=${search}" autocomplete="false">
+                    <div class="suggestions"></div>
+                </div>
+                <button class="filter-button" type="submit">
+                    Search
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </form>
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Kode Bank</th>
+                    <th>Nama Bank</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bank:${bankGrid}" th:object="${bank}">
+                    <td class="action">
+                        <a th:href="@{/bank/delete(id=*{kodeBank})}" class="action-button delete-button">
+                            <i class="fa fa-trash" aria-hidden="true"></i> delete
+                        </a>
+                        <a th:href="@{/bank/form(id=*{kodeBank})}" class="action-button update-button">
+                            <i class="fas fa-edit" aria-hidden="true"></i> edit
+                        </a>
+                        <a class="action-button detail-button" th:href="@{/bank/detail(id=*{kodeBank})}">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i> lihat
+                        </a>
+                    </td>
+                    <td th:text="*{kodeBank}"></td>
+                    <td th:text="*{namaBank}"></td>
+                    <td th:text="*{status}"></td>
+                </tr>
+                <tr th:if="${#lists.size(bankGrid)}==0">
+                    <td colspan="7">Data Tidak Ditemukan</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <div class="pagination" th:if="${#lists.size(bankGrid)}!=0">
+                            <div>
+                                <a th:href="@{/bank(page=1, filter=${filter}, search=${search})}"
+                                   th:attr="onclick=${currentPage <= 1} ? 'event.preventDefault()' : ''">&laquo;</a>
+
+                                <a th:href="@{/bank(page=${currentPage - 1}, filter=${filter}, search=${search} )}"
+                                   th:attr="onclick=${currentPage <= 1} ? 'event.preventDefault()' : ''">&lt;</a>
+
+                                <span th:text="|Page ${currentPage} of ${totalPages}|"></span>
+
+                                <a th:href="@{/bank(page=${currentPage + 1}, filter=${filter}, search=${search})}"
+                                   th:attr="onclick=${currentPage >= totalPages} ? 'event.preventDefault()' : ''">&gt;</a>
+
+                                <a th:href="@{/bank(page=${totalPages}, filter=${filter}, search=${search})}"
+                                   th:attr="onclick=${currentPage >= totalPages} ? 'event.preventDefault()' : ''">&raquo;</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

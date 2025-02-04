@@ -9,35 +9,62 @@
     <aside class="sidebar" th:replace="~{layout :: nav}">
     </aside>
     <main>
-        <div class="table-container">
+        <div class="table-container" th:object="${mitraAgenByIdGrid}" >
             <h3>
-                <a href="../usermanagement/master-jabatan.html"> Mitra / Agen </a>
-                <span> > </span>
-                <a href="">Ubah</a>
+                <a th:href="@{/mitraAgen}"> Mitra / Agen </a>
+                <span th:switch="*{id}">
+                    <span th:case="null"> > Tambah</span>
+                    <span th:case="*{id}"> > Ubah</span>
+                </span>
             </h3>
-            <form method="post" class="upsert-form" action="/book-library/insert-update(categoryName=${categoryName})">
+            <form method="post" class="upsert-form" th:attr="action=@{/mitraAgen/form}" th:object="${mitraAgenByIdGrid}" >
                 <input type="hidden" name="_csrf" value="${_csrf.token}">
+                <input th:if="*{id}==null" type="hidden" th:field="*{id}">
+                <input type="hidden" th:field="*{idTipeMaster}">
                 <table>
                     <tbody>
+                    <tr th:if="*{id}!=null">
+                        <td><label class="label-nama">Kode Mitra/Agen</label></td>
+                        <td>
+                            <input type="text" th:field="*{id}" readOnly >
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
                     <tr>
                         <td><label class="label-nama">Tipe Master *</label></td>
                         <td>
-                            <input id="Tipe" name="tipe" type="text" required >
+                            <div class="search-container">
+                                <input class="search-tipeMaster" id="tipeMaster" name="tipeMaster" type="text" th:field="*{namaTipeMaster}" required >
+                                <div class="suggestions tipeMaster"></div>
+                            </div>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Produk *</label></td>
                         <td>
-                            <input id="Produk" name="Produk" type="text" required >
+                            <div class="search-container">
+                                <input class="search-produk" id="Produk" name="Produk" type="text" th:field="*{namaProduk}" required >
+                                <div class="suggestions mitraProduk"></div>
+                            </div>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Cabang *</label></td>
                         <td>
-                            <input id="cabangsales" name="cabangsales" type="text" required readonly>
+                            <input type="text" th:field="*{namaCabang}" th:value="${mitraAgenByIdGrid?.namaCabang}"  required readOnly>
                             <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Status*</label></td>
+                        <td class="input-box">
+                            <input th:field="*{status}" type="radio" name="status" id="status-aktif" value="1" required>
+                            <label for="status-aktif">Aktif</label>
+                            <input th:field="*{status}" type="radio" name="status" id="status-tidak-aktif" value="0" required>
+                            <label for="status-tidak-aktif">Tidak Aktif</label>
+                            <div class="field-validation-error" id="error-status"></div>
                         </td>
                     </tr>
                     </tbody>
@@ -49,108 +76,169 @@
                             <tbody>
                             <!-- Divisi (Dropdown) -->
                             <tr>
-                                <td><label class="identitas">Nomor Identitas*</label></td>
+                                <td><label class="identitas" >Nomor Identitas*</label></td>
                                 <td>
-                                    <select name="divisi" id="divisi">
-                                        <option value="ktp">KTP</option>
-                                        <option value="sim">SIM</option>
+                                    <select name="idIdentitas" id="idIdentitas">
+                                        <option th:each="identitas : ${identitasGrid}"
+                                                th:object="${identitas}"
+                                                th:text="*{namaIdentitas}"
+                                                th:value="*{id}"></option>
                                     </select>
 
-                                    <input id="identitas" name="identitas" type="number" required placeholder="&#xf095;   081234567890">
+                                    <input th:field="*{nomorIdentitas}" id="identitas" name="identitas" type="number" required placeholder="&#xf095;   081234567890">
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Nama *</label></td>
                                 <td>
-                                    <input id="nama" name="nama" type="text" required>
+                                    <input id="nama" name="nama" type="text" th:field="*{nama}" required>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Jenis Kelamin*</label></td>
                                 <td class="input-box">
-                                    <input type="radio" name="kelamin" id="laki-laki" value="laki-laki" required>
-                                    <label for="status-aktif">Laki-Laki</label>
-                                    <input type="radio" name="kelamin" id="perempuan" value="perempuan" required>
-                                    <label for="status-tidak-aktif">Perempuan</label>
+                                    <input th:field="*{jenisKelamin}" type="radio" name="kelamin" id="laki-laki" value="L" required>
+                                    <label for="laki-laki">Laki-Laki</label>
+                                    <input th:field="*{jenisKelamin}" type="radio" name="kelamin" id="perempuan" value="P" required>
+                                    <label for="perempuan">Perempuan</label>
                                     <div class="field-validation-error" id="error-statu"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Nomor NPWP *</label></td>
                                 <td>
-                                    <input id="NPWP" name="NPWP" type="number" required>
+                                    <input th:field="*{npwp}" id="NPWP" name="NPWP" type="text" required>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Alamat Identitas*</label></td>
                                 <td>
-                                    <textarea id="address" name="address" required placeholder="&#xf015;" rows="4" cols="50"></textarea>
+                                    <textarea th:field="*{alamatIdentitas}" id="address" name="address" required placeholder="&#xf015;" rows="4" cols="50"></textarea>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama"> Kelurahan *</label></td>
                                 <td>
-                                    <input id="kelurahan" name="kelurahan" type="text" required>
+                                    <div class="search-container">
+                                        <input th:field="*{namaKelurahanIdentitas}" id="kelurahanIdentitas" name="kelurahanIdentitas" type="text" class="search-kelurahan" required>
+                                        <div class="suggestions mitraKelurahan"></div>
+                                    </div>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Kode Pos *</label></td>
                                 <td>
-                                    <input id="kodepos" name="kodepos" type="text" required readonly>
+                                    <input th:field="*{kodeposIdentitas}" id="kodeposIdentitas" name="kodeposIdentitas" type="text" required readonly>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Kecamatan *</label></td>
                                 <td>
-                                    <input id="kecamantan" name="kecamantan" type="text" required readonly>
+                                    <input th:field="*{kecamatanIdentitas}" id="kecamatanIdentitas" name="kecamantanIdentitas" type="text" required readonly>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Kota / Kabupaten *</label></td>
                                 <td>
-                                    <input id="kotakabupaten" name="kotakabupaten" type="text" required readonly>
+                                    <input th:field="*{kotaIdentitas}" id="kotakabupatenIdentitas" name="kotakabupaten" type="text" required readonly>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Provinsi *</label></td>
                                 <td>
-                                    <input id="provinsi" name="provinsi" type="text" required readonly>
+                                    <input th:field="*{provinsiIdentitas}" id="provinsiIdentitas" name="provinsi" type="text" required readonly>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <input type="checkbox" id="alamatSama"
+                                           th:checked="*{namaKelurahanIdentitas} != null and *{namaKelurahanIdentitas} == *{namaKelurahanDomisili}">
+                                    <label for="alamatSama">Alamat domisili sama dengan alamat identitas</label>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><label class="label-nama">Alamat Domisili*</label></td>
+                                <td>
+                                    <textarea th:field="*{alamatDomisili}" id="alamatDomisili" name="alamatDomisili" required placeholder="&#xf015;" rows="4" cols="50"></textarea>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
+                                <td><label class="label-nama"> Kelurahan *</label></td>
+                                <td>
+                                    <div class="search-container">
+                                        <input th:field="*{namaKelurahanDomisili}" id="kelurahanDomisili" name="kelurahanDomisili" type="text" class="search-kelurahan2" required>
+                                        <div class="suggestions mitraKelurahan2"></div>
+                                    </div>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Kode Pos *</label></td>
+                                <td>
+                                    <input th:field="*{kodeposDomisili}" id="kodeposDomisili" name="kodeposDomisili" type="text" required readonly>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Kecamatan *</label></td>
+                                <td>
+                                    <input th:field="*{kecamatanDomisili}" id="kecamatanDomisili" name="kecamantanDomisili" type="text" required readonly>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Kota / Kabupaten *</label></td>
+                                <td>
+                                    <input th:field="*{kotaDomisili}" id="kotakabupatenDomisili" name="kotakabupatenDomisili" type="text" required readonly>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="label-nama">Provinsi *</label></td>
+                                <td>
+                                    <input th:field="*{provinsiDomisili}" id="provinsiDomisili" name="provinsiDomisili" type="text" required readonly>
+                                    <div class="field-validation-error"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
                                 <td><label class="label-nama">Tempat Lahir *</label></td>
                                 <td>
-                                    <input id="Cabang" name="Cabang" type="text" required >
+                                    <input th:field="*{tempatLahir}" id="tempatLahir" name="tempatLahir" type="text" required >
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Tanggal Lahir *</label></td>
                                 <td>
-                                    <input id="tanggallahir" name="tanggallahir" type="date" required placeholder="&#xf133;   1 Januari 2025">
+                                    <input th:value="*{tanggalLahir}" id="tanggalLahir" name="tanggalLahir" type="date" required>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
-                                <td><label class="nomortelepon">Nomor Telepon </label></td>
+                                <td><label class="label-nama">Nomor Telepon </label></td>
                                 <td>
-                                    <input id="nomortelepon" name="nomortelepon" type="text">
+                                    <input th:field="*{nomorTelepon}" id="nomortelepon" name="nomortelepon" type="text">
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
-                                <td><label class="nomorhandphone">Nomor Handphone * </label></td>
+                                <td><label class="label-nama">Nomor Handphone * </label></td>
                                 <td>
-                                    <input id="nomorhandphone" name="nomorhandphone" type="text">
+                                    <input th:field="*{nomorHandPhone}" id="nomorhandphone" name="nomorhandphone" type="text">
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -167,32 +255,25 @@
                             <tr>
                                 <td><label class="label-nama">Nama Bank*</label></td>
                                 <td>
-                                    <input id="bank" name="bank" type="text" required >
+                                    <div class="search-container">
+                                        <input class="search-bank" id="bank" name="bank" type="text" th:field="*{namaBank}" required >
+                                        <div class="suggestions bank"></div>
+                                    </div>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Nomor Rekening *</label></td>
                                 <td>
-                                    <input id="rek" name="rek" type="tel" required >
+                                    <input th:field="*{nomorRekening}" id="rek" name="rek" type="tel" required >
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Nama Pemilik Rekening *</label></td>
                                 <td>
-                                    <input id="namarekening" name="namarekening" type="text" required >
+                                    <input th:field="*{namaRekening}" id="namarekening" name="namarekening" type="text" required >
                                     <div class="field-validation-error"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="label-nama">Status*</label></td>
-                                <td class="input-box">
-                                    <input type="radio" name="status" id="status-aktif" value="Aktif" required>
-                                    <label for="status-aktif">Aktif</label>
-                                    <input type="radio" name="status" id="status-tidak-aktif" value="Tidak Aktif" required>
-                                    <label for="status-tidak-aktif">Tidak Aktif</label>
-                                    <div class="field-validation-error" id="error-status"></div>
                                 </td>
                             </tr>
                             </tbody>
@@ -204,5 +285,6 @@
         </div>
     </main>
 </div>
+<script th:src="@{/js/mitraAgen-form.js}" defer></script>
 </body>
 </html>

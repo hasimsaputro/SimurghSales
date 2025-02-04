@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -26,6 +27,9 @@ public class Produk {
 
     @Column(name = "Status", nullable = false)
     private Boolean status;
+
+    @Column(name = "DeleteDate")
+    private LocalDate deleteDate;
 
     @ManyToMany(mappedBy = "produkDataleads")
     private Set<DataLeads> dataLeads;

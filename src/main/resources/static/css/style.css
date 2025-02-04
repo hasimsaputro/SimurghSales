@@ -1,9 +1,8 @@
-
 /* CSS Styling */
 * {
     margin: 0;
     padding: 0;
-    /*box-sizing: border-box;*/
+    box-sizing: border-box;
 }
 
 body {
@@ -40,11 +39,11 @@ header {
 /* Sidebar Styling */
 .sidebar {
     position: fixed;
-    top: 90px;
+    top: 90px; 
     left: 0;
     width: 200px;
     background-color: #f4f4f4;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 60px); 
     padding-top: 15px;
     border-right: 1px solid #ddd;
     font-size: 15px;
@@ -165,7 +164,7 @@ header {
 /* Main Content Styling */
 main {
     margin-left: 220px;
-    margin-top: 40px;
+    margin-top: 40px; 
     padding: 20px;
     flex-grow: 1;
 }
@@ -217,27 +216,15 @@ select {
 .search-container{
     display: flex;
     position: relative;
-    flex-direction: row;
-    align-items:center;
+    flex-direction: column;
   }
-.search-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 18px;
-    color: #aaa;
-    cursor: pointer;
-}
-.searchFormKelurahan{
-   color: black;
-}
   .suggestions {
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
     background-color: #fff;
+    border: 1px solid #ccc;
     border-top: none;
     z-index: 1000;
     max-height: 200px;
@@ -251,6 +238,18 @@ select {
   .suggestion-item:hover {
     background-color: #f0f0f0;
   }
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #aaa;
+    cursor: pointer;
+}
+.searchFormKelurahan{
+   color: black;
+}
 
 button.filter-button {
     padding: 5px 10px;

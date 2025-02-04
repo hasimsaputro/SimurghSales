@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="upsert-form" th:object="${detailCabangGrid}">
+            <h3>
+                <a th:href="@{/cabang}"> Master Cabang </a>
+                <span> > </span>
+                <span>Lihat</span>
+            </h3>
+            <div>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td><label class="label-nama">Kode Cabang</label></td>
+                        <td>
+                            <p th:text="*{kodeCabang}"></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Nama Cabang *</label></td>
+                        <td>
+                            <p th:text="*{namaCabang}"></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Tipe Struktur *</label></td>
+                        <td>
+                            <p th:text="*{tipeStruktur}"></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Alamat *</label></td>
+                        <td>
+                            <p th:text="*{alamat}"></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Kode Pos *</label></td>
+                        <td>
+                            <p th:text="*{kodePos}"></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Kelurahan</label></td>
+                        <td>
+                            <p th:text="*{kelurahan}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kecamatan</label></td>
+                        <td>
+                            <p th:text="*{kecamatan}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kota / Kabupaten</label></td>
+                        <td>
+                            <p th:text="*{kotaKabupaten}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Provinsi *</label></td>
+                        <td>
+                            <p th:text="*{provinsi}"></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Nomor Telepon</label></td>
+                        <td>
+                            <p th:text="*{nomorTelepon}"></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Nomor NPWP *</label></td>
+                        <td>
+                            <p th:text="*{npwp}"></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Tanggal Berdiri *</label></td>
+                        <td>
+                            <p th:text="*{tanggalBerdiri}"></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Status*</label></td>
+                        <td class="input-box">
+                            <p th:text="*{status} == 1 ? 'Aktif' : 'Tidak Aktif'"></p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

@@ -19,13 +19,14 @@ public class MitraAgenDetailDTO {
     private String kecamatanIdentitas;
     private String kotaIdentitas;
     private String provinsiIdentitas;
+    private String alamatDomisili;
     private String kelurahanDomisili;
     private String kodePosDomisili;
     private String kecamatanDomisili;
     private String kotaDomisili;
     private String provinsiDomisili;
     private String tempatLahir;
-    private String tangalLahir;
+    private String tanggalLahir;
     private String nomorTelepon;
     private String nomorHandphone;
     private String bank;
