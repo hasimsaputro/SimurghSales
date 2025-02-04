@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/kategori}"> Master Kategori </a> > <a th:href="@{/kategori/detail}"> Lihat </a>
+            </h3>
+            <form method="post" class="upsert-form" action="@{/kategori/detail}">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><label class="label-nama">Kode Kategori</label></td>
+                            <td>
+                                <p th:text="${kategori.id}"></p>
+                            </td>
+                        <tr>
+                            <td><label class="label-nama">Nama Kategori</label></td>
+                            <td ><p th:text="${kategori.namaKategori}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Status</label></td>
+                            <td>
+                                <p th:text="${kategori.status}"></p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

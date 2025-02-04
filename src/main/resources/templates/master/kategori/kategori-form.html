@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/kategori}"> Master Kategori </a> >
+                <a th:href="@{/kategori/form}" th:text="${formKategori.id != null} ? 'Ubah' : 'Tambah'"></a>
+            </h3>
+            <form method="post" class="upsert-form" th:action="@{/kategori/form}" th:object="${formKategori}">
+                <table>
+                    <tbody>
+                    <tr th:if="${formKategori.id != null}">
+                        <td><label class="label-nama">Kode Kategori</label></td>
+                        <td>
+                            <input id="idKategori" name="idKategori" type="text" th:field="*{id}" th:disabled="${formKategori.id != null}">
+                            <div class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Nama Kategori *</label></td>
+                        <td>
+                            <input id="namaKategori" name="namaKategori" type="text" th:field="*{namaKategori}">
+                            <div th:errors="*{namaKategori}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Status *</label></td>
+                        <td class="input-box">
+                            <input type="radio" th:field="*{status}" value="true" id="status-aktif" >
+                            <label for="status-aktif">Aktif</label>
+
+                            <input type="radio" th:field="*{status}" value="false" id="status-tidak-aktif" >
+                            <label for="status-tidak-aktif">Tidak Aktif</label>
+
+                            <div th:errors="*{status}"  class="field-validation-error"></div>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <button class="submit-button" type="submit">Simpan</button>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

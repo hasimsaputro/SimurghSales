@@ -19,6 +19,11 @@
     <script th:src="@{/js/keteranganAplikasi.js}" defer></script>
     <script th:src="@{/js/jabatan.js}" defer></script>
     <script th:src="@{/js/referensi.js}" defer></script>
+    <script th:src="@{/js/searchPot.js}" defer></script>
+    <script th:src="@{/js/searchKategori.js}" defer></script>
+    <script th:src="@{/js/searchMerk.js}" defer></script>
+    <script th:src="@{/js/searchTipe.js}" defer></script>
+    <script th:src="@{/js/searchModel.js}" defer></script>
 </head>
 <body>
     <header th:fragment="header">
@@ -32,6 +37,16 @@
         <aside class="sidebar" th:fragment="nav">
             <ul>
                 <li><a href="../portal/portal.html">Portal</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Master</a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/pot}">POT</a></li>
+                        <li><a th:href="@{/kategori}">Kategori</a></li>
+                        <li><a th:href="@{/merk}">Merk</a></li>
+                        <li><a th:href="@{/tipe}">Tipe</a></li>
+                        <li><a th:href="@{/model}">Model</a></li>
+                    </ul>
+                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle">Master</a>
                     <ul class="dropdown-menu">

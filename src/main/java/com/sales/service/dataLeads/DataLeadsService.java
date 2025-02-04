@@ -1,8 +1,6 @@
 package com.sales.service.dataLeads;
 
 import com.sales.dto.OptionDTO;
-import com.sales.dto.OptionKelurahanDTO;
-import com.sales.dto.dataLeads.*;
 import com.sales.dto.dataLeads.*;
 import com.sales.entity.Kategori;
 import com.sales.entity.Merk;
@@ -31,6 +29,7 @@ public interface DataLeadsService {
     List<OptionDTO> getOptionMerek(Integer kategori);
     List<OptionDTO> getOptionTipe(Integer kategori, String  merk);
     List<OptionDTO> getOptionModel(Integer kategori, String merk, String tipe);
+    List<OptionDTO> getOptionKeteranganAplikasi();
     String getEstimasiNilaiFunding(EstimasiNilaiFundingDTO dto);
     OptionDTO getRandomSurveyor(Integer cabangId);
     List<OptionDTO> getSearchItems(String filter);

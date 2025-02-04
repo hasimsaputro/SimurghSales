@@ -73,18 +73,18 @@
                     <td colspan="6">
                         <div class="pagination" th:if="${totalPages} != 0">
                             <div>
-                                <a th:href="@{/keteranganAplikasi(page=1, filter=${filterSelected}, search=${search})}"
+                                <a th:href="@{/dataleads(page=1, filter=${filter}, search=${search})}"
                                    th:attr="onclick=${currentPage <= 1} ? 'event.preventDefault()' : ''">&laquo;</a>
 
-                                <a th:href="@{/keteranganAplikasi(page=${currentPage - 1}, filter=${filterSelected}, search=${search} )}"
+                                <a th:href="@{/dataleads(page=${currentPage - 1}, filter=${filter}, search=${search} )}"
                                    th:attr="onclick=${currentPage <= 1} ? 'event.preventDefault()' : ''">&lt;</a>
 
                                 <span th:text="|Page ${currentPage} of ${totalPages}|"></span>
 
-                                <a th:href="@{/keteranganAplikasi(page=${currentPage + 1}, filter=${filterSelected}, search=${search})}"
+                                <a th:href="@{/dataleads(page=${currentPage + 1}, filter=${filter}, search=${search})}"
                                    th:attr="onclick=${currentPage >= totalPages} ? 'event.preventDefault()' : ''">&gt;</a>
 
-                                <a th:href="@{/keteranganAplikasi(page=${totalPages}, filter=${filterSelected}, search=${search})}"
+                                <a th:href="@{/dataleads(page=${totalPages}, filter=${filter}, search=${search})}"
                                    th:attr="onclick=${currentPage >= totalPages} ? 'event.preventDefault()' : ''">&raquo;</a>
                             </div>
                         </div>

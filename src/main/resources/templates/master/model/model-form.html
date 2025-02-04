@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/model}"> Master Model </a> >
+                <a th:href="@{/model/form}" th:text="${formModel.id != null} ? 'Ubah' : 'Tambah'"></a>
+            </h3>
+            <form method="post" class="upsert-form" th:action="@{/model/form}" th:object="${formModel}">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td><label class="label-nama">Kategori *</label></td>
+                        <td>
+                            <div class="search-container">
+                                <input id="namaKategoriModel" name="namaKategori" class="namaKategoriModelInput" type="text" th:field="*{namaKategori}">
+                                <input id="idKategoriModel" name="idKategori" class="idKategoriModelInput" type="hidden" th:field="*{idKategori}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions modelKategori"></div>
+                            </div>
+                            <div th:errors="*{idKategori}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Merk *</label></td>
+                        <td>
+                            <div class="search-container">
+                                <input id="namaMerkModel" name="namaMerk" class="namaMerkModelInput" type="text" th:field="*{namaMerk}">
+                                <input id="idMerkModel" name="idMerk" class="idMerkModelInput" type="hidden" th:field="*{idMerk}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions modelMerk"></div>
+                            </div>
+                            <div th:errors="*{idMerk}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Tipe *</label></td>
+                        <td>
+                            <div class="search-container">
+                                <input id="namaTipeModel" name="namaTipe" class="namaTipeModelInput" type="text" th:field="*{namaTipe}">
+                                <input id="idTipeModel" name="idTipe" class="idTipeModelInput" type="hidden" th:field="*{idTipe}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions modelTipe"></div>
+                            </div>
+                            <div th:errors="*{idTipe}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Jenis</label></td>
+                        <td>
+                            <input id="namaJenisModel" name="namaMerk" class="namaJenisModelInput" type="text" th:field="*{namaJenis}" disabled>
+                            <input id="idJenisModel" name="idJenis" class="idJenisModelInput" type="hidden" th:field="*{idJenis}">
+                            <div th:errors="*{idJenis}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Kode Model *</label></td>
+                        <td>
+                            <input id="idModel" name="idModel" type="text" th:field="*{id}" th:disabled="${formModel.id != null}">
+                            <div th:errors="*{id}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Nama Model *</label></td>
+                        <td>
+                            <input id="namaModel" name="namaModel" type="text" th:field="*{namaModel}">
+                            <div th:errors="*{namaModel}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Status *</label></td>
+                        <td class="input-box">
+                            <input type="radio" th:field="*{status}" value="true" id="status-aktif" >
+                            <label for="status-aktif">Aktif</label>
+
+                            <input type="radio" th:field="*{status}" value="false" id="status-tidak-aktif" >
+                            <label for="status-tidak-aktif">Tidak Aktif</label>
+
+                            <div th:errors="*{status}"  class="field-validation-error"></div>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <button class="submit-button" type="submit">Simpan</button>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

@@ -3,6 +3,7 @@ package com.sales.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -25,6 +26,9 @@ public class Merk {
 
     @Column(name = "Status", nullable = false)
     private Boolean status;
+
+    @Column(name = "DeleteDate")
+    private LocalDate deleteDate;
 
     @ManyToOne
     @JoinColumn(name = "IdKategori", insertable = false, updatable = false)
