@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/model}"> Master Model </a> > <a th:href="@{/model/detail}"> Lihat </a>
+            </h3>
+            <form method="post" class="upsert-form" action="@{/model/detail}">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><label class="label-nama">Kategori</label></td>
+                            <td>
+                                <p th:text="${model.namaKategori}"></p>
+                            </td>
+                        <tr>
+                        <tr>
+                            <td><label class="label-nama">Merk</label></td>
+                            <td>
+                                <p th:text="${model.merk}"></p>
+                            </td>
+                        <tr>
+                        <tr>
+                            <td><label class="label-nama">Tipe</label></td>
+                            <td ><p th:text="${model.tipe}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Jenis</label></td>
+                            <td ><p th:text="${model.jenis}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Kode Model</label></td>
+                            <td ><p th:text="${model.id}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Nama Model</label></td>
+                            <td ><p th:text="${model.namaModel}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Status</label></td>
+                            <td>
+                                <p th:text="${model.status}"></p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

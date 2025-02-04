@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a href="../usermanagement/master-jabatan.html">POT(Payment Of Term)</a>
+            </h3>
+            <a class="black-button create-button" th:href="@{\pot\form}">
+                Tambah
+                <i class="fas fa-plus" aria-hidden="true"></i>
+            </a>
+            <form method="get" class="filter" th:action="@{/pot}">
+                <select name="filter" id="">
+                    <option th:value="null">Pilih Filter</option>
+                    <option th:each="filter : ${filterItem}" th:object="${filter}"
+                            th:value="*{value}"th:text="*{text}"></option>
+                </select>
+                <div class="search-container">
+                    <input type="text" id="search" name="search" class="searchDataLeads" th:attr="value=${search}">
+                    <i class="fas fa-search search-icon"></i>
+                    <div class="suggestions"></div>
+                </div>
+                <button class="filter-button" type="submit">
+                    Search
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </form>
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Kode POT</th>
+                    <th>Nama POT</th>
+                    <th>Produk</th>
+                    <th>Tanggal Awal Berlaku</th>
+                    <th>Tanggal Akhir Berlaku</th>
+                    <th>Pokok Hutang Awal</th>
+                    <th>Pokok Hutang Akhir</th>
+                    <th>Tenor</th>
+                    <th>Effective Rate</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pot:${grid}" th:object="${pot}">
+                    <td class="action">
+                        <a th:href="@{\pot\delete(potId=*{id})}" class="action-button delete-button">
+                            <i class="fa fa-trash" aria-hidden="true"></i> Hapus
+                        </a>
+                        <a th:href="@{\pot\form(potId=*{id})}" class="action-button update-button">
+                            <i class="fas fa-edit" aria-hidden="true"></i> Ubah
+                        </a>
+                        <a class="action-button detail-button" th:href="@{\pot\detail(potId=*{id})}">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i> Lihat
+                        </a>
+                    </td>
+                    <td th:text="*{id}"></td>
+                    <td th:text="*{namaPot}"></td>
+                    <td th:text="*{namaProduk}"></td>
+                    <td th:text="*{tanggalAwal}"></td>
+                    <td th:text="*{tanggalAkhir}"></td>
+                    <td th:text="*{pokokHutangAwal}"></td>
+                    <td th:text="*{pokokHutangAkhir}"></td>
+                    <td th:text="*{tenor}"></td>
+                    <td th:text="*{effectiveRate}"></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <div class="pagination" th:if="${totalPages} != 0">
+                            <div>
+                                <a th:href="@{/dataleads(page=1, filter=${filter}, search=${search})}"
+                                   th:attr="onclick=${currentPage <= 1} ? 'event.preventDefault()' : ''">&laquo;</a>
+
+                                <a th:href="@{/dataleads(page=${currentPage - 1}, filter=${filter}, search=${search} )}"
+                                   th:attr="onclick=${currentPage <= 1} ? 'event.preventDefault()' : ''">&lt;</a>
+
+                                <span th:text="|Page ${currentPage} of ${totalPages}|"></span>
+
+                                <a th:href="@{/dataleads(page=${currentPage + 1}, filter=${filter}, search=${search})}"
+                                   th:attr="onclick=${currentPage >= totalPages} ? 'event.preventDefault()' : ''">&gt;</a>
+
+                                <a th:href="@{/dataleads(page=${totalPages}, filter=${filter}, search=${search})}"
+                                   th:attr="onclick=${currentPage >= totalPages} ? 'event.preventDefault()' : ''">&raquo;</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

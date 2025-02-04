@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/tipe}"> Master Tipe </a> > <a th:href="@{/tipe/detail}"> Lihat </a>
+            </h3>
+            <form method="post" class="upsert-form" action="@{/tipe/detail}">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><label class="label-nama">Kategori</label></td>
+                            <td>
+                                <p th:text="${tipe.namaKategori}"></p>
+                            </td>
+                        <tr>
+                        <tr>
+                            <td><label class="label-nama">Merk</label></td>
+                            <td>
+                                <p th:text="${tipe.namaMerk}"></p>
+                            </td>
+                        <tr>
+                        <tr>
+                            <td><label class="label-nama">Kode Tipe</label></td>
+                            <td ><p th:text="${tipe.id}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Nama Tipe</label></td>
+                            <td ><p th:text="${tipe.namaTipe}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Jenis</label></td>
+                            <td ><p th:text="${tipe.namaJenis}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Status</label></td>
+                            <td>
+                                <p th:text="${tipe.status}"></p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

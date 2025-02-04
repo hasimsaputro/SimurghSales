@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -29,14 +30,14 @@ public class POT {
     @Column(name = "IdProduk", nullable = false)
     private Integer idProduk;
 
-    @Column(name = "IdKriteriaPaket", nullable = false)
-    private Integer idKriteriaPaket;
+    @Column(name = "IdKriteriaPaket",length = 7, nullable = false)
+    private String idKriteriaPaket;
 
     @Column(name = "TanggalMulai")
-    private Date tanggalMulai;
+    private LocalDate tanggalMulai;
 
     @Column(name = "TanggalAkhir")
-    private Date tanggalAkhir;
+    private LocalDate tanggalAkhir;
 
     @Column(name = "PokokHutangAwal")
     private BigDecimal pokokHutangAwal;
@@ -76,6 +77,9 @@ public class POT {
 
     @Column(name = "IdModel",length = 10, nullable = false)
     private String idModel;
+
+    @Column(name = "DeleteDate")
+    private LocalDate deleteDate;
 
     @ManyToOne
     @JoinColumn(name = "IdProduk", insertable = false, updatable = false)

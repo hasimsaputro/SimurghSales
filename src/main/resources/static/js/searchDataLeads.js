@@ -4,8 +4,6 @@ let searchInput = document.querySelector('input.searchDataLeads');
 let suggestionsContainer = document.querySelector('.search-container .suggestions');
 let selectFilter = document.querySelector('.filter select');
 
-let kelurahanInput = document.querySelector('input#kelurahan.searchFormKelurahan');
-let suggestionKelurahan = document.querySelector('div.suggestionDataLeadsKelurahan')
 
 let potInput = document.querySelector('input#pot.searchFormPOT');
 let suggestionPot = document.querySelector('div.suggestionDataLeadsPOT');
@@ -44,36 +42,6 @@ if(searchInput){
     });
 }
 
-kelurahanInput.addEventListener('input', ()=>{
-    console.log('HALOOO');
-    let kelurahanValue = kelurahanInput.value;
-    suggestionKelurahan.innerHTML = '';
-    fetch(`${urlDataleads}getKelurahan`)
-                .then(response => response.json())
-                .then(data => {
-                    const items = data.map(option => option.text);
-                    console.log(items)
-                    if (kelurahanValue) {
-                        const filteredData = items.filter(item => item.toLowerCase().includes(kelurahanValue));
-                        console.log(filteredData)
-                        filteredData.forEach(item => {
-                            const div = document.createElement('div');
-                            div.classList.add('suggestion-item');
-                            div.textContent = item;
-
-                            div.addEventListener('click', function() {
-                                kelurahanInput.value = item;
-                                suggestionKelurahan.innerHTML = '';
-                            });
-
-                            suggestionKelurahan.appendChild(div);
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                });
-})
 let tenorInput = document.querySelector('input#tenor.tenorInput');
 let estimasiInput = document.querySelector('input#estimasi-nilai-funding.nilaiFundingInput');
 
@@ -142,14 +110,11 @@ potInput.addEventListener('input',()=>{
                                                     }
                                                 })
                                             }
-
                                             if(tipeInput){
                                                 tipeInput.addEventListener('input',()=>{
-                                                    console.log('halooo Tipe')
                                                     let tipeInputValue = tipeInput.value.toLowerCase();
                                                     suggestionTipe.innerHTML = '';
                                                     const tipeData = data.tipe;
-                                                    console.log(tipeData);
                                                     if(tipeInputValue){
                                                         const filteredTipeData = tipeData.filter(item => item.text.toLowerCase().includes(tipeInputValue));
                                                         filteredTipeData.forEach(item => {
@@ -166,13 +131,11 @@ potInput.addEventListener('input',()=>{
                                                     }
                                                 })
                                             }
-
                                             if(modelInput){
                                                 modelInput.addEventListener('input',()=>{
                                                     let modelInputValue = modelInput.value.toLowerCase();
                                                     suggestionModel.innerHTML = '';
                                                     const modelData = data.model;
-                                                    console.log(modelData);
                                                     if(modelInputValue){
                                                         const filteredModelData = modelData.filter(item => item.text.toLowerCase().includes(modelInputValue));
                                                         filteredModelData.forEach(item => {

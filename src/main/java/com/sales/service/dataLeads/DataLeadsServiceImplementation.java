@@ -10,9 +10,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class DataLeadsServiceImplementation implements DataLeadsService{
@@ -21,7 +23,6 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
     private final ModelRepository modelRepository;
     private final TipeRepository tipeRepository;
     private final MerkRepository merkRepository;
-    private final KategoriRepository kategoriRepository;
     private final MitraAgenRepository mitraAgenRepository;
     private final DataLeadsRepository repository;
     private final UserRepository userRepository;
@@ -29,14 +30,14 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
     private final PotRepository potRepository;
     private final HargaPasarRepository hargaPasarRepository;
     private final Integer rowInPage = 10;
+    public Locale indo = new Locale("id", "ID");
 
-    public DataLeadsServiceImplementation(ProdukRepository produkRepository, HargaPasarRepository hargaPasarRepository, KeteranganAplikasiRepository keteranganAplikasiRepository, ModelRepository modelRepository, TipeRepository tipeRepository, MerkRepository merkRepository, KategoriRepository kategoriRepository, MitraAgenRepository mitraAgenRepository, DataLeadsRepository repository, UserRepository userRepository, KelurahanRepository kelurahanRepository, PotRepository potRepository) {
+    public DataLeadsServiceImplementation(ProdukRepository produkRepository, HargaPasarRepository hargaPasarRepository, KeteranganAplikasiRepository keteranganAplikasiRepository, ModelRepository modelRepository, TipeRepository tipeRepository, MerkRepository merkRepository, MitraAgenRepository mitraAgenRepository, DataLeadsRepository repository, UserRepository userRepository, KelurahanRepository kelurahanRepository, PotRepository potRepository) {
         this.produkRepository = produkRepository;
         this.keteranganAplikasiRepository = keteranganAplikasiRepository;
         this.modelRepository = modelRepository;
         this.tipeRepository = tipeRepository;
         this.merkRepository = merkRepository;
-        this.kategoriRepository = kategoriRepository;
         this.mitraAgenRepository = mitraAgenRepository;
         this.repository = repository;
         this.userRepository = userRepository;
@@ -70,7 +71,7 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
                     dataLeads = repository.getByKeterangan(search, pagination);
                     break;
                 case "status":
-                    search = search.equalsIgnoreCase("Aktif") ? String.valueOf(1) : String.valueOf(0) ;
+                    search = search.equalsIgnoreCase("Aktif") ? "true" : "false";
                     dataLeads = repository.getByStatus(Boolean.parseBoolean(search),pagination);
                     break;
             }
@@ -230,7 +231,8 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
                     totalRows = repository.countByKeterangan(search);
                     break;
                 case "status":
-                    totalRows = repository.countByStatus(search);
+                    search = search.equalsIgnoreCase("Aktif") ? "true" : "false";
+                    totalRows = repository.countByStatus(Boolean.parseBoolean(search));
                     break;
             }
         }
@@ -333,67 +335,6 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
         return listdto;
     }
 
-    @Override
-    public List<OptionDTO> getOptionPOT() {
-        return null;
-    }
-
-    @Override
-    public List<OptionDTO> getOptionKategori() {
-        List<OptionDTO> optionDTOList = new LinkedList<>();
-        List<Kategori> list = kategoriRepository.getAll();
-
-        for(var kategori : list){
-            OptionDTO dto = new OptionDTO();
-            dto.setText(kategori.getNamaKategori());
-            dto.setValue(kategori.getId().toString());
-            optionDTOList.add(dto);
-        }
-        return optionDTOList;
-    }
-
-    @Override
-    public List<OptionDTO> getOptionMerek(Integer kategoriId) {
-        List<OptionDTO> optionDTOList = new LinkedList<>();
-////        List<Merk> list = merkRepository.getAll(kategoriId);
-//
-//        for(var merk : list){
-//            OptionDTO dto = new OptionDTO();
-//            dto.setText(merk.getNamaMerk());
-//            dto.setValue(merk.getId());
-//            optionDTOList.add(dto);
-//        }
-        return optionDTOList;
-    }
-
-    @Override
-    public List<OptionDTO> getOptionTipe(Integer kategori, String merk) {
-        List<OptionDTO> optionDTOList = new LinkedList<>();
-//        List<Tipe> list = tipeRepository.getAll(kategori,merk);
-//
-//        for(var tipe : list){
-//            OptionDTO dto = new OptionDTO();
-//            dto.setText(tipe.getNamaTipe());
-//            dto.setValue(tipe.getId());
-//            optionDTOList.add(dto);
-//        }
-        return optionDTOList;
-    }
-
-    @Override
-    public List<OptionDTO> getOptionModel(Integer kategori, String merk, String tipe) {
-        List<OptionDTO> optionDTOList = new LinkedList<>();
-//        List<Model> list = modelRepository.getAll(kategori,merk,tipe);
-//
-//        for(var model : list){
-//            OptionDTO dto = new OptionDTO();
-//            dto.setText(model.getNamaModel());
-//            dto.setValue(model.getId());
-//            optionDTOList.add(dto);
-//        }
-        return optionDTOList;
-    }
-
 
 
     @Override
@@ -467,7 +408,7 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
         potDataDTO.setTenor(String.valueOf(potData.getTenor()));
         List<Merk> merkData;
         if(potData.getIdMerk() == null){
-            merkData = merkRepository.getAll(potData.getIdKategori());
+            merkData = merkRepository.getMerkByKategoriId(potData.getIdKategori());
             for (var data : merkData){
                 OptionDTO item = new OptionDTO(data.getNamaMerk(),String.valueOf(data.getId()));
                 merk.add(item);
@@ -480,7 +421,7 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
         }
         List<Tipe> tipeData = new LinkedList<>();
         if(potData.getIdTipe() == null && potData.getIdMerk() == null){
-            tipeData = tipeRepository.getAll(potData.getIdKategori());
+            tipeData = tipeRepository.getAllTipeByKategoriId(potData.getIdKategori());
             for (var data : tipeData){
                 OptionDTO item = new OptionDTO(data.getNamaTipe(),String.valueOf(data.getId()));
                 tipe.add(item);
@@ -538,7 +479,7 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
         var totalDp = pokokHutang.multiply(BigDecimal.valueOf(dp+1));
         var totalEstimasi = pokokHutang.add(biayaProvisi).add(biayaAsuransi).subtract(totalDp);
 
-        return String.valueOf(totalEstimasi);
+        return NumberFormat.getCurrencyInstance(indo).format(totalEstimasi);
     }
 
 }

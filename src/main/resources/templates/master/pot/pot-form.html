@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/pot}"> POT(Payment Of Term) </a> > <a th:href="@{/pot/insert}"> Tambah </a>
+            </h3>
+            <form method="post" class="pot-form" th:action="@{/pot/form}" th:object="${formPOT}">
+                <input type="hidden" th:field="*{id}">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td><label class="label-nama">Nama POT *</label></td>
+                        <td>
+                            <input id="namaPot" name="namaPot" type="text" required th:field="*{namaPot}">
+                            <div class="field-validation-error" th:errors="*{namaPot}"></div>
+                        </td>
+                    <tr>
+                        <td><label class="label-nama">Produk *</label></td>
+                        <td>
+                            <input id="namaProduk" name="namaProduk" type="text" required th:field="*{idProduk}">
+                            <div class="field-validation-error" th:errors="*{idProduk}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kriteria Paket</label></td>
+                        <td>
+                            <input id="idKriteriaPaket" name="idKriteriaPaket" type="text" required th:field="*{idKriteriaPaket}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Tanggal Mulai Berlaku</label></td>
+                        <td>
+                            <input type="date" id="tanggalMulai" name="tanggalMulai" th:value="*{tanggalMulai}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Tanggal Akhir Berlaku</label></td>
+                        <td>
+                            <input type="date" id="tanggalAkhir" name="tanggalAkhir" th:value="*{tanggalAkhir}">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Pokok Hutang Awal</label></td>
+                        <td>
+                            <input id="pokokHutangAwal" name="pokokHutangAwal" type="text" required th:field="*{pokokHutangAwal}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Pokok Hutang Akhir</label></td>
+                        <td>
+                            <input id="pokokHutangAkhir" name="pokokHutangAkhir" type="text" required th:field="*{pokokHutangAkhir}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Interval Pembayaran *</label></td>
+                        <td>
+                            <input id="idIntevalPembayaran" name="idIntevalPembayaran" type="text" required th:field="*{idIntevalPembayaran}">
+                            <div class="field-validation-error" th:errors="*{idIntevalPembayaran}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Tenor</label></td>
+                        <td>
+                            <input id="tenor" name="tenor" type="text" required th:field="*{tenor}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Effective Rate</label></td>
+                        <td>
+                            <input id="effectiveRate" name="effectiveRate" type="text" required th:field="*{effectiveRate}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Nilai Admin</label></td>
+                        <td>
+                            <input id="nilaiAdmin" name="nilaiAdmin" type="text" required th:field="*{nilaiAdmin}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Nilai Provisi</label></td>
+                        <td>
+                            <input id="nilaiProvisi" name="nilaiProvisi" type="text" required th:field="*{nilaiProvisi}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">% DP</label></td>
+                        <td>
+                            <input id="dp" name="dp" type="text" required th:field="*{dp}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Status Merchandise</label></td>
+                        <td class="input-box">
+                            <input type="radio" th:field="*{statusMerchandise}" value="true" id="statusMerchandiseAktif" required>
+                            <label >Aktif</label>
+
+                            <input type="radio" th:field="*{statusMerchandise}" value="false" id="statusMerchandiseTdkAktif" required>
+                            <label >Tidak Aktif</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kategori *</label></td>
+                        <td>
+                            <input id="kategori" name="kategori" class="kategoriInput" type="text" required th:field="*{idKategori}">
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Merek</label></td>
+                        <td>
+                            <div class="search-container">
+                                <input id="merk" name="merk" class="merkInput" type="text" th:field="*{idMerk}">
+                                <div class="suggestionDataLeadsMerk"></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Tipe</label></td>
+                        <td>
+                            <div class="search-container">
+                                <input id="tipe" name="tipe" class="tipeInput" type="text" th:field="*{idTipe}">
+                                <div class="suggestionDataLeadsTipe"></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Model</label></td>
+                        <td>
+                            <div class="search-container">
+                                <input id="model" name="model" class="modelInput" type="text" th:field="*{idModel}">
+                                <div class="suggestionDataLeadsModel"></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+                <button class="submit-button" type="submit">Simpan</button>
+            </form>
+            <div id="part1" class="form-part">
+                <button type="button" class="toggle-btn" onclick="togglePart('part1')">Data Cabang</button>
+                <div class="form-content">
+                    <button class="btnSimpanCabang" type="button">
+                        Simpan
+                    </button>
+                    <form method="get" class="pot-filter" th:action="@{/pot/cabang}">
+                        <select name="filter" id="">
+                            <option th:value="null"> Pilih Filter</option>
+                            <option th:each="filter : ${filterItem}" th:object="${filter}"
+                                    th:value="*{value}"th:text="*{text}"></option>
+                        </select>
+                        <div class="search-container">
+                            <input type="text" id="search" name="search" class="searchDataLeads" th:attr="value=${search}">
+                            <div class="suggestions"></div>
+                        </div>
+                        <button class="filter-button" type="submit">
+                            Search
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Kode Cabang</th>
+                            <th>Nama Cabang</th>
+                            <th>Tipe Struktur</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="cabang:${grid}" th:object="${pot/cabang}">
+                            <td class="action">
+                                <input type="checkbox" name="addCabanf" id="addCabang" th:field="*{idCabang}">
+                            </td>
+                            <td th:text="*{idCabang}"></td>
+                            <td th:text="*{namaCabang}"></td>
+                            <td th:text="*{tipeStruktur}"></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="6">
+                                <div class="pagination" th:if="${totalPages} != 0">
+                                    <div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

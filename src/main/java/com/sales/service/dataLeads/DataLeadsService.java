@@ -21,11 +21,6 @@ public interface DataLeadsService {
     List<OptionDTO> getOptionSumberDataAplikasi();
     List<OptionDTO> getOptionReferensi();
     List<OptionDTO> getOptionKeteranganAplikasi();
-    List<OptionDTO> getOptionPOT();
-    List<OptionDTO> getOptionKategori();
-    List<OptionDTO> getOptionMerek(Integer kategori);
-    List<OptionDTO> getOptionTipe(Integer kategori, String  merk);
-    List<OptionDTO> getOptionModel(Integer kategori, String merk, String tipe);
     String getEstimasiNilaiFunding(EstimasiNilaiFundingDTO dto);
     List<OptionDTO> getSearchItems(String filter);
 

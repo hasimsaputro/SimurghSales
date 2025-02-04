@@ -57,7 +57,7 @@ public interface DataLeadsRepository extends JpaRepository<DataLeads, String> {
     List<DataLeads> getByKeterangan(String search, Pageable pagination);
 
     @Query("""
-            SELECT dl
+            SELECT DISTINCT dl
             FROM DataLeads dl
             WHERE dl.status = :search
             """)
@@ -115,11 +115,11 @@ public interface DataLeadsRepository extends JpaRepository<DataLeads, String> {
     int countByKeterangan(String search);
 
     @Query("""
-            SELECT COUNT(dl.id)
+            SELECT DISTINCT COUNT(dl.id)
             FROM DataLeads dl
             WHERE dl.status = :search
             """)
-    int countByStatus(String search);
+    int countByStatus(boolean search);
 
     @Query("""
             SELECT dl.id
@@ -154,7 +154,7 @@ public interface DataLeadsRepository extends JpaRepository<DataLeads, String> {
             """)
     List<String> getItemsByKeterangan();
 
-    @Query(value = "SELECT CASE WHEN dl.status = 1 THEN 'Aktif' ELSE 'Tidak Aktif' END FROM DataLeads dl", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT CASE WHEN dl.status = 1 THEN 'Aktif' ELSE 'Tidak Aktif' END FROM DataLeads dl", nativeQuery = true)
     List<String> getItemsByStatus();
 
     @Query("""
