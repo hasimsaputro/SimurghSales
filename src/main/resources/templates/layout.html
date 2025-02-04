@@ -11,7 +11,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script th:src="@{/js/script.js}" defer></script>
-    <script th:src="@{/js/mitraAgen-form.js}" defer></script>
 </head>
 <body>
     <header th:fragment="header">
@@ -26,6 +25,21 @@
             <ul>
                 <li><a href="../portal/portal.html">Portal</a></li>
                 <li><a th:href="@{/mitraAgen}">Mitra / Agen</a></li>
+                <!-- Dropdown for Master -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Master</a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/tipeMaster}">Tipe Master</a></li>
+                        <li><a th:href="@{/produk}">Produk</a></li>
+                        <li><a th:href="@{/cabang}">Cabang</a></li>
+                        <li><a th:href="@{/identitas}">Identitas</a></li>
+                        <li><a th:href="@{/bank}">Bank</a></li>
+                        <li><a href="../usermanagement/master-jabatan.html">Kelurahan</a></li>
+                        <li><a href="../usermanagement/master-role.html">Kecamatan</a></li>
+                        <li><a href="../usermanagement/master-user.html">Kabupaten</a></li>
+                        <li><a href="../usermanagement/master-user.html">Provinsi</a></li>
+                    </ul>
+                </li>
                 <li><a th:href="@{/DataLeads}">Data Lead</a></li>
             </ul>
         </aside>

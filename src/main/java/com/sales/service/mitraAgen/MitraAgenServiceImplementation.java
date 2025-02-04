@@ -324,12 +324,12 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                     break;
             }
         }
-        List<MitraAgenIndexOptionDTO> searchsItems = new LinkedList<>();
+        List<MitraAgenIndexOptionDTO> mitraAgenIndexOptionDTOS = new LinkedList<>();
         for (String searchItem : searchItems){
             MitraAgenIndexOptionDTO mitraAgenIndexOptionDTO = new MitraAgenIndexOptionDTO(searchItem, searchItem);
-            searchsItems.add(mitraAgenIndexOptionDTO);
+            mitraAgenIndexOptionDTOS.add(mitraAgenIndexOptionDTO);
         }
-        return searchsItems;
+        return mitraAgenIndexOptionDTOS;
     }
 
 

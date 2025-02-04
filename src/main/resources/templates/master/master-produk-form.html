@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<header th:replace="~{layout :: header}"></header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}"></aside>
+    <main>
+        <div class="table-container" th:object="${produkByIdGrid}">
+            <h3>
+                <a th:href="@{/produk}"> Master Produk </a>
+                <span th:switch="*{id}">
+                    <span th:case="null"> > Tambah</span>
+                    <span th:case="*{id}"> > Ubah</span>
+                </span>
+            </h3>
+            <form method="post" class="upsert-form" th:attr="action=@{/produk/form}" th:object="${produkByIdGrid}">
+                <input type="hidden" name="_csrf" value="${_csrf.token}">
+                <input th:if="*{id}==null" type="hidden" th:field="*{id}">
+                <table>
+                    <tbody>
+                    <tr th:if="*{id}!=null">
+                        <td><label class="label-nama">Kode Produk</label></td>
+                        <td>
+                            <input type="text" th:field="*{id}" readOnly>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Nama Produk *</label></td>
+                        <td>
+                            <input id="namaProduk" name="namaProduk" type="text" th:field="*{namaProduk}" required>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Status*</label></td>
+                        <td class="input-box">
+                            <input th:field="*{status}" type="radio" name="status" id="status-aktif" value="1" required>
+                            <label for="status-aktif">Aktif</label>
+                            <input th:field="*{status}" type="radio" name="status" id="status-tidak-aktif" value="0" required>
+                            <label for="status-tidak-aktif">Tidak Aktif</label>
+                            <div class="field-validation-error" id="error-status"></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="submit-button" type="submit">Simpan</button>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

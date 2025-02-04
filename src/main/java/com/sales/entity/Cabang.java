@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +30,7 @@ public class Cabang {
     private Integer idTipeStruktur;
 
     @Column(name = "Alamat", length = 100, nullable = false)
-    private String Alamat;
+    private String alamat;
 
     @Column(name = "IdKelurahan", nullable = false)
     private Integer idKelurahan;
@@ -41,10 +42,13 @@ public class Cabang {
     private String nomorNPWP;
 
     @Column(name = "TanggalBerdiri")
-    private Date tanggalBerdiri;
+    private LocalDate tanggalBerdiri;
 
     @Column(name = "Status", nullable = false)
     private Boolean status;
+
+    @Column(name = "DeleteDate")
+    private LocalDate deleteDate;
 
     @ManyToOne
     @JoinColumn(name = "IdTipeStruktur",insertable = false,updatable = false)

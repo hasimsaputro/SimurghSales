@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<script th:src="@{/js/produk-index.js}" defer></script>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/produk}"> Master Produk </a>
+            </h3>
+            <a class="black-button create-button" th:href="@{/produk/form}">
+                Tambah
+                <i class="fas fa-plus" aria-hidden="true"></i>
+            </a>
+            <form method="get" class="filter" th:action="@{/produk}">
+                <select name="filter" id="filter">
+                    <option th:value="null">No Specific</option>
+                    <option th:each="filter : ${filterItem}"
+                            th:object="${filter}"
+                            th:text="*{nama}"
+                            th:value="*{value}"></option>
+                </select>
+                <div class="search-container">
+                    <input type="text" id="search" name="search" placeholder="" th:attr="value=${search}" autocomplete="false">
+                    <div class="suggestions"></div>
+                </div>
+                <button class="filter-button" type="submit">
+                    Search
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </form>
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Kode Produk</th>
+                    <th>Nama Produk</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr  th:each="produk:${produkGrid}" th:object="${produk}">
+                    <td class="action">
+                        <a th:href="@{/produk/delete(id=*{kodeProduk})}" class="action-button delete-button">
+                            <i class="fa fa-trash" aria-hidden="true"></i> delete
+                        </a>
+                        <a th:href="@{/produk/form(id=*{kodeProduk})}" class="action-button update-button">
+                            <i class="fas fa-edit" aria-hidden="true"></i> edit
+                        </a>
+                        <a class="action-button detail-button" th:href="@{/produk/detail(id=*{kodeProduk})}">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i> lihat
+                        </a>
+                    </td>
+                    <td th:text="*{kodeProduk}"></td>
+                    <td th:text="*{namaProduk}"></td>
+                    <td th:text="*{status}"></td>
+                </tr>
+                <tr th:if="${#lists.size(produkGrid)}==0">
+                    <td colspan="7">Data Tidak Ditemukan</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <div class="pagination" th:if="${#lists.size(produkGrid)}!=0">
+                            <div>
+                                <a th:href="@{/produk(page=1, filter=${filter}, search=${search})}"
+                                   th:attr="onclick=${currentPage <= 1} ? 'event.preventDefault()' : ''">&laquo;</a>
+
+                                <a th:href="@{/produk(page=${currentPage - 1}, filter=${filter}, search=${search} )}"
+                                   th:attr="onclick=${currentPage <= 1} ? 'event.preventDefault()' : ''">&lt;</a>
+
+                                <span th:text="|Page ${currentPage} of ${totalPages}|"></span>
+
+                                <a th:href="@{/produk(page=${currentPage + 1}, filter=${filter}, search=${search})}"
+                                   th:attr="onclick=${currentPage >= totalPages} ? 'event.preventDefault()' : ''">&gt;</a>
+
+                                <a th:href="@{/produk(page=${totalPages}, filter=${filter}, search=${search})}"
+                                   th:attr="onclick=${currentPage >= totalPages} ? 'event.preventDefault()' : ''">&raquo;</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

@@ -130,7 +130,6 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
     List<MitraAgen> getMitraAgenByStatus(Pageable pageable, @Param("search") Boolean search);
 
 
-
     @Query("""
             SELECT mit.id
             FROM MitraAgen mit

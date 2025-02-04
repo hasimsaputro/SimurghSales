@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<header th:replace="~{layout :: header}"></header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}"></aside>
+    <main>
+        <div class="upsert-form" th:object="${detailIdentitasGrid}">
+            <h3>
+                <a th:href="@{/identitas}"> Master Identitas </a>
+                <span> > </span>
+                <span>Lihat</span>
+            </h3>
+            <div>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td><label class="label-nama">Kode Identitas</label></td>
+                        <td>
+                            <p th:text="*{kodeIdentitas}"></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Nama Identitas *</label></td>
+                        <td>
+                            <p th:text="*{namaIdentitas}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Status*</label></td>
+                        <td class="input-box">
+                            <p th:text="*{status} == 1 ? 'Aktif' : 'Tidak Aktif'"></p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

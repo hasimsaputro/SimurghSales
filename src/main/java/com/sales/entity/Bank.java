@@ -3,6 +3,7 @@ package com.sales.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -19,6 +20,9 @@ public class Bank {
 
     @Column(name = "Status", nullable = false)
     private Boolean status;
+
+    @Column(name = "DeleteDate")
+    private LocalDate deleteDate;
 
     @OneToMany(mappedBy = "bankMitraAgen")
     private List<MitraAgen> mitraAgenList;
