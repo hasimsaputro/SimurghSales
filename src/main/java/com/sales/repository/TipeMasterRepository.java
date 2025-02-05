@@ -111,4 +111,10 @@ public interface TipeMasterRepository extends JpaRepository<TipeMaster, Integer>
             WHERE tip.namaTipeMaster = :namaTipeMaster
             """)
     TipeMaster getTipeMasterByName(String namaTipeMaster);
+
+    @Query("""
+            SELECT tip.namaTipeMaster
+            FROM TipeMaster tip
+            """)
+    List<String> getTipeMasterItems();
 }

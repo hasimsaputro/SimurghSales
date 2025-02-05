@@ -2,69 +2,16 @@
     document.addEventListener('DOMContentLoaded', function() {
         let mainUrl = "http://localhost:8082/api/mitraAgen";
 
-        let produkInput = document.querySelector("div.search-container input.search-produk");
-        let suggestionsProdukContainer = document.querySelector("div.search-container .suggestions.mitraProduk");
-
-    let kelurahanInput = document.querySelector("div.search-container input.search-kelurahan");
-    let suggestionsKelurahanContainer = document.querySelector("div.search-container .suggestions.mitraKelurahan");
-    let kodeposInput = document.querySelector("input#kodeposIdentitas");
-    let kecamatanInput = document.querySelector("input#kecamatanIdentitas");
-    let kotaKabupatenInput = document.querySelector("input#kotakabupatenIdentitas");
-    let provinsiInput = document.querySelector("input#provinsiIdentitas");
-    let selectedKelurahanValue = null;
-
-    let kelurahanDomisiliInput = document.querySelector("input#kelurahanDomisili");
-    let suggestionsKelurahanDomisiliContainer = document.querySelector(".mitraKelurahan2");
-    let kodePosDomisiliInput = document.querySelector("input#kodeposDomisili");
-    let kecamatanDomisiliInput = document.querySelector("input#kecamatanDomisili");
-    let kotaKabupatenDomisiliInput = document.querySelector("input#kotakabupatenDomisili");
-    let provinsiDomisiliInput = document.querySelector("input#provinsiDomisili");
-    let selectedKelurahanDomisiliValue = null;
-
-
-
-    let tipeMasterInput = document.querySelector("div.search-container input.search-tipeMaster");
-    let suggestionsTipeMasterContainer = document.querySelector("div.search-container .suggestions.tipeMaster");
-
-    let bankInput = document.querySelector("div.search-container input.search-bank");
-    let suggestionsBankContainer = document.querySelector("div.search-container .suggestions.bank")
-
-    tipeMasterInput.addEventListener("input",()=> {
-                  const query = tipeMasterInput.value.toLowerCase();
-                  suggestionsTipeMasterContainer.innerHTML ="";
-                  fetch(`${mainUrl}/tipeMaster-options`).then(response => response.json()).then(data => {
-                  const items = data.map(option => option.namaTipeMaster);
-                  if (query) {
-                                      const filteredData = items.filter(item => item.toLowerCase().includes(query));
-                                      console.log(filteredData)
-                                      filteredData.forEach(item => {
-                                          const div = document.createElement('div');
-                                          div.classList.add('suggestion-item');
-                                          div.textContent = item;
-
-                                          div.addEventListener('click', function() {
-                                              tipeMasterInput.value = item;
-                                              suggestionsTipeMasterContainer.innerHTML = '';
-                                          });
-
-                                          suggestionsTipeMasterContainer.appendChild(div);
-                                      });
-                                  }
-                  })
-                  .catch(error => {
-                                  console.error('Error fetching data:', error);
-                              });
-            })
+        let currentPage = 0;
+        let isLoading = false;
 
         const alamatSamaCheckbox = document.getElementById('alamatSama');
-
         const address = document.getElementById('address');
         const kelurahanIdentitas = document.getElementById('kelurahanIdentitas');
         const kodeposIdentitas = document.getElementById('kodeposIdentitas');
         const kecamatanIdentitas = document.getElementById('kecamatanIdentitas');
         const kotakabupatenIdentitas = document.getElementById('kotakabupatenIdentitas');
         const provinsiIdentitas = document.getElementById('provinsiIdentitas');
-
         const alamatDomisili = document.getElementById('alamatDomisili');
         const kelurahanDomisili = document.getElementById('kelurahanDomisili');
         const kodeposDomisili = document.getElementById('kodeposDomisili');
@@ -72,163 +19,135 @@
         const kotakabupatenDomisili = document.getElementById('kotakabupatenDomisili');
         const provinsiDomisili = document.getElementById('provinsiDomisili');
 
-    produkInput.addEventListener("input",()=> {
-          const query = produkInput.value.toLowerCase();
-          suggestionsProdukContainer.innerHTML ="";
-          fetch(`${mainUrl}/produk-options`).then(response => response.json()).then(data => {
-          const items = data.map(option => option.namaProduk);
-          if (query) {
-                              const filteredData = items.filter(item => item.toLowerCase().includes(query));
-                              console.log(filteredData)
-                              filteredData.forEach(item => {
-                                  const div = document.createElement('div');
-                                  div.classList.add('suggestion-item');
-                                  div.textContent = item;
+        function fetchSuggestions(query = '', target) {
+            if (isLoading) return;
+            isLoading = true;
 
-                                  div.addEventListener('click', function() {
-                                      produkInput.value = item;
-                                      suggestionsProdukContainer.innerHTML = '';
-                                  });
+            let apiUrl = "";
+            if (target === "kelurahanIdentitas" || target === "kelurahanDomisili") {
+                apiUrl = "kelurahan-options";
+            } else {
+                apiUrl = `${target}-options`;
+            }
 
-                                  suggestionsProdukContainer.appendChild(div);
-                              });
-                          }
-          })
-          .catch(error => {
-                          console.error('Error fetching data:', error);
-                      });
-    })
-
-    bankInput.addEventListener("input",()=> {
-              const query = bankInput.value.toLowerCase();
-              suggestionsBankContainer.innerHTML ="";
-              fetch(`${mainUrl}/bank-options`).then(response => response.json()).then(data => {
-              const items = data.map(option => option.namaBank);
-              if (query) {
-                                  const filteredData = items.filter(item => item.toLowerCase().includes(query));
-                                  console.log(filteredData)
-                                  filteredData.forEach(item => {
-                                      const div = document.createElement('div');
-                                      div.classList.add('suggestion-item');
-                                      div.textContent = item;
-
-                                      div.addEventListener('click', function() {
-                                          bankInput.value = item;
-                                          suggestionsBankContainer.innerHTML = '';
-                                      });
-
-                                      suggestionsBankContainer.appendChild(div);
-                                  });
-                              }
-              })
-              .catch(error => {
-                              console.error('Error fetching data:', error);
-                          });
-        })
-
-    kelurahanInput.addEventListener("input", () => {
-        const query = kelurahanInput.value.toLowerCase();
-        suggestionsKelurahanContainer.innerHTML = "";  // Kosongkan daftar suggestion
-
-        if (query) {
-            // Jika ada input, lakukan pencarian
-            fetch(`${mainUrl}/kelurahan-options`)
+            fetch(`${mainUrl}/${apiUrl}?page=${currentPage}&size=5`)
                 .then(response => response.json())
                 .then(data => {
-                    const items = data.map(option => ({
-                        namaKelurahan: option.namaKelurahan,
-                        value: option.value,
-                        kodePos: option.kodePos,
-                        kecamatan: option.kecamatan,
-                        kotaKabupaten: option.kotaKabupaten,
-                        provinsi: option.provinsi
-                    }));
+                    isLoading = false;
+                    let items = [];
+                    let filteredData = [];
 
-                    const filteredData = items.filter(item => item.namaKelurahan.toLowerCase().includes(query));
+                    if (target === 'kelurahanIdentitas' || target === 'kelurahanDomisili') {
+                        items = data.map(option => ({
+                            namaKelurahan: option.namaKelurahan,
+                            kodePos: option.kodePos,
+                            kecamatan: option.kecamatan,
+                            kotaKabupaten: option.kotaKabupaten,
+                            provinsi: option.provinsi
+                        }));
 
-                    // Jika ada hasil yang cocok
-                    filteredData.forEach(item => {
-                        const div = document.createElement('div');
-                        div.classList.add('suggestion-item');
-                        div.textContent = item.namaKelurahan;
+                        filteredData = items.filter(item => item.namaKelurahan.toLowerCase().includes(query.toLowerCase()));
+                    } else {
+                        items = data.map(option => option[`nama${capitalizeFirstLetter(target)}`]);
+                        filteredData = query
+                            ? items.filter(item => item.toLowerCase().includes(query.toLowerCase()))
+                            : items;
+                    }
 
-                        // Event listener untuk memilih suggestion
-                        div.addEventListener('click', function() {
-                            kelurahanInput.value = item.namaKelurahan;  // Mengisi input dengan hasil yang dipilih
-                            selectedKelurahanValue = item.value;  // Menyimpan nilai kelurahan yang dipilih
-                            kodeposInput.value = item.kodePos;
-                            kecamatanInput.value = item.kecamatan;
-                            kotaKabupatenInput.value = item.kotaKabupaten;
-                            provinsiInput.value = item.provinsi;
-                            suggestionsKelurahanContainer.innerHTML = '';  // Hapus suggestions setelah klik
+                    const limitedResults = filteredData.slice(0, 5);
+                    const suggestionsContainer = document.querySelector(`.suggestions.${target}`);
+                    suggestionsContainer.innerHTML = '';
+
+                    if (limitedResults.length > 0) {
+                        limitedResults.forEach(item => {
+                            const div = document.createElement('div');
+                            div.classList.add('suggestion-item');
+                            div.textContent = item.namaKelurahan || item;
+
+                            div.addEventListener('click', function () {
+                                const inputField = document.querySelector(`input#${target}`);
+                                inputField.value = item.namaKelurahan || item;
+
+                                if (target === 'kelurahanIdentitas' || target === 'kelurahanDomisili') {
+                                    const jenis = target.substring(target.indexOf('kelurahan') + 'kelurahan'.length); // Ambil "Identitas" atau "Domisili"
+                                    const selectedItem = items.find(i => i.namaKelurahan === item.namaKelurahan);
+                                    if (selectedItem) {
+                                        document.querySelector(`#kodepos${capitalizeFirstLetter(jenis)}`).value = selectedItem.kodePos;
+                                        document.querySelector(`#kecamatan${capitalizeFirstLetter(jenis)}`).value = selectedItem.kecamatan;
+                                        document.querySelector(`#kotakabupaten${capitalizeFirstLetter(jenis)}`).value = selectedItem.kotaKabupaten;
+                                        document.querySelector(`#provinsi${capitalizeFirstLetter(jenis)}`).value = selectedItem.provinsi;
+                                    }
+
+                                    if (alamatSamaCheckbox.checked) {
+                                        alamatDomisili.value = address.value;
+                                        kelurahanDomisili.value = kelurahanIdentitas.value;
+                                        kodeposDomisili.value = kodeposIdentitas.value;
+                                        kecamatanDomisili.value = kecamatanIdentitas.value;
+                                        kotakabupatenDomisili.value = kotakabupatenIdentitas.value;
+                                        provinsiDomisili.value = provinsiIdentitas.value;
+                                    }
+                                }
+                                suggestionsContainer.innerHTML = '';
+                            });
+
+                            suggestionsContainer.appendChild(div);
                         });
 
-                        // Tambahkan item suggestion ke dalam container
-                        suggestionsKelurahanContainer.appendChild(div);
-                    });
+//                        if (filteredData.length > currentPage * 5) {
+//                            const loadMoreButton = document.createElement('div');
+//                            loadMoreButton.classList.add('load-more');
+//                            loadMoreButton.textContent = 'Muat Lebih Banyak';
+//                            loadMoreButton.addEventListener('click', function () {
+//                                currentPage++;
+//                                fetchSuggestions(query, target);
+//                            });
+//                            suggestionsContainer.appendChild(loadMoreButton);
+//                        }
+                    } else {
+                        const noResultMessage = document.createElement('div');
+                        noResultMessage.classList.add('suggestion-item');
+                        noResultMessage.textContent = 'Tidak ada hasil ditemukan.';
+                        suggestionsContainer.appendChild(noResultMessage);
+                    }
                 })
                 .catch(error => {
-                    console.error('Error fetching data:', error);
+                    console.error('Terjadi kesalahan saat mengambil data:', error);
+                    const suggestionsContainer = document.querySelector(`.suggestions.${target}`);
+                    suggestionsContainer.innerHTML = '<div class="suggestion-item">Terjadi kesalahan saat memuat data.</div>';
+                    isLoading = false;
                 });
         }
-        // Jika input kosong, pastikan tidak ada suggestion yang ditampilkan
-        else {
-            suggestionsKelurahanContainer.innerHTML = '';  // Hapus semua suggestion jika input kosong
+
+        document.querySelectorAll('input').forEach(inputField => {
+            inputField.addEventListener('input', () => {
+                const query = inputField.value;
+                const target = inputField.classList[0].replace('search-', '');
+                currentPage = 0;
+                fetchSuggestions(query, target);
+            });
+        });
+
+        document.querySelectorAll('.search-icon').forEach(searchIcon => {
+            searchIcon.addEventListener('click', () => {
+                const target = searchIcon.getAttribute('data-target');
+                const query = document.querySelector(`input#${target}`).value;
+                currentPage = 0;
+                fetchSuggestions(query, target);
+            });
+        });
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
         }
-    });
 
-
-    kelurahanDomisiliInput.addEventListener("input", () => {
-        const query = kelurahanDomisiliInput.value.toLowerCase();
-        suggestionsKelurahanDomisiliContainer.innerHTML = "";  // Kosongkan daftar suggestion
-
-        if (query) {
-            // Jika ada input, lakukan pencarian
-            fetch(`${mainUrl}/kelurahan-options`)
-                .then(response => response.json())
-                .then(data => {
-                    const items = data.map(option => ({
-                        namaKelurahan: option.namaKelurahan,
-                        value: option.value,
-                        kodePos: option.kodePos,
-                        kecamatan: option.kecamatan,
-                        kotaKabupaten: option.kotaKabupaten,
-                        provinsi: option.provinsi
-                    }));
-
-                    const filteredData = items.filter(item => item.namaKelurahan.toLowerCase().includes(query));
-
-                    // Jika ada hasil yang cocok
-                    filteredData.forEach(item => {
-                        const div = document.createElement('div');
-                        div.classList.add('suggestion-item');
-                        div.textContent = item.namaKelurahan;
-
-                        // Event listener untuk memilih suggestion
-                        div.addEventListener('click', function() {
-                            kelurahanDomisiliInput.value = item.namaKelurahan;  // Mengisi input dengan hasil yang dipilih
-                            selectedKelurahanDomisiliValue = item.value;  // Menyimpan nilai kelurahan yang dipilih
-                            kodePosDomisiliInput.value = item.kodePos;
-                            kecamatanDomisiliInput.value = item.kecamatan;
-                            kotaKabupatenDomisiliInput.value = item.kotaKabupaten;
-                            provinsiDomisiliInput.value = item.provinsi;
-                            suggestionsKelurahanDomisiliContainer.innerHTML = '';  // Hapus suggestions setelah klik
-                        });
-
-                        // Tambahkan item suggestion ke dalam container
-                        suggestionsKelurahanDomisiliContainer.appendChild(div);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
+        document.addEventListener('click', function(event) {
+            const isClickInside = event.target.closest('.search-container');
+            if (!isClickInside) {
+                document.querySelectorAll('.suggestions').forEach(container => {
+                    container.innerHTML = '';
                 });
-        }
-        // Jika input kosong, pastikan tidak ada suggestion yang ditampilkan
-        else {
-            suggestionsKelurahanDomisiliContainer.innerHTML = '';  // Hapus semua suggestion jika input kosong
-        }
-    });
-
+            }
+        });
 
         if (alamatSamaCheckbox.checked){
             alamatDomisili.readOnly = true;

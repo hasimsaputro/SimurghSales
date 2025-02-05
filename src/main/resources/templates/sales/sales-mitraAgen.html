@@ -26,8 +26,9 @@
                             th:text="*{nama}"
                             th:value="*{value}"></option>
                 </select>
-                <div class="search-container">
-                    <input type="text" id="search" name="search" placeholder="" th:attr="value=${search}" autocomplete="false">
+                <div class="search-container-filter">
+                    <input type="text" id="search" name="search" class="search-filter" th:attr="value=${search}">
+                    <i class="fas fa-search search-icon"></i>
                     <div class="suggestions"></div>
                 </div>
                 <button class="filter-button" type="submit">

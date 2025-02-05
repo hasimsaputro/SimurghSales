@@ -35,7 +35,7 @@
         let kecIdenField = document.querySelector("#kecamatanIdentitas");
         let kabIdenField = document.querySelector("#kotakabupatenIdentitas");
         let provIdenField = document.querySelector("#provinsiIdentitas");
-
+        let alamatSamaField = document.querySelector("#alamatSama");
         let alamatDomField = document.querySelector("#alamatDomisili");
         let kelDomField = document.querySelector("#kelurahanDomisili");
         let kodPosDomField = document.querySelector("#kodeposDomisili");
@@ -57,6 +57,9 @@
         kecIdenField.textContent = detail.kecamatanIdentitas;
         kabIdenField.textContent = detail.kotaIdentitas;
         provIdenField.textContent = detail.provinsiIdentitas;
+        if (detail.kelurahanIdentitas == detail.kelurahanDomisili){
+            alamatSamaField.checked = true;
+        }
         alamatDomField.textContent = detail.alamatDomisili;
         kelDomField.textContent = detail.kelurahanDomisili;
         kodPosDomField.textContent = detail.kodePosDomisili;

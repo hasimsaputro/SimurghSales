@@ -97,7 +97,7 @@ public interface ProdukRepository extends JpaRepository<Produk, Integer> {
             FROM Produk pro
             WHERE pro.deleteDate IS NULL
             """)
-    List<Produk> getAllProduk();
+    List<Produk> getAllProduk(Pageable pageable);
 
 
     @Query("""
