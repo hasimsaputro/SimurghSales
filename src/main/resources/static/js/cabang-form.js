@@ -6,122 +6,124 @@
     let totalPages;
     let checkedProduk = [];
 
+    let bodiTabelProduk = document.querySelector(".produk-list tbody");
+
     let searchProdukCabang = document.querySelector('input#search.searchProdukCabang');
     let suggestionsProdukCabangContainer = document.querySelector('.search-container .suggestions.produkCabang');
     let selectProdukCabangFilter = document.querySelector('.produk-filter select');
 
-    // fetch(`${mainUrl}/produk/getFilterItems`)
-    //             .then(response => response.json())
-    //             .then(data => {
-    //                 selectProdukCabangFilter.innerHTML = "";
-    //                 let defaultOption = document.createElement("option");
-    //                 defaultOption.value = "";
-    //                 defaultOption.textContent = "-- Pilih Item --";
-    //                 selectProdukCabangFilter.appendChild(defaultOption);
-    //                 data.forEach(item => {
-    //                     let option = document.createElement("option");
-    //                     option.value = item.value;
-    //                     option.textContent = item.nama;
-    //                     selectProdukCabangFilter.appendChild(option);
-    //                     // console.log(item.nama);
-    //                     // console.log(item.value);
-    //                 });
-    //             })
-    //             .catch(error => {
-    //                 console.error('Error fetching data:', error);
-    //             });
+    fetch(`${mainUrl}/produk/getFilterItems`)
+                .then(response => response.json())
+                .then(data => {
+                    selectProdukCabangFilter.innerHTML = "";
+                    let defaultOption = document.createElement("option");
+                    defaultOption.value = "";
+                    defaultOption.textContent = "-- Pilih Item --";
+                    selectProdukCabangFilter.appendChild(defaultOption);
+                    data.forEach(item => {
+                        let option = document.createElement("option");
+                        option.value = item.value;
+                        option.textContent = item.nama;
+                        selectProdukCabangFilter.appendChild(option);
+                        // console.log(item.nama);
+                        // console.log(item.value);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
     
-    //             selectProdukCabangFilter.addEventListener("change", function() {
-    //                 filter = selectProdukCabangFilter.value;
-    //             });
+                selectProdukCabangFilter.addEventListener("change", function() {
+                    filter = selectProdukCabangFilter.value;
+                });
 
-    //             if(searchProdukCabang){
-    //                 searchProdukCabang.addEventListener('input', function() {
-    //                     const query = searchProdukCabang.value.toLowerCase();
-    //                     // const filterValue = selectProdukCabangFilter.value;
-    //                     suggestionsProdukCabangContainer.innerHTML = '';
-    //                     fetch(`${mainUrl}/produk/getSearchItems=${filter}`)
-    //                             .then(response => response.json())
-    //                             .then(data => {
-    //                                 const items = data.map(option => option.nama);
-    //                                 if (query) {
-    //                                     const filteredData = items.filter(item => item.toLowerCase().includes(query));
-    //                                     filteredData.forEach(item => {
-    //                                         const div = document.createElement('div');
-    //                                         div.classList.add('suggestion-item');
-    //                                         div.textContent = item;
+                if(searchProdukCabang){
+                    searchProdukCabang.addEventListener('input', function() {
+                        const query = searchProdukCabang.value.toLowerCase();
+                        // const filterValue = selectProdukCabangFilter.value;
+                        suggestionsProdukCabangContainer.innerHTML = '';
+                        fetch(`${mainUrl}/produk/getSearchItems=${filter}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    const items = data.map(option => option.nama);
+                                    if (query) {
+                                        const filteredData = items.filter(item => item.toLowerCase().includes(query));
+                                        filteredData.forEach(item => {
+                                            const div = document.createElement('div');
+                                            div.classList.add('suggestion-item');
+                                            div.textContent = item;
           
-    //                                         div.addEventListener('click', function() {
-    //                                             searchProdukCabang.value = item;
-    //                                             search = item;
-    //                                             suggestionsProdukCabangContainer.innerHTML = '';
-    //                                         });
+                                            div.addEventListener('click', function() {
+                                                searchProdukCabang.value = item;
+                                                search = item;
+                                                suggestionsProdukCabangContainer.innerHTML = '';
+                                            });
           
-    //                                         suggestionsProdukCabangContainer.appendChild(div);
-    //                                             });
-    //                                         }
-    //                                     })
-    //                                     .catch(error => {
-    //                                         console.error('Error fetching data:', error);
-    //                                     });
-    //                 });
-    //               }
+                                            suggestionsProdukCabangContainer.appendChild(div);
+                                                });
+                                            }
+                                        })
+                                        .catch(error => {
+                                            console.error('Error fetching data:', error);
+                                        });
+                    });
+                  }
 
-    //               console.log(search);
-    //               console.log(filter);
+                  console.log(search);
+                  console.log(filter);
                   
                   
-    //               let searchBtn = document.querySelector('.filter-button');
-    //               if(searchBtn){
-    //                   searchBtn.addEventListener('click',()=>{
-    //                 //   console.log('haloo')
-    //                       fetch(`${mainUrl}/produk?page=${currentPage}&filter=${filter}&search=${search}`)
-    //                       .then(response => response.json())
-    //                       .then(data => {
-    //                         console.log(data);
-                            
-    //                           bodiTabelProduk.innerHTML = "";
-    //                           for (const produk of data.produkIndexDTOS) {
-    //                               let row = document.createElement("tr");
-    //                               let columnCheckbox = document.createElement("td");
-    //                               let columnKode = document.createElement("td");
-    //                               let columnName = document.createElement("td");
-    //                               let inputCheckbox = document.createElement("input");
-    //                               inputCheckbox.setAttribute("type", "checkbox");
-    //                               inputCheckbox.name = "produk";
-    //                               inputCheckbox.id = produk.kodeProduk;
+                  let searchBtn = document.querySelector('.filter-button');
+                  if(searchBtn){
+                      searchBtn.addEventListener('click',()=>{
+                        event.preventDefault;
+                    //   console.log('haloo')
+                          fetch(`${mainUrl}/produk?page=${currentPage}&filter=${filter}&search=${search}`)
+                          .then(response => response.json())
+                          .then(data => {
+                            console.log(data);
+                            bodiTabelProduk.innerHTML = "";
+                              for (const produk of data.produkIndexDTOS) {
+                                  let row = document.createElement("tr");
+                                  let columnCheckbox = document.createElement("td");
+                                  let columnKode = document.createElement("td");
+                                  let columnName = document.createElement("td");
+                                  let inputCheckbox = document.createElement("input");
+                                  inputCheckbox.setAttribute("type", "checkbox");
+                                  inputCheckbox.name = "produk";
+                                  inputCheckbox.id = produk.kodeProduk;
           
-    //                               // Mengecek apakah produk ada di dalam array produkChecked
-    //                               if (checkedProduk.includes(produk.kodeProduk)) {
-    //                                   inputCheckbox.checked = true; // Menandai checkbox sebagai tercentang jika ID ada di produkChecked
-    //                               }
+                                  // Mengecek apakah produk ada di dalam array produkChecked
+                                  if (checkedProduk.includes(produk.kodeProduk)) {
+                                      inputCheckbox.checked = true; // Menandai checkbox sebagai tercentang jika ID ada di produkChecked
+                                  }
           
-    //                               columnKode.innerHTML = produk.kodeProduk;
-    //                               columnName.innerHTML = produk.namaProduk;
-    //                               columnCheckbox.appendChild(inputCheckbox);
-    //                               row.appendChild(columnCheckbox);
-    //                               row.appendChild(columnKode);
-    //                               row.appendChild(columnName);
-    //                               bodiTabelProduk.appendChild(row);
-    //                           }
-    //                         currentPage = data.currentPage;
-    //                         totalPages = data.totalPages;
+                                  columnKode.innerHTML = produk.kodeProduk;
+                                  columnName.innerHTML = produk.namaProduk;
+                                  columnCheckbox.appendChild(inputCheckbox);
+                                  row.appendChild(columnCheckbox);
+                                  row.appendChild(columnKode);
+                                  row.appendChild(columnName);
+                                  bodiTabelProduk.appendChild(row);
+                              }
+                            // currentPage = data.currentPage;
+                            // totalPages = data.totalPages;
 
-    //                         let span = document.querySelector("#page-text");
-    //                         span.textContent = `Page ${currentPage} of ${totalPages}`;
+                            // let span = document.querySelector("#page-text");
+                            // span.textContent = `Page ${currentPage} of ${totalPages}`;
 
-    //                         checkCheckboxes();
-    //                       })
-    //                       .catch(error => {
-    //                         console.error('Error fetching data:', error);
-    //                     });                        
-    //                   })
+                            // checkCheckboxes();
+                          })
+                          .catch(error => {
+                            console.error('Error fetching data:', error);
+                        });                        
+                      })
                       
-    //               }
+                  }
 
 
     let searchProduct = () => {
-        let bodiTabelProduk = document.querySelector(".produk-list tbody");
+        
         bodiTabelProduk.innerHTML = "";
         fetch(`${mainUrl}/produk?page=${currentPage}&filter=${filter}&search=${search}`).then(response => response.json()).then(data => {
             for (const produk of data.produkIndexDTOS) {

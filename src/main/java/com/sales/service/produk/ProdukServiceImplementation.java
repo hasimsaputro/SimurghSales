@@ -92,6 +92,7 @@ public class ProdukServiceImplementation implements ProdukService {
         return produkIndexDTOS;
     }
 
+
     @Override
     public CabangProdukGridDTO getAllRest(int page, String filter, String search){
         List<ProdukIndexDTO> produkIndexDTOS = this.getAll(page, filter, search);

@@ -57,15 +57,15 @@ public class ProdukRestController {
         }
     }
 
-//    @GetMapping(value = {"/getSearchItems={filter}"})
-//    public ResponseEntity<Object> getSearchItems(
-//            @PathVariable String filter
-//    ){
-//        try{
-//            List<ProdukIndexOptionDTO> produkIndexOptionDTOS = service.getSearchItems(filter);
-//            return ResponseEntity.status(HttpStatus.OK).body(IndexOptionDTOS);
-//        } catch (Exception e){
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-//        }
-//    }
+    @GetMapping(value = {"/getSearchItems={filter}"})
+    public ResponseEntity<Object> getSearchItems(
+            @PathVariable String filter
+    ){
+        try{
+            List<ProdukIndexOptionDTO> produkIndexOptionDTOS = service.getSearchItems(filter);
+            return ResponseEntity.status(HttpStatus.OK).body(produkIndexOptionDTOS);
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 }
