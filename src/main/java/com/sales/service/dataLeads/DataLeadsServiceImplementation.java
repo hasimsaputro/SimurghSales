@@ -35,7 +35,6 @@ public class DataLeadsServiceImplementation implements DataLeadsService {
     private final MitraAgenRepository mitraAgenRepository;
     private final DataLeadsRepository repository;
     private final UserRepository userRepository;
-    private final KelurahanRepository kelurahanRepository;
     private final PotRepository potRepository;
     private final HargaPasarRepository hargaPasarRepository;
     private final Integer rowInPage = 10;
@@ -47,7 +46,6 @@ public class DataLeadsServiceImplementation implements DataLeadsService {
         this.kelurahanRepository = kelurahanRepository;
         this.debiturRepository = debiturRepository;
         this.tipeAplikasiRepository = tipeAplikasiRepository;
-    public DataLeadsServiceImplementation(ProdukRepository produkRepository, HargaPasarRepository hargaPasarRepository, KeteranganAplikasiRepository keteranganAplikasiRepository, ModelRepository modelRepository, TipeRepository tipeRepository, MerkRepository merkRepository, MitraAgenRepository mitraAgenRepository, DataLeadsRepository repository, UserRepository userRepository, KelurahanRepository kelurahanRepository, PotRepository potRepository) {
         this.produkRepository = produkRepository;
         this.keteranganAplikasiRepository = keteranganAplikasiRepository;
         this.modelRepository = modelRepository;
@@ -56,7 +54,6 @@ public class DataLeadsServiceImplementation implements DataLeadsService {
         this.mitraAgenRepository = mitraAgenRepository;
         this.repository = repository;
         this.userRepository = userRepository;
-        this.kelurahanRepository = kelurahanRepository;
         this.potRepository = potRepository;
         this.hargaPasarRepository = hargaPasarRepository;
     }
@@ -507,9 +504,8 @@ public class DataLeadsServiceImplementation implements DataLeadsService {
     }
 
 
-
     @Override
-    public List<OptionDTO>  getSearchItems(String filter) {
+    public List<OptionDTO> getSearchItems(String filter) {
         List<String > searchItems = new LinkedList<>();
         if(!filter.isBlank()){
             switch (filter){
@@ -650,11 +646,12 @@ public class DataLeadsServiceImplementation implements DataLeadsService {
         var totalDp = pokokHutang.multiply(BigDecimal.valueOf(dp+1));
         var totalEstimasi = pokokHutang.add(biayaProvisi).add(biayaAsuransi).subtract(totalDp);
 
-        return NumberFormat.getCurrencyInstance(indo).format(totalEstimasi);
+        return String.valueOf(totalEstimasi);
     }
 
     @Override
     public OptionDTO getRandomSurveyor(Integer cabangId) {
+
         OptionDTO randomSurveyor = new OptionDTO();
         List<User> listSurveyor = userRepository.getUserByCabangAndSurveyor(cabangId);
         Random random = new Random();

@@ -12,22 +12,22 @@ function togglePart(partId) {
 }
 
 // Optional: Close dropdowns if clicked outside
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('.form-part')) {
-        document.querySelectorAll('.form-content').forEach(function(menu) {
-            menu.style.display = 'none';
-        });
-        document.querySelectorAll('.form-part').forEach(function(dropdown) {
-            dropdown.classList.remove('open');
-        });
-    }
-});
+//document.addEventListener('click', function(e) {
+//    if (!e.target.closest('.form-part')) {
+//        document.querySelectorAll('.form-content').forEach(function(menu) {
+//            menu.style.display = 'none';
+//        });
+//        document.querySelectorAll('.form-part').forEach(function(dropdown) {
+//            dropdown.classList.remove('open');
+//        });
+//    }
+//});
 
 
-  $(document).ready(function() {
+$(document).ready(function() {
+    // Inisialisasi datepicker
     $("#tanggal").datepicker({
-      dateFormat: "dd MM yy", // Format: 01 Januari 2025
-      regional: "id" // Mengatur bahasa Indonesia
+        dateFormat: "dd MM yy", // Format: 01 Januari 2025
+        regional: "id" // Mengatur bahasa Indonesia
     });
-  });
-
+});

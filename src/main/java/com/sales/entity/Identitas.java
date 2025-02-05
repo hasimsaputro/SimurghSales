@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @NoArgsConstructor
@@ -28,6 +29,9 @@ public class Identitas {
 
     @OneToMany(mappedBy = "identitas")
     private List<Debitur> debiturList;
+
+    @Column(name = "DeleteDate")
+    private LocalDate deleteDate;
 
     @OneToMany(mappedBy = "identitasMitraAgen")
     private List<MitraAgen> mitraAgenList;

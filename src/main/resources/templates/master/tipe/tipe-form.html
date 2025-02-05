@@ -44,7 +44,7 @@
                     <tr>
                         <td><label class="label-nama">Kode Tipe *</label></td>
                         <td>
-                            <input id="idTipe" name="idTipe" type="text" th:field="*{id}" th:disabled="${formTipe.id != null}">
+                            <input id="idTipe" name="idTipe" type="text" th:field="*{id}" th:readonly="${formTipe.id != null}">
                             <div th:errors="*{id}" class="field-validation-error"></div>
                         </td>
                     <tr>

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container" th:object="${cabangByIdGrid}" >
+            <h3>
+                <a th:href="@{/cabang}"> Master Cabang </a>
+                <span th:switch="*{id}">
+                    <span th:case="null"> > Tambah</span>
+                    <span th:case="*{id}"> > Ubah</span>
+                </span>
+            </h3>
+            <form class="upsert-form" th:object="${cabangByIdGrid}" >
+                <input type="hidden" name="_csrf" value="${_csrf.token}">
+                <input th:if="*{id}==null" type="hidden" th:field="*{id}">
+                <table>
+                    <tbody>
+                    <tr th:if="*{id}!=null">
+                        <td><label class="label-nama">Kode Cabang</label></td>
+                        <td>
+                            <input type="text" th:field="*{id}" readOnly >
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Nama Cabang *</label></td>
+                        <td>
+                            <input id="namaCabang" name="namaCabang" type="text" th:field="*{namaCabang}" required>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Tipe Struktur *</label></td>
+                        <td>
+                            <div class="search-container">
+                                <input class="search-tipeStruktur" id="tipeStruktur" name="tipeStruktur" type="text" th:field="*{tipeStruktur}" required >
+                                <div class="suggestions tipeStruktur"></div>
+                            </div>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Alamat *</label></td>
+                        <td>
+                            <textarea th:field="*{alamat}" id="address" name="address" required placeholder="&#xf015;" rows="4" cols="50"></textarea>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama"> Kelurahan </label></td>
+                        <td>
+                            <input th:field="*{kelurahan}" id="kelurahan" name="kelurahan" type="text" required>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Kode Pos *</label></td>
+                        <td>
+                            <input type="text" th:field="*{kodePos}"  required readonly >
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Kecamatan </label></td>
+                        <td>
+                            <input th:field="*{kecamatan}" id="kecamatan" name="kecamantan" type="text" required readonly >
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kota / Kabupaten </label></td>
+                        <td>
+                            <input th:field="*{kotaKabupaten}" id="kotakabupaten" name="kotakabupaten" type="text" required readonly>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Provinsi *</label></td>
+                        <td>
+                            <input th:field="*{provinsi}" id="provinsi" name="provinsi" type="text" required readonly>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Nomor Telepon </label></td>
+                        <td>
+                            <input th:field="*{nomorTelepon}" id="nomortelepon" name="nomortelepon" type="text">
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Nomor NPWP *</label></td>
+                        <td>
+                            <input th:field="*{npwp}" id="NPWP" name="NPWP" type="text" required>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Tanggal Berdiri *</label></td>
+                        <td>
+                            <input th:value="*{tanggalBerdiri}" id="tanggalBerdiri" name="tanggalBerdiri" type="date" required>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="label-nama">Status*</label></td>
+                        <td class="input-box">
+                            <input th:field="*{status}" type="radio" name="status" id="status-aktif" value="1" required>
+                            <label for="status-aktif">Aktif</label>
+                            <input th:field="*{status}" type="radio" name="status" id="status-tidak-aktif" value="0" required>
+                            <label for="status-tidak-aktif">Tidak Aktif</label>
+                            <div class="field-validation-error" id="error-status"></div>
+                        </td>
+                    </tr>
+                </table>
+                <div id="part1" class="form-part">
+                    <!-- <button type="button" class="toggle-btn" onclick="togglePart('part1')">Produk</button> -->
+                    <button type="button" class="toggle-btn">Produk</button>
+                    <!-- <form class="filter">
+                        <select name="filter" id="filter">
+                            <option th:value="null">No Specific</option>
+                            <option>Kode Produk</option>
+                            <option>Nama Produk</option>
+                        </select>
+                        <div class="search-container">
+                            <input type="text" id="search" name="search" placeholder="" th:attr="value=${search}" autocomplete="false">
+                            <div class="suggestions"></div>
+                        </div>
+                        <button class="filter-button" type="button">
+                            Search
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </form> -->
+                    <table class="produk-list">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Kode Produk</th>
+                            <th>Nama Produk</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+
+                    </table>
+                </div>
+
+                <button class="submit-button" type="submit">Simpan</button>
+            </form>
+        </div>
+    </main>
+</div>
+<script th:src="@{/js/cabang-form.js}" defer></script>
+</body>
+</html>

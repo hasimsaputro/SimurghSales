@@ -26,14 +26,25 @@
                     <tr>
                         <td><label class="label-nama">Produk *</label></td>
                         <td>
-                            <input id="namaProduk" name="namaProduk" type="text" required th:field="*{idProduk}">
+                            <div class="search-container">
+                                <input id="namaProdukPot" name="namaProduk" type="text" class="namaProdukPotInput" required th:field="*{namaProduk}">
+                                <input id="idProdukPot" name="idProduk" class="idProdukPotInput" type="hidden" th:field="*{idProduk}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions produkPot"></div>
+                            </div>
                             <div class="field-validation-error" th:errors="*{idProduk}"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Kriteria Paket</label></td>
                         <td>
-                            <input id="idKriteriaPaket" name="idKriteriaPaket" type="text" required th:field="*{idKriteriaPaket}">
+                            <div class="search-container">
+                                <input id="namaKriteriaPaketPot" name="namaProduk" type="text" class="namaKriteriaPotInput" required th:field="*{namaKriteriaPaket}">
+                                <input id="idKriteriaPaketPot" name="idKriteriaPaket" class="idKriteriaPotInput" type="hidden" th:field="*{idKriteriaPaket}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions kriteriaPot"></div>
+                            </div>
+                            <div class="field-validation-error" th:errors="*{idKriteriaPaket}"></div>
                         </td>
                     </tr>
                     <tr>
@@ -64,7 +75,12 @@
                     <tr>
                         <td><label class="label-nama">Interval Pembayaran *</label></td>
                         <td>
-                            <input id="idIntevalPembayaran" name="idIntevalPembayaran" type="text" required th:field="*{idIntevalPembayaran}">
+                            <div class="search-container">
+                                <input id="namaIntervalPot" name="namaInterval" type="text" class="namaIntervalPotInput" required th:field="*{namaInterval}">
+                                <input id="idIntevalPembayaranPot" name="idIntevalPembayaran" class="idIntervalPotInput" type="hidden" th:field="*{idIntevalPembayaran}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions intervalPot"></div>
+                            </div>
                             <div class="field-validation-error" th:errors="*{idIntevalPembayaran}"></div>
                         </td>
                     </tr>
@@ -111,16 +127,23 @@
                     <tr>
                         <td><label class="label-nama">Kategori *</label></td>
                         <td>
-                            <input id="kategori" name="kategori" class="kategoriInput" type="text" required th:field="*{idKategori}">
-                            <div class="field-validation-error"></div>
+                            <div class="search-container">
+                                <input id="namaKategoriPot" name="namaKategori" type="text" class="namaKategoriPotInput" required th:field="*{namaKategori}">
+                                <input id="idKategoriPot" name="idKategori" class="idKategoriPotInput" type="hidden" th:field="*{idKategori}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions kategoriPot"></div>
+                            </div>
+                            <div class="field-validation-error" th:errors="*{idKategori}"></div>
                         </td>
                     </tr>
                     <tr>
                         <td><label class="label-nama">Merek</label></td>
                         <td>
                             <div class="search-container">
-                                <input id="merk" name="merk" class="merkInput" type="text" th:field="*{idMerk}">
-                                <div class="suggestionDataLeadsMerk"></div>
+                                <input id="namaMerkPot" name="namaMerk" type="text" class="namaMerkPotInput" required th:field="*{namaMerk}">
+                                <input id="idMerkPot" name="idMerk" class="idMerkPotInput" type="hidden" th:field="*{idMerk}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions merkPot"></div>
                             </div>
                         </td>
                     </tr>
@@ -129,8 +152,10 @@
                         <td><label class="label-nama">Tipe</label></td>
                         <td>
                             <div class="search-container">
-                                <input id="tipe" name="tipe" class="tipeInput" type="text" th:field="*{idTipe}">
-                                <div class="suggestionDataLeadsTipe"></div>
+                                <input id="namaTipePot" name="namaTipe" type="text" class="namaTipePotInput" required th:field="*{namaTipe}">
+                                <input id="idTipePot" name="idTipe" class="idTipePotInput" type="hidden" th:field="*{idTipe}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions tipePot"></div>
                             </div>
                         </td>
                     </tr>
@@ -139,73 +164,64 @@
                         <td><label class="label-nama">Model</label></td>
                         <td>
                             <div class="search-container">
-                                <input id="model" name="model" class="modelInput" type="text" th:field="*{idModel}">
-                                <div class="suggestionDataLeadsModel"></div>
+                                <input id="namaModelPot" name="namaModel" type="text" class="namaModelPotInput" required th:field="*{namaModel}">
+                                <input id="idModelPot" name="idModel" class="idModelPotInput" type="hidden" th:field="*{idModel}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions modelPot"></div>
                             </div>
                         </td>
                     </tr>
 
                     </tbody>
                 </table>
+                <div id="part1" class="form-part">
+                <button type="button" class="toggle-btn" onclick="togglePart('part1')">Data Cabang</button>
+                    <div class="form-content">
+                        <div class="pot-filter">
+                            <select name="filter" id="">
+                                <option th:value="null"> Pilih Filter</option>
+                                <option th:each="filter : ${filterItem}" th:object="${filter}"
+                                        th:value="*{value}"th:text="*{text}"></option>
+                            </select>
+                            <div class="search-container">
+                                <input type="text" id="search" name="search" class="searchCabangPot" th:attr="value=${search}">
+                                <div class="suggestions cabangPot"></div>
+                            </div>
+                            <button class="filter-button">
+                                Search
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <table class="cabang-list">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Kode Cabang</th>
+                                <th>Nama Cabang</th>
+                                <th>Tipe Struktur</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="6">
+                                    <div class="pagination" th:if="${totalPages} != 0">
+                                        <div>
 
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
                 <button class="submit-button" type="submit">Simpan</button>
             </form>
-            <div id="part1" class="form-part">
-                <button type="button" class="toggle-btn" onclick="togglePart('part1')">Data Cabang</button>
-                <div class="form-content">
-                    <button class="btnSimpanCabang" type="button">
-                        Simpan
-                    </button>
-                    <form method="get" class="pot-filter" th:action="@{/pot/cabang}">
-                        <select name="filter" id="">
-                            <option th:value="null"> Pilih Filter</option>
-                            <option th:each="filter : ${filterItem}" th:object="${filter}"
-                                    th:value="*{value}"th:text="*{text}"></option>
-                        </select>
-                        <div class="search-container">
-                            <input type="text" id="search" name="search" class="searchDataLeads" th:attr="value=${search}">
-                            <div class="suggestions"></div>
-                        </div>
-                        <button class="filter-button" type="submit">
-                            Search
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </button>
-                    </form>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Kode Cabang</th>
-                            <th>Nama Cabang</th>
-                            <th>Tipe Struktur</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="cabang:${grid}" th:object="${pot/cabang}">
-                            <td class="action">
-                                <input type="checkbox" name="addCabanf" id="addCabang" th:field="*{idCabang}">
-                            </td>
-                            <td th:text="*{idCabang}"></td>
-                            <td th:text="*{namaCabang}"></td>
-                            <td th:text="*{tipeStruktur}"></td>
-                        </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <td colspan="6">
-                                <div class="pagination" th:if="${totalPages} != 0">
-                                    <div>
-
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
         </div>
     </main>
 </div>
+<script th:src="@{/js/pot-form.js}" defer></script>
 </body>
 </html>

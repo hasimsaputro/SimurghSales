@@ -32,7 +32,7 @@
                     <tr>
                         <td><label class="label-nama">Kode Merk *</label></td>
                         <td>
-                            <input id="idMerk" name="idMerk" type="text" th:field="*{id}" th:disabled="${formMerk.id != null}">
+                            <input id="idMerk" name="idMerk" type="text" th:field="*{id}"    th:readonly="${formMerk.id != null}">
                             <div class="field-validation-error"></div>
                         </td>
                     <tr>

@@ -218,13 +218,13 @@ public class ModelServiceImplementation implements ModelService{
                     searchItems = repository.getItemsByNamaMerk();
                     break;
                 case "namaTipe":
-                    searchItems = repository.getItemsByName();
+                    searchItems = repository.getItemsByNameTipe();
                     break;
                 case "namaJenis":
                     searchItems = repository.getItemsByNamaJenis();
                     break;
                 case "namaModel":
-                    searchItems = repository.getItemsByNamaJenis();
+                    searchItems = repository.getItemsByName();
                     break;
                 case "status":
                     searchItems = repository.getItemsByStatus();
