@@ -140,8 +140,10 @@ public class KecamatanServiceImplementation implements KecamatanService{
         if (id!=null){
             try {
                 Kecamatan kecamatan = repository.findById(id).orElseThrow();
-                kecamatanFormDTO.setProvinsi(kecamatan.getProvinsi().getNamaProvinsi());
-                kecamatanFormDTO.setKabupaten(kecamatan.getKabupaten().getNamaKabupatenKota());
+                String getIdNameLocation = String.format("%s - %s", kecamatan.getProvinsi().getId(), kecamatan.getProvinsi().getNamaProvinsi());
+                kecamatanFormDTO.setProvinsi(getIdNameLocation);
+                getIdNameLocation = String.format("%s - %s", kecamatan.getKabupaten().getId(), kecamatan.getKabupaten().getNamaKabupatenKota());
+                kecamatanFormDTO.setKabupaten(getIdNameLocation);
                 kecamatanFormDTO.setKode(kecamatan.getId());
                 kecamatanFormDTO.setKecamatan(kecamatan.getNamaKecamatan());
                 kecamatanFormDTO.setStatus(kecamatan.getStatus());
@@ -154,8 +156,10 @@ public class KecamatanServiceImplementation implements KecamatanService{
     public void save(KecamatanFormDTO kecamatanFormDTO) {
         Kecamatan kecamatan = new Kecamatan();
         kecamatan.setId(kecamatanFormDTO.getKode());
-        kecamatan.setIdProvinsi(provinsiRepository.getProvinsiFormByName(kecamatanFormDTO.getProvinsi()).getId());
-        kecamatan.setIdKabupaten(kabupatenRepository.getKabupatenFormByName(kecamatanFormDTO.getKabupaten()).getId());
+        Integer getIdLocation = Integer.parseInt(kecamatanFormDTO.getProvinsi().substring(0, kecamatanFormDTO.getProvinsi().indexOf(" - ")));
+        kecamatan.setIdProvinsi(provinsiRepository.getProvinsiFormById(getIdLocation).getId());
+        getIdLocation = Integer.parseInt(kecamatanFormDTO.getKabupaten().substring(0, kecamatanFormDTO.getKabupaten().indexOf(" - ")));
+        kecamatan.setIdKabupaten(kabupatenRepository.getKabupatenFormById(getIdLocation).getId());
         kecamatan.setNamaKecamatan(kecamatanFormDTO.getKecamatan());
         kecamatan.setStatus(kecamatanFormDTO.getStatus());
 

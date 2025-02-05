@@ -24,9 +24,9 @@ public interface KabupatenRepository extends JpaRepository<Kabupaten, Integer> {
             SELECT kab
             FROM Kabupaten kab
             WHERE kab.deleteDate IS NULL
-            AND kab.namaKabupatenKota = :namaKabupaten
+            AND kab.id = :id
             """)
-    Kabupaten getKabupatenFormByName(String namaKabupaten);
+    Kabupaten getKabupatenFormById(Integer id);
 
     @Query("""
             SELECT kab.namaKabupatenKota

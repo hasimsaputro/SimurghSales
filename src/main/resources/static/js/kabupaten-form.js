@@ -9,32 +9,30 @@
 
             let apiUrl = `${target}-options`;
 
+            const suggestionsContainer = document.querySelector(`.suggestions.${target}`);
+            suggestionsContainer.innerHTML = '<div class="loading-spinner">Memuat...</div>';
+
             fetch(`${mainUrl}/${apiUrl}`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     isLoading = false;
-                    let items = [];
                     let filteredData = [];
 
-                    items = data.map(option => option.name);
-                    console.log(items);
                     filteredData = query
-                        ? items.filter(item => item.toLowerCase().includes(query.toLowerCase()))
-                        : items;
+                        ? data.filter(item => item.name.toLowerCase().includes(query.toLowerCase()))
+                        : data;
 
-                    const suggestionsContainer = document.querySelector(`.suggestions.${target}`);
                     suggestionsContainer.innerHTML = '';
 
                     if (filteredData.length > 0) {
                         filteredData.forEach(item => {
                             const div = document.createElement('div');
                             div.classList.add('suggestion-item');
-                            div.textContent = item;
+                            div.textContent = `${item.id} - ${item.name}`;
 
                             div.addEventListener('click', function () {
                                 const inputField = document.querySelector(`input#${target}`);
-                                inputField.value = item;
+                                inputField.value = `${item.id} - ${item.name}`;
 
                                 suggestionsContainer.innerHTML = '';
                             });

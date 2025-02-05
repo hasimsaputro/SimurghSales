@@ -129,7 +129,8 @@ public class KabupatenServiceImplementation implements KabupatenService{
         if (id!=null){
             try {
                 Kabupaten kabupaten = repository.findById(id).orElseThrow();
-                kabupatenFormDTO.setProvinsi(kabupaten.getProvinsi().getNamaProvinsi());
+                String getIdNameLocation = String.format("%s - %s", kabupaten.getProvinsi().getId(), kabupaten.getProvinsi().getNamaProvinsi());
+                kabupatenFormDTO.setProvinsi(getIdNameLocation);
                 kabupatenFormDTO.setKode(kabupaten.getId());
                 kabupatenFormDTO.setKabupaten(kabupaten.getNamaKabupatenKota());
                 kabupatenFormDTO.setStatus(kabupaten.getStatus());
@@ -142,7 +143,8 @@ public class KabupatenServiceImplementation implements KabupatenService{
     public void save(KabupatenFormDTO kabupatenFormDTO) {
         Kabupaten kabupaten = new Kabupaten();
         kabupaten.setId(kabupatenFormDTO.getKode());
-        kabupaten.setIdProvinsi(provinsiRepository.getProvinsiFormByName(kabupatenFormDTO.getProvinsi()).getId());
+        Integer getIdLocation = Integer.parseInt(kabupatenFormDTO.getProvinsi().substring(0, kabupatenFormDTO.getProvinsi().indexOf(" - ")));
+        kabupaten.setIdProvinsi(provinsiRepository.getProvinsiFormById(getIdLocation).getId());
         kabupaten.setNamaKabupatenKota(kabupatenFormDTO.getKabupaten());
         kabupaten.setStatus(kabupatenFormDTO.getStatus());
 

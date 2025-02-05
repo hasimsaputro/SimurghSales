@@ -23,9 +23,9 @@ public interface ProvinsiRepository extends JpaRepository<Provinsi, Integer> {
             SELECT prov
             FROM Provinsi prov
             WHERE prov.deleteDate IS NULL
-            AND prov.namaProvinsi = :namaProvinsi
+            AND prov.id = :id
             """)
-    Provinsi getProvinsiFormByName(String namaProvinsi);
+    Provinsi getProvinsiFormById(Integer id);
 
     @Query("""
             SELECT prov.namaProvinsi

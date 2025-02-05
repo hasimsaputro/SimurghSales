@@ -150,9 +150,12 @@ public class KelurahanServiceImplementation implements KelurahanService{
         if (id!=null){
             try {
                 Kelurahan kelurahan = repository.findById(id).orElseThrow();
-                kelurahanFormDTO.setProvinsi(kelurahan.getProvinsi().getNamaProvinsi());
-                kelurahanFormDTO.setKabupaten(kelurahan.getKabupaten().getNamaKabupatenKota());
-                kelurahanFormDTO.setKecamatan(kelurahan.getKecamatan().getNamaKecamatan());
+                String getIdNameLocation = String.format("%s - %s", kelurahan.getProvinsi().getId(), kelurahan.getProvinsi().getNamaProvinsi());
+                kelurahanFormDTO.setProvinsi(getIdNameLocation);
+                getIdNameLocation = String.format("%s - %s", kelurahan.getKabupaten().getId(), kelurahan.getKabupaten().getNamaKabupatenKota());
+                kelurahanFormDTO.setKabupaten(getIdNameLocation);
+                getIdNameLocation = String.format("%s - %s", kelurahan.getKecamatan().getId(), kelurahan.getKecamatan().getNamaKecamatan());
+                kelurahanFormDTO.setKecamatan(getIdNameLocation);
                 kelurahanFormDTO.setKode(kelurahan.getId());
                 kelurahanFormDTO.setKelurahan(kelurahan.getNamaKelurahan());
                 kelurahanFormDTO.setKodePos(kelurahan.getKodePos());
@@ -166,9 +169,12 @@ public class KelurahanServiceImplementation implements KelurahanService{
     public void save(KelurahanFormDTO kelurahanFormDTO) {
         Kelurahan kelurahan = new Kelurahan();
         kelurahan.setId(kelurahanFormDTO.getKode());
-        kelurahan.setIdProvinsi(provinsiRepository.getProvinsiFormByName(kelurahanFormDTO.getProvinsi()).getId());
-        kelurahan.setIdKabupaten(kabupatenRepository.getKabupatenFormByName(kelurahanFormDTO.getKabupaten()).getId());
-        kelurahan.setIdKecamatan(kecamatanRepository.getKecamatanFormByName(kelurahanFormDTO.getKecamatan()).getId());
+        Integer getIdLocation = Integer.parseInt(kelurahanFormDTO.getProvinsi().substring(0, kelurahanFormDTO.getProvinsi().indexOf(" - ")));
+        kelurahan.setIdProvinsi(provinsiRepository.getProvinsiFormById(getIdLocation).getId());
+        getIdLocation = Integer.parseInt(kelurahanFormDTO.getKabupaten().substring(0, kelurahanFormDTO.getKabupaten().indexOf(" - ")));
+        kelurahan.setIdKabupaten(kabupatenRepository.getKabupatenFormById(getIdLocation).getId());
+        getIdLocation = Integer.parseInt(kelurahanFormDTO.getKecamatan().substring(0, kelurahanFormDTO.getKecamatan().indexOf(" - ")));
+        kelurahan.setIdKecamatan(kecamatanRepository.getKecamatanFormById(getIdLocation).getId());
         kelurahan.setNamaKelurahan(kelurahanFormDTO.getKelurahan());
         kelurahan.setKodePos(kelurahanFormDTO.getKodePos());
         kelurahan.setStatus(kelurahanFormDTO.getStatus());
