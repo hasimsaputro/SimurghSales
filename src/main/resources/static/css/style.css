@@ -664,3 +664,28 @@ h3 a:hover {
     font-size: 16px;
     line-height: 1.5;
 }
+
+.produk-filter {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-direction: row;
+}
+
+.produk-filter input[type="text"],
+.produk-filter select {
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 3px;
+    background-color: transparent;
+    color: black;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 15px;
+    width: fit-content;
+}
+
+.produk-filter .filter-button{
+  height:35px;
+  margin: 8px 0 15px 0;
+}

@@ -94,6 +94,8 @@ public interface BankRepository extends JpaRepository<Bank, Integer> {
     @Query("""
             SELECT ba
             FROM Bank ba
+            WHERE ba.deleteDate IS NULL
+            AND ba.status = true
             """)
     List<Bank> getAllBank();
 

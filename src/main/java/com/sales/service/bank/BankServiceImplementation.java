@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public class BankServiceImplementation implements BankService {
     private final BankRepository repository;
-    private final int rowInPage = 1;
+    private final int rowInPage = 4;
 
     public BankServiceImplementation(BankRepository repository) {
         this.repository = repository;

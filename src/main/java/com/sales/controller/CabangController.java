@@ -45,7 +45,7 @@ public class CabangController {
             Model model
     ){
         List<CabangProdukDTO> cabangProdukDTOS = service.getProdukByCabang(id);
-        cabangProdukDTOS.sort(Comparator.comparing(CabangProdukDTO::getNama));
+        cabangProdukDTOS.sort(Comparator.comparing(CabangProdukDTO::getId));
         model.addAttribute("detailCabangGrid", service.getDetailCabangById(id));
         model.addAttribute("detailProdukByCabang",cabangProdukDTOS);
         return "master/master-cabang-detail";
@@ -60,19 +60,19 @@ public class CabangController {
         return "master/master-cabang-form";
     }
 
-    @PostMapping("form")
-    public String form(
-            @Valid @ModelAttribute("cabang")
-            CabangFormDTO cabangFormDTO,
-            BindingResult bindingResult
-    ){
-        if (bindingResult.hasErrors()){
-            return "master/master-cabang-form";
-        } else {
-            service.save(cabangFormDTO);
-            return "redirect:/cabang";
-        }
-    }
+//    @PostMapping("form")
+//    public String form(
+//            @Valid @ModelAttribute("cabang")
+//            CabangFormDTO cabangFormDTO,
+//            BindingResult bindingResult
+//    ){
+//        if (bindingResult.hasErrors()){
+//            return "master/master-cabang-form";
+//        } else {
+//            service.save(cabangFormDTO);
+//            return "redirect:/cabang";
+//        }
+//    }
 
     @GetMapping("delete")
     public String delete(Integer id){

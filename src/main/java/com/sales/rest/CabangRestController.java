@@ -69,6 +69,16 @@ public class CabangRestController {
         }
     }
 
+    @GetMapping("kelurahan-options")
+    public ResponseEntity<Object> getKelurahan(){
+        try{
+            var optionKelurahan= service.getKelurahanOption();
+            return ResponseEntity.status(HttpStatus.OK).body(optionKelurahan);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+
 
 
 }

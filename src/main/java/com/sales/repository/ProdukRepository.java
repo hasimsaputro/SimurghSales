@@ -96,6 +96,7 @@ public interface ProdukRepository extends JpaRepository<Produk, Integer> {
             SELECT pro
             FROM Produk pro
             WHERE pro.deleteDate IS NULL
+            AND pro.status = true
             """)
     List<Produk> getAllProduk();
 
