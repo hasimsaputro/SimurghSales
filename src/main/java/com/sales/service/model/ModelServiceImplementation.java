@@ -45,7 +45,7 @@ public class ModelServiceImplementation implements ModelService{
         Pageable pagination = PageRequest.of(page-1,rowInPage, Sort.by("id"));
         List<Model> modelList = new LinkedList<>();
         if(filter.equals("null") || filter.isBlank()){
-            modelList = repository.getAllModel(pagination);
+            modelList = repository.getAll(pagination);
         }else {
             switch (filter){
                 case "id":

@@ -441,7 +441,7 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
         }
         List<Model> modelData = new LinkedList<>();
         if(potData.getIdModel() == null && potData.getIdMerk() == null && potData.getIdTipe() == null){
-            modelData = modelRepository.getAll(potData.getIdKategori());
+            modelData = modelRepository.getAllByKategoriId(potData.getIdKategori());
             for (var data : modelData){
                 OptionDTO item = new OptionDTO(data.getNamaModel(),String.valueOf(data.getId()));
                 model.add(item);

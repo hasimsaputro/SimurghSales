@@ -11,9 +11,10 @@
     <main>
         <div class="table-container">
             <h3>
-                <a th:href="@{/pot}"> POT(Payment Of Term) </a> > <a th:href="@{/pot/insert}"> Tambah </a>
+                <a th:href="@{/pot}"> POT(Payment Of Term) </a> >
+                <a th:href="@{/pot/form}" th:text="${formPOT.id != null} ? 'Ubah' : 'Tambah'"></a>
             </h3>
-            <form method="post" class="pot-form" th:action="@{/pot/form}" th:object="${formPOT}">
+            <form  class="pot-form" th:action="@{/pot/form}" th:object="${formPOT}">
                 <input type="hidden" th:field="*{id}">
                 <table>
                     <tbody>
@@ -39,7 +40,7 @@
                         <td><label class="label-nama">Kriteria Paket</label></td>
                         <td>
                             <div class="search-container">
-                                <input id="namaKriteriaPaketPot" name="namaProduk" type="text" class="namaKriteriaPotInput" required th:field="*{namaKriteriaPaket}">
+                                <input id="namaKriteriaPaketPot" name="namaKriteria" type="text" class="namaKriteriaPotInput" required th:field="*{namaKriteriaPaket}">
                                 <input id="idKriteriaPaketPot" name="idKriteriaPaket" class="idKriteriaPotInput" type="hidden" th:field="*{idKriteriaPaket}">
                                 <i class="fas fa-search search-icon"></i>
                                 <div class="suggestions kriteriaPot"></div>

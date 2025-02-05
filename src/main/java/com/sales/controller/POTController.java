@@ -1,5 +1,8 @@
 package com.sales.controller;
 
+import com.sales.dto.OptionDTO;
+import com.sales.dto.cabang.CabangProdukDTO;
+import com.sales.dto.pot.CabangPotDTO;
 import com.sales.dto.pot.PotFormDTO;
 import com.sales.service.pot.PotService;
 import jakarta.validation.Valid;
@@ -9,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -41,24 +45,13 @@ public class POTController {
         model.addAttribute("formPOT", pot);
         return "master/pot/pot-form";
     }
-    @PostMapping("form")
-    public String indexForm(@Valid @ModelAttribute("formPOT")
-                                PotFormDTO dto,
-                            BindingResult validation,
-                            Model model){
-        if(validation.hasErrors()){
-            return "master/pot/pot-form";
-        }else {
-            service.savePOT(dto);
-            return "redirect:/pot";
-        }
-    }
-
     @GetMapping("detail")
     public String detail(Model model,@RequestParam(defaultValue = "0")Integer potId) {
-        var id = service.getPotByIdDetail(potId);
-        model.addAttribute("dataLeadsById",id);
-        return "master/pot/pot-form";
+        List<CabangPotDTO> cabangPot = service.getCabangByPotId(potId);
+        cabangPot.sort(Comparator.comparing(CabangPotDTO::getNamaCabang));
+        model.addAttribute("pot", service.getPotByIdDetail(potId));
+        model.addAttribute("detailCabangByPot",cabangPot);
+        return "master/pot/pot-detail";
     }
 //
     @GetMapping("delete")
