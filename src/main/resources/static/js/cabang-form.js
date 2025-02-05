@@ -71,20 +71,20 @@
 
             // Create the request body object
             let requestBody = {
-            id: parseInt(idCabang),  // Convert to integer if needed
-            namaCabang: namaCabang,
-            tipeStruktur: tipeStruktur,
-            alamat: alamat,
-            kodePos: kodePos,
-            kelurahan: kelurahan,
-            kecamatan: kecamatan,
-            kotaKabupaten: kotaKabupaten,
-            provinsi: provinsi,
-            nomorTelepon: nomorTelepon,
-            npwp: nomorNpwp,
-            tanggalBerdiri: tanggalBerdiri,  // Ensure this is formatted correctly (e.g., 'YYYY-MM-DD')
-            produkList: ids,
-            status: status == 1 ? true : false
+                id: parseInt(idCabang),  // Convert to integer if needed
+                namaCabang: namaCabang,
+                tipeStruktur: tipeStruktur,
+                alamat: alamat,
+                kodePos: kodePos,
+                kelurahan: kelurahan,
+                kecamatan: kecamatan,
+                kotaKabupaten: kotaKabupaten,
+                provinsi: provinsi,
+                nomorTelepon: nomorTelepon,
+                npwp: nomorNpwp,
+                tanggalBerdiri: tanggalBerdiri,  // Ensure this is formatted correctly (e.g., 'YYYY-MM-DD')
+                produkList: ids,
+                status: status == 1 ? true : false
             };
 
             // Send the request using Fetch API

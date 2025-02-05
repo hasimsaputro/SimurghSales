@@ -55,7 +55,7 @@ public class POTController {
     }
 
     @GetMapping("detail")
-    public String detail(Model model,@RequestParam(defaultValue = "")String potId) {
+    public String detail(Model model,@RequestParam(defaultValue = "0")Integer potId) {
         var id = service.getPotByIdDetail(potId);
         model.addAttribute("dataLeadsById",id);
         return "master/pot/pot-form";

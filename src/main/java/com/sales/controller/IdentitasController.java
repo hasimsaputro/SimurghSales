@@ -32,7 +32,7 @@ public class IdentitasController {
         model.addAttribute("filter", filter);
         model.addAttribute("search", search);
         model.addAttribute("filterItem", service.getFilterAsItem());
-        return "master/master-identitas";
+        return "master/identitas/master-identitas";
     }
 
     @GetMapping("detail")
@@ -41,7 +41,7 @@ public class IdentitasController {
             Model model
     ){
         model.addAttribute("detailIdentitasGrid", service.getDetailIdentitasById(id));
-        return "master/master-identitas-detail";
+        return "master/identitas/master-identitas-detail";
     }
 
     @GetMapping("form")
@@ -50,7 +50,7 @@ public class IdentitasController {
             Model model
     ){
         model.addAttribute("identitasByIdGrid", service.getIdentitasById(id));
-        return "master/master-identitas-form";
+        return "master/identitas/master-identitas-form";
     }
 
     @PostMapping("form")
@@ -60,7 +60,7 @@ public class IdentitasController {
             BindingResult bindingResult
     ){
         if (bindingResult.hasErrors()){
-            return "master/master-identitas-form";
+            return "master/identitas/master-identitas-form";
         } else {
             service.save(identitasFormDTO);
             return "redirect:/identitas";

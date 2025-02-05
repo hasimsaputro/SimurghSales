@@ -1,6 +1,7 @@
 package com.sales.service.pot;
 
 import com.sales.dto.OptionDTO;
+import com.sales.dto.pot.PotDetailDTO;
 import com.sales.dto.pot.PotFormDTO;
 import com.sales.dto.pot.PotIndexDTO;
 
@@ -16,5 +17,9 @@ public interface PotService {
 
     void deletePot(Integer potId);
 
-    Object getPotByIdDetail(String potId);
+    PotDetailDTO getPotByIdDetail(Integer potId);
+
+    List<OptionDTO> getCabangByPotId(Integer id);
+
+    List<OptionDTO> getSearchCabangItems(String filter);
 }

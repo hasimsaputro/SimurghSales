@@ -36,7 +36,7 @@ public class CabangController {
         model.addAttribute("filter", filter);
         model.addAttribute("search", search);
         model.addAttribute("filterItem", service.getFilterAsItem());
-        return "master/master-cabang";
+        return "master/cabang/master-cabang";
     }
 
     @GetMapping("detail")
@@ -48,7 +48,7 @@ public class CabangController {
         cabangProdukDTOS.sort(Comparator.comparing(CabangProdukDTO::getNama));
         model.addAttribute("detailCabangGrid", service.getDetailCabangById(id));
         model.addAttribute("detailProdukByCabang",cabangProdukDTOS);
-        return "master/master-cabang-detail";
+        return "master/cabang/master-cabang-detail";
     }
 
     @GetMapping("form")
@@ -57,7 +57,7 @@ public class CabangController {
             Model  model
     ){
         model.addAttribute("cabangByIdGrid", service.getCabangById(id));
-        return "master/master-cabang-form";
+        return "master/cabang/master-cabang-form";
     }
 
     @PostMapping("form")
@@ -67,7 +67,7 @@ public class CabangController {
             BindingResult bindingResult
     ){
         if (bindingResult.hasErrors()){
-            return "master/master-cabang-form";
+            return "master/cabang/master-cabang-form";
         } else {
             service.save(cabangFormDTO);
             return "redirect:/cabang";

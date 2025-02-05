@@ -1,5 +1,6 @@
 package com.sales.service.cabang;
 
+import com.sales.dto.OptionDTO;
 import com.sales.dto.cabang.*;
 import com.sales.dto.produk.ProdukIndexDTO;
 import com.sales.entity.Cabang;
@@ -21,7 +22,7 @@ import java.util.*;
 public class CabangServiceImplementation implements CabangService{
     private final CabangRepository cabangRepository;
     private final ProdukRepository produkRepository;
-    private final int rowInPage = 1;
+    private final int rowInPage = 10;
 
     public CabangServiceImplementation(CabangRepository cabangRepository, ProdukRepository produkRepository) {
         this.cabangRepository = cabangRepository;
@@ -170,8 +171,7 @@ public class CabangServiceImplementation implements CabangService{
         cabang.setTanggalBerdiri(cabangFormDTO.getTanggalBerdiri());
         cabang.setStatus(cabangFormDTO.getStatus());
         Set<Produk> produkSet = new HashSet<>();
-        for (Integer kodeProduk:
-             cabangFormDTO.getProdukList()) {
+        for (Integer kodeProduk: cabangFormDTO.getProdukList()) {
                     Produk produk = produkRepository.getProdukById(kodeProduk);
                     produkSet.add(produk);
                     cabang.setProdukSet(produkSet);
@@ -233,14 +233,22 @@ public class CabangServiceImplementation implements CabangService{
     public List<CabangProdukDTO> getProdukByCabang(Integer id) {
         Cabang cabang = cabangRepository.findById(id).orElseThrow();
         List<CabangProdukDTO> cabangProdukDTOS = new LinkedList<>();
-        for (Produk produk:
-             cabang.getProdukSet()){
+        for (Produk produk: cabang.getProdukSet()){
             CabangProdukDTO cabangProdukDTO = new CabangProdukDTO();
             cabangProdukDTO.setId(produk.getId());
             cabangProdukDTO.setNama(produk.getNamaProduk());
             cabangProdukDTOS.add(cabangProdukDTO);
         }
         return cabangProdukDTOS;
+    }
+
+    @Override
+    public List<OptionDTO> getfilterAsItem() {
+        return List.of(
+                new OptionDTO("Kode Cabang", "id"),
+                new OptionDTO("Nama Cabang", "namaCabang"),
+                new OptionDTO("Tipe Struktur", "tipeStruktur")
+        );
     }
 
 

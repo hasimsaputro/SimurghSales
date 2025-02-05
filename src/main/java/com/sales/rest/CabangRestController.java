@@ -1,6 +1,7 @@
 package com.sales.rest;
 
 import com.sales.dto.cabang.CabangFormDTO;
+import com.sales.dto.cabang.CabangIndexDTO;
 import com.sales.dto.cabang.CabangIndexOptionDTO;
 import com.sales.dto.cabang.CabangProdukDTO;
 import com.sales.entity.Produk;
@@ -25,6 +26,21 @@ public class CabangRestController {
         this.service = service;
     }
 
+    @GetMapping(value = {"","/filter={filter}/search={search}"})
+    public ResponseEntity<Object> index(@PathVariable(required = false) String filter,
+                                        @PathVariable(required = false) String search,
+                                        @PathVariable(required = false) Integer page){
+        page = page == null? 1 : page;
+        filter = filter == null? "" : filter;
+        search = search == null? "" : search;
+        try{
+            List<CabangIndexDTO> cabang= service.getAll(page,filter,search);
+            return ResponseEntity.status(HttpStatus.OK).body(cabang);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+
     @GetMapping(value = {"/getSearchItems={filter}"})
     public ResponseEntity<Object> getSearchItems(
             @PathVariable String filter
@@ -34,6 +50,16 @@ public class CabangRestController {
             return ResponseEntity.status(HttpStatus.OK).body(cabangIndexOptionDTOS);
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping(value = {"/getFilterItems"})
+    public ResponseEntity<Object> getFilterItems(){
+        try{
+            var filterItem= service.getfilterAsItem();
+            return ResponseEntity.status(HttpStatus.OK).body(filterItem);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
         }
     }
 

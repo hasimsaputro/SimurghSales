@@ -32,7 +32,7 @@ public class ProdukController {
         model.addAttribute("filter", filter);
         model.addAttribute("search", search);
         model.addAttribute("filterItem", service.getFilterAsItem());
-        return "master/master-produk";
+        return "master/produk/master-produk";
     }
 
     @GetMapping("detail")
@@ -41,7 +41,7 @@ public class ProdukController {
             Model model
     ){
         model.addAttribute("detailProdukGrid", service.getDetailProdukById(id));
-        return "master/master-produk-detail";
+        return "master/produk/master-produk-detail";
     }
 
     @GetMapping("form")
@@ -50,7 +50,7 @@ public class ProdukController {
             Model  model
     ){
         model.addAttribute("produkByIdGrid", service.getProdukById(id));
-        return "master/master-produk-form";
+        return "master/produk/master-produk-form";
     }
 
     @PostMapping("form")
@@ -60,7 +60,7 @@ public class ProdukController {
             BindingResult bindingResult
     ){
         if (bindingResult.hasErrors()){
-            return "master/master-produk-form";
+            return "master/produk/master-produk-form";
         } else {
             service.save(produkFormDTO);
             return "redirect:/produk";

@@ -32,7 +32,7 @@ public class TipeMasterController {
         model.addAttribute("filter", filter);
         model.addAttribute("search", search);
         model.addAttribute("filterItem", service.getFilterAsItem());
-        return "master/master-tipeMaster";
+        return "master/tipeMaster/master-tipeMaster";
     }
 
     @GetMapping("detail")
@@ -41,7 +41,7 @@ public class TipeMasterController {
             Model model
     ){
         model.addAttribute("detailTipeMasterGrid", service.getDetailTipeMasterById(id));
-        return "master/master-tipeMaster-detail";
+        return "master/tipeMaster/master-tipeMaster-detail";
     }
 
     @GetMapping("form")
@@ -50,7 +50,7 @@ public class TipeMasterController {
             Model model
     ){
         model.addAttribute("tipeMasterByIdGrid", service.getTipeMasterById(id));
-        return "master/master-tipeMaster-form";
+        return "master/tipeMaster/master-tipeMaster-form";
     }
 
     @PostMapping("form")
@@ -60,7 +60,7 @@ public class TipeMasterController {
             BindingResult bindingResult
     ){
         if (bindingResult.hasErrors()){
-            return "master/master-tipeMaster-form";
+            return "master/tipeMaster/master-tipeMaster-form";
         } else {
             service.save(tipeMasterFormDTO);
             return "redirect:/tipeMaster";

@@ -41,6 +41,7 @@ public class KategoriController {
         model.addAttribute("formKategori", kategori);
         return "master/kategori/kategori-form";
     }
+
     @PostMapping("form")
     public String indexForm(@Valid @ModelAttribute("formKategori") KategoriFormDTO dto,
                             BindingResult validation,

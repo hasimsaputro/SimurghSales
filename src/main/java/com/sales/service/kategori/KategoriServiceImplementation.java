@@ -72,7 +72,7 @@ public class KategoriServiceImplementation implements KategoriService {
                 case "id":
                     totalRows = repository.countById(search);
                     break;
-                case "nomorAplikasi":
+                case "namaKategori":
                     totalRows = repository.countByNamaKategori(search);
                     break;
                 case "status":
@@ -110,7 +110,9 @@ public class KategoriServiceImplementation implements KategoriService {
     @Override
     public void saveKategori(KategoriFormDTO dto) {
         Kategori kategori = new Kategori();
-        kategori.setId(dto.getId());
+        if(dto.getId() != null){
+            kategori.setId(dto.getId());
+        }
         kategori.setNamaKategori(dto.getNamaKategori());
         kategori.setStatus(dto.getStatus());
         repository.save(kategori);

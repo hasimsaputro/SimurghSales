@@ -1,5 +1,6 @@
 package com.sales.service.cabang;
 
+import com.sales.dto.OptionDTO;
 import com.sales.dto.cabang.*;
 import com.sales.dto.mitraAgen.*;
 import com.sales.entity.Produk;
@@ -18,4 +19,5 @@ public interface CabangService {
     List<CabangIndexOptionDTO> getSearchItems(String filter);
     List<CabangProdukDTO> getProdukByCabang(Integer id);
 
+    List<OptionDTO> getfilterAsItem();
 }

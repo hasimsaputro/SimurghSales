@@ -182,4 +182,9 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             """)
     String getLastNumberById(String prefix);
 
+    @Query("""
+            SELECT mit
+            FROM MitraAgen mit
+            """)
+    List<MitraAgen> getAll();
 }

@@ -842,7 +842,7 @@ h3 a:hover {
   }
 
   .pot-filter input[type="text"],
-  select {
+  .pot-filter select {
       padding: 5px;
       border: 1px solid black;
       border-radius: 3px;
@@ -851,6 +851,12 @@ h3 a:hover {
       font-family: 'Font Awesome 5 Free';
       font-weight: 900;
       font-size: 15px;
+      width: fit-content;
+  }
+
+  .pot-filter .filter-button{
+    height:35px;
+    margin: 8px 0 15px 0;
   }
 
   .btnSimpanCabang{
@@ -867,4 +873,24 @@ h3 a:hover {
   .btnSimpanCabang:hover {
       background-color: black;
       color: white;
+  }
+
+  .scrollable-dropdown {
+      max-height: 400px;
+      overflow-y: auto;
+      overflow-x: hidden;zontal */
+      border: 1px solid #ccc;
+      border-radius: 4px;
+  }
+
+
+  .scrollable-dropdown li a {
+      padding: 8px 16px;
+      display: block;
+      color: #333;
+      text-decoration: none;
+  }
+
+  .scrollable-dropdown li a:hover {
+      background-color: #f5f5f5;
   }

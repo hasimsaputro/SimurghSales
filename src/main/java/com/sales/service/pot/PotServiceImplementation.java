@@ -2,14 +2,22 @@ package com.sales.service.pot;
 
 
 import com.sales.dto.OptionDTO;
+import com.sales.dto.cabang.CabangProdukDTO;
+import com.sales.dto.pot.PotDetailDTO;
 import com.sales.dto.pot.PotFormDTO;
 import com.sales.dto.pot.PotIndexDTO;
+import com.sales.dto.tipe.TipeDetailDTO;
+import com.sales.entity.Cabang;
 import com.sales.entity.POT;
+import com.sales.entity.Produk;
+import com.sales.entity.Tipe;
 import com.sales.helper.DateHelper;
 import com.sales.repository.PotRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -41,14 +49,14 @@ public class PotServiceImplementation implements PotService {
             String idKriteriaPaket = pot.getIdKriteriaPaket();
             LocalDate tanggalMulai = pot.getTanggalMulai();
             LocalDate tanggalAkhir = pot.getTanggalAkhir();
-            BigDecimal pokokAwal = pot.getPokokHutangAwal();
-            BigDecimal pokokAkhir = pot.getPokokHutangAkhir();
+            String pokokAwal = pot.getPokokHutangAwal().stripTrailingZeros().toString();
+            String pokokAkhir = pot.getPokokHutangAkhir().stripTrailingZeros().toString();
             Integer idInterval = pot.getIdInterval();
-            Integer tenor = pot.getTenor();
-            Double effectiveRate = pot.getEffectRate();
-            BigDecimal nilaiAdmin = pot.getNilaiAdmin();
-            BigDecimal nilaiProvisi = pot.getNilaiProvisi();
-            Integer dp = pot.getDp();
+            String tenor = String.valueOf(pot.getTenor());
+            String effectiveRate = String.valueOf(pot.getEffectRate());
+            String nilaiAdmin = pot.getNilaiAdmin().stripTrailingZeros().toString();
+            String nilaiProvisi = pot.getNilaiProvisi().stripTrailingZeros().toString();
+            String dp = String.valueOf(pot.getDp());
             Boolean statusMerchandise = pot.getStatusMerchandise();
             Integer idKategori = pot.getIdKategori();
             String idMerk = pot.getIdMerk();
@@ -56,8 +64,10 @@ public class PotServiceImplementation implements PotService {
             String idModel = pot.getIdModel();
             potFormDTO.setId(id);
             potFormDTO.setNamaPot(namaPot);
+            potFormDTO.setNamaProduk(pot.getProduk().getNamaProduk());
             potFormDTO.setIdProduk(idProduk);
             potFormDTO.setIdKriteriaPaket(idKriteriaPaket);
+            potFormDTO.setNamaKriteriaPaket(pot.getKriteriaPaket().getNamaKriteria());
             potFormDTO.setTanggalMulai(tanggalMulai);
             potFormDTO.setTanggalAkhir(tanggalAkhir);
             potFormDTO.setPokokHutangAwal(pokokAwal);
@@ -101,16 +111,16 @@ public class PotServiceImplementation implements PotService {
                     potList = repository.getByTanggalAkhir(search, pagination);
                     break;
                 case "pokokAwal":
-                    potList = repository.getByTanggalAkhir(search, pagination);
+                    potList = repository.getByPokokAwal(search, pagination);
                     break;
                 case "pokokAkhir":
-                    potList = repository.getByTanggalAkhir(search, pagination);
+                    potList = repository.getByPokokAkhir(search, pagination);
                     break;
                 case "tenor":
-                    potList = repository.getByTanggalAkhir(search, pagination);
+                    potList = repository.getByTenor(search, pagination);
                     break;
                 case "effectiveRate":
-                    potList = repository.getByTanggalAkhir(search, pagination);
+                    potList = repository.getByEffectRate(search, pagination);
                     break;
 
             }
@@ -146,7 +156,41 @@ public class PotServiceImplementation implements PotService {
 
     @Override
     public int getTotal(String filter, String search) {
-        return 0;
+        double totalRows = 0;
+        if(filter.equals("null") || filter.isBlank()){
+            totalRows = repository.countAll();
+        }else {
+            switch (filter){
+                case "id":
+                    totalRows = repository.countById(search);
+                    break;
+                case "namaPot":
+                    totalRows = repository.countByNamaPot(search);
+                    break;
+                case "namaProduk":
+                    totalRows = repository.countByNamaProduk(search);
+                    break;
+                case "tanggalAwal":
+                    totalRows = repository.countByTanggalAwal(search);
+                    break;
+                case "tanggalAkhir":
+                    totalRows = repository.countByTanggalAkhir(search);
+                    break;
+                case "pokokAwal":
+                    totalRows = repository.countByPokokAwal(search);
+                    break;
+                case "pokokAkhir":
+                    totalRows = repository.countByPokokAkhir(search);
+                    break;
+                case "tenor":
+                    totalRows = repository.countByTenor(search);
+                    break;
+                case "effectiveRate":
+                    totalRows = repository.countByEffectRate(search);
+                    break;
+            }
+        }
+        return (int)(Math.ceil(totalRows/rowInPage));
     }
 
     @Override
@@ -173,14 +217,18 @@ public class PotServiceImplementation implements PotService {
         pot.setIdKriteriaPaket(dto.getIdKriteriaPaket());
         pot.setTanggalMulai(dto.getTanggalMulai());
         pot.setTanggalAkhir(dto.getTanggalAkhir());
-        pot.setPokokHutangAwal(dto.getPokokHutangAwal());
-        pot.setPokokHutangAkhir(dto.getPokokHutangAkhir());
+        var pokokAwal = new BigDecimal(dto.getPokokHutangAwal());
+        var pokokAkhir = new BigDecimal(dto.getPokokHutangAkhir());
+        pot.setPokokHutangAwal(pokokAwal);
+        pot.setPokokHutangAkhir(pokokAkhir);
         pot.setIdInterval(dto.getIdIntevalPembayaran());
-        pot.setTenor(dto.getTenor());
-        pot.setEffectRate(dto.getEffectiveRate());
-        pot.setNilaiAdmin(dto.getNilaiAdmin());
-        pot.setNilaiProvisi(dto.getNilaiProvisi());
-        pot.setDp(dto.getDp());
+        pot.setTenor(Integer.parseInt(dto.getTenor()));
+        pot.setEffectRate(Double.parseDouble(dto.getEffectiveRate()));
+        var nilaiAdmin = new BigDecimal(dto.getNilaiAdmin());
+        var nilaiProvisi = new BigDecimal(dto.getNilaiProvisi());
+        pot.setNilaiAdmin(nilaiAdmin);
+        pot.setNilaiProvisi(nilaiProvisi);
+        pot.setDp(Integer.parseInt(dto.getDp()));
         pot.setStatusMerchandise(dto.getStatusMerchandise());
         pot.setIdKategori(dto.getIdKategori());
         pot.setIdMerk(dto.getIdMerk());
@@ -197,7 +245,66 @@ public class PotServiceImplementation implements PotService {
     }
 
     @Override
-    public Object getPotByIdDetail(String potId) {
-        return null;
+    public PotDetailDTO getPotByIdDetail(Integer potId) {
+        var pot = repository.findById(potId).orElseThrow();
+        PotDetailDTO dto = new PotDetailDTO();
+        dto.setId(pot.getId());
+        return dto;
+    }
+
+    @Override
+    public List<OptionDTO> getCabangByPotId(Integer id) {
+        var pot = repository.findById(id).orElseThrow();
+        List<OptionDTO> produkList = new LinkedList<>();
+        for (Cabang cabangList: pot.getCabangSet()){
+            OptionDTO cabang = new OptionDTO();
+            cabang.setValue(String.valueOf(cabangList.getId()));
+            cabang.setText(cabangList.getNamaCabang());
+            produkList.add(cabang);
+        }
+        return produkList;
+    }
+
+    @Override
+    public List<OptionDTO> getSearchCabangItems(String filter) {
+        List<String > searchItems = new LinkedList<>();
+        if(!filter.isBlank()){
+            switch (filter){
+                case "id":
+                    searchItems = repository.getItemsId();
+                    break;
+                case "namaPot":
+                    searchItems = repository.getItemsNamaPot();
+                    break;
+                case "namaProduk":
+                    searchItems = repository.getItemsNamaProduk();
+                    break;
+                case "tanggalAwal":
+                    searchItems = repository.getItemsTanggalAwal();
+                    break;
+                case "tanggalAkhir":
+                    searchItems = repository.getItemsTanggalAkhir();
+                    break;
+                case "pokokAwal":
+                    searchItems = repository.getItemsPokokAwal();
+                    break;
+                case "pokokAkhir":
+                    searchItems = repository.getItemsPokokAkhir();
+                    break;
+                case "tenor":
+                    searchItems = repository.getItemsTenor();
+                    break;
+                case "effectiveRate":
+                    searchItems = repository.getItemsEffectRate();
+                    break;
+
+            }
+        }
+        List<OptionDTO> searchsItems = new LinkedList<>();
+        for (var searchItem : searchItems){
+            OptionDTO item = new OptionDTO(searchItem, searchItem);
+            searchsItems.add(item);
+        }
+        return searchsItems;
     }
 }

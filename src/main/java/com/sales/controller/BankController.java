@@ -32,7 +32,7 @@ public class BankController {
         model.addAttribute("filter", filter);
         model.addAttribute("search", search);
         model.addAttribute("filterItem", service.getFilterAsItem());
-        return "master/master-bank";
+        return "master/bank/master-bank";
     }
 
     @GetMapping("detail")
@@ -41,7 +41,7 @@ public class BankController {
             Model model
     ){
         model.addAttribute("detailBankGrid", service.getDetailBankById(id));
-        return "master/master-bank-detail";
+        return "master/bank/master-bank-detail";
     }
 
     @GetMapping("form")
@@ -50,7 +50,7 @@ public class BankController {
             Model  model
     ){
         model.addAttribute("bankByIdGrid", service.getBankById(id));
-        return "master/master-bank-form";
+        return "master/bank/master-bank-form";
     }
 
     @PostMapping("form")
@@ -60,7 +60,7 @@ public class BankController {
             BindingResult bindingResult
     ){
         if (bindingResult.hasErrors()){
-            return "master/master-bank-form";
+            return "master/bank/master-bank-form";
         } else {
             service.save(bankFormDTO);
             return "redirect:/bank";
