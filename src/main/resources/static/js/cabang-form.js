@@ -83,36 +83,47 @@
                           .then(data => {
                             console.log(data);
                             bodiTabelProduk.innerHTML = "";
-                              for (const produk of data.produkIndexDTOS) {
-                                  let row = document.createElement("tr");
-                                  let columnCheckbox = document.createElement("td");
-                                  let columnKode = document.createElement("td");
-                                  let columnName = document.createElement("td");
-                                  let inputCheckbox = document.createElement("input");
-                                  inputCheckbox.setAttribute("type", "checkbox");
-                                  inputCheckbox.name = "produk";
-                                  inputCheckbox.id = produk.kodeProduk;
-          
-                                  // Mengecek apakah produk ada di dalam array produkChecked
-                                  if (checkedProduk.includes(produk.kodeProduk)) {
-                                      inputCheckbox.checked = true; // Menandai checkbox sebagai tercentang jika ID ada di produkChecked
-                                  }
-          
-                                  columnKode.innerHTML = produk.kodeProduk;
-                                  columnName.innerHTML = produk.namaProduk;
-                                  columnCheckbox.appendChild(inputCheckbox);
-                                  row.appendChild(columnCheckbox);
-                                  row.appendChild(columnKode);
-                                  row.appendChild(columnName);
-                                  bodiTabelProduk.appendChild(row);
-                              }
-                            // currentPage = data.currentPage;
-                            // totalPages = data.totalPages;
+                            if(data.produkIndexDTOS && data.produkIndexDTOS.length > 0){
+                                for (const produk of data.produkIndexDTOS) {
+                                    let row = document.createElement("tr");
+                                    let columnCheckbox = document.createElement("td");
+                                    let columnKode = document.createElement("td");
+                                    let columnName = document.createElement("td");
+                                    // let columnValidation = document.createElement("td");
+                                    let inputCheckbox = document.createElement("input");
+                                    inputCheckbox.setAttribute("type", "checkbox");
+                                    inputCheckbox.name = "produk";
+                                    inputCheckbox.id = produk.kodeProduk;
+            
+                                    // Mengecek apakah produk ada di dalam array produkChecked
+                                    if (checkedProduk.includes(produk.kodeProduk)) {
+                                        inputCheckbox.checked = true; // Menandai checkbox sebagai tercentang jika ID ada di produkChecked
+                                    }
+                                    
+                                      columnKode.innerHTML = produk.kodeProduk;
+                                      columnName.innerHTML = produk.namaProduk;
+                                      columnCheckbox.appendChild(inputCheckbox);
+                                      row.appendChild(columnCheckbox);
+                                      row.appendChild(columnKode);
+                                      row.appendChild(columnName);  
+                                    bodiTabelProduk.appendChild(row);
+                                }
+                            } else{
+                                let row = document.createElement("tr");
+                                let columnMessage = document.createElement("td");
+                                columnMessage.setAttribute("colspan", "7"); // Menyesuaikan dengan jumlah kolom
+                                columnMessage.textContent = "Produk tidak ditemukan atau tidak aktif"; // Menampilkan pesan
+                                row.appendChild(columnMessage);
+                                bodiTabelProduk.appendChild(row); // Menambahkan row dengan pesan ke dalam tabel
+                            }
+                              
+                            currentPage = data.currentPage;
+                            totalPages = data.totalPages;
 
-                            // let span = document.querySelector("#page-text");
-                            // span.textContent = `Page ${currentPage} of ${totalPages}`;
+                            let span = document.querySelector("#page-text");
+                            span.textContent = `Page ${currentPage} of ${totalPages}`;
 
-                            // checkCheckboxes();
+                            checkCheckboxes();
                           })
                           .catch(error => {
                             console.error('Error fetching data:', error);

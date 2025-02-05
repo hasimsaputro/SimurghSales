@@ -92,10 +92,48 @@ public class ProdukServiceImplementation implements ProdukService {
         return produkIndexDTOS;
     }
 
+    @Override
+    public List<ProdukIndexDTO> getAllAktif(int page, String filter, String search) {
+        int totalPages = getTotalPages(filter, search);
+        if (page < 1) {
+            page = 1;
+        }
+        if (page > totalPages && totalPages > 0){
+            page = totalPages;
+        }
+        Pageable pageable = PageRequest.of(page - 1, rowInPage, Sort.by("id"));
+
+        List<Produk> produkList = new LinkedList<>();
+        if (filter.isEmpty()){
+            produkList = repository.getAllProdukAktif(pageable);
+        }else {
+            switch (filter){
+                case "id":
+                    produkList = repository.getProdukAktifById(pageable,search);
+                    break;
+                case "namaProduk":
+                    produkList = repository.getProdukAktifByName(pageable, search);
+                    break;
+            }
+        }
+
+        List<ProdukIndexDTO> produkIndexDTOS = new LinkedList<>();
+        for (Produk produk : produkList){
+            ProdukIndexDTO produkIndexDTO = new ProdukIndexDTO();
+            produkIndexDTO.setKodeProduk(produk.getId());
+            produkIndexDTO.setNamaProduk(produk.getNamaProduk());
+            String statusProduk = !produk.getStatus() ? "Tidak Aktif" : "Aktif";
+            produkIndexDTO.setStatus(statusProduk);
+
+            produkIndexDTOS.add(produkIndexDTO);
+        }
+        return produkIndexDTOS;
+    }
+
 
     @Override
     public CabangProdukGridDTO getAllRest(int page, String filter, String search){
-        List<ProdukIndexDTO> produkIndexDTOS = this.getAll(page, filter, search);
+        List<ProdukIndexDTO> produkIndexDTOS = this.getAllAktif(page, filter, search);
         CabangProdukGridDTO cabangProdukGridDTO = new CabangProdukGridDTO();
         cabangProdukGridDTO.setProdukIndexDTOS(produkIndexDTOS);
         cabangProdukGridDTO.setCurrentPage(page);
@@ -158,6 +196,13 @@ public class ProdukServiceImplementation implements ProdukService {
                 new ProdukIndexOptionDTO("Kode Produk","id"),
                 new ProdukIndexOptionDTO("Nama Produk", "namaProduk"),
                 new ProdukIndexOptionDTO("Status", "status")
+        );
+    }
+    @Override
+    public List<ProdukIndexOptionDTO> getFilterAsItemNonStatus() {
+        return List.of(
+                new ProdukIndexOptionDTO("Kode Produk","id"),
+                new ProdukIndexOptionDTO("Nama Produk", "namaProduk")
         );
     }
 
