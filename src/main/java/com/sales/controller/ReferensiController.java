@@ -1,10 +1,7 @@
 package com.sales.controller;
 
-import com.sales.dto.master.ReferensiFormDTO;
-import com.sales.dto.master.TipeAplikasiDTO;
-import com.sales.service.master.ReferensiService;
-import com.sales.service.master.ReferensiServiceImplement;
-import com.sales.service.master.TipeAplikasiService;
+import com.sales.dto.referensi.ReferensiFormDTO;
+import com.sales.service.referensi.ReferensiService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,7 +35,7 @@ public class ReferensiController {
 
 
 
-        return "sales/referensi";
+        return "userManagement/referensi/referensi";
     }
 
     @GetMapping("form")
@@ -49,13 +46,13 @@ public class ReferensiController {
         model.addAttribute("gridDebitur",gridDebitur);
 
 
-        return "sales/referensi-form";
+        return "userManagement/referensi/referensi-form";
     }
 
     @PostMapping("form")
     public String updateInsert(@ModelAttribute("referensiDto") ReferensiFormDTO referensiDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "sales/referensi-form";
+            return "userManagement/referensi/referensi-form";
         } else {
             service.updateInsert(referensiDto);
             return "redirect:/referensi";
@@ -67,7 +64,7 @@ public class ReferensiController {
         var referensiDto = service.getReferensiById(id);
         model.addAttribute("referensiDto",referensiDto);
 
-        return "sales/referensi-detail";
+        return "userManagement/referensi/referensi-detail";
     }
 
     @GetMapping("delete")

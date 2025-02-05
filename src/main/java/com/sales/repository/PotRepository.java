@@ -217,4 +217,11 @@ public interface PotRepository extends JpaRepository<POT, Integer> {
              WHERE CAST(pot.effectRate AS String) = :search
             """)
     int countByEffectRate(String search);
+
+    @Query("""
+            SELECT pot
+            FROM POT pot
+             WHERE pot.namaPOT = :name
+            """)
+    POT getPotByName(String name);
 }

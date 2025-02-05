@@ -22,7 +22,7 @@
                         <td>
                             <div class="search-container">
                                 <input class="search-produk" id="product" name="product" type="text" required th:field="${dataLeadsById.idProduk}">
-                                <div class="suggestions-produk" ></div>
+                                <div class="suggestions-produk suggestions" ></div>
                             </div>
 
                             <div class="field-validation-error"></div>
@@ -41,7 +41,7 @@
                         <td>
                             <div class="search-container">
                                 <input id="tipe-aplikasi" name="tipe-aplikasi" type="text" required th:field="${dataLeadsById.tipeAplikasi}">
-                                <div class="suggestions-tipeAplikasi"></div>
+                                <div class="suggestions-tipeAplikasi suggestions"></div>
                                 <div class="field-validation-error"></div>
                             </div>
                         </td>
@@ -102,10 +102,11 @@
                     <tr>
                         <td><label class="label-nama">Kelurahan *</label></td>
                         <td>
-                            <div class="search-container"></div>
-                            <input id="kelurahan" name="kelurahan" type="text" required th:field="${dataLeadsById.kelurahan}">
-                            <div class="suggestions-kelurahan"></div>
-                            <div class="field-validation-error"></div>
+                            <div class="search-container">
+                                <input id="kelurahan" name="kelurahan" type="text" required th:field="${dataLeadsById.kelurahan}">
+                                <div class="suggestions-kelurahan suggestions"></div>
+                                <div class="field-validation-error"></div>
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -141,7 +142,7 @@
                         <td></td>
                         <td class="input-box">
                             <input type="checkbox" id="" name=""
-                                   th:checked="${dataLeadsById.kelurahanDomisili == dataLeadsById.kelurahan}">
+                                   th:checked="${dataLeadsById.kelurahanDomisili == dataLeadsById.kelurahan} and ${dataLeadsById.kelurahanDomisili} != null">
                             <label for="">Sama Dengan Alamat Identitas</label>
                             <div class="field-validation-error"></div>
                         </td>
@@ -160,7 +161,7 @@
                         <td>
                             <div class="search-container"></div>
                             <input id="kelurahan-domisili" name="kelurahan-domisili" type="text" required th:field="${dataLeadsById.kelurahanDomisili}">
-                            <div class="suggestions-kelurahanDomisili"></div>
+                            <div class="suggestions-kelurahanDomisili suggestions"></div>
                             <div class="field-validation-error"></div>
                         </td>
                     </tr>
@@ -233,7 +234,7 @@
                         <td>
                             <div class="search-container">
                                 <input id="sumber-data-aplikasi" name="sumber-data-aplikasi" type="text" th:field="${dataLeadsById.sumberDataAplikasi}">
-                                <div class="suggestions-sumberDataAplikasi"></div>
+                                <div class="suggestions-sumberDataAplikasi suggestions"></div>
                                 <div class="field-validation-error"></div>
                             </div>
 
@@ -246,7 +247,7 @@
                             <div class="search-container">
                                 <input id="referensi" name="referensi" type="text" th:field="${dataLeadsById.referensi}">
                                 <input type="hidden" id="referensiValue" name="referensiValue" th:value="${dataLeadsById.referensiValue}">
-                                <div class="suggestions-referensi"></div>
+                                <div class="suggestions-referensi suggestions"></div>
                                 <div class="field-validation-error"></div>
                             </div>
 
@@ -266,7 +267,7 @@
                         <td>
                             <div class="search-container">
                                 <input id="keterangan-aplikasi" name="keterangan-aplikasi" type="text" th:field="${dataLeadsById.keteranganAplikasi}">
-                                <div class="suggestions-keterangan-aplikasi"></div>
+                                <div class="suggestions-keterangan-aplikasi suggestions"></div>
                                 <div class="field-validation-error"></div>
                             </div>
 
@@ -304,14 +305,17 @@
                             <tr>
                                 <td><label class="label-nama">POT (Payment of Term *</label></td>
                                 <td>
-                                    <input id="pot" name="pot" type="text" required th:field="${dataLeadsById.pot}">
+                                    <div class="search-container">
+                                        <input id="pot" class="searchFormPOT" name="pot" type="text" required th:field="${dataLeadsById.pot}">
+                                        <div class="suggestionDataLeadsPOT suggestions" ></div>
+                                    </div>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label class="label-nama">Tenor</label></td>
                                 <td>
-                                    <input id="tenor" name="tenor" type="text" required readonly th:field="${dataLeadsById.tenor}">
+                                    <input id="tenor" name="tenor" class="tenorInput" type="text" required readonly th:field="${dataLeadsById.tenor}">
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -320,7 +324,7 @@
                             <tr>
                                 <td><label class="label-nama">Estimasi Nilai Funding</label></td>
                                 <td>
-                                    <input id="estimasi-nilai-funding" name="estimasi-nilai=-funding" type="text" required readonly th:field="${dataLeadsById.estimasiNilaiFunding}">
+                                    <input id="estimasi-nilai-funding" class="nilaiFundingInput" name="estimasi-nilai=-funding" type="text" required readonly th:field="${dataLeadsById.estimasiNilaiFunding}">
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -336,14 +340,17 @@
                             <tr>
                                 <td><label class="label-nama">Kategori *</label></td>
                                 <td>
-                                    <input id="kategori" name="kategori" type="text" required th:field="${dataLeadsById.kategori}">
+                                    <input id="kategori" name="kategori" class="kategoriInput" type="text" required th:field="${dataLeadsById.kategori}">
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
                             <tr>
-                                <td><label class="label-nama">Merk</label></td>
+                                <td><label class="label-nama">Merek</label></td>
                                 <td>
-                                    <input id="merak" name="merak" type="text" th:field="${dataLeadsById.merek}">
+                                    <div class="search-container">
+                                        <input id="merk" name="merk" class="merkInput" type="text" th:field="${dataLeadsById.merek}">
+                                        <div class="suggestionDataLeadsMerk suggestions"></div>
+                                    </div>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -351,7 +358,10 @@
                             <tr>
                                 <td><label class="label-nama">Tipe</label></td>
                                 <td>
-                                    <input id="tipe" name="tipe" type="text" th:field="${dataLeadsById.tipe}">
+                                    <div class="search-container">
+                                        <input id="tipe" name="tipe" class="tipeInput" type="text" th:field="${dataLeadsById.tipe}">
+                                        <div class="suggestionDataLeadsTipe suggestions"></div>
+                                    </div>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>
@@ -359,7 +369,10 @@
                             <tr>
                                 <td><label class="label-nama">Model</label></td>
                                 <td>
-                                    <input id="model" name="model" type="text" th:field="${dataLeadsById.model}">
+                                    <div class="search-container">
+                                        <input id="model" name="model" class="modelInput" type="text" th:field="${dataLeadsById.model}">
+                                        <div class="suggestionDataLeadsModel suggestions"></div>
+                                    </div>
                                     <div class="field-validation-error"></div>
                                 </td>
                             </tr>

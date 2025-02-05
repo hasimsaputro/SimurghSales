@@ -146,4 +146,11 @@ public interface MerkRepository extends JpaRepository<Merk, String> {
             FROM Merk mer
             """)
     List<Merk> getAllMerk();
+
+    @Query("""
+            SELECT mer
+            FROM Merk mer
+            WHERE mer.namaMerk = :name
+            """)
+    Merk getMerkByName(String name);
 }

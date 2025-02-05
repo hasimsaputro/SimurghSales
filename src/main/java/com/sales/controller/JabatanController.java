@@ -1,9 +1,7 @@
 package com.sales.controller;
 
-import com.sales.dto.master.JabatanFormDTO;
-import com.sales.dto.master.KeteranganAplikasiFormDTO;
-import com.sales.service.master.JabatanService;
-import com.sales.service.master.KeteranganAplikasiService;
+import com.sales.dto.jabatan.JabatanFormDTO;
+import com.sales.service.jabatan.JabatanService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,7 +34,7 @@ public class JabatanController {
 
 
 
-        return "sales/jabatan";
+        return "userManagement/jabatan/jabatan";
     }
 
     @GetMapping("form")
@@ -46,13 +44,13 @@ public class JabatanController {
 
 
 
-        return "sales/jabatan-form";
+        return "userManagement/jabatan/jabatan-form";
     }
 
     @PostMapping("form")
     public String updateInsert(@ModelAttribute("dto") JabatanFormDTO jabatanFormDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "sales/jabatan-form";
+            return "userManagement/jabatan/jabatan-form";
         } else {
             service.updateInsert(jabatanFormDTO);
             return "redirect:/jabatan";
@@ -64,7 +62,7 @@ public class JabatanController {
         var dto = service.getJabatanById(id);
         model.addAttribute("dto",dto);
 
-        return "sales/jabatan-detail";
+        return "userManagement/jabatan/jabatan-detail";
     }
 
     @GetMapping("delete")

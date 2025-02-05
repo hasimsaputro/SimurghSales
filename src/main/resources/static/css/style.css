@@ -224,8 +224,6 @@ select {
     left: 0;
     right: 0;
     background-color: #fff;
-    border: 1px solid #ccc;
-    border-top: none;
     z-index: 1000;
     max-height: 200px;
     overflow-y: auto;

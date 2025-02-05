@@ -20,7 +20,7 @@
                     <tr th:if="${formKategori.id != null}">
                         <td><label class="label-nama">Kode Kategori</label></td>
                         <td>
-                            <input id="idKategori" name="idKategori" type="text" th:field="*{id}" th:disabled="${formKategori.id != null}">
+                            <input id="idKategori" name="idKategori" type="text" th:field="*{id}" th:readonly="${formKategori.id != null}">
                             <div class="field-validation-error"></div>
                         </td>
                     <tr>

@@ -1,6 +1,6 @@
 package com.sales.rest;
 
-import com.sales.service.master.KeteranganAplikasiService;
+import com.sales.service.keteranganAplikasi.KeteranganAplikasiService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

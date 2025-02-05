@@ -1,8 +1,7 @@
 package com.sales.controller;
 
-import com.sales.dto.master.TipeAplikasiDTO;
-import com.sales.service.master.TipeAplikasiService;
-import jakarta.validation.Valid;
+import com.sales.dto.tipeAplikasi.TipeAplikasiDTO;
+import com.sales.service.tipeAplikasi.TipeAplikasiService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,7 +33,7 @@ public class TipeAplikasiController {
 
 
 
-        return "sales/tipe-aplikasi";
+        return "master/tipeAplikasi/tipe-aplikasi";
     }
 
     @GetMapping("form")
@@ -44,13 +43,13 @@ public class TipeAplikasiController {
 
 
 
-        return "sales/tipeaplikasi-form";
+        return "master/tipeAplikasi/tipeaplikasi-form";
     }
 
     @PostMapping("form")
     public String updateInsert(@ModelAttribute("tipeAplikasiDto") TipeAplikasiDTO tipeAplikasiDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "sales/tipeaplikasi-form";
+            return "master/tipeAplikasi/tipeaplikasi-form";
         } else {
             service.updateInsert(tipeAplikasiDTO);
             return "redirect:/tipeAplikasi";
@@ -62,7 +61,7 @@ public class TipeAplikasiController {
         var tipeAplikasiDto = service.getTipeAplikasiById(id);
         model.addAttribute("tipeAplikasiDto",tipeAplikasiDto);
 
-        return "sales/tipeaplikasi-detail";
+        return "master/tipeAplikasi/tipeaplikasi-detail";
     }
 
     @GetMapping("delete")

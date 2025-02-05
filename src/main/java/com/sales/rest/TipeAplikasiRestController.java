@@ -1,6 +1,6 @@
 package com.sales.rest;
 
-import com.sales.service.master.TipeAplikasiServiceImplementation;
+import com.sales.service.tipeAplikasi.TipeAplikasiServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

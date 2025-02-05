@@ -1,8 +1,8 @@
 package com.sales.controller;
 
-import com.sales.dto.master.KeteranganAplikasiFormDTO;
+import com.sales.dto.keteranganAplikasi.KeteranganAplikasiFormDTO;
 
-import com.sales.service.master.KeteranganAplikasiService;
+import com.sales.service.keteranganAplikasi.KeteranganAplikasiService;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +36,7 @@ public class KeteranganAplikasiController {
 
 
 
-        return "sales/keterangan-aplikasi";
+        return "master/keteranganAplikasi/keterangan-aplikasi";
     }
 
     @GetMapping("form")
@@ -46,13 +46,13 @@ public class KeteranganAplikasiController {
 
 
 
-        return "sales/keterangan-aplikasi-form";
+        return "master/keteranganAplikasi/keterangan-aplikasi-form";
     }
 
     @PostMapping("form")
     public String updateInsert(@ModelAttribute("dto") KeteranganAplikasiFormDTO keteranganAplikasiFormDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "sales/keterangan-aplikasi-form";
+            return "master/keteranganAplikasi/keterangan-aplikasi-form";
         } else {
             service.updateInsert(keteranganAplikasiFormDTO);
             return "redirect:/keteranganAplikasi";
@@ -64,7 +64,7 @@ public class KeteranganAplikasiController {
         var dto = service.getKeteranganAplikasiById(id);
         model.addAttribute("dto",dto);
 
-        return "sales/keterangan-aplikasi-detail";
+        return "master/keteranganAplikasi/keterangan-aplikasi-detail";
     }
 
     @GetMapping("delete")

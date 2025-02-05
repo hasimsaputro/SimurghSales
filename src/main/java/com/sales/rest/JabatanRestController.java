@@ -1,7 +1,6 @@
 package com.sales.rest;
 
-import com.sales.service.master.JabatanService;
-import com.sales.service.master.KeteranganAplikasiService;
+import com.sales.service.jabatan.JabatanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

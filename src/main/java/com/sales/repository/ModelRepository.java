@@ -201,4 +201,11 @@ public interface ModelRepository extends JpaRepository<Model, String> {
             WHERE mod.id = :modelId
             """)
     Model getModelById(String modelId);
+
+    @Query("""
+            SELECT mod
+            FROM Model mod
+            WHERE mod.namaModel = :name
+            """)
+    Model getModelByName(String name);
 }
