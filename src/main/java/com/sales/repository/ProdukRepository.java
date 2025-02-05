@@ -55,6 +55,14 @@ public interface ProdukRepository extends JpaRepository<Produk, Integer> {
             SELECT pro
             FROM Produk pro
             WHERE pro.deleteDate IS NULL
+            AND pro.status = true
+            """)
+    List<Produk> getAllProdukAktif(Pageable pageable);
+
+    @Query("""
+            SELECT pro
+            FROM Produk pro
+            WHERE pro.deleteDate IS NULL
             AND pro.id = :search
             """)
     List<Produk> getProdukById(Pageable pageable, @Param("search") String search);
@@ -63,9 +71,27 @@ public interface ProdukRepository extends JpaRepository<Produk, Integer> {
             SELECT pro
             FROM Produk pro
             WHERE pro.deleteDate IS NULL
+            AND pro.status = true
+            AND pro.id = :search
+            """)
+    List<Produk> getProdukAktifById(Pageable pageable, @Param("search") String search);
+
+    @Query("""
+            SELECT pro
+            FROM Produk pro
+            WHERE pro.deleteDate IS NULL
             AND pro.namaProduk = :search
             """)
     List<Produk> getProdukByName(Pageable pageable, @Param("search") String search);
+
+    @Query("""
+            SELECT pro
+            FROM Produk pro
+            WHERE pro.deleteDate IS NULL
+            AND pro.status = true
+            AND pro.namaProduk = :search
+            """)
+    List<Produk> getProdukAktifByName(Pageable pageable, @Param("search") String search);
 
     @Query("""
             SELECT pro

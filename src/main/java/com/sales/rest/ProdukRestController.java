@@ -26,8 +26,8 @@ public class ProdukRestController {
     @GetMapping("")
     public ResponseEntity<Object> index(
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "status") String filter,
-            @RequestParam(defaultValue = "Aktif") String search
+            @RequestParam String filter,
+            @RequestParam String search
     ){
         try {
             CabangProdukGridDTO cabangProdukGridDTO = service.getAllRest(page, filter, search);
@@ -50,7 +50,7 @@ public class ProdukRestController {
     @GetMapping(value = {"/getFilterItems"})
     public ResponseEntity<Object> getFilterItems(){
         try{
-            var filterItem= service.getFilterAsItem();
+            var filterItem= service.getFilterAsItemNonStatus();
             return ResponseEntity.status(HttpStatus.OK).body(filterItem);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
