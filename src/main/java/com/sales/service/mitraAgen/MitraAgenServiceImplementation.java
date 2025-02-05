@@ -24,7 +24,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
     private final IdentitasRepository identitasRepository;
     private final BankRepository bankRepository;
     private final CabangRepository cabangRepository;
-    private final int rowInPage = 10;
+    private final int rowInPage = 5;
 
     @Autowired
     public MitraAgenServiceImplementation(MitraAgenRepository repository, ProdukRepository produkRepository, TipeMasterRepository tipeMasterRepository, KelurahanRepository kelurahanRepository, IdentitasRepository identitasRepository, BankRepository bankRepository, CabangRepository cabangRepository) {

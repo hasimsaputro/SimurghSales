@@ -16,6 +16,7 @@ public interface IdentitasRepository extends JpaRepository<Identitas, Integer> {
             SELECT ide
             FROM Identitas ide
             WHERE ide.deleteDate IS NULL
+            AND ide.status = true
             """)
     List<Identitas> getAllIdentitas();
 

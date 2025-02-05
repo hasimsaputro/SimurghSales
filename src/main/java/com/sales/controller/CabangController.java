@@ -45,7 +45,7 @@ public class CabangController {
             Model model
     ){
         List<CabangProdukDTO> cabangProdukDTOS = service.getProdukByCabang(id);
-        cabangProdukDTOS.sort(Comparator.comparing(CabangProdukDTO::getNama));
+        cabangProdukDTOS.sort(Comparator.comparing(CabangProdukDTO::getId));
         model.addAttribute("detailCabangGrid", service.getDetailCabangById(id));
         model.addAttribute("detailProdukByCabang",cabangProdukDTOS);
         return "master/cabang/master-cabang-detail";

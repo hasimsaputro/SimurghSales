@@ -2,14 +2,16 @@ package com.sales.service.cabang;
 
 import com.sales.dto.OptionDTO;
 import com.sales.dto.cabang.*;
-import com.sales.dto.produk.ProdukIndexDTO;
+import com.sales.dto.mitraAgen.KelurahanOptionDTO;
+import com.sales.dto.mitraAgen.ProdukOptionDTO;
+import com.sales.dto.produk.ProdukIndexOptionDTO;
 import com.sales.entity.Cabang;
+import com.sales.entity.Kelurahan;
 import com.sales.entity.Produk;
 import com.sales.helper.DateHelper;
 import com.sales.repository.CabangRepository;
+import com.sales.repository.KelurahanRepository;
 import com.sales.repository.ProdukRepository;
-import jakarta.persistence.EntityNotFoundException;
-import org.hibernate.boot.jaxb.hbm.internal.CacheAccessTypeConverter;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,11 +24,13 @@ import java.util.*;
 public class CabangServiceImplementation implements CabangService{
     private final CabangRepository cabangRepository;
     private final ProdukRepository produkRepository;
-    private final int rowInPage = 10;
+    private final KelurahanRepository kelurahanRepository;
+    private final int rowInPage = 4;
 
-    public CabangServiceImplementation(CabangRepository cabangRepository, ProdukRepository produkRepository) {
+    public CabangServiceImplementation(CabangRepository cabangRepository, ProdukRepository produkRepository, KelurahanRepository kelurahanRepository) {
         this.cabangRepository = cabangRepository;
         this.produkRepository = produkRepository;
+        this.kelurahanRepository = kelurahanRepository;
     }
 
     @Override
@@ -240,6 +244,45 @@ public class CabangServiceImplementation implements CabangService{
             cabangProdukDTOS.add(cabangProdukDTO);
         }
         return cabangProdukDTOS;
+    }
+
+    @Override
+    public List<KelurahanOptionDTO> getKelurahanOption() {
+        List<Kelurahan> kelurahanList = kelurahanRepository.getAllKelurahan();
+        List<KelurahanOptionDTO> kelurahanOptionDTOS = new LinkedList<>();
+        for (Kelurahan kelurahan: kelurahanList
+        ) {
+            KelurahanOptionDTO kelurahanOptionDTO = new KelurahanOptionDTO();
+            kelurahanOptionDTO.setId(kelurahan.getId());
+            kelurahanOptionDTO.setNamaKelurahan(kelurahan.getNamaKelurahan());
+            kelurahanOptionDTO.setKecamatan(kelurahan.getKecamatan().getNamaKecamatan());
+            kelurahanOptionDTO.setProvinsi(kelurahan.getProvinsi().getNamaProvinsi());
+            kelurahanOptionDTO.setKodePos(kelurahan.getKodePos());
+            kelurahanOptionDTO.setKotaKabupaten(kelurahan.getKabupaten().getNamaKabupatenKota());
+            kelurahanOptionDTOS.add(kelurahanOptionDTO);
+        }
+        return kelurahanOptionDTOS;
+    }
+
+    @Override
+    public List<ProdukIndexOptionDTO> getSearchProdukItems(String filter) {
+        List<String> searchItems = new LinkedList<>();
+        if(!filter.isBlank()){
+            switch (filter){
+                case "id":
+                    searchItems = produkRepository.getProdukItemsById();
+                    break;
+                case "namaProduk":
+                    searchItems = produkRepository.getProdukItemsByName();
+                    break;
+            }
+        }
+        List<ProdukIndexOptionDTO> searchsItems = new LinkedList<>();
+        for (var searchItem : searchItems){
+            ProdukIndexOptionDTO item = new ProdukIndexOptionDTO(searchItem, searchItem);
+            searchsItems.add(item);
+        }
+        return searchsItems;
     }
 
     @Override

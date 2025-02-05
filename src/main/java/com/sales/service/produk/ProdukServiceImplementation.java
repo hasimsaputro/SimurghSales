@@ -1,5 +1,6 @@
 package com.sales.service.produk;
 
+import com.sales.dto.cabang.CabangProdukGridDTO;
 import com.sales.dto.produk.ProdukDetailDTO;
 import com.sales.dto.produk.ProdukFormDTO;
 import com.sales.dto.produk.ProdukIndexDTO;
@@ -21,7 +22,7 @@ import java.util.List;
 @Service
 public class ProdukServiceImplementation implements ProdukService {
     private final ProdukRepository repository;
-    private final int rowInPage = 10;
+    private final int rowInPage = 4;
 
     public ProdukServiceImplementation(ProdukRepository repository) {
         this.repository = repository;
@@ -90,6 +91,18 @@ public class ProdukServiceImplementation implements ProdukService {
         }
         return produkIndexDTOS;
     }
+
+
+    @Override
+    public CabangProdukGridDTO getAllRest(int page, String filter, String search){
+        List<ProdukIndexDTO> produkIndexDTOS = this.getAll(page, filter, search);
+        CabangProdukGridDTO cabangProdukGridDTO = new CabangProdukGridDTO();
+        cabangProdukGridDTO.setProdukIndexDTOS(produkIndexDTOS);
+        cabangProdukGridDTO.setCurrentPage(page);
+        cabangProdukGridDTO.setTotalPages(this.getTotalPages(filter, search));
+        return cabangProdukGridDTO;
+    };
+
 
     @Override
     public ProdukFormDTO getProdukById(Integer id) {
@@ -170,6 +183,21 @@ public class ProdukServiceImplementation implements ProdukService {
             produkIndexOptionDTOS.add(produkIndexOptionDTO);
         }
         return produkIndexOptionDTOS;
+    }
+
+
+    @Override
+    public List<ProdukIndexDTO> getAllProduks() {
+        List<Produk> produkList = repository.getAllProduk();
+        List<ProdukIndexDTO> produkIndexDTOS = new LinkedList<>();
+        for (Produk produk:
+             produkList) {
+            ProdukIndexDTO produkIndexDTO = new ProdukIndexDTO();
+            produkIndexDTO.setKodeProduk(produk.getId());
+            produkIndexDTO.setNamaProduk(produk.getNamaProduk());
+            produkIndexDTOS.add(produkIndexDTO);
+        }
+        return produkIndexDTOS;
     }
 
 }

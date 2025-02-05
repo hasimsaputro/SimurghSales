@@ -16,6 +16,7 @@ public interface CabangRepository extends JpaRepository<Cabang, Integer> {
     @Query("""
             SELECT COUNT(1)
             FROM Cabang cab
+            WHERE cab.deleteDate IS NULL
             """)
     int getTotalPages();
 

@@ -3,6 +3,7 @@ package com.sales.service.cabang;
 import com.sales.dto.OptionDTO;
 import com.sales.dto.cabang.*;
 import com.sales.dto.mitraAgen.*;
+import com.sales.dto.produk.ProdukIndexOptionDTO;
 import com.sales.entity.Produk;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public interface CabangService {
     List<CabangIndexOptionDTO> getFilterAsItem();
     List<CabangIndexOptionDTO> getSearchItems(String filter);
     List<CabangProdukDTO> getProdukByCabang(Integer id);
-
+    List<KelurahanOptionDTO> getKelurahanOption();
+    List<ProdukIndexOptionDTO> getSearchProdukItems(String filter);
     List<OptionDTO> getfilterAsItem();
 }
