@@ -1,131 +1,79 @@
 (()=>{
+    let mainUrl = "http://localhost:8082/api";
+    let currentPage = 1;
+    let filter = "";
+    let search = "";
+    let totalPages;
+    let checkedCabang = [];
+    let bodiTabelCabang = document.querySelector(".cabang-list tbody");
+    let idPot = document.querySelector("#id").value;
+    let searchCabangPot = document.querySelector('input#search.searchCabangPot');
+    let suggestionsCabangPotContainer = document.querySelector('.search-container .suggestions.cabangPot');
+    let selectCabangPotFilter = document.querySelector('.pot-filter select');
 
-    document.addEventListener('DOMContentLoaded', function(){
-
-        let mainUrl = "http://localhost:8082/api";
-
-        let bodiTabelProduk = document.querySelector(".cabang-list tbody");
-        let idPot = document.querySelector("#id").value;
-
-
-
-        let searchCabangPot = document.querySelector('input#search.searchCabangPot');
-        let suggestionsCabangPotContainer = document.querySelector('.search-container .suggestions.cabangPot');
-        let selectCabangPotFilter = document.querySelector('.pot-filter select');
-
-        fetch(`${mainUrl}/cabang/getFilterItems`)
-                .then(response => response.json())
-                .then(data => {
-                    selectCabangPotFilter.innerHTML = "";
-                    let defaultOption = document.createElement("option");
-                    defaultOption.value = "";
-                    defaultOption.textContent = "-- Pilih Item --";
-                    selectCabangPotFilter.appendChild(defaultOption);
-                    data.forEach(item => {
-                        let option = document.createElement("option");
-                        option.value = item.value;
-                        option.textContent = item.text;
-                        selectCabangPotFilter.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
+    fetch(`${mainUrl}/cabang/getFilterItems`)
+            .then(response => response.json())
+            .then(data => {
+                selectCabangPotFilter.innerHTML = "";
+                let defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.textContent = "-- Pilih Item --";
+                selectCabangPotFilter.appendChild(defaultOption);
+                data.forEach(item => {
+                    let option = document.createElement("option");
+                    option.value = item.value;
+                    option.textContent = item.text;
+                    selectCabangPotFilter.appendChild(option);
                 });
-
-        let searchCabangValue = "";
-        let filterCabangValue = "";
-        selectCabangPotFilter.addEventListener("change", function() {
-            filterCabangValue = selectCabangPotFilter.value;
-        });
-        console.log(selectCabangPotFilter.value);
-        if(searchCabangPot){
-          searchCabangPot.addEventListener('input', function() {
-              const query = searchCabangPot.value.toLowerCase();
-              const filterValue = selectCabangPotFilter.value;
-              suggestionsCabangPotContainer.innerHTML = '';
-              fetch(`${mainUrl}/pot/getSearchCabangItems=${filterCabangValue}`)
-                      .then(response => response.json())
-                      .then(data => {
-                          const items = data.map(option => option.text);
-                          if (query) {
-                              const filteredData = items.filter(item => item.toLowerCase().includes(query));
-                              filteredData.forEach(item => {
-                                  const div = document.createElement('div');
-                                  div.classList.add('suggestion-item');
-                                  div.textContent = item;
-
-                                  div.addEventListener('click', function() {
-                                      searchCabangPot.value = item;
-                                      searchCabangValue = item;
-                                      suggestionsCabangPotContainer.innerHTML = '';
-                                  });
-
-                                  suggestionsCabangPotContainer.appendChild(div);
-                                      });
-                                  }
-                              })
-                              .catch(error => {
-                                  console.error('Error fetching data:', error);
-                              });
-          });
-        }
-        let checkedCabang = [];
-        if(idPot){
-            fetch(`${mainUrl}/pot/cabang/${idPot}`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Data dari API:", data); // Cek apakah ini array atau objek
-
-                    if (Array.isArray(data)) { // Pastikan data adalah array
-                        checkedCabang = data.map(option => +option.id);
-                    } else {
-                        checkedCabang = []; // Jika bukan array, kosongkan
-                    }
-
-                    console.log("Checked Cabang (ID saja):", checkedCabang);
-                })
-                .catch(error => console.error("Fetch error:", error));
-        }
-
-        let searchBtn = document.querySelector('.filter-button');
-        if(searchBtn){
-            searchBtn.addEventListener('click',()=>{
-            console.log('haloo')
-                fetch(`${mainUrl}/cabang/filter=${filterCabangValue}/search=${searchCabangValue}`).then(response => response.json()).then(data => {
-                    bodiTabelProduk.innerHTML = "";
-                    for (const cabang of data) {
-                        let row = document.createElement("tr");
-                        let columnCheckbox = document.createElement("td");
-                        let columnKode = document.createElement("td");
-                        let columnName = document.createElement("td");
-                        let columnTipe = document.createElement("td");
-                        let inputCheckbox = document.createElement("input");
-                        inputCheckbox.setAttribute("type", "checkbox");
-                        inputCheckbox.name = "cabang";
-                        inputCheckbox.id = cabang.kodeCabang;
-
-                        // Mengecek apakah produk ada di dalam array produkChecked
-                        if (checkedCabang.includes(cabang.kodeCabang)) {
-                            inputCheckbox.checked = true; // Menandai checkbox sebagai tercentang jika ID ada di produkChecked
-                        }
-
-                        columnKode.innerHTML = cabang.kodeCabang;
-                        columnName.innerHTML = cabang.namaCabang;
-                        columnTipe.innerHTML = cabang.tipeStruktur;
-                        columnCheckbox.appendChild(inputCheckbox);
-                        row.appendChild(columnCheckbox);
-                        row.appendChild(columnKode);
-                        row.appendChild(columnName);
-                        row.appendChild(columnTipe);
-                        bodiTabelProduk.appendChild(row);
-                    }
-                })
             })
-        }
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
 
-        setTimeout(() => {
-            fetch(`${mainUrl}/cabang`).then(response => response.json()).then(data => {
-                for (const cabang of data) {
+    selectCabangPotFilter.addEventListener("change", function() {
+        filter = selectCabangPotFilter.value;
+    });
+
+    if(searchCabangPot){
+      searchCabangPot.addEventListener('input', function() {
+          const query = searchCabangPot.value.toLowerCase();
+          suggestionsCabangPotContainer.innerHTML = '';
+          fetch(`${mainUrl}/pot/getSearchCabangItems=${filter}`)
+                  .then(response => response.json())
+                  .then(data => {
+                      const items = data.map(option => option.text);
+                      if (query) {
+                          const filteredData = items.filter(item => item.toLowerCase().includes(query));
+                          filteredData.forEach(item => {
+                              const div = document.createElement('div');
+                              div.classList.add('suggestion-item');
+                              div.textContent = item;
+
+                              div.addEventListener('click', function() {
+                                  searchCabangPot.value = item;
+                                  search = item;
+                                  suggestionsCabangPotContainer.innerHTML = '';
+                              });
+
+                              suggestionsCabangPotContainer.appendChild(div);
+                                  });
+                              }
+                          })
+                          .catch(error => {
+                              console.error('Error fetching data:', error);
+                          });
+      });
+    }
+
+    
+
+    let searchBtn = document.querySelector('.filter-button');
+    if(searchBtn){
+        searchBtn.addEventListener('click',()=>{
+        console.log('haloo')
+            fetch(`${mainUrl}/cabang?page=${currentPage}&filter=${filter}&search=${search}`).then(response => response.json()).then(data => {
+                bodiTabelCabang.innerHTML = "";
+                for (const cabang of data.cabangIndexDTOS) {
                     let row = document.createElement("tr");
                     let columnCheckbox = document.createElement("td");
                     let columnKode = document.createElement("td");
@@ -135,11 +83,12 @@
                     inputCheckbox.setAttribute("type", "checkbox");
                     inputCheckbox.name = "cabang";
                     inputCheckbox.id = cabang.kodeCabang;
-                    // Mengecek apakah produk ada di dalam array produkChecked
-                    if (checkedCabang.includes(cabang.kodeCabang)) {
-                        inputCheckbox.checked = true; // Menandai checkbox sebagai tercentang jika ID ada di produkChecked
-                    }
-    
+
+                    // // Mengecek apakah produk ada di dalam array produkChecked
+                    // if (checkedCabang.includes(cabang.kodeCabang)) {
+                    //     inputCheckbox.checked = true; // Menandai checkbox sebagai tercentang jika ID ada di produkChecked
+                    // }
+
                     columnKode.innerHTML = cabang.kodeCabang;
                     columnName.innerHTML = cabang.namaCabang;
                     columnTipe.innerHTML = cabang.tipeStruktur;
@@ -148,12 +97,119 @@
                     row.appendChild(columnKode);
                     row.appendChild(columnName);
                     row.appendChild(columnTipe);
-                    bodiTabelProduk.appendChild(row);
+                    bodiTabelCabang.appendChild(row);
                 }
+                currentPage = data.currentPage;
+                totalPages = data.totalPages;
+
+                let span = document.querySelector("#page-text");
+                span.textContent = `Page ${currentPage} of ${totalPages}`;
+
+                checkCheckboxes();
             })
-        }, 1000)
+        })
+    }
 
+    let indexCabangPOT = () => {
+        bodiTabelCabang.innerHTML = "";
+        fetch(`${mainUrl}/cabang?page=${currentPage}&filter=${filter}&search=${search}`).then(response => response.json()).then(data => {
+            for (const cabang of data.cabangIndexDTOS) {
+                let row = document.createElement("tr");
+                let columnCheckbox = document.createElement("td");
+                let columnKode = document.createElement("td");
+                let columnName = document.createElement("td");
+                let columnTipe = document.createElement("td");
+                let inputCheckbox = document.createElement("input");
+                inputCheckbox.setAttribute("type", "checkbox");
+                inputCheckbox.name = "cabang";
+                inputCheckbox.id = cabang.kodeCabang;
 
+                columnKode.innerHTML = cabang.kodeCabang;
+                columnName.innerHTML = cabang.namaCabang;
+                columnTipe.innerHTML = cabang.tipeStruktur;
+                columnCheckbox.appendChild(inputCheckbox);
+                row.appendChild(columnCheckbox);
+                row.appendChild(columnKode);
+                row.appendChild(columnName);
+                row.appendChild(columnTipe);
+                bodiTabelCabang.appendChild(row);
+            }
+            currentPage = data.currentPage;
+            totalPages = data.totalPages;
+
+            let span = document.querySelector("#page-text");
+            span.textContent = `Page ${currentPage} of ${totalPages}`;
+
+                checkCheckboxes();
+        })
+    }
+
+    // setTimeout(() => {
+    //     fetch(`${mainUrl}/cabang`).then(response => response.json()).then(data => {
+    //         for (const cabang of data) {
+    //             let row = document.createElement("tr");
+    //             let columnCheckbox = document.createElement("td");
+    //             let columnKode = document.createElement("td");
+    //             let columnName = document.createElement("td");
+    //             let columnTipe = document.createElement("td");
+    //             let inputCheckbox = document.createElement("input");
+    //             inputCheckbox.setAttribute("type", "checkbox");
+    //             inputCheckbox.name = "cabang";
+    //             inputCheckbox.id = cabang.kodeCabang;
+    //             // Mengecek apakah produk ada di dalam array produkChecked
+    //             if (checkedCabang.includes(cabang.kodeCabang)) {
+    //                 inputCheckbox.checked = true; // Menandai checkbox sebagai tercentang jika ID ada di produkChecked
+    //             }
+
+    //             columnKode.innerHTML = cabang.kodeCabang;
+    //             columnName.innerHTML = cabang.namaCabang;
+    //             columnTipe.innerHTML = cabang.tipeStruktur;
+    //             columnCheckbox.appendChild(inputCheckbox);
+    //             row.appendChild(columnCheckbox);
+    //             row.appendChild(columnKode);
+    //             row.appendChild(columnName);
+    //             row.appendChild(columnTipe);
+    //             bodiTabelCabang.appendChild(row);
+    //         }
+    //     })
+    // }, 1000)
+
+    let checkCheckboxes = () => {
+        let checkboxes = document.querySelectorAll(".cabang-list tbody input[name='cabang']");
+        console.log(checkedCabang)
+            checkboxes.forEach(checkbox => {
+                if(checkedCabang.includes(parseInt(checkbox.id))){
+                    checkbox.checked = true;
+                } else {
+                    checkbox.checked = false
+                }
+                checkbox.addEventListener("change", () => {
+                    if(checkbox.checked){
+                        checkedCabang.push(parseInt(checkbox.id));
+                    }else{
+                        let index = checkedCabang.indexOf(parseInt(checkbox.id));
+
+                        // If the value exists in the array, remove it
+                        if (index !== -1) {
+                            checkedCabang.splice(index, 1); // Remove 1 element at the found index
+                        }
+                    }
+                })
+            })
+    }
+    document.addEventListener('DOMContentLoaded', function(){
+        if(idPot){
+            fetch(`${mainUrl}/pot/cabang/${idPot}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (Array.isArray(data)) { 
+                        checkedCabang = data.map(option => +option.id);
+                    } else {
+                        checkedCabang = []; 
+                    }
+                })
+                .catch(error => console.error("Fetch error:", error));
+        }
 
 
         let saveButton = document.querySelector(".submit-button");

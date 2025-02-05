@@ -3,6 +3,7 @@ package com.sales.service.cabang;
 import com.sales.dto.OptionDTO;
 import com.sales.dto.cabang.*;
 import com.sales.dto.mitraAgen.*;
+import com.sales.dto.pot.CabangPotGridDTO;
 import com.sales.dto.produk.ProdukIndexOptionDTO;
 import com.sales.entity.Produk;
 
@@ -22,4 +23,6 @@ public interface CabangService {
     List<KelurahanOptionDTO> getKelurahanOption();
     List<ProdukIndexOptionDTO> getSearchProdukItems(String filter);
     List<OptionDTO> getfilterAsItem();
+
+    CabangPotGridDTO getAllCabang(int page, String filter, String search);
 }

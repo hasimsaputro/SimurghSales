@@ -4,6 +4,8 @@ import com.sales.dto.OptionDTO;
 import com.sales.dto.cabang.*;
 import com.sales.dto.mitraAgen.KelurahanOptionDTO;
 import com.sales.dto.mitraAgen.ProdukOptionDTO;
+import com.sales.dto.pot.CabangPotGridDTO;
+import com.sales.dto.produk.ProdukIndexDTO;
 import com.sales.dto.produk.ProdukIndexOptionDTO;
 import com.sales.entity.Cabang;
 import com.sales.entity.Kelurahan;
@@ -292,6 +294,16 @@ public class CabangServiceImplementation implements CabangService{
                 new OptionDTO("Nama Cabang", "namaCabang"),
                 new OptionDTO("Tipe Struktur", "tipeStruktur")
         );
+    }
+
+    @Override
+    public CabangPotGridDTO getAllCabang(int page, String filter, String search) {
+        List<CabangIndexDTO> cabangIndexDTOS = this.getAll(page, filter, search);
+        CabangPotGridDTO cabangPotGridDTO = new CabangPotGridDTO();
+        cabangPotGridDTO.setCabangIndexDTOS(cabangIndexDTOS);
+        cabangPotGridDTO.setCurrentPage(page);
+        cabangPotGridDTO.setTotalPages(this.getTotalPages(filter, search));
+        return cabangPotGridDTO;
     }
 
 

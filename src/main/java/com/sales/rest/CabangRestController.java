@@ -4,6 +4,7 @@ import com.sales.dto.cabang.CabangFormDTO;
 import com.sales.dto.cabang.CabangIndexDTO;
 import com.sales.dto.cabang.CabangIndexOptionDTO;
 import com.sales.dto.cabang.CabangProdukDTO;
+import com.sales.dto.pot.CabangPotGridDTO;
 import com.sales.entity.Produk;
 import com.sales.service.cabang.CabangService;
 import jakarta.validation.Valid;
@@ -26,15 +27,13 @@ public class CabangRestController {
         this.service = service;
     }
 
-    @GetMapping(value = {"","/filter={filter}/search={search}"})
-    public ResponseEntity<Object> index(@PathVariable(required = false) String filter,
-                                        @PathVariable(required = false) String search,
-                                        @PathVariable(required = false) Integer page){
-        page = page == null? 1 : page;
-        filter = filter == null? "" : filter;
-        search = search == null? "" : search;
+    @GetMapping("")
+    public ResponseEntity<Object> index(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "status") String filter,
+            @RequestParam(defaultValue = "Aktif") String search){
         try{
-            List<CabangIndexDTO> cabang= service.getAll(page,filter,search);
+            CabangPotGridDTO cabang= service.getAllCabang(page,filter,search);
             return ResponseEntity.status(HttpStatus.OK).body(cabang);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
