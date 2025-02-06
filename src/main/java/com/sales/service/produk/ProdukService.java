@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface ProdukService {
     int getTotalPages(String filter, String search);
+    int getTotalPagesAktif(String filter, String search);
     List<ProdukIndexDTO> getAll(int page, String filter, String search);
     List<ProdukIndexDTO> getAllAktif(int page, String filter, String search);
     CabangProdukGridDTO getAllRest(int page, String filter, String search);

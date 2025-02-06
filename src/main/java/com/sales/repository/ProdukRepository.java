@@ -23,10 +23,27 @@ public interface ProdukRepository extends JpaRepository<Produk, Integer> {
     @Query("""
             SELECT COUNT(1)
             FROM Produk pro
+            WHERE pro.deleteDate IS NULL
+            AND pro.status = true
+            """)
+    int getTotalPagesAktif();
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM Produk pro
             WHERE pro.id = %:search%
             AND pro.deleteDate IS NULL
             """)
     int getTotalPagesById(String search);
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM Produk pro
+            WHERE pro.id = %:search%
+            AND pro.deleteDate IS NULL
+            AND pro.status = true
+            """)
+    int getTotalPagesByIdAktif(String search);
 
     @Query("""
             SELECT COUNT(1)
@@ -40,9 +57,27 @@ public interface ProdukRepository extends JpaRepository<Produk, Integer> {
             SELECT COUNT(1)
             FROM Produk pro
             WHERE pro.deleteDate IS NULL
+            AND pro.status = true
+            AND pro.namaProduk LIKE %:search%
+            """)
+    int getTotalpagesByNameAktif(String search);
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM Produk pro
+            WHERE pro.deleteDate IS NULL
             AND pro.status = :search
             """)
     int getTotalpagesByStatus(Boolean search);
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM Produk pro
+            WHERE pro.deleteDate IS NULL
+            AND pro.status = :search
+            AND pro.status = true
+            """)
+    int getTotalpagesByStatusAktif(Boolean search);
 
     @Query("""
             SELECT pro
