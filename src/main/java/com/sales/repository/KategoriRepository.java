@@ -85,7 +85,7 @@ public interface KategoriRepository extends JpaRepository<Kategori, Integer> {
     List<String> getItemsId();
 
     @Query("""
-            SELECT kat.namaKategori
+            SELECT DISTINCT kat.namaKategori
             FROM Kategori kat
             """)
     List<String> getItemsNamaKategori();

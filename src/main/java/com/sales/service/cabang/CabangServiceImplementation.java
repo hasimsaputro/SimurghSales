@@ -276,7 +276,7 @@ public class CabangServiceImplementation implements CabangService{
 
     @Override
     public List<KelurahanOptionDTO> getKelurahanOption() {
-        List<Kelurahan> kelurahanList = kelurahanRepository.getAllKelurahan();
+        List<Kelurahan> kelurahanList = kelurahanRepository.getAllKelurahanOption();
         List<KelurahanOptionDTO> kelurahanOptionDTOS = new LinkedList<>();
         for (Kelurahan kelurahan: kelurahanList
         ) {
