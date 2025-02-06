@@ -1,7 +1,9 @@
 package com.sales.service.dataLeads;
 
 import com.sales.dto.OptionDTO;
+import com.sales.dto.OptionKelurahanDTO;
 import com.sales.dto.dataLeads.*;
+import com.sales.dto.dataLeads.KeteranganAplikasiSurveyorDTO;
 import com.sales.entity.*;
 import com.sales.repository.*;
 import org.springframework.data.domain.PageRequest;
@@ -10,14 +12,20 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Locale;
 
 @Service
-public class DataLeadsServiceImplementation implements DataLeadsService{
+public class DataLeadsServiceImplementation implements DataLeadsService {
+    private final KategoriRepository kategoriRepository;
+    private final ReferensiRepository referensiRepository;
+    private final CabangRepository cabangRepository;
+    private final KelurahanRepository kelurahanRepository;
+    private final DebiturRepository debiturRepository;
+    private final TipeAplikasiRepository tipeAplikasiRepository;
     private final ProdukRepository produkRepository;
     private final KeteranganAplikasiRepository keteranganAplikasiRepository;
     private final ModelRepository modelRepository;
@@ -26,13 +34,18 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
     private final MitraAgenRepository mitraAgenRepository;
     private final DataLeadsRepository repository;
     private final UserRepository userRepository;
-    private final KelurahanRepository kelurahanRepository;
     private final PotRepository potRepository;
     private final HargaPasarRepository hargaPasarRepository;
     private final Integer rowInPage = 10;
     public Locale indo = new Locale("id", "ID");
 
-    public DataLeadsServiceImplementation(ProdukRepository produkRepository, HargaPasarRepository hargaPasarRepository, KeteranganAplikasiRepository keteranganAplikasiRepository, ModelRepository modelRepository, TipeRepository tipeRepository, MerkRepository merkRepository, MitraAgenRepository mitraAgenRepository, DataLeadsRepository repository, UserRepository userRepository, KelurahanRepository kelurahanRepository, PotRepository potRepository) {
+    public DataLeadsServiceImplementation(KategoriRepository kategoriRepository1, ReferensiRepository referensiRepository, CabangRepository cabangRepository, DebiturRepository debiturRepository, TipeAplikasiRepository tipeAplikasiRepository, ProdukRepository produkRepository, HargaPasarRepository hargaPasarRepository, KeteranganAplikasiRepository keteranganAplikasiRepository, ModelRepository modelRepository, TipeRepository tipeRepository, MerkRepository merkRepository, KategoriRepository kategoriRepository, MitraAgenRepository mitraAgenRepository, DataLeadsRepository repository, UserRepository userRepository, KelurahanRepository kelurahanRepository, PotRepository potRepository) {
+        this.kategoriRepository = kategoriRepository1;
+        this.referensiRepository = referensiRepository;
+        this.cabangRepository = cabangRepository;
+        this.kelurahanRepository = kelurahanRepository;
+        this.debiturRepository = debiturRepository;
+        this.tipeAplikasiRepository = tipeAplikasiRepository;
         this.produkRepository = produkRepository;
         this.keteranganAplikasiRepository = keteranganAplikasiRepository;
         this.modelRepository = modelRepository;
@@ -41,7 +54,6 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
         this.mitraAgenRepository = mitraAgenRepository;
         this.repository = repository;
         this.userRepository = userRepository;
-        this.kelurahanRepository = kelurahanRepository;
         this.potRepository = potRepository;
         this.hargaPasarRepository = hargaPasarRepository;
     }
@@ -132,15 +144,30 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
             dto.setNomorHandphone2(dataLeads.getDebiturDataLeads().getNomorHP2());
             dto.setNomorTelepon(dataLeads.getDebiturDataLeads().getNomorTelepon());
             dto.setSumberDataAplikasi(dataLeads.getMitraAgenDataLeads().getNamaMitraAgen());
-            dto.setReferensi(dataLeads.getIdDebiturReferensi()== null? "" : dataLeads.getDebiturReferensiDataLeads().getNamaDepan().concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaTengah()).concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaAkhir()));
+            dto.setReferensi(referensiRepository.getReferenceById(dataLeads.getIdDebiturReferensi()).getNamaDepan());
+            dto.setReferensiValue(dataLeads.getIdDebiturReferensi());
             dto.setJenisUsaha(dataLeads.getJenisUsaha());
             dto.setKeteranganAplikasi(dataLeads.getKeteranganAplikasi().getNamaKeteranganAplikasi());
-            dto.setSurveyor(userRepository.getUserByCabangAndSurveyor(dataLeads.getIdCabang()) == null ? "Cabang Tidak Ada Surveyor" :  userRepository.getUserByCabangAndSurveyor(dataLeads.getIdCabang()).getNamaKaryawan());
+            if(dataLeads.getUserDataLeads() == null){
+
+            }else {
+                dto.setSurveyor(dataLeads.getUserDataLeads().getNamaKaryawan());
+            }
+
             dto.setStatus(dataLeads.getStatus());
             dto.setPot(dataLeads.getPotDataLeads().getNamaPOT());
             dto.setTenor(dataLeads.getPotDataLeads().getTenor().toString());
-            //Kurang Estimasi Nilai Faunding dan Data Unit
-            //dan unit
+            dto.setKategori(dataLeads.getKategoriDataLeads().getNamaKategori());
+            dto.setMerek(dataLeads.getMerkDataLeads().getNamaMerk());
+            dto.setModel(dataLeads.getModelDataLeads().getNamaModel());
+            dto.setTipe(dataLeads.getTipeDataLeads().getNamaTipe());
+            dto.setTahun(dataLeads.getTahun());
+            dto.setTahunPajakSTNK(dataLeads.getTahunPajakSTNK());
+            dto.setNomorBPKB(dataLeads.getNomorBPKB());
+            dto.setNomorPolisi(dataLeads.getNomorPolisi());
+            dto.setEstimasiNilaiFunding(dataLeads.getEstimasiNilaiFunding().toString());
+            dto.setReferensi(dataLeads.getDebiturReferensiDataLeads() == null ? " " : dataLeads.getDebiturReferensiDataLeads().getNamaDepan().concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaTengah().concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaAkhir())));
+
         }
 
         return dto;
@@ -192,15 +219,14 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
             dto.setNomorHandphone2(dataLeads.getDebiturDataLeads().getNomorHP2());
             dto.setNomorTelepon(dataLeads.getDebiturDataLeads().getNomorTelepon());
             dto.setSumberDataAplikasi(dataLeads.getMitraAgenDataLeads().getNamaMitraAgen());
-            dto.setReferensi(dataLeads.getIdDebiturReferensi()== null? "" : dataLeads.getDebiturReferensiDataLeads().getNamaDepan().concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaTengah()).concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaAkhir()));
+            dto.setReferensi(dataLeads.getDebiturReferensiDataLeads() == null ? " " : dataLeads.getDebiturReferensiDataLeads().getNamaDepan().concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaTengah().concat(" ").concat(dataLeads.getDebiturReferensiDataLeads().getNamaAkhir())));
             dto.setJenisUsaha(dataLeads.getJenisUsaha());
             dto.setKeteranganAplikasi(dataLeads.getKeteranganAplikasi().getNamaKeteranganAplikasi());
-            dto.setSurveyor(userRepository.getUserByCabangAndSurveyor(dataLeads.getIdCabang()) == null ? "Cabang Tidak Ada Surveyor" :  userRepository.getUserByCabangAndSurveyor(dataLeads.getIdCabang()).getNamaKaryawan());
+            dto.setSurveyor(dataLeads.getUserDataLeads().getNamaKaryawan());
             dto.setStatus(dataLeads.getStatus());
             dto.setPot(dataLeads.getPotDataLeads().getNamaPOT());
             dto.setTenor(dataLeads.getPotDataLeads().getTenor().toString());
-            //Kurang Estimasi Nilai Faunding dan Data Unit
-            //dan unit
+            dto.setEstimasiNilaiFunding(dataLeads.getEstimasiNilaiFunding().toString());
         }
 
         return dto;
@@ -261,50 +287,126 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
     @Override
     public void updateInsertDataLeads(DataLeadsFormDTO dataLeadsFormDTO) {
         DataLeads dataLeads = repository.getDataLeadsById(dataLeadsFormDTO.getId());
-        Boolean isexist = dataLeads.getId() == null ? false : true;
+        Boolean isexist = dataLeads == null ? false : true;
+        if(isexist == false) {
+            List<DataLeads> list = repository.findAll();
 
-        if(isexist == false){
-            dataLeads = new DataLeads();
-            List<DataLeads> listUrutan = repository.getAllOnly();
-
-            String newId;
-            if (!listUrutan.isEmpty()) {
+            if(list.size() == 0){
+                dataLeads = new DataLeads();
+                String newId = "LEAD-00001";
+                dataLeads.setId(newId);
+                dataLeads.setNomorAplikasi("240100000001");
+            }else {
+                dataLeads = new DataLeads();
+                List<DataLeads> listUrutan = repository.getAllOnly();
                 DataLeads lastDataLead = listUrutan.get(listUrutan.size() - 1);
+                BigDecimal lastNomorAplikasi = new BigDecimal(lastDataLead.getNomorAplikasi());
+                BigDecimal newNomorAplikasi = lastNomorAplikasi.add(BigDecimal.ONE);
+                String stringNomorAplikasi = newNomorAplikasi.toString();
+                dataLeads.setNomorAplikasi(stringNomorAplikasi);
                 String lastId = lastDataLead.getId();
-
-                if (lastId != null && lastId.startsWith("LEAD-")) {
-                    try {
-                        int lastNumber = Integer.parseInt(lastId.substring(5));
-                        newId = String.format("LEAD-%05d", lastNumber + 1);
-                    } catch (NumberFormatException e) {
-                        newId = "LEAD-00001";
-                    }
-                } else {
-                    newId = "LEAD-00001";
-                }
-            } else {
-                newId = "LEAD-00001";
+                int lastNumber = Integer.parseInt(lastId.substring(5));
+                String newId = String.format("LEAD-%05d", lastNumber + 1);
+                dataLeads.setId(newId);
             }
 
-            dataLeads.setId(newId);
+        }else{
+            dataLeads.setId(dataLeadsFormDTO.getId());
+        }
+
             dataLeads.setIdProduk(produkRepository.getProdukByName(dataLeadsFormDTO.getIdProduk()).getId());
-            dataLeads.setNomorAplikasi("000000");
+            List<DataLeads> dataLeadsList =  repository.getAllOnly();
             dataLeads.setTipeDebitur(dataLeadsFormDTO.getTipeDebitur() == true ? "PU" : "PO");
+            dataLeads.setIdTipeAplikasi(tipeAplikasiRepository.getTipeAplikasiByName(dataLeadsFormDTO.getTipeAplikasi()).getId());
+
+            List<Debitur> debiturList = debiturRepository.getAllOnly();
+            Debitur debitur = new Debitur();
+            if(dataLeads.getIdTipeAplikasi() == 1 /*Artinya Debitur Baruu*/) {
+                if(debiturList.size() == 0){
+                    String newId = "C012400001";
+                    debitur.setId(newId);
+                }else {
+                    Debitur lastDebitur = debiturList.get(debiturList.size() - 1);
+                    String lastId = lastDebitur.getId();
+                    int lastNumber = Integer.parseInt(lastId.substring(5));
+                    String newId = String.format("C0124%05d", lastNumber + 1);
+                    debitur.setId(newId);
+                }
+
+            }else {
+                Debitur debiturByNik = debiturRepository.getDebiturByNik(dataLeadsFormDTO.getNomorIdentitas());
+
+                if (debiturByNik == null || debiturByNik.getId() == null) {
+                    // Tidak ditemukan debitur, buat ID baru untuk debitur
+                    Debitur lastDebitur = debiturList.get(debiturList.size() - 1);
+                    String lastId = lastDebitur.getId();
+                    int lastNumber = Integer.parseInt(lastId.substring(5));
+                    String newId = String.format("C0124%05d", lastNumber + 1);
+                    debitur.setId(newId);
+                    dataLeads.setIdTipeAplikasi(1);
+                } else {
+                    // Ditemukan debitur, gunakan ID yang ada
+                    debitur.setId(debiturByNik.getId());
+                }
 
 
 
+            }
+
+            debitur.setNamaDepan(dataLeadsFormDTO.getNamaDepanDebitur());
+            debitur.setNamaTengah(dataLeadsFormDTO.getNamaTengahDebitur());
+            debitur.setNamaAkhir(dataLeadsFormDTO.getNamaBelakangDebitur());
+            debitur.setNamaPanggilan(dataLeadsFormDTO.getNamaDepanDebitur());
+            debitur.setIdIdentitas(dataLeadsFormDTO.getIdIdentitas());
+            debitur.setNomorIdentitas(dataLeadsFormDTO.getNomorIdentitas());
+            debitur.setJenisKelamin(dataLeadsFormDTO.getJenisKelamin());
+            debitur.setAlamatIdentitas(dataLeadsFormDTO.getAlamatIdentitas());
+            debitur.setIdKelurahan(kelurahanRepository.getKelurahanByNama(dataLeadsFormDTO.getKelurahan()).getId());
+            debitur.setAlamatDomisili(dataLeadsFormDTO.getAlamatDomisili());
+            debitur.setIdKelurahanDomisili(kelurahanRepository.getKelurahanByNama(dataLeadsFormDTO.getKelurahanDomisili()).getId());
+            debitur.setNomorHp1(dataLeadsFormDTO.getNomorHandphone1());
+            debitur.setNomorHP2(dataLeadsFormDTO.getNomorHandphone2());
+            debitur.setNomorTelepon(dataLeadsFormDTO.getNomorTelepon());
+
+
+
+
+
+            dataLeads.setIdDebitur(debitur.getId());
+            dataLeads.setIdCabang(1); //SEMENTARA HARD CODE MENUNGGU LOGIN
+            dataLeads.setIdMitraAgen(mitraAgenRepository.getByNama(dataLeadsFormDTO.getSumberDataAplikasi()).getId() );
+            dataLeads.setIdDebiturReferensi(dataLeadsFormDTO.getReferensiValue()); //sementara
+            dataLeads.setJenisUsaha(dataLeadsFormDTO.getJenisUsaha());
             dataLeads.setIdKeteranganAplikasi(keteranganAplikasiRepository.getKeteranganAplikasiByName(dataLeadsFormDTO.getKeteranganAplikasi()).getId());
+            if (dataLeadsFormDTO.getSurveyor().isBlank() || dataLeadsFormDTO.getSurveyor().equals(null)){
+                dataLeads.setIdUser(null);
+            }else {
+                dataLeads.setIdUser(userRepository.getUserByName(dataLeadsFormDTO.getSurveyor()).getNik());
+            }
+            dataLeads.setStatus(dataLeadsFormDTO.getStatus());
 
+            dataLeads.setIdPOT(potRepository.getPotByName(dataLeadsFormDTO.getPot()).getId());
+            dataLeads.setEstimasiNilaiFunding(new BigDecimal(dataLeadsFormDTO.getEstimasiNilaiFunding()));
+            dataLeads.setIdKategori(kategoriRepository.getKategoriByName(dataLeadsFormDTO.getKategori()).getId());
+            dataLeads.setIdMerk(merkRepository.getMerkByName(dataLeadsFormDTO.getMerek()).getId());
+            dataLeads.setIdTipe(tipeRepository.getTipeByName(dataLeadsFormDTO.getTipe()).getId());
+            dataLeads.setIdModel(modelRepository.getModelByName(dataLeadsFormDTO.getModel()).getId());
+            dataLeads.setTahun(dataLeadsFormDTO.getTahun());
+            dataLeads.setTahunPajakSTNK(dataLeadsFormDTO.getTahunPajakSTNK());
+            dataLeads.setNomorBPKB(dataLeadsFormDTO.getNomorBPKB());
+            dataLeads.setNomorPolisi(dataLeadsFormDTO.getNomorPolisi());
+            debiturRepository.save(debitur);
+            repository.save(dataLeads);
         }
 
 
-        repository.save(dataLeads);
-    }
+
 
     @Override
-    public List<OptionDTO> getOptionSumberDataAplikasi() {
+    public List<OptionDTO> getOptionSumberDataAplikasi( String produkName , Integer cabangId) {
         List<OptionDTO> optionDTOList = new LinkedList<>();
-        List<MitraAgen> listSumberdataAplikasi = mitraAgenRepository.getAll();
+        Produk produk = produkRepository.getProdukByName(produkName);
+        List<MitraAgen> listSumberdataAplikasi = mitraAgenRepository.getAllByProductIdCabangId(produk.getId(),cabangId);
 
         for(var mitraAgen : listSumberdataAplikasi){
             OptionDTO dto = new OptionDTO();
@@ -316,25 +418,86 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
     }
 
     @Override
-    public List<OptionDTO> getOptionReferensi() {
-        return null;
+    public List<OptionKelurahanDTO> getOptionKelurahan() {
+        List<Kelurahan> listKelurahan = kelurahanRepository.findAll();
+        List<OptionKelurahanDTO> optionKelurahanDTOS = new LinkedList<>();
+
+        for (var kelurahan : listKelurahan){
+            OptionKelurahanDTO dto = new OptionKelurahanDTO();
+            dto.setValue(kelurahan.getId());
+            dto.setKelurahan(kelurahan.getNamaKelurahan());
+            dto.setKecamatan(kelurahan.getKecamatan().getNamaKecamatan());
+            dto.setKotaKabupaten(kelurahan.getKecamatan().getKabupaten().getNamaKabupatenKota());
+            dto.setProvinsi(kelurahan.getKecamatan().getKabupaten().getProvinsi().getNamaProvinsi());
+            dto.setKodePos(kelurahan.getKodePos());
+            optionKelurahanDTOS.add(dto);
+        }
+        return optionKelurahanDTOS;
     }
 
     @Override
-    public List<OptionDTO> getOptionKeteranganAplikasi() {
-        OptionDTO dto1 = new OptionDTO();
-        OptionDTO dto2 = new OptionDTO();
-        List<OptionDTO> listdto = new LinkedList<>();
-        dto1.setValue("1");
-        dto2.setValue("2");
-        dto1.setText("Interest");
-        dto2.setText("Prospect");
-        listdto.add(dto1);
-        listdto.add(dto2);
+    public List<OptionDTO> getOptionProduk() {
+
+        List<Produk> listProduk = produkRepository.getAll();
+        List<OptionDTO> listDto = new LinkedList<>();
+        for(var pro : listProduk){
+            OptionDTO dto1 = new OptionDTO();
+            dto1.setText(pro.getNamaProduk());
+            dto1.setValue(pro.getId().toString());
+            listDto.add(dto1);
+        }
+
+        return listDto;
+    }
+
+    @Override
+    public List<OptionDTO> getOptionTipeAplikasi() {
+        List<OptionDTO> optionDTOList = new LinkedList<>();
+        List<TipeAplikasi> list = tipeAplikasiRepository.findAll();
+
+        for(var tipe : list){
+            OptionDTO dto = new OptionDTO();
+            dto.setText(tipe.getNamaTipeAplikasi());
+            dto.setValue(tipe.getId().toString());
+            optionDTOList.add(dto);
+        }
+        return optionDTOList;
+    }
+
+    @Override
+    public List<OptionDTO> getOptionReferensi() {
+        List<OptionDTO> optionDTOList = new LinkedList<>();
+        List<Referensi> list = referensiRepository.findAll();
+
+        for(var tipe : list){
+            OptionDTO dto = new OptionDTO();
+            dto.setText(tipe.getNamaDepan().concat(" ").concat(tipe.getNamaTengah().concat(" ").concat(tipe.getNamaAkhir())));
+            dto.setValue(tipe.getId());
+            optionDTOList.add(dto);
+        }
+        return optionDTOList;
+
+    }
+
+    @Override
+    public List<KeteranganAplikasiSurveyorDTO> getOptionKeteranganAplikasi(Integer cabangId) {
+        List<KeteranganAplikasi> listket = keteranganAplikasiRepository.findAll();
+        List<KeteranganAplikasiSurveyorDTO> listdto = new LinkedList<>();
+
+        for (var ket : listket){
+            KeteranganAplikasiSurveyorDTO dto = new KeteranganAplikasiSurveyorDTO();
+            dto.setText(ket.getNamaKeteranganAplikasi());
+            dto.setValue(ket.getId().toString());
+            if(dto.getValue().equals("2")){
+                OptionDTO surveyor = getRandomSurveyor(cabangId);
+                dto.setIdSurveyor(surveyor.getValue());
+                dto.setSurveyor(surveyor.getText());
+            }
+            listdto.add(dto);
+        }
 
         return listdto;
     }
-
 
 
     @Override
@@ -479,7 +642,20 @@ public class DataLeadsServiceImplementation implements DataLeadsService{
         var totalDp = pokokHutang.multiply(BigDecimal.valueOf(dp+1));
         var totalEstimasi = pokokHutang.add(biayaProvisi).add(biayaAsuransi).subtract(totalDp);
 
-        return NumberFormat.getCurrencyInstance(indo).format(totalEstimasi);
+        return String.valueOf(totalEstimasi);
+    }
+
+    @Override
+    public OptionDTO getRandomSurveyor(Integer cabangId) {
+
+        OptionDTO randomSurveyor = new OptionDTO();
+        List<User> listSurveyor = userRepository.getUserByCabangAndSurveyor(cabangId);
+        Random random = new Random();
+        Integer randomIndex = random.nextInt(listSurveyor.size());
+        User surveyor = listSurveyor.get(randomIndex);
+        randomSurveyor.setValue(surveyor.getNik());
+        randomSurveyor.setText(surveyor.getNamaKaryawan());
+        return randomSurveyor;
     }
 
 }

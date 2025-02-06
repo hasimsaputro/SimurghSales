@@ -51,7 +51,7 @@ public class DataLeads {
     @Column(name = "IdKeteranganAplikasi", nullable = false)
     private Integer idKeteranganAplikasi;
 
-    @Column(name = "IdUser", length = 7, nullable = false)
+    @Column(name = "IdUser", length = 7)
     private String idUser;
 
     @Column(name = "Status", nullable = false)

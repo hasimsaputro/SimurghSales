@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/wilayah")
+@RequestMapping("api/wilayahHargaPasar")
 public class WilayahHargaPasarRestController {
     private final WilayahHargaPasarService service;
 
@@ -25,7 +25,17 @@ public class WilayahHargaPasarRestController {
         this.service = service;
     }
 
-
+    @GetMapping(value = {"/getSearchItems={filter}"})
+    public ResponseEntity<Object> getSearchItems(
+            @PathVariable String filter
+    ){
+        try{
+            List<FilterIndexOptionDTO> filterIndexOptionDTOS = service.getSearchItems(filter);
+            return ResponseEntity.status(HttpStatus.OK).body(filterIndexOptionDTOS);
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 
     @GetMapping(value = {"/getFilterItems"})
     public ResponseEntity<Object> getFilterItems(){

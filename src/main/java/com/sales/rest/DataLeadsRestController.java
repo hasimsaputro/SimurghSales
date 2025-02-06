@@ -1,5 +1,6 @@
 package com.sales.rest;
 
+import com.sales.dto.dataLeads.SumberDataAplikasiFilterDTO;
 import com.sales.dto.dataLeads.EstimasiNilaiFundingDTO;
 import com.sales.service.dataLeads.DataLeadsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,9 +69,18 @@ public class DataLeadsRestController {
     }
 
     @GetMapping("keteranganAplikasi")
-    public ResponseEntity<Object> getOptioonKeteranganAplikasi(){
+    public ResponseEntity<Object> getOptioonKeteranganAplikasi(@RequestParam Integer cabangId){
         try{
-            var optionKeteranganAplikasi= service.getOptionKeteranganAplikasi();
+            var optionKeteranganAplikasi= service.getOptionKeteranganAplikasi(cabangId);
+            return ResponseEntity.status(HttpStatus.OK).body(optionKeteranganAplikasi);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+    @GetMapping("tipeAplikasi")
+    public ResponseEntity<Object> getOptioonTipeAplikasi(){
+        try{
+            var optionKeteranganAplikasi= service.getOptionTipeAplikasi();
             return ResponseEntity.status(HttpStatus.OK).body(optionKeteranganAplikasi);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
@@ -87,11 +97,31 @@ public class DataLeadsRestController {
         }
     }
 
-    @GetMapping("sumberDataAplikasi")
-    public ResponseEntity<Object> getSumberDataApliakasi(){
+    @GetMapping("produk")
+    public ResponseEntity<Object> getOptioonProduk(){
         try{
-            var optionSumberDataAplikasi= service.getOptionSumberDataAplikasi();
+            var optionReferensi= service.getOptionProduk();
+            return ResponseEntity.status(HttpStatus.OK).body(optionReferensi);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+
+    @GetMapping("sumberDataAplikasi")
+    public ResponseEntity<Object> getSumberDataApliakasi(@RequestParam String produkName,@RequestParam Integer cabangId){
+        try{
+            var optionSumberDataAplikasi= service.getOptionSumberDataAplikasi(produkName,cabangId);
             return ResponseEntity.status(HttpStatus.OK).body(optionSumberDataAplikasi);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+
+    @GetMapping("kelurahan")
+    public ResponseEntity<Object> getKelurahan(){
+        try{
+            var optionKelurahan= service.getOptionKelurahan();
+            return ResponseEntity.status(HttpStatus.OK).body(optionKelurahan);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
         }

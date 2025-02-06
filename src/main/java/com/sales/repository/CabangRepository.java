@@ -148,6 +148,14 @@ public interface CabangRepository extends JpaRepository<Cabang, Integer> {
     List<String> getCabangItemsByStatus();
 
     @Query("""
+            SELECT ca
+            FROM Cabang ca
+            WHERE ca.namaCabang = :namaCab
+            """)
+    Cabang getCabangByNama(String namaCab);
+
+
+    @Query("""
             SELECT cab
             FROM Cabang cab
             WHERE cab.deleteDate IS NULL

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+
+</head>
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<script th:src="@{/js/jabatan.js}" defer></script>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container" th:href="@{\jabatan}">
+            <h3>
+                <a > Jabatan </a>
+            </h3>
+            <a class="black-button create-button" th:href="@{\jabatan\form}">
+                Tambah
+                <i class="fas fa-plus" aria-hidden="true"></i>
+            </a>
+            <form method="get" class="filter" th:action="@{/jabatan}">
+                <select name="filter" id="">
+                    <option th:value="null">No Specific Seller</option>
+                    <option th:each="filter : ${listFilter}" th:object="${filter}"
+                            th:value="*{value}"th:text="*{text}"><input type="hidden" th:value="${filterSelected} = *{value}"></option>
+                </select>
+                <div class="search-container-filter">
+                    <input type="text" id="search" name="search" class="searchJabatan" th:attr="value=${search}">
+                    <div class="suggestions"></div>
+                </div>
+                <button class="filter-button" type="submit">
+                    Search
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </form>
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Kode Jabatan</th>
+                    <th>Nama Jabatan</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.size(gridJabatan)} == 0">
+                        <td>Data Tidak Ditemukan</td>
+                    </tr>
+                    <tr th:each="tp:${gridJabatan}" th:object="${tp}">
+                        <td class="action">
+                            <a th:href="@{\jabatan\delete(id=*{id})}" class="action-button delete-button">
+                                <i class="fa fa-trash" aria-hidden="true"></i> Hapus
+                            </a>
+                            <a th:href="@{\jabatan\form(id=*{id})}" class="action-button update-button">
+                                <i class="fas fa-edit" aria-hidden="true"></i> Ubah
+                            </a>
+                            <a class="action-button detail-button" th:href="@{\jabatan\detail(id=*{id})}">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i> Lihat
+                            </a>
+                        </td>
+                        <td th:text="*{id}"></td>
+                        <td th:text="*{name}"></td>
+                        <td> <p id="status-aplikasi" name="tipe-aplikasi" type="text" required th:field="${tp.status}">
+                            <span th:if="${tp.status}">Aktif</span>
+                            <span th:if="${not tp.status}">Tidak Aktif</span>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <div class="pagination" th:if="${totalPages} != 0">
+                            <div>
+                                <a th:href="@{/jabatan(page=1, filter=${filterSelected}, search=${search})}"
+                                   th:attr="onclick=${currentPage <= 1} ? 'event.preventDefault()' : ''">&laquo;</a>
+
+                                <a th:href="@{/jabatan(page=${currentPage - 1}, filter=${filterSelected}, search=${search} )}"
+                                   th:attr="onclick=${currentPage <= 1} ? 'event.preventDefault()' : ''">&lt;</a>
+
+                                <span th:text="|Page ${currentPage} of ${totalPages}|"></span>
+
+                                <a th:href="@{/jabatan(page=${currentPage + 1}, filter=${filterSelected}, search=${search})}"
+                                   th:attr="onclick=${currentPage >= totalPages} ? 'event.preventDefault()' : ''">&gt;</a>
+
+                                <a th:href="@{/jabatan(page=${totalPages}, filter=${filterSelected}, search=${search})}"
+                                   th:attr="onclick=${currentPage >= totalPages} ? 'event.preventDefault()' : ''">&raquo;</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

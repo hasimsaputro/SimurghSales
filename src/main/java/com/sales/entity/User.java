@@ -41,7 +41,10 @@ public class User{
     private String nomorHp;
 
     @Column(name = "Status", nullable = false)
-    private Boolean Status;
+    private Boolean status;
+
+    @Column(name = "StatusSurveyor")
+    private Boolean statusSurveyor;
 
     @ManyToOne
     @JoinColumn(name = "IdJabatan",insertable = false,updatable = false)

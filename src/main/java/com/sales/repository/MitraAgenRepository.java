@@ -131,44 +131,41 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
 
 
     @Query("""
-            SELECT mit.id
+            SELECT DISTINCT mit.id
             FROM MitraAgen mit
             WHERE mit.deleteDate IS NULL
             """)
     List<String> getMitraAgenItemsById();
 
-    @Query("""
-            SELECT tm.namaTipeMaster
-            FROM MitraAgen mit
-            JOIN mit.tipeMasterMitraAgen tm
-            WHERE mit.deleteDate IS NULL
-            """)
-    List<String> getMitraAgenItemsByTipe();
+//    @Query("""
+//            SELECT DISTINCT tm.namaTipeMaster
+//            FROM MitraAgen mit
+//            JOIN mit.tipeMasterMitraAgen tm
+//            """)
+//    List<String> getMitraAgenItemsByTipe();
 
     @Query("""
-            SELECT mit.namaMitraAgen
+            SELECT DISTINCT mit.namaMitraAgen
             FROM MitraAgen mit
             WHERE mit.deleteDate IS NULL
             """)
     List<String> getMitraAgenItemsByName();
 
-    @Query("""
-            SELECT kel.namaKelurahan
-            FROM MitraAgen mit
-            JOIN mit.kelurahanDomisiliMitraAgen kel
-            WHERE mit.deleteDate IS NULL
-            """)
-    List<String> getMitraAgenByItemsKelurahan();
+//    @Query("""
+//            SELECT DISTINCT kel.namaKelurahan
+//            FROM MitraAgen mit
+//            JOIN mit.kelurahanDomisiliMitraAgen kel
+//            """)
+//    List<String> getMitraAgenByItemsKelurahan();
+//
+//    @Query("""
+//            SELECT DISTINCT cb.namaCabang
+//            FROM MitraAgen mit
+//            JOIN mit.cabangMitraAgen cb
+//            """)
+//    List<String> getMitraAgenItemsByCabang();
 
-    @Query("""
-            SELECT cb.namaCabang
-            FROM MitraAgen mit
-            JOIN mit.cabangMitraAgen cb
-            WHERE mit.deleteDate IS NULL
-            """)
-    List<String> getMitraAgenItemsByCabang();
-
-    @Query(value = "SELECT CASE WHEN mit.status = 1 THEN 'Aktif' ELSE 'Tidak Aktif' END FROM MitraAgen mit", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT CASE WHEN mit.status = 1 THEN 'Aktif' ELSE 'Tidak Aktif' END FROM MitraAgen mit", nativeQuery = true)
     List<String> getMitraAgenItemsByStatus();
 
 
@@ -187,4 +184,62 @@ public interface MitraAgenRepository extends JpaRepository<MitraAgen, String> {
             FROM MitraAgen mit
             """)
     List<MitraAgen> getAll();
+
+    @Query("""
+            SELECT mit
+            FROM MitraAgen mit
+            WHERE mit.idProduk = :productId AND mit.idCabang = :cabangId
+            """)
+    List<MitraAgen> getAllByProductIdCabangId(Integer productId,Integer cabangId);
+
+    @Query("""
+            SELECT mit
+            FROM MitraAgen mit
+            WHERE mit.namaMitraAgen = :nama
+            """)
+    MitraAgen getByNama(String nama);
+
+//
+//    @Query("""
+//            SELECT mit
+//            FROM MitraAgen mit
+//            WHERE mit.Id = :id
+//            """)
+//    MitraAgen getMitraAgenById(String id);
+//
+//    @Query("""
+//            SELECT mit
+//            FROM MitraAgen mit
+//            WHERE mit.IdTipeMaster = :tipe
+//            """)
+//    List<MitraAgen> getMitraAgenByTipe(Integer tipe);
+//
+//    @Query("""
+//            SELECT mit
+//            FROM MitraAgen mit
+//            WHERE mit.NamaMitraAgen = :name
+//            """)
+//    List<MitraAgen> getMitraAgenByName(String name);
+//
+//    @Query("""
+//            SELECT mit
+//            FROM MitraAgen mit
+//            WHERE mit.IdKelurahan = :kelurahan
+//            """)
+//    List<MitraAgen> getMitraAgenByKelurahan(Integer kelurahan);
+//
+//    @Query("""
+//            SELECT mit
+//            FROM MitraAgen mit
+//            WHERE mit.IdCabang = :cabang
+//            """)
+//    List<MitraAgen> getMitraAgenByCabang(Integer cabang);
+//
+//    @Query("""
+//            SELECT mit
+//            FROM MitraAgen mit
+//            WHERE mit.Status = :status
+//            """)
+//    List<MitraAgen> getMitraAgenByStatus(Boolean status);
+
 }

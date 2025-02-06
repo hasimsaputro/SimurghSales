@@ -1,7 +1,7 @@
 let urlDataleads = 'http://localhost:8082/api/dataLeads/';
 let urlEstimasi = 'http://localhost:8082/api/dataLeads/estimasiNilai';
 let searchInput = document.querySelector('input.searchDataLeads');
-let suggestionsContainer = document.querySelector('.search-container .suggestions');
+let suggestionsContainer = document.querySelector('.search-container-filter .suggestions');
 let selectFilter = document.querySelector('.filter select');
 
 

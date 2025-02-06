@@ -22,6 +22,23 @@ public class WilayahHargaPasarController {
         this.service = service;
     }
 
+    @GetMapping("")
+    public String index(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "") String filter,
+            @RequestParam(defaultValue = "") String search,
+            Model model
+    ){
+        model.addAttribute("wilayahHargaPasarGrid", service.getAllWilayahHargaPasar(page, filter, search));
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", service.getTotalPages(filter, search));
+        model.addAttribute("filter", filter);
+        model.addAttribute("search", search);
+        model.addAttribute("filterItem", service.getFilterAsItem());
+
+        return "master/wilayahHargaPasar/master-wilayahHargaPasar";
+    }
+
     @GetMapping("form")
     public String indexForm(@RequestParam(defaultValue ="")String wilayahId,Model model){
         var wilayah = service.getWilayahById(wilayahId);
@@ -36,6 +53,7 @@ public class WilayahHargaPasarController {
         model.addAttribute("detailCabangByWilayah",cabangWilayah);
         return "master/wilayahHargaPasar/wilayah-harga-pasar-detail";
     }
+
 
     @GetMapping("delete")
     public String indexDelete(@RequestParam(defaultValue = "") String wilayahId){

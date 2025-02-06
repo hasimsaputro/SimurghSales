@@ -172,4 +172,11 @@ public interface TipeRepository extends JpaRepository<Tipe, String > {
             FROM Tipe tip
             """)
     List<Tipe> getAllTipe();
+
+    @Query("""
+            SELECT tip
+            FROM Tipe tip
+            WHERE tip.namaTipe = :name
+            """)
+    Tipe getTipeByName(String name);
 }

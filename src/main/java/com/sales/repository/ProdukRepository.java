@@ -175,4 +175,10 @@ public interface ProdukRepository extends JpaRepository<Produk, Integer> {
             WHERE pro.namaProduk = :namaProduk
             """)
     Produk getProdukByName(String namaProduk);
+
+    @Query("""
+            SELECT p
+            FROM Produk p
+            """)
+    List<Produk> getAll();
 }

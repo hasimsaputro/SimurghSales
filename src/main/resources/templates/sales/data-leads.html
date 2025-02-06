@@ -23,7 +23,7 @@
                     <option th:each="filter : ${filterItem}" th:object="${filter}"
                             th:value="*{value}"th:text="*{text}"></option>
                 </select>
-                <div class="search-container">
+                <div class="search-container-filter">
                     <input type="text" id="search" name="search" class="searchDataLeads" th:attr="value=${search}">
                     <div class="suggestions"></div>
                 </div>

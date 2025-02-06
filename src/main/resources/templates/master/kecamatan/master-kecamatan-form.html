@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<script th:src="@{/js/kecamatan-form.js}" defer></script>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container" th:object="${formKecamatanGrid}" >
+            <h3>
+                <a th:href="@{/kecamatan}"> Kecamatan </a>
+                <span th:switch="*{kode}">
+                    <span th:case="null"> > Tambah</span>
+                    <span th:case="*{kode}"> > Ubah</span>
+                </span>
+            </h3>
+            <form method="post" class="upsert-form" th:attr="action=@{/kecamatan/form}" th:object="${formKecamatanGrid}" >
+                <input type="hidden" name="_csrf" value="${_csrf.token}">
+                <input th:if="*{kode}==null" type="hidden" th:field="*{kode}">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td><label class="label-nama">Provinsi *</label></td>
+                        <td>
+                            <div class="search-container">
+                                <input class="search-provinsi" id="provinsi" name="provinsi" type="text" th:field="*{provinsi}" required >
+                                <i class="fas fa-search search-icon" data-target="provinsi"></i>
+                                <div class="suggestions provinsi"></div>
+                            </div>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Kota/Kabupaten *</label></td>
+                        <td>
+                            <div class="search-container">
+                                <input class="search-kabupaten" id="kabupaten" name="kabupaten" type="text" th:field="*{kabupaten}" required >
+                                <i class="fas fa-search search-icon" data-target="kabupaten"></i>
+                                <div class="suggestions kabupaten"></div>
+                            </div>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr th:if="*{kode}!=null">
+                        <td><label class="label-nama">Kode Kecamatan</label></td>
+                        <td>
+                            <input type="text" th:field="*{kode}" readOnly>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Nama Kecamatan *</label></td>
+                        <td>
+                            <input type="text" th:field="*{kecamatan}" required>
+                            <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Status*</label></td>
+                        <td class="input-box">
+                            <input th:field="*{status}" type="radio" name="status" id="status-aktif" value="1" required>
+                            <label for="status-aktif">Aktif</label>
+                            <input th:field="*{status}" type="radio" name="status" id="status-tidak-aktif" value="0" required>
+                            <label for="status-tidak-aktif">Tidak Aktif</label>
+                            <div class="field-validation-error" id="error-status"></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="submit-button" type="submit">Save</button>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

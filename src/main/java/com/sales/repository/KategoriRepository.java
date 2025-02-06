@@ -40,6 +40,7 @@ public interface KategoriRepository extends JpaRepository<Kategori, Integer> {
     @Query("""
             SELECT COUNT(kat.id)
             FROM Kategori kat
+            WHERE kat.deleteDate IS NULL
             """)
     int countAll();
     
@@ -84,11 +85,18 @@ public interface KategoriRepository extends JpaRepository<Kategori, Integer> {
     List<String> getItemsId();
 
     @Query("""
-            SELECT kat.namaKategori
+            SELECT DISTINCT kat.namaKategori
             FROM Kategori kat
             """)
     List<String> getItemsNamaKategori();
 
     @Query(value = "SELECT DISTINCT CASE WHEN kat.status = 1 THEN 'Aktif' ELSE 'Tidak Aktif' END FROM Kategori kat", nativeQuery = true)
     List<String> getItemsStatus();
+
+    @Query("""
+            SELECT kat
+            FROM Kategori kat
+            WHERE kat.namaKategori = :name
+            """)
+    Kategori getKategoriByName(String name);
 }
