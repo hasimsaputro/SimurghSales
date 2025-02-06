@@ -56,7 +56,17 @@ public class CabangRestController {
     @GetMapping(value = {"/getFilterItems"})
     public ResponseEntity<Object> getFilterItems(){
         try{
-            var filterItem= service.getfilterAsItem();
+            var filterItem= service.getFilterCabangWilayah();
+            return ResponseEntity.status(HttpStatus.OK).body(filterItem);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
+
+    @GetMapping(value = {"/getFilterCabangWilayahItems"})
+    public ResponseEntity<Object> getFilterCabangWilayahItems(){
+        try{
+            var filterItem= service.getFilterCabangWilayah();
             return ResponseEntity.status(HttpStatus.OK).body(filterItem);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);

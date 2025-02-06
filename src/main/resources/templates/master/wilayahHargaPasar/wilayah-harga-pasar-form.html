@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/wilayahHargaPasar}"> Master Wilayah Harga Pasar </a> >
+                <a th:href="@{/wilayahHargaPasar/form}" th:text="${formWilayah.id != null} ? 'Ubah' : 'Tambah'"></a>
+            </h3>
+            <form  class="pot-form" th:action="@{/wilayahHargaPasar/form}" th:object="${formWilayah}">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td><label class="label-nama">Kode Wilayah *</label></td>
+                        <td>
+                            <input id="id" name="idWilayah" type="text" th:field="*{id}" th:readonly="${formWilayah.id != null}">
+                            <div th:errors="*{id}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Nama Wilayah *</label></td>
+                        <td>
+                            <input id="namaWilayah" name="namaWilayah" type="text" required th:field="*{namaWilayah}">
+                            <div class="field-validation-error" th:errors="*{namaWilayah}"></div>
+                        </td>
+                    <tr>
+                        <td><label class="label-nama">Kategori *</label></td>
+                        <td>
+                            <div class="search-container">
+                                <input id="namaKategoriWilayah" name="namaKategori" type="text" class="namaKategoriWilayahInput" required th:field="*{namaKategori}">
+                                <input id="idKategoriWilayah" name="idKategori" class="idKategoriWilayahInput" type="hidden" th:field="*{idKategori}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions kategoriWilayah"></div>
+                            </div>
+                            <div class="field-validation-error" th:errors="*{idKategori}"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Status</label></td>
+                        <td class="input-box">
+                            <input type="radio" th:field="*{status}" value="true" id="statusAktif" required>
+                            <label >Aktif</label>
+
+                            <input type="radio" th:field="*{status}" value="false" id="statusTdkAktif" required>
+                            <label >Tidak Aktif</label>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div id="part1" class="form-part">
+                    <button type="button" class="toggle-btn" onclick="togglePart('part1')">Data Cabang</button>
+                    <div class="form-content">
+                        <div class="wilayah-filter">
+                            <select name="filter" id="">
+                                <option th:value="null"> Pilih Filter</option>
+                                <option th:each="filter : ${filterItem}" th:object="${filter}"
+                                        th:value="*{value}"th:text="*{text}"></option>
+                            </select>
+                            <div class="search-container">
+                                <input type="text" id="search" name="search" class="searchCabangWilayah" th:attr="value=${search}">
+                                <div class="suggestions cabangWilayah"></div>
+                            </div>
+                            <button class="filter-button">
+                                Search
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <table class="cabang-list">
+                            <thead>
+                            <tr>
+                                <th><input type="checkbox" name="select-all" id="select-all"></th>
+                                <th>Kode Cabang</th>
+                                <th>Nama Cabang</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pagination">
+                                        <div>
+                                            <a id="left-arrows">&laquo;</a>
+
+                                            <a id="left-arrow">&lt;</a>
+
+                                            <span id="page-text"></span>
+
+                                            <a id="right-arrow">&gt;</a>
+
+                                            <a id="right-arrows">&raquo;</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <button class="submit-button" type="submit">Simpan</button>
+            </form>
+        </div>
+    </main>
+</div>
+<script th:src="@{/js/wilayahHargaPasar-form.js}" defer></script>
+</body>
+</html>

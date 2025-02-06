@@ -320,13 +320,13 @@
                 dp: dp,
                 tenor: tenor,
                 effectiveRate: effectiveRate,
-                nilaiAdmin: nilaiAdmin,  // Ensure this is formatted correctly (e.g., 'YYYY-MM-DD')
-                nilaiProvisi: nilaiProvisi,  // Ensure this is formatted correctly (e.g., 'YYYY-MM-DD')
-                statusMerchandise: statusMerchandise == 1 ? true : false,  // Ensure this is formatted correctly (e.g., 'YYYY-MM-DD')
-                idKategori: parseInt(idKategori),  // Ensure this is formatted correctly (e.g., 'YYYY-MM-DD')
-                idMerk: idMerk,  // Ensure this is formatted correctly (e.g., 'YYYY-MM-DD')
-                idTipe: idTipe,  // Ensure this is formatted correctly (e.g., 'YYYY-MM-DD')
-                idModel: idModel,  // Ensure this is formatted correctly (e.g., 'YYYY-MM-DD')
+                nilaiAdmin: nilaiAdmin,
+                nilaiProvisi: nilaiProvisi,
+                statusMerchandise: statusMerchandise != 1 ? true : false,
+                idKategori: parseInt(idKategori),
+                idMerk: idMerk,
+                idTipe: idTipe,
+                idModel: idModel,
 
             };
 

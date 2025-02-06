@@ -31,4 +31,6 @@ public interface CabangService {
     List<CabangIndexDTO> getAllCabangs();
 
     List<OptionDTO> getSearchCabangItems(String filter);
+
+    List<OptionDTO> getFilterCabangWilayah();
 }

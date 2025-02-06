@@ -420,5 +420,13 @@ public class CabangServiceImplementation implements CabangService{
         return searchsItems;
     }
 
+    @Override
+    public List<OptionDTO> getFilterCabangWilayah() {
+        return List.of(
+                new OptionDTO("Kode Cabang", "id"),
+                new OptionDTO("Nama Cabang", "namaCabang")
+        );
+    }
+
 
 }

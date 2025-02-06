@@ -919,3 +919,28 @@ h3 a:hover {
   height:35px;
   margin: 8px 0 15px 0;
 }
+
+.wilayah-filter {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-direction: row;
+}
+
+.wilayah-filter input[type="text"],
+.wilayah-filter select {
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 3px;
+    background-color: transparent;
+    color: black;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 15px;
+    width: fit-content;
+}
+
+.wilayah-filter .filter-button{
+  height:35px;
+  margin: 8px 0 15px 0;
+}

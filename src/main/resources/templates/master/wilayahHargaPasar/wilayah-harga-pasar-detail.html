@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/wilayahHargaPasar}"> Master Wilayah Harga Pasar </a> > <a th:href="@{/wilayahHargaPasar/detail}"> Lihat </a>
+            </h3>
+            <form method="post" class="upsert-form" action="@{/wilayahHargaPasar/detail}">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><label class="label-nama">Kode Wilayah</label></td>
+                            <td>
+                                <p th:text="${wilayahHargaPasar.id}"></p>
+                            </td>
+                        <tr>
+                        <tr>
+                            <td><label class="label-nama">Nama Wilayah</label></td>
+                            <td>
+                                <p th:text="${wilayahHargaPasar.namaWilayah}"></p>
+                            </td>
+                        <tr>
+                        <tr>
+                            <td><label class="label-nama">Kategori</label></td>
+                            <td ><p th:text="${wilayahHargaPasar.kategori}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Status</label></td>
+                            <td ><p th:text="${wilayahHargaPasar.status}"></p></td>
+                        </tr>
+
+                        <tr>
+                            <table >
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Kode Cabang</th>
+                                    <th>Nama Cabang</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr th:each="cabang:${detailCabangByWilayah}" th:object="${cabang}">
+                                    <td>
+                                        <input type="checkbox" checked disabled>
+                                    </td>
+                                    <td th:text="*{id}"></td>
+                                    <td th:text="*{namaCabang}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>
