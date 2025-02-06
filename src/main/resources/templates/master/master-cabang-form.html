@@ -1,10 +1,8 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="~{layout :: head}">
-</head>
+<head th:replace="~{layout :: head}"></head>
 <body>
-<header th:replace="~{layout :: header}">
-</header>
+<header th:replace="~{layout :: header}"></header>
 <div class="container">
     <aside class="sidebar" th:replace="~{layout :: nav}">
     </aside>
@@ -133,54 +131,56 @@
                 </table>
                 <div id="part1" class="form-part">
                     <!-- <button type="button" class="toggle-btn" onclick="togglePart('part1')">Produk</button> -->
-                    <button type="button" class="toggle-btn">Produk</button>
-                    <div class="produk-filter">
-                        <select name="filter" id="">
-                            <option th:value="null"> Pilih Filter</option>
-                            <option th:each="filter : ${filterItem}" th:object="${filter}"
-                                    th:value="*{value}"th:text="*{text}"></option>
-                        </select>
-                        <div class="search-container">
-                            <input type="text" id="search" name="search" class="searchProdukCabang" th:attr="value=${search}">
-                            <div class="suggestions produkCabang"></div>
+                    <button  type="button" class="toggle-btn" onclick="togglePart('part1')">Produk</button>
+                    <div class="form-content">
+                        <div class="produk-filter">
+                            <select name="filter" id="">
+                                <option th:value="null"> Pilih Filter</option>
+                                <option th:each="filter : ${filterItem}" th:object="${filter}"
+                                        th:value="*{value}"th:text="*{text}"></option>
+                            </select>
+                            <div class="search-container">
+                                <input type="text" id="search" name="search" class="searchProdukCabang" th:attr="value=${search}">
+                                <div class="suggestions produkCabang"></div>
+                            </div>
+                            <button type="button" class="filter-button">
+                                Search
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
                         </div>
-                        <button type="button" class="filter-button">
-                            Search
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div><input type="checkbox" name="select-all" id="select-all"> <span>Select All</span></div>
-                    <table class="produk-list">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Kode Produk</th>
-                            <th>Nama Produk</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                        <tfoot>
+                        <div><input type="checkbox" name="select-all" id="select-all"> <span>Select All</span></div>
+                        <table class="produk-list">
+                            <thead>
                             <tr>
-                                <td colspan="3">
-                                    <div class="pagination">
-                                        <div>
-                                            <a id="left-arrows">&laquo;</a>
-            
-                                            <a id="left-arrow">&lt;</a>
-                                            
-                                            <span id="page-text"></span>
-            
-                                            <a id="right-arrow">&gt;</a>
-            
-                                            <a id="right-arrows">&raquo;</a>
-                                        </div>
-                                    </div>
-                                </td>
+                                <th></th>
+                                <th>Kode Produk</th>
+                                <th>Nama Produk</th>
                             </tr>
-                        </tfoot>
-
-                    </table>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="pagination">
+                                            <div>
+                                                <a id="left-arrows">&laquo;</a>
+                
+                                                <a id="left-arrow">&lt;</a>
+                                                
+                                                <span id="page-text"></span>
+                
+                                                <a id="right-arrow">&gt;</a>
+                
+                                                <a id="right-arrows">&raquo;</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+    
+                        </table>
+                    </div>
                 </div>
 
                 <button class="submit-button" type="submit">Simpan</button>

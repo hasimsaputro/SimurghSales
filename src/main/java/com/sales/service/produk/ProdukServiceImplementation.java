@@ -22,7 +22,7 @@ import java.util.List;
 @Service
 public class ProdukServiceImplementation implements ProdukService {
     private final ProdukRepository repository;
-    private final int rowInPage = 4;
+    private final int rowInPage = 1;
 
     public ProdukServiceImplementation(ProdukRepository repository) {
         this.repository = repository;
@@ -38,12 +38,35 @@ public class ProdukServiceImplementation implements ProdukService {
                 case "id":
                     page = repository.getTotalPagesById(search);
                     break;
-                case "nama":
+                case "namaProduk":
                     page = repository.getTotalpagesByName(search);
                     break;
                 case "status":
                     search = search.equalsIgnoreCase("Aktif") ? String.valueOf(true) : String.valueOf(false);
                     page = repository.getTotalpagesByStatus(Boolean.parseBoolean(search));
+                    break;
+            }
+        }
+        return (int) Math.ceil(page/rowInPage);
+    }
+
+    @Override
+    public int getTotalPagesAktif(String filter, String search) {
+
+        double page = 0;
+        if(filter.isEmpty()){
+            page = repository.getTotalPagesAktif();
+        } else {
+            switch (filter){
+                case "id":
+                    page = repository.getTotalPagesByIdAktif(search);
+                    break;
+                case "namaProduk":
+                    page = repository.getTotalpagesByNameAktif(search);
+                    break;
+                case "status":
+                    search = search.equalsIgnoreCase("Aktif") ? String.valueOf(true) : String.valueOf(false);
+                    page = repository.getTotalpagesByStatusAktif(Boolean.parseBoolean(search));
                     break;
             }
         }
@@ -94,7 +117,7 @@ public class ProdukServiceImplementation implements ProdukService {
 
     @Override
     public List<ProdukIndexDTO> getAllAktif(int page, String filter, String search) {
-        int totalPages = getTotalPages(filter, search);
+        int totalPages = getTotalPagesAktif(filter, search);
         if (page < 1) {
             page = 1;
         }
@@ -137,7 +160,7 @@ public class ProdukServiceImplementation implements ProdukService {
         CabangProdukGridDTO cabangProdukGridDTO = new CabangProdukGridDTO();
         cabangProdukGridDTO.setProdukIndexDTOS(produkIndexDTOS);
         cabangProdukGridDTO.setCurrentPage(page);
-        cabangProdukGridDTO.setTotalPages(this.getTotalPages(filter, search));
+        cabangProdukGridDTO.setTotalPages(this.getTotalPagesAktif(filter, search));
         return cabangProdukGridDTO;
     };
 
