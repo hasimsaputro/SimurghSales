@@ -12,8 +12,6 @@ import java.util.List;
 public interface WilayahHargaPasarService {
     int getTotalPages(String filter, String search);
     List<WilayahHargaPasarIndexDTO> getAllWilayahHargaPasar(int page, String filter, String search);
-    void save(WilayahHargaPasarFormDTO wilayahHargaPasarFormDTO);
-    void delete(String id);
 
     List<FilterIndexOptionDTO> getFilterAsItem();
     List<FilterIndexOptionDTO> getSearchItems(String filter);
@@ -26,11 +24,8 @@ public interface WilayahHargaPasarService {
 
     void deleteWilayah(String wilayahId);
 
-    List<OptionDTO> getfilterAsItem();
 
     void saveWilayah(WilayahHargaPasarFormDTO wilayahHargaPasarFormDTO);
 
     List<OptionDTO> getKategoriItems();
-
-    List<OptionDTO> getFilterCabang();
 }

@@ -1,10 +1,8 @@
 package com.sales.rest;
 
-import com.sales.dto.pot.CabangPotDTO;
-import com.sales.dto.pot.PotFormDTO;
+import com.sales.dto.FilterIndexOptionDTO;
 import com.sales.dto.wilayahHargaPasar.CabangWilayahDTO;
 import com.sales.dto.wilayahHargaPasar.WilayahHargaPasarFormDTO;
-import com.sales.service.pot.PotService;
 import com.sales.service.wilayahHargaPasar.WilayahHargaPasarService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +32,6 @@ public class WilayahHargaPasarRestController {
             return ResponseEntity.status(HttpStatus.OK).body(filterIndexOptionDTOS);
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-    }
-
-    @GetMapping(value = {"/getFilterItems"})
-    public ResponseEntity<Object> getFilterItems(){
-        try{
-            var filterItem= service.getFilterCabang();
-            return ResponseEntity.status(HttpStatus.OK).body(filterItem);
-        }catch (Exception exception){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
         }
     }
 

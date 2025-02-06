@@ -11,13 +11,11 @@ import com.sales.entity.WilayahHargaPasar;
 import com.sales.repository.CabangRepository;
 import com.sales.repository.KategoriRepository;
 import com.sales.repository.WilayahHargaPasarRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -109,8 +107,6 @@ public class WilayahHargaPasarServiceImplementation implements WilayahHargaPasar
         return wilayahHargaPasarIndexDTOS;
     }
 
-    @Override
-    }
 
     @Override
     public void deleteWilayah(String wilayahId) {
@@ -189,42 +185,43 @@ public List<CabangWilayahDTO> getCabangByWilayahId(String wilayahId) {
     return cabangWilayahDTOList;
 }
 
-@Override
-public WilayahHargaPasarDetailDTO getWilayahDetailById(String wilayahId) {
-    var wilayahHargaPasar = repository.findById(wilayahId).orElseThrow();
-    WilayahHargaPasarDetailDTO dto = new WilayahHargaPasarDetailDTO();
-    dto.setId(wilayahHargaPasar.getId());
-    dto.setNamaWilayah(wilayahHargaPasar.getNamaWilayah());
-    dto.setNamaKategori(wilayahHargaPasar.getKategoriWilayah().getNamaKategori());
-    dto.setStatus(wilayahHargaPasar.getStatus()?"Aktif":"Tidak Aktif");
-    return dto;
-}
-
-@Override
-public void saveWilayah(WilayahHargaPasarFormDTO dto) {
-    WilayahHargaPasar wilayahHargaPasar = new WilayahHargaPasar();
-    wilayahHargaPasar.setId(dto.getId());
-    wilayahHargaPasar.setNamaWilayah(dto.getNamaWilayah());
-    wilayahHargaPasar.setIdKategori(dto.getIdKategori());
-    wilayahHargaPasar.setStatus(dto.getStatus());
-    Set<Cabang> cabangSet = new HashSet<>();
-    var cabangList = dto.getCabangList();
-    for (Integer kodeCabang : cabangList) {
-        Cabang cabang = cabangRepository.findById(kodeCabang).orElseThrow();
-        cabangSet.add(cabang);
-        wilayahHargaPasar.setCabangSet(cabangSet);
+    @Override
+    public WilayahHargaPasarDetailDTO getWilayahDetailById(String wilayahId) {
+        var wilayahHargaPasar = repository.findById(wilayahId).orElseThrow();
+        WilayahHargaPasarDetailDTO dto = new WilayahHargaPasarDetailDTO();
+        dto.setId(wilayahHargaPasar.getId());
+        dto.setNamaWilayah(wilayahHargaPasar.getNamaWilayah());
+        dto.setNamaKategori(wilayahHargaPasar.getKategoriWilayah().getNamaKategori());
+        dto.setStatus(wilayahHargaPasar.getStatus()?"Aktif":"Tidak Aktif");
+        return dto;
     }
-    repository.save(wilayahHargaPasar);
-}
 
-@Override
-public List<OptionDTO> getKategoriItems() {
-    var kategoriItem = kategoriRepository.getAllKategori();
-    List<OptionDTO> kategoriList = new LinkedList<>();
-    for (var kategori : kategoriItem){
-        OptionDTO item = new OptionDTO(kategori.getNamaKategori(),String.valueOf(kategori.getId()));
-        kategoriList.add(item);
+    @Override
+    public void saveWilayah(WilayahHargaPasarFormDTO dto) {
+        WilayahHargaPasar wilayahHargaPasar = new WilayahHargaPasar();
+        wilayahHargaPasar.setId(dto.getId());
+        wilayahHargaPasar.setNamaWilayah(dto.getNamaWilayah());
+        wilayahHargaPasar.setIdKategori(dto.getIdKategori());
+        wilayahHargaPasar.setStatus(dto.getStatus());
+        Set<Cabang> cabangSet = new HashSet<>();
+        var cabangList = dto.getCabangList();
+        for (Integer kodeCabang : cabangList) {
+            Cabang cabang = cabangRepository.findById(kodeCabang).orElseThrow();
+            cabangSet.add(cabang);
+            wilayahHargaPasar.setCabangSet(cabangSet);
+        }
+        repository.save(wilayahHargaPasar);
     }
-    return kategoriList;
-}
+
+    @Override
+    public List<OptionDTO> getKategoriItems() {
+        var kategoriItem = kategoriRepository.getAllKategori();
+        List<OptionDTO> kategoriList = new LinkedList<>();
+        for (var kategori : kategoriItem){
+            OptionDTO item = new OptionDTO(kategori.getNamaKategori(),String.valueOf(kategori.getId()));
+            kategoriList.add(item);
+        }
+        return kategoriList;
+    }
+
 }

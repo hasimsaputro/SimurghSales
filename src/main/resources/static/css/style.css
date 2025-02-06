@@ -2,7 +2,7 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+   /* box-sizing: border-box;*/
 }
 
 body {
@@ -979,3 +979,11 @@ h3 a:hover {
   height:35px;
   margin: 8px 0 15px 0;
 }
+
+.wilayah-filter .search-container{
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    align-items:center;
+    width: auto;
+  }

@@ -176,7 +176,7 @@
                 })
         }
         if(idWilayah){
-            fetch(`${mainUrl}/wilayah/cabang/${idWilayah}`)
+            fetch(`${mainUrl}/wilayahHargaPasar/cabang/${idWilayah}`)
                 .then(response => response.json())
                 .then(data => {
                     if (Array.isArray(data)) {
@@ -267,7 +267,7 @@
             };
 
             // Send the request using Fetch API
-            fetch(`${mainUrl}/wilayah`, {
+            fetch(`${mainUrl}/wilayahHargaPasar`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
