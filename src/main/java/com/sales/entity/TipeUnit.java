@@ -23,6 +23,6 @@ public class TipeUnit {
     @Column(name = "DeleteDate")
     private LocalDate deleteDate;
 
-//    @OneToMany(mappedBy = "tipeAplikasiDataLeads")
-//    private List<DataLeads> dataLeadsList;
+    @OneToMany(mappedBy = "tipeUnitHargaPasar")
+    private List<HargaPasar> hargaPasarList;
 }

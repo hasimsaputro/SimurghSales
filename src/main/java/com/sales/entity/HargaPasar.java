@@ -34,7 +34,7 @@ public class HargaPasar {
     private String idJenis;
 
     @Column(name = "TipeUnit", length = 10, nullable = false)
-    private String tipeUnit;
+    private String idUnit;
 
     @Column(name = "Tahun", length = 5, nullable = false)
     private String tahun;
@@ -45,8 +45,9 @@ public class HargaPasar {
     @Column(name = "TanggalBerlaku")
     private LocalDate tanggalBerlaku;
 
-    @Column(name = "Status")
+    @Column(name = "Status", nullable = false)
     private Boolean status;
+
 
     @ManyToOne
     @JoinColumn(name = "IdKategori",insertable = false,updatable = false)
@@ -63,6 +64,10 @@ public class HargaPasar {
     @ManyToOne
     @JoinColumn(name = "IdTipe",insertable = false,updatable = false)
     private Tipe tipeHargaPasar;
+
+    @ManyToOne
+    @JoinColumn(name = "TipeUnit",insertable = false,updatable = false)
+    private TipeUnit tipeUnitHargaPasar;
 
     @ManyToOne
     @JoinColumn(name = "IdModel",insertable = false,updatable = false)

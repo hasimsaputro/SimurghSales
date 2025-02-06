@@ -1,5 +1,6 @@
 package com.sales.repository;
 
+import com.sales.entity.Tipe;
 import com.sales.entity.TipeUnit;
 
 import org.springframework.data.domain.Pageable;
@@ -40,4 +41,10 @@ public interface TipeUnitRepository extends JpaRepository<TipeUnit, String> {
         WHERE t.id = :id
         """)
    TipeUnit getTipeUnitById(String id);
+
+    @Query("""
+            SELECT tu
+            FROM TipeUnit tu
+            """)
+    List<TipeUnit> getAllTipeUnit();
 }

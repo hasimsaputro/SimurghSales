@@ -1,10 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
 </head>
 <body>
-
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/hargaPasar}"> Master Harga Pasar </a> > <a th:href="@{/hargaPasar/detail}"> Lihat </a>
+            </h3>
+            <form method="post" class="upsert-form" action="@{/hargaPasar/detail}">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td><label class="label-nama">Kategori</label></td>
+                        <td>
+                            <p th:text="${hargaPasar.namaKategori}"></p>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Wilayah</label></td>
+                        <td>
+                            <p th:text="${hargaPasar.wilayah}"></p>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Merk</label></td>
+                        <td>
+                            <p th:text="${hargaPasar.merk}"></p>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Tipe</label></td>
+                        <td ><p th:text="${hargaPasar.tipe}"></p></td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Model</label></td>
+                        <td ><p th:text="${hargaPasar.model}"></p></td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Jenis</label></td>
+                        <td ><p th:text="${hargaPasar.jenis}"></p></td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Tipe Unit</label></td>
+                        <td ><p th:text="${hargaPasar.namaTipeUnit}"></p></td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Tahun</label></td>
+                        <td ><p th:text="${hargaPasar.tahun}"></p></td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Harga</label></td>
+                        <td>
+                            <p th:text="${hargaPasar.harga}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Tanggal Mulai Berlaku</label></td>
+                        <td>
+                            <p th:text="${hargaPasar.tanggalMulai}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Status</label></td>
+                        <td>
+                            <p th:text="${hargaPasar.status}"></p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</div>
 </body>
 </html>

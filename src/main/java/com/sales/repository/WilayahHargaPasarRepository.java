@@ -110,4 +110,10 @@ public interface WilayahHargaPasarRepository extends JpaRepository<WilayahHargaP
 
     @Query(value = "SELECT DISTINCT CASE WHEN whp.status = 1 THEN 'Aktif' ELSE 'Tidak Aktif' END FROM WilayahHargaPasar whp", nativeQuery = true)
     List<String> getWilayahHargaPasarItemsByStatus();
+
+    @Query("""
+            SELECT whp
+            FROM WilayahHargaPasar whp
+            """)
+    List<WilayahHargaPasar> getAllWilayah();
 }

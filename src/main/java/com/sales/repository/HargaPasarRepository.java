@@ -79,8 +79,9 @@ public interface HargaPasarRepository extends JpaRepository<HargaPasar, Integer>
     @Query("""
             SELECT COUNT(1)
             FROM HargaPasar hp
+            JOIN hp.tipeUnitHargaPasar tph
             WHERE hp.deleteDate IS NULL
-            AND hp.tipeUnit = :search
+            AND tph.namaUnit = :search
             """)
     int getTotalPagesByTipeUnit(String search);
 
@@ -163,8 +164,9 @@ public interface HargaPasarRepository extends JpaRepository<HargaPasar, Integer>
     @Query("""
             SELECT hp
             FROM HargaPasar hp
+            JOIN hp.tipeUnitHargaPasar tph
             WHERE hp.deleteDate IS NULL
-            AND hp.tipeUnit = :search
+            AND tph.namaUnit = :search
             """)
     List<HargaPasar> getHargaPasarByTipeUnit(Pageable pageable, @Param("search") String search);
 

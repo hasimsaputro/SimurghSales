@@ -1,5 +1,6 @@
 package com.sales.service.hargaPasar;
 
+import com.sales.dto.OptionDTO;
 import com.sales.dto.cabang.*;
 import com.sales.dto.hargaPasar.HargaPasarDetailDTO;
 import com.sales.dto.hargaPasar.HargaPasarFormDTO;
@@ -14,8 +15,24 @@ public interface HargaPasarService {
     List<HargaPasarIndexDTO> getAll(int page, String filter, String search);
     HargaPasarFormDTO getHargaPasarById(Integer id);
     HargaPasarDetailDTO getDetailHargaPasarById(Integer id);
-    void save(HargaPasarFormDTO hargaPasarFormDTO);
-    void delete(int id);
     List<HargaPasarIndexOptionDTO> getFilterAsItem();
     List<HargaPasarIndexOptionDTO> getSearchItems(String filter);
+
+    void saveHargaPasar(HargaPasarFormDTO dto);
+
+    void deleteHargaPasar(Integer id);
+
+    List<OptionDTO> getKategoriItems();
+
+    List<OptionDTO> getWilayahItems();
+
+    List<OptionDTO> getMerkItems();
+
+    List<OptionDTO> getTipeItems();
+
+    List<OptionDTO> getModelItems();
+
+    OptionDTO getTipeJenis(String idTipe);
+
+    List<OptionDTO> getTipeUnitItems();
 }

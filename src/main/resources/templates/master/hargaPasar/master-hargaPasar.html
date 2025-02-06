@@ -54,13 +54,13 @@
                 <tbody>
                 <tr  th:each="hargaPasar:${hargaPasarGrid}" th:object="${hargaPasar}">
                     <td class="action">
-                        <a th:href="@{/hargaPasar/delete(id=*{idHargaPasar})}" class="action-button delete-button">
+                        <a th:href="@{/hargaPasar/delete(hargaId=*{idHargaPasar})}" class="action-button delete-button">
                             <i class="fa fa-trash" aria-hidden="true"></i> delete
                         </a>
-                        <a th:href="@{/hargaPasar/form(id=*{idHargaPasar})}" class="action-button update-button">
+                        <a th:href="@{/hargaPasar/form(hargaId=*{idHargaPasar})}" class="action-button update-button">
                             <i class="fas fa-edit" aria-hidden="true"></i> edit
                         </a>
-                        <a class="action-button detail-button" th:href="@{/hargaPasar/detail(id=*{idHargaPasar})}">
+                        <a class="action-button detail-button" th:href="@{/hargaPasar/detail(hargaId=*{idHargaPasar})}">
                             <i class="fa fa-info-circle" aria-hidden="true"></i> lihat
                         </a>
                     </td>

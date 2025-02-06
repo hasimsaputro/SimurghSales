@@ -1,10 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
 </head>
 <body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/hargaPasar}"> Master Harga Pasar </a> >
+                <a th:href="@{/hargaPasar/form}" th:text="${formHargaPasar.id != null} ? 'Ubah' : 'Tambah'"></a>
+            </h3>
+            <form method="post" class="upsert-form" th:action="@{/hargaPasar/form}" th:object="${formHargaPasar}">
+                <input type="hidden" th:field="*{id}">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td><label class="label-nama">Kategori *</label></td>
+                        <td>
+                            <div class="search-container">
+                                <input id="namaKategoriHarga" name="namaKategori" class="namaKategoriHargaInput" type="text" th:field="*{namaKategori}">
+                                <input id="idKategoriHarga" name="idKategori" class="idKategoriHargaInput" type="hidden" th:field="*{idKategori}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions kategoriHargaPasar"></div>
+                            </div>
+                            <div th:errors="*{idKategori}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Wilayah *</label></td>
+                        <td>
+                            <div class="search-container">
+                                <input id="namaWilayahHarga" name="namaWilayah" class="namaWilayahHargaInput" type="text" th:field="*{namaWilayah}">
+                                <input id="idWilayahHarga" name="idWilayah" class="idWilayahHargaInput" type="hidden" th:field="*{idWilayah}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions wilayahHargaPasar"></div>
+                            </div>
+                            <div th:errors="*{idWilayah}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Merk *</label></td>
+                        <td>
+                            <div class="search-container">
+                                <input id="namaMerkHarga" name="namaMerk" class="namaMerkHargaInput" type="text" th:field="*{namaMerk}">
+                                <input id="idMerkHarga" name="idMerk" class="idMerkHargaInput" type="hidden" th:field="*{idMerk}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions merkHargaPasar"></div>
+                            </div>
+                            <div th:errors="*{idMerk}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Tipe *</label></td>
+                        <td>
+                            <div class="search-container">
+                                <input id="namaTipeHarga" name="namaTipe" class="namaTipeHargaInput" type="text" th:field="*{namaTipe}">
+                                <input id="idTipeHarga" name="idTipe" class="idTipeHargaInput" type="hidden" th:field="*{idTipe}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions tipeHargaPasar"></div>
+                            </div>
+                            <div th:errors="*{idTipe}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Model *</label></td>
+                        <td>
+                            <div class="search-container">
+                                <input id="namaModelHarga" name="namaModel" class="namaModelHargaInput" type="text" th:field="*{namaModel}">
+                                <input id="idModelHarga" name="idModel" class="idModelHargaInput" type="hidden" th:field="*{idModel}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions modelHargaPasar"></div>
+                            </div>
+                            <div th:errors="*{idModel}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Jenis</label></td>
+                        <td>
+                            <input id="namaJenisHarga" name="namaMerk" class="namaJenisHargaInput" type="text" th:field="*{namaJenis}" disabled>
+                            <input id="idJenisHarga" name="idJenis" class="idJenisHargaInput" type="hidden" th:field="*{idJenis}">
+                            <div th:errors="*{idJenis}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Tipe Unit *</label></td>
+                        <td>
+                            <div class="search-container">
+                                <input id="namaTipeUnitHarga" name="namaTipeUnit" class="namaTipeUnitHargaInput" type="text" th:field="*{namaTipeUnit}">
+                                <input id="idTipeUnitHarga" name="idTipeUnit" class="idTipeUnitHargaInput" type="hidden" th:field="*{idTipeUnit}">
+                                <i class="fas fa-search search-icon"></i>
+                                <div class="suggestions tipeUnitHargaPasar"></div>
+                            </div>
+                            <div th:errors="*{idTipeUnit}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Tahun *</label></td>
+                        <td>
+                            <input id="tahun" name="tahun" type="text" th:field="*{tahun}">
+                            <div th:errors="*{tahun}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Harga *</label></td>
+                        <td>
+                            <input id="harga" name="harga" type="text" th:field="*{harga}">
+                            <div th:errors="*{harga}" class="field-validation-error"></div>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td><label class="label-nama">Tanggal Mulai Berlaku</label></td>
+                        <td>
+                            <input type="date" id="tanggalMulai" name="tanggalMulai" th:value="*{tanggalMulai}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Status *</label></td>
+                        <td class="input-box">
+                            <input type="radio" th:field="*{status}" value="true" id="status-aktif" >
+                            <label for="status-aktif">Aktif</label>
 
+                            <input type="radio" th:field="*{status}" value="false" id="status-tidak-aktif" >
+                            <label for="status-tidak-aktif">Tidak Aktif</label>
+
+                            <div th:errors="*{status}"  class="field-validation-error"></div>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <button class="submit-button" type="submit">Simpan</button>
+            </form>
+        </div>
+    </main>
+</div>
 </body>
+<script th:src="@{/js/hargaPasar-form.js}" defer></script>
 </html>
