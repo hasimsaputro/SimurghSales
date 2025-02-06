@@ -160,8 +160,7 @@
 
             let span = document.querySelector("#page-text");
             span.textContent = `Page ${currentPage} of ${totalPages}`;
-
-                checkCheckboxes();
+            checkCheckboxes();
         })
     }
 

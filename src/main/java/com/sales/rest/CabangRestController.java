@@ -5,6 +5,7 @@ import com.sales.dto.cabang.CabangIndexDTO;
 import com.sales.dto.cabang.CabangIndexOptionDTO;
 import com.sales.dto.cabang.CabangProdukDTO;
 import com.sales.dto.pot.CabangPotGridDTO;
+import com.sales.dto.produk.ProdukIndexDTO;
 import com.sales.entity.Produk;
 import com.sales.service.cabang.CabangService;
 import jakarta.validation.Valid;
@@ -30,8 +31,8 @@ public class CabangRestController {
     @GetMapping("")
     public ResponseEntity<Object> index(
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "status") String filter,
-            @RequestParam(defaultValue = "Aktif") String search){
+            @RequestParam String filter,
+            @RequestParam String search){
         try{
             CabangPotGridDTO cabang= service.getAllCabang(page,filter,search);
             return ResponseEntity.status(HttpStatus.OK).body(cabang);
@@ -104,6 +105,24 @@ public class CabangRestController {
         }
     }
 
+    @GetMapping("cabangs")
+    public ResponseEntity<Object> getAll(){
+        try {
+            List<CabangIndexDTO> cabangs = service.getAllCabangs();
+            return ResponseEntity.status(HttpStatus.OK).body(cabangs);
+        } catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+        }
+    }
 
+    @GetMapping(value = {"/getSearchCabangItems={filter}"})
+    public ResponseEntity<Object> getSearchCabangItems(@PathVariable String filter){
+        try{
+            var searchItems= service.getSearchCabangItems(filter);
+            return ResponseEntity.status(HttpStatus.OK).body(searchItems);
+        }catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+        }
+    }
 
 }

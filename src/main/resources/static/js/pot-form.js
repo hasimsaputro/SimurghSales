@@ -38,7 +38,7 @@
       searchCabangPot.addEventListener('input', function() {
           const query = searchCabangPot.value.toLowerCase();
           suggestionsCabangPotContainer.innerHTML = '';
-          fetch(`${mainUrl}/pot/getSearchCabangItems=${filter}`)
+          fetch(`${mainUrl}/cabang/getSearchCabangItems=${filter}`)
                   .then(response => response.json())
                   .then(data => {
                       const items = data.map(option => option.text);
@@ -69,35 +69,45 @@
 
     let searchBtn = document.querySelector('.filter-button');
     if(searchBtn){
-        searchBtn.addEventListener('click',()=>{
+        searchBtn.addEventListener('click',(event)=>{
         console.log('haloo')
+        event.preventDefault();
             fetch(`${mainUrl}/cabang?page=${currentPage}&filter=${filter}&search=${search}`).then(response => response.json()).then(data => {
                 bodiTabelCabang.innerHTML = "";
-                for (const cabang of data.cabangIndexDTOS) {
+                if(data.cabangIndexDTOS && data.cabangIndexDTOS.length > 0){
+                    for (const cabang of data.cabangIndexDTOS) {
+                        let row = document.createElement("tr");
+                        let columnCheckbox = document.createElement("td");
+                        let columnKode = document.createElement("td");
+                        let columnName = document.createElement("td");
+                        let columnTipe = document.createElement("td");
+                        let inputCheckbox = document.createElement("input");
+                        inputCheckbox.setAttribute("type", "checkbox");
+                        inputCheckbox.name = "cabang";
+                        inputCheckbox.id = cabang.kodeCabang;
+    
+                        // Mengecek apakah produk ada di dalam array produkChecked
+                        if (checkedCabang.includes(cabang.kodeCabang)) {
+                            inputCheckbox.checked = true; // Menandai checkbox sebagai tercentang jika ID ada di produkChecked
+                        }
+    
+                        columnKode.innerHTML = cabang.kodeCabang;
+                        columnName.innerHTML = cabang.namaCabang;
+                        columnTipe.innerHTML = cabang.tipeStruktur;
+                        columnCheckbox.appendChild(inputCheckbox);
+                        row.appendChild(columnCheckbox);
+                        row.appendChild(columnKode);
+                        row.appendChild(columnName);
+                        row.appendChild(columnTipe);
+                        bodiTabelCabang.appendChild(row);
+                    }
+                }else{
                     let row = document.createElement("tr");
-                    let columnCheckbox = document.createElement("td");
-                    let columnKode = document.createElement("td");
-                    let columnName = document.createElement("td");
-                    let columnTipe = document.createElement("td");
-                    let inputCheckbox = document.createElement("input");
-                    inputCheckbox.setAttribute("type", "checkbox");
-                    inputCheckbox.name = "cabang";
-                    inputCheckbox.id = cabang.kodeCabang;
-
-                    // // Mengecek apakah produk ada di dalam array produkChecked
-                    // if (checkedCabang.includes(cabang.kodeCabang)) {
-                    //     inputCheckbox.checked = true; // Menandai checkbox sebagai tercentang jika ID ada di produkChecked
-                    // }
-
-                    columnKode.innerHTML = cabang.kodeCabang;
-                    columnName.innerHTML = cabang.namaCabang;
-                    columnTipe.innerHTML = cabang.tipeStruktur;
-                    columnCheckbox.appendChild(inputCheckbox);
-                    row.appendChild(columnCheckbox);
-                    row.appendChild(columnKode);
-                    row.appendChild(columnName);
-                    row.appendChild(columnTipe);
-                    bodiTabelCabang.appendChild(row);
+                    let columnMessage = document.createElement("td");
+                    columnMessage.setAttribute("colspan", "7"); // Menyesuaikan dengan jumlah kolom
+                    columnMessage.textContent = "Cabang tidak ditemukan atau tidak aktif"; // Menampilkan pesan
+                    row.appendChild(columnMessage);
+                    bodiTabelCabang.appendChild(row); // Menambahkan row dengan pesan ke dalam tabel
                 }
                 currentPage = data.currentPage;
                 totalPages = data.totalPages;
@@ -211,6 +221,60 @@
                 .catch(error => console.error("Fetch error:", error));
         }
 
+        setTimeout(() => {
+            indexCabangPOT();
+        }, 1000)
+
+        let leftArrows = document.querySelector("#left-arrows");
+        let leftArrow = document.querySelector("#left-arrow");
+        let rightArrow = document.querySelector("#right-arrow");
+        let rightArrows = document.querySelector("#right-arrows");
+
+        leftArrows.addEventListener("click", () => {
+            if(currentPage > 1){
+                currentPage = 1;
+                indexCabangPOT();
+            }
+        })
+
+        leftArrow.addEventListener("click", () =>{
+            if(currentPage > 1){
+                currentPage -= 1;
+                indexCabangPOT();
+            }
+        })
+
+        rightArrow.addEventListener("click", () => {
+            if(currentPage < totalPages){
+                currentPage += 1;
+                indexCabangPOT();
+            }
+        })
+
+        rightArrows.addEventListener("click", () =>{
+            if(currentPage < totalPages){
+                currentPage = totalPages;
+                indexCabangPOT();
+            }
+        })
+
+        let selectAllCheckbox = document.querySelector("#select-all");
+        selectAllCheckbox.addEventListener("change", () => {
+            if(selectAllCheckbox.checked){
+                fetch(`${mainUrl}/cabang/cabangs`).then(response => response.json()).then(data => {
+                    checkedCabang = []
+                    console.log(data)
+                    data.forEach(cabang => {
+                        checkedCabang.push(cabang.kodeCabang)
+                    })
+                    console.log(checkedCabang);
+                    indexCabangPOT();
+                })
+            }else{
+                checkedCabang = [];
+                checkCheckboxes();
+            }
+        })
 
         let saveButton = document.querySelector(".submit-button");
         saveButton.addEventListener("click", () => {

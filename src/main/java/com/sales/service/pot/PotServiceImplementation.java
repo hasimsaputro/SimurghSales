@@ -94,11 +94,11 @@ public class PotServiceImplementation implements PotService {
             potFormDTO.setIdKategori(idKategori);
             potFormDTO.setNamaKategori(pot.getKategoriPOT().getNamaKategori());
             potFormDTO.setIdMerk(idMerk);
-            potFormDTO.setNamaMerk(pot.getMerkPOT().getNamaMerk());
+            potFormDTO.setNamaMerk(pot.getMerkPOT() == null?"All - All":pot.getIdMerk()+" - "+pot.getMerkPOT().getNamaMerk());
             potFormDTO.setIdTipe(idTipe);
-            potFormDTO.setNamaTipe(pot.getTipePOT().getNamaTipe());
+            potFormDTO.setNamaTipe(pot.getTipePOT() == null?"All - All":pot.getIdTipe()+" - "+pot.getTipePOT().getNamaTipe());
             potFormDTO.setIdModel(idModel);
-            potFormDTO.setNamaModel(pot.getModelPOT().getNamaModel());
+            potFormDTO.setNamaModel(pot.getModelPOT() == null?"All - All":pot.getIdModel()+" - "+pot.getModelPOT().getNamaModel());
         }
         return potFormDTO;
     }
@@ -352,29 +352,7 @@ public class PotServiceImplementation implements PotService {
         return searchsItems;
     }
 
-    @Override
-    public List<OptionDTO> getSearchCabangItems(String filter) {
-        List<String > searchItems = new LinkedList<>();
-        if(!filter.isBlank()){
-            switch (filter){
-                case "id":
-                    searchItems = repository.getItemsId();
-                    break;
-                case "namaPot":
-                    searchItems = repository.getItemsNamaPot();
-                    break;
-                case "namaProduk":
-                    searchItems = repository.getItemsNamaProduk();
-                    break;
-            }
-        }
-        List<OptionDTO> searchsItems = new LinkedList<>();
-        for (var searchItem : searchItems){
-            OptionDTO item = new OptionDTO(searchItem, searchItem);
-            searchsItems.add(item);
-        }
-        return searchsItems;
-    }
+
 
     @Override
     public List<OptionDTO> getProdukItems() {

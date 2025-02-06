@@ -23,15 +23,7 @@ public class PotRestController {
         this.service = service;
     }
 
-    @GetMapping(value = {"/getSearchCabangItems={filter}"})
-    public ResponseEntity<Object> getSearchItems(@PathVariable String filter){
-        try{
-            var searchItems= service.getSearchCabangItems(filter);
-            return ResponseEntity.status(HttpStatus.OK).body(searchItems);
-        }catch (Exception exception){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
-        }
-    }
+
 
     @GetMapping(value = {"/getFilterItems"})
     public ResponseEntity<Object> getFilterItems(){

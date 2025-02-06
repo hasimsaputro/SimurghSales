@@ -24,7 +24,7 @@ public interface PotService {
 
     List<OptionDTO> getSearchItems(String filter);
 
-    List<OptionDTO> getSearchCabangItems(String filter);
+
 
     List<OptionDTO> getProdukItems();
 

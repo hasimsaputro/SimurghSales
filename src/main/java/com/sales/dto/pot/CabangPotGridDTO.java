@@ -11,4 +11,5 @@ public class CabangPotGridDTO {
     private List<CabangIndexDTO> cabangIndexDTOS;
     private Integer currentPage;
     private Integer totalPages;
+    private Integer totalPagesAktif;
 }

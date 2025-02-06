@@ -96,12 +96,14 @@ public interface PotRepository extends JpaRepository<POT, Integer> {
     @Query("""
             SELECT pot.id
             FROM POT pot
+            WHERE pot.deleteDate IS NULL
             """)
     List<String> getItemsId();
 
     @Query("""
             SELECT pot.namaPOT
             FROM POT pot
+            WHERE pot.deleteDate IS NULL
             """)
     List<String> getItemsNamaPot();
 
@@ -109,6 +111,7 @@ public interface PotRepository extends JpaRepository<POT, Integer> {
             SELECT pro.namaProduk
             FROM POT pot
             JOIN pot.produk pro
+            WHERE pot.deleteDate IS NULL
             """)
     List<String> getItemsNamaProduk();
 
