@@ -101,7 +101,7 @@ public interface KelurahanRepository extends JpaRepository<Kelurahan, Integer> {
             FROM Kelurahan kel
             WHERE kel.deleteDate IS NULL
             """)
-    List<Kelurahan> getAllKelurahan(Pageable pageable);
+    List<Kelurahan> getAllKelurahan();
 
     @Query("""
             SELECT kel

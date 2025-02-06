@@ -97,10 +97,29 @@ public class TipeAplikasiServiceImplementation implements TipeAplikasiService {
     }
 
     @Override
-    public Integer totalPage(Integer id, String name, Boolean status) {
-        if (name != null){
-            if(name.trim().isBlank()){
-                name = null;
+    public Integer totalPage(Integer id, String name, Boolean status, String filter, String search) {
+        if (filter.isBlank()){
+        }else {
+            switch (filter){
+                case "kodeTipeAplikasi" :
+                    try{
+                        id = Integer.parseInt(search);
+                    }catch (Exception exception){
+                        id = null;
+                    }
+
+                    break;
+                case  "namaTipeAplikasi":
+                    name = search;
+                    break;
+                case "status" :
+                    try{
+                        status = Boolean.getBoolean(search);
+                    }catch (Exception exception){
+                        status = null;
+                    }
+
+                    break;
             }
         }
 

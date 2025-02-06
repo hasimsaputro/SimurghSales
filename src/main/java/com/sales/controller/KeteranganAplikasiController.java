@@ -27,7 +27,7 @@ public class KeteranganAplikasiController {
         model.addAttribute("filterSelected",filter);
         model.addAttribute("search",search);
         model.addAttribute("gridKeteranganAplikasi",grid);
-        model.addAttribute("totalPages",service.totalPage(id, name, status));
+        model.addAttribute("totalPages",service.totalPage(id, name, status, filter, search));
         model.addAttribute("id",id);
         model.addAttribute("name",name);
         model.addAttribute("status",status);

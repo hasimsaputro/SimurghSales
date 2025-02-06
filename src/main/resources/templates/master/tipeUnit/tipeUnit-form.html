@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/tipeUnit}"> Master Tipe Unit </a> > <a th:href="@{/tipeUnit/form}"> Tambah </a>
+            </h3>
+            <form method="post" class="upsert-form" th:action="@{/tipeUnit/form}">
+                <input type="hidden" th:field="${tipeUnitDto.id}">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td><label class="label-nama">Nama Tipe Aplikasi *</label></td>
+                        <td>
+                                <input id="tipe-aplikasi" name="tipe-aplikasi" type="text" required th:field="${tipeUnitDto.namaUnit}">
+                                <div class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label class="label-nama">Status*</label></td>
+                        <td class="input-box">
+                            <input type="radio" th:field="${tipeUnitDto.status}" value="true" id="status-aktif" required>
+                            <label for="status-aktif">Aktif</label>
+
+                            <input type="radio" th:field="${tipeUnitDto.status}" value="false" id="status-tidak-aktif" required>
+                            <label for="status-tidak-aktif">Tidak Aktif</label>
+
+                            <div  class="field-validation-error"></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="submit-button" type="submit">Simpan</button>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

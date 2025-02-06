@@ -81,7 +81,7 @@ public class KelurahanServiceImplementation implements KelurahanService{
 
         List<Kelurahan> kelurahanList = new LinkedList<>();
         if (filter.isEmpty()){
-            kelurahanList = repository.getAllKelurahan(pageable);
+            kelurahanList = repository.getAllKelurahan();
         } else {
             switch (filter){
                 case "provinsi":
