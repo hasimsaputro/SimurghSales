@@ -12,7 +12,7 @@
     <aside class="sidebar" th:replace="~{layout :: nav}">
     </aside>
     <main>
-        <div class="table-container">
+        <div class="table-container" th:href="@{\referensi}">
             <h3>
                 <a > Referensi </a>
             </h3>
@@ -26,7 +26,7 @@
                     <option th:each="filter : ${listFilter}" th:object="${filter}"
                             th:value="*{value}"th:text="*{text}"><input type="hidden" th:value="${filterSelected} = *{value}"></option>
                 </select>
-                <div class="search-container">
+                <div class="search-container-filter">
                     <input type="text" id="search" name="search" class="searchTipeAplikasi" th:attr="value=${search}">
                     <div class="suggestions"></div>
                 </div>
@@ -72,13 +72,21 @@
                 <tfoot>
                 <tr>
                     <td colspan="6">
-                        <div class="pagination" th:if="${totalPage} != 0">
+                        <div class="pagination" th:if="${totalPages} != 0">
                             <div>
-                                <button>&laquo;</button>
-                                <button>&lt;</button>
-                                <span>Page 1 of 30</span>
-                                <button>&gt;</button>
-                                <button>&raquo;</button>
+                                <a th:href="@{/referensi(page=1, filter=${filterSelected}, search=${search})}"
+                                   th:attr="onclick=${currentPage <= 1} ? 'event.preventDefault()' : ''">&laquo;</a>
+
+                                <a th:href="@{/referensi(page=${currentPage - 1}, filter=${filterSelected}, search=${search} )}"
+                                   th:attr="onclick=${currentPage <= 1} ? 'event.preventDefault()' : ''">&lt;</a>
+
+                                <span th:text="|Page ${currentPage} of ${totalPages}|"></span>
+
+                                <a th:href="@{/referensi(page=${currentPage + 1}, filter=${filterSelected}, search=${search})}"
+                                   th:attr="onclick=${currentPage >= totalPages} ? 'event.preventDefault()' : ''">&gt;</a>
+
+                                <a th:href="@{/referensi(page=${totalPages}, filter=${filterSelected}, search=${search})}"
+                                   th:attr="onclick=${currentPage >= totalPages} ? 'event.preventDefault()' : ''">&raquo;</a>
                             </div>
                         </div>
                     </td>

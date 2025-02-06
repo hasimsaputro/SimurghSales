@@ -2,7 +2,7 @@
     let mainUrl = "http://localhost:8082/api/cabang";
 
     let searchInput = document.querySelector("#search");
-    let suggestions = document.querySelector(".search-container .suggestions");
+    let suggestions = document.querySelector(".search-container-filter .suggestions");
     let selectFilter = document.querySelector("#filter");
 
     searchInput.addEventListener('input', function() {

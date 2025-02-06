@@ -1,6 +1,6 @@
 let urlKategori = 'http://localhost:8082/api/kategori/';
 let searchKategori = document.querySelector('input#search.searchKategori');
-let suggestionsKategoriContainer = document.querySelector('.search-container .suggestions.kategori');
+let suggestionsKategoriContainer = document.querySelector('.search-container-filter .suggestions.kategori');
 let selectKategoriFilter = document.querySelector('.filter.kategori select');
 
 if(searchKategori){

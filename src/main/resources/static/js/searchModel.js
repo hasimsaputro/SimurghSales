@@ -1,6 +1,6 @@
 let urlModel = 'http://localhost:8082/api/model/';
 let searchModel = document.querySelector('input#search.searchIndexModel');
-let suggestionsModelContainer = document.querySelector('.search-container .suggestions.model');
+let suggestionsModelContainer = document.querySelector('.search-container-filter .suggestions.model');
 let selectModelFilter = document.querySelector('.filter.model select');
 
 if(searchModel){

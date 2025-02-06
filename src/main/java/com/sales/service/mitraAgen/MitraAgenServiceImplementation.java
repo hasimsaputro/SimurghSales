@@ -317,7 +317,7 @@ public class MitraAgenServiceImplementation implements MitraAgenService{
                     searchItems = kelurahanRepository.getKelurahanItems();
                     break;
                 case "cabang":
-                    searchItems = cabangRepository.getCabangItems();
+                    searchItems = cabangRepository.getCabangItemsByName();
                     break;
                 case "status":
                     searchItems = repository.getMitraAgenItemsByStatus();

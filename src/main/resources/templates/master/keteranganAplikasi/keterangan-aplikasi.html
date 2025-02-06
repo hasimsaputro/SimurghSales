@@ -12,7 +12,7 @@
     <aside class="sidebar" th:replace="~{layout :: nav}">
     </aside>
     <main>
-        <div class="table-container">
+        <div class="table-container" th:href="@{\keteranganAplikasi}">
             <h3>
                 <a > Keterangan Aplikasi </a>
             </h3>
@@ -26,7 +26,7 @@
                     <option th:each="filter : ${listFilter}" th:object="${filter}"
                             th:value="*{value}"th:text="*{text}"><input type="hidden" th:value="${filterSelected} = *{value}"></option>
                 </select>
-                <div class="search-container">
+                <div class="search-container-filter">
                     <input type="text" id="search" name="search" class="searchKeteranganAplikasi" th:attr="value=${search}">
                     <div class="suggestions"></div>
                 </div>

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     let urlMerk = 'http://localhost:8082/api/merk/';
     let searchMerk = document.querySelector('input#search.searchIndexMerk');
-    let suggestionsMerkContainer = document.querySelector('.search-container .suggestions.merk');
+    let suggestionsMerkContainer = document.querySelector('.search-container-filter .suggestions.merk');
     let selectMerkFilter = document.querySelector('.filter.merk select');
 
     if(searchMerk){

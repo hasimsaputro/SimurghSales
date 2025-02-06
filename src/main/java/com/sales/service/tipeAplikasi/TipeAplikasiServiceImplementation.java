@@ -29,7 +29,7 @@ public class TipeAplikasiServiceImplementation implements TipeAplikasiService {
     private final MitraAgenRepository mitraAgenRepository;
     private final DataLeadsRepository repository;
     private final UserRepository userRepository;
-    private final Integer rowInPage = 5;
+    private final Integer rowInPage = 1;
 
     public TipeAplikasiServiceImplementation(ReferensiRepository referensiRepository, CabangRepository cabangRepository, KelurahanRepository kelurahanRepository, DebiturRepository debiturRepository, TipeAplikasiRepository tipeAplikasiRepository, ProdukRepository produkRepository, KeteranganAplikasiRepository keteranganAplikasiRepository, ModelRepository modelRepositoryl, TipeRepository tipeRepository, MerkRepository merkRepository, KategoriRepository kategoriRepository, MitraAgenRepository mitraAgenRepository, DataLeadsRepository repository, UserRepository userRepository) {
         this.referensiRepository = referensiRepository;

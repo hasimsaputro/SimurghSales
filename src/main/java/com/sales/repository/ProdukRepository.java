@@ -92,13 +92,6 @@ public interface ProdukRepository extends JpaRepository<Produk, Integer> {
     @Query(value = "SELECT CASE WHEN pro.status = 1 THEN 'Aktif' ELSE 'Tidak Aktif' END FROM Produk pro", nativeQuery = true)
     List<String> getProdukItemsByStatus();
 
-    @Query("""
-            SELECT pro
-            FROM Produk pro
-            WHERE pro.deleteDate IS NULL
-            """)
-    List<Produk> getAllProduk(Pageable pageable);
-
 
     @Query("""
             SELECT pro

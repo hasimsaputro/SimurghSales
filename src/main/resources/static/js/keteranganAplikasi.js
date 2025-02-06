@@ -1,6 +1,6 @@
 let urlKeteranganAplikasi = 'http://localhost:8082/api/keteranganAplikasi/getSearchItems/'; // URL yang mengarah ke controller baru
 let searchInputKeteranganAplikasi = document.querySelector('input.searchKeteranganAplikasi');
-let suggestionsContainerKeteranganAplikasi = document.querySelector('.search-container .suggestions');
+let suggestionsContainerKeteranganAplikasi = document.querySelector('.search-container-filter .suggestions');
 let selectFilterKeteranganAplikasi = document.querySelector('.filter select'); // Elemen select filter
 suggestionsContainerKeteranganAplikasi.style.display = 'none';
 

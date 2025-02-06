@@ -107,6 +107,7 @@ public interface CabangRepository extends JpaRepository<Cabang, Integer> {
             """)
     List<Cabang> getCabangByStatus(Pageable pageable, @Param("search") Boolean search);
 
+
     @Query("""
             SELECT cab
             FROM Cabang cab

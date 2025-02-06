@@ -1,6 +1,6 @@
 let urlTipe = 'http://localhost:8082/api/tipe/';
 let searchTipe = document.querySelector('input#search.searchIndexTipe');
-let suggestionsTipeContainer = document.querySelector('.search-container .suggestions.tipe');
+let suggestionsTipeContainer = document.querySelector('.search-container-filter .suggestions.tipe');
 let selectTipeFilter = document.querySelector('.filter.tipe select');
 
 if(searchTipe){

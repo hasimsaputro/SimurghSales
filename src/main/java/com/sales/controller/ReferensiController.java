@@ -27,10 +27,11 @@ public class ReferensiController {
         model.addAttribute("filterSelected",filter);
         model.addAttribute("search",search);
         model.addAttribute("gridReferensi",grid);
-        model.addAttribute("totalPage",service.totalPage(id, name, status));
+        model.addAttribute("totalPages",service.totalPage(id, name, status));
         model.addAttribute("id",id);
         model.addAttribute("name",name);
         model.addAttribute("status",status);
+        model.addAttribute("currentPage",page);
 
 
 

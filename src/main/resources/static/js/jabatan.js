@@ -1,6 +1,6 @@
 let urlJabatan = 'http://localhost:8082/api/jabatan/getSearchItems/'; // URL yang mengarah ke controller baru
 let searchInputJabatan = document.querySelector('input.searchJabatan');
-let suggestionsContainerJabatan = document.querySelector('.search-container .suggestions');
+let suggestionsContainerJabatan = document.querySelector('.search-container-filter .suggestions');
 let selectFilterJabatan = document.querySelector('.filter select'); // Elemen select filter
 suggestionsContainerJabatan.style.display = 'none';
 
