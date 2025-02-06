@@ -9,7 +9,7 @@ import java.util.List;
 public interface KeteranganAplikasiService {
 
     List<KeteranganAplikasiDTO> getAll(Integer id , String name, Boolean status, Integer page, String filter, String search);
-    Integer totalPage(Integer id ,String name,Boolean status);
+    Integer totalPage(Integer id ,String name,Boolean status, String filter, String search);
     KeteranganAplikasiDTO getKeteranganAplikasiById(Integer id);
     List<OptionDTO> filter();
     List<OptionDTO> getSearchFilter(String filter);
