@@ -3,9 +3,7 @@ package com.sales.service.cabang;
 import com.sales.dto.OptionDTO;
 import com.sales.dto.cabang.*;
 import com.sales.dto.mitraAgen.KelurahanOptionDTO;
-import com.sales.dto.mitraAgen.ProdukOptionDTO;
 import com.sales.dto.pot.CabangPotGridDTO;
-import com.sales.dto.produk.ProdukIndexDTO;
 import com.sales.dto.produk.ProdukIndexOptionDTO;
 import com.sales.entity.Cabang;
 import com.sales.entity.Kelurahan;
@@ -88,7 +86,7 @@ public class CabangServiceImplementation implements CabangService{
                     break;
             }
         }
-        return (int) Math.ceil(page/rowInPage);
+        return (int) Math.ceil(page/rowInPage) == 0 ? 1 : (int) Math.ceil(page/rowInPage);
     }
 
     @Override
@@ -380,7 +378,7 @@ public class CabangServiceImplementation implements CabangService{
         CabangPotGridDTO cabangPotGridDTO = new CabangPotGridDTO();
         cabangPotGridDTO.setCabangIndexDTOS(cabangIndexDTOS);
         cabangPotGridDTO.setCurrentPage(page);
-        cabangPotGridDTO.setTotalPagesAktif(this.getTotalPagesAktif(filter, search));
+        cabangPotGridDTO.setTotalPages(this.getTotalPagesAktif(filter, search));
         return cabangPotGridDTO;
     }
 

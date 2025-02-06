@@ -11,7 +11,7 @@
     <main>
         <div class="table-container">
             <h3>
-                <a th:href="@{/DataLeads}"> Data Leads </a> > <a th:href="@{/DataLeads/insert}"> Tambah </a>
+                <a th:href="@{/dataleads}"> Data Leads </a> > <a th:href="@{/dataleads/form}"> Tambah </a>
             </h3>
             <form method="post" class="upsert-form" action="@{/dataLeads/form}">
                 <input type="hidden" th:value="${dataLeadsById.id}">
