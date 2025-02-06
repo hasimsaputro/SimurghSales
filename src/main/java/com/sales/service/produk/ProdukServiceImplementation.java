@@ -22,7 +22,7 @@ import java.util.List;
 @Service
 public class ProdukServiceImplementation implements ProdukService {
     private final ProdukRepository repository;
-    private final int rowInPage = 1;
+    private final int rowInPage = 5;
 
     public ProdukServiceImplementation(ProdukRepository repository) {
         this.repository = repository;
