@@ -13,9 +13,15 @@ public interface ModelRepository extends JpaRepository<Model, String> {
     @Query("""
             SELECT mod
             FROM Model mod
+            """)
+    List<Model> getAll(Pageable pagination);
+
+    @Query("""
+            SELECT mod
+            FROM Model mod
             WHERE mod.idKategori = :kategoriId
             """)
-    List<Model> getAll(Integer kategoriId);
+    List<Model> getAllByKategoriId(Integer kategoriId);
 
     @Query("""
             SELECT mod
@@ -35,7 +41,7 @@ public interface ModelRepository extends JpaRepository<Model, String> {
             SELECT mod
             FROM Model mod
             """)
-    List<Model> getAllModel(Pageable pagination);
+    List<Model> getAllModel();
 
     @Query("""
             SELECT mod

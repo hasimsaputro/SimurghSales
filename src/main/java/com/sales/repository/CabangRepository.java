@@ -16,6 +16,7 @@ public interface CabangRepository extends JpaRepository<Cabang, Integer> {
     @Query("""
             SELECT COUNT(1)
             FROM Cabang cab
+            WHERE cab.deleteDate IS NULL
             """)
     int getTotalPages();
 
@@ -107,7 +108,6 @@ public interface CabangRepository extends JpaRepository<Cabang, Integer> {
             """)
     List<Cabang> getCabangByStatus(Pageable pageable, @Param("search") Boolean search);
 
-
     @Query("""
             SELECT cab
             FROM Cabang cab
@@ -155,5 +155,118 @@ public interface CabangRepository extends JpaRepository<Cabang, Integer> {
     Cabang getCabangByNama(String namaCab);
 
 
+    @Query("""
+            SELECT cab
+            FROM Cabang cab
+            WHERE cab.deleteDate IS NULL
+            AND cab.status = true
+            """)
+    List<Cabang> getAllCabangs();
 
+    @Query("""
+            SELECT cab
+            FROM Cabang cab
+            WHERE cab.deleteDate IS NULL
+            AND cab.status = true
+            """)
+    List<Cabang> getAllCabangAktif(Pageable pageable);
+
+    @Query("""
+            SELECT cab
+            FROM Cabang cab
+            WHERE cab.deleteDate IS NULL
+            AND cab.id = :search
+            AND cab.status = true
+            """)
+    List<Cabang> getCabangByIdAktif(Pageable pageable, @Param("search") String search);
+
+    @Query("""
+            SELECT cab
+            FROM Cabang cab
+            WHERE cab.deleteDate IS NULL
+            AND cab.namaCabang = :search
+            AND cab.status = true
+            """)
+    List<Cabang> getCabangByNameAktif(Pageable pageable, @Param("search") String search);
+
+    @Query("""
+            SELECT cab
+            FROM Cabang cab
+            JOIN cab.tipeStruktur ts
+            WHERE cab.deleteDate IS NULL
+            AND ts.namaStruktur = :search
+            AND cab.status = true
+            """)
+    List<Cabang> getCabangByTipeStrukturAktif(Pageable pageable, @Param("search") String search);
+
+    @Query("""
+            SELECT cab
+            FROM Cabang cab
+            WHERE cab.deleteDate IS NULL
+            AND cab.alamat LIKE CONCAT('%', :search, '%')
+            AND cab.status = true
+            """)
+    List<Cabang> getCabangByAlamatAktif(Pageable pageable, @Param("search") String search);
+
+    @Query("""
+            SELECT cab
+            FROM Cabang cab
+            WHERE cab.deleteDate IS NULL
+            AND cab.status = :search
+            AND cab.status = true
+            """)
+    List<Cabang> getCabangByStatusAktif(Pageable pageable, @Param("search") Boolean search);
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM Cabang cab
+            WHERE cab.deleteDate IS NULL
+            AND cab.status = true
+            """)
+    int getTotalPagesAktif();
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM Cabang cab
+            WHERE cab.id = %:search%
+            AND cab.status = true
+            """)
+    int getTotalPagesByIdAktif(String search);
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM Cabang cab
+            WHERE cab.deleteDate IS NULL
+            AND cab.namaCabang LIKE %:search%
+            AND cab.status = true
+            """)
+    int getTotalpagesByNameAktif(String search);
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM Cabang cab
+            JOIN cab.tipeStruktur ts
+            WHERE cab.deleteDate IS NULL
+            AND ts.namaStruktur = :search
+            AND cab.status = true
+            """)
+    int getTotalpagesByTipeStrukturAktif(String search);
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM Cabang cab
+            WHERE cab.deleteDate IS NULL
+            AND cab.alamat = :search
+            AND cab.status = true
+            """)
+    int getTotalpagesByAlamatAktif(String search);
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM Cabang cab
+            WHERE cab.deleteDate IS NULL
+            AND cab.status = :search
+            AND cab.status = true
+            """)
+    int getTotalpagesByStatusAktif(Boolean search);
 }

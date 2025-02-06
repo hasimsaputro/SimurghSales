@@ -20,7 +20,7 @@ import java.util.List;
 public class TipeMasterServiceImplementation implements TipeMasterService{
 
     private final TipeMasterRepository repository;
-    private final int rowInPage = 1;
+    private final int rowInPage = 4;
 
     public TipeMasterServiceImplementation(TipeMasterRepository repository) {
         this.repository = repository;

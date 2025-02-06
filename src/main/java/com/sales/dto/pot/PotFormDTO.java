@@ -1,6 +1,8 @@
 package com.sales.dto.pot;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -12,7 +14,7 @@ public class PotFormDTO {
     private Integer id;
     @NotBlank(message = "Nama harus diisi")
     private String namaPot;
-    @NotBlank(message = "Produk Harus Dipilih")
+    @NotNull
     private Integer idProduk;
     private String namaProduk;
     private String idKriteriaPaket;
@@ -21,7 +23,7 @@ public class PotFormDTO {
     private LocalDate tanggalAkhir;
     private String pokokHutangAwal;
     private String pokokHutangAkhir;
-    @NotBlank(message = "Interval Pembayaran Harus Dipilih")
+    @NotNull
     private Integer idIntevalPembayaran;
     private String namaInterval;
     private String tenor;
@@ -30,7 +32,7 @@ public class PotFormDTO {
     private String nilaiProvisi;
     private String dp;
     private Boolean statusMerchandise;
-    @NotBlank(message = "Kategori Harus Dipilih")
+    @NotNull
     private Integer idKategori;
     private String namaKategori;
     private String idMerk;
@@ -39,5 +41,7 @@ public class PotFormDTO {
     private String namaTipe;
     private String idModel;
     private String namaModel;
+
+    @JsonProperty("cabangList")
     private List<Integer> cabangList;
 }

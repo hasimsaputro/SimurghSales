@@ -1,6 +1,7 @@
 package com.sales.service.pot;
 
 import com.sales.dto.OptionDTO;
+import com.sales.dto.pot.CabangPotDTO;
 import com.sales.dto.pot.PotDetailDTO;
 import com.sales.dto.pot.PotFormDTO;
 import com.sales.dto.pot.PotIndexDTO;
@@ -19,7 +20,23 @@ public interface PotService {
 
     PotDetailDTO getPotByIdDetail(Integer potId);
 
-    List<OptionDTO> getCabangByPotId(Integer id);
+    List<CabangPotDTO> getCabangByPotId(Integer id);
 
-    List<OptionDTO> getSearchCabangItems(String filter);
+    List<OptionDTO> getSearchItems(String filter);
+
+
+
+    List<OptionDTO> getProdukItems();
+
+    List<OptionDTO> getKriteriaItems();
+
+    List<OptionDTO> getIntervalItems();
+
+    List<OptionDTO> getKategoriItems();
+
+    List<OptionDTO> getMerkItems();
+
+    List<OptionDTO> getTipeItems();
+
+    List<OptionDTO> getModelItems();
 }

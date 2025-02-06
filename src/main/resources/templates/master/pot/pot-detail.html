@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout :: head}">
+</head>
+<body>
+<header th:replace="~{layout :: header}">
+</header>
+<div class="container">
+    <aside class="sidebar" th:replace="~{layout :: nav}">
+    </aside>
+    <main>
+        <div class="table-container">
+            <h3>
+                <a th:href="@{/pot}"> Master POT(Payment Of Term) </a> > <a th:href="@{/pot/detail}"> Lihat </a>
+            </h3>
+            <form method="post" class="upsert-form" action="@{/pot/detail}">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><label class="label-nama">Kode POT</label></td>
+                            <td>
+                                <p th:text="${pot.id}"></p>
+                            </td>
+                        <tr>
+                        <tr>
+                            <td><label class="label-nama">Nama POT</label></td>
+                            <td>
+                                <p th:text="${pot.namaPot}"></p>
+                            </td>
+                        <tr>
+                        <tr>
+                            <td><label class="label-nama">Produk</label></td>
+                            <td ><p th:text="${pot.produk}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Kriteria Paket</label></td>
+                            <td ><p th:text="${pot.kriteriaPaket}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Tanggal Mulai Berlaku</label></td>
+                            <td ><p th:text="${pot.tanggalMulai}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Tanggal Akhir Berlaku</label></td>
+                            <td ><p th:text="${pot.tanggalAkhir}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Pokok Hutang Awal</label></td>
+                            <td ><p th:text="${pot.pokokAwal}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Pokok Hutang Akhir</label></td>
+                            <td ><p th:text="${pot.pokokAkhir}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Interval Pembayaran</label></td>
+                            <td ><p th:text="${pot.interval}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Tenor</label></td>
+                            <td ><p th:text="${pot.tenor}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Effective Rate</label></td>
+                            <td ><p th:text="${pot.effectRate}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Nilai Admin</label></td>
+                            <td ><p th:text="${pot.nilaiAdmin}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Nilai Provisi</label></td>
+                            <td ><p th:text="${pot.nilaiProvisi}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">% DP</label></td>
+                            <td ><p th:text="${pot.dp}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Status Merchandise</label></td>
+                            <td ><p th:text="${pot.statusMerchandise}"></p></td>
+                        </tr><tr>
+                            <td><label class="label-nama">Kategori</label></td>
+                            <td ><p th:text="${pot.kategori}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Merk</label></td>
+                            <td ><p th:text="${pot.merk}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label class="label-nama">Tipe</label></td>
+                            <td ><p th:text="${pot.tipe}"></p></td>
+                        </tr>
+
+                        <tr>
+                            <td><label class="label-nama">Model</label></td>
+                            <td>
+                                <p th:text="${pot.model}"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <table >
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Kode Cabang</th>
+                                    <th>Nama Cabang</th>
+                                    <th>Tipe Struktur</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr th:each="cabang:${detailCabangByPot}" th:object="${cabang}">
+                                    <td>
+                                        <input type="checkbox" checked disabled>
+                                    </td>
+                                    <td th:text="*{id}"></td>
+                                    <td th:text="*{namaCabang}"></td>
+                                    <td th:text="*{tipeStruktur}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

@@ -69,13 +69,13 @@ public class POT {
     @Column(name = "IdKategori", nullable = false)
     private Integer idKategori;
 
-    @Column(name = "IdMerk", length = 10, nullable = false)
+    @Column(name = "IdMerk", length = 10)
     private String idMerk;
 
-    @Column(name = "IdTipe",length = 10, nullable = false)
+    @Column(name = "IdTipe",length = 10)
     private String idTipe;
 
-    @Column(name = "IdModel",length = 10, nullable = false)
+    @Column(name = "IdModel",length = 10)
     private String idModel;
 
     @Column(name = "DeleteDate")

@@ -15,6 +15,8 @@ public interface TipeMasterRepository extends JpaRepository<TipeMaster, Integer>
     @Query("""
             SELECT tip
             FROM TipeMaster tip
+            WHERE tip.deleteDate IS NULL
+            AND tip.status = true
             """)
     List<TipeMaster> getAllTipeMaster();
 

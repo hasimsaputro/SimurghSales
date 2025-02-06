@@ -23,10 +23,27 @@ public interface ProdukRepository extends JpaRepository<Produk, Integer> {
     @Query("""
             SELECT COUNT(1)
             FROM Produk pro
+            WHERE pro.deleteDate IS NULL
+            AND pro.status = true
+            """)
+    int getTotalPagesAktif();
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM Produk pro
             WHERE pro.id = %:search%
             AND pro.deleteDate IS NULL
             """)
     int getTotalPagesById(String search);
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM Produk pro
+            WHERE pro.id = %:search%
+            AND pro.deleteDate IS NULL
+            AND pro.status = true
+            """)
+    int getTotalPagesByIdAktif(String search);
 
     @Query("""
             SELECT COUNT(1)
@@ -40,9 +57,27 @@ public interface ProdukRepository extends JpaRepository<Produk, Integer> {
             SELECT COUNT(1)
             FROM Produk pro
             WHERE pro.deleteDate IS NULL
+            AND pro.status = true
+            AND pro.namaProduk LIKE %:search%
+            """)
+    int getTotalpagesByNameAktif(String search);
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM Produk pro
+            WHERE pro.deleteDate IS NULL
             AND pro.status = :search
             """)
     int getTotalpagesByStatus(Boolean search);
+
+    @Query("""
+            SELECT COUNT(1)
+            FROM Produk pro
+            WHERE pro.deleteDate IS NULL
+            AND pro.status = :search
+            AND pro.status = true
+            """)
+    int getTotalpagesByStatusAktif(Boolean search);
 
     @Query("""
             SELECT pro
@@ -50,6 +85,14 @@ public interface ProdukRepository extends JpaRepository<Produk, Integer> {
             WHERE pro.deleteDate IS NULL
             """)
     List<Produk> getAllProduk(Pageable pageable);
+
+    @Query("""
+            SELECT pro
+            FROM Produk pro
+            WHERE pro.deleteDate IS NULL
+            AND pro.status = true
+            """)
+    List<Produk> getAllProdukAktif(Pageable pageable);
 
     @Query("""
             SELECT pro
@@ -63,9 +106,27 @@ public interface ProdukRepository extends JpaRepository<Produk, Integer> {
             SELECT pro
             FROM Produk pro
             WHERE pro.deleteDate IS NULL
+            AND pro.status = true
+            AND pro.id = :search
+            """)
+    List<Produk> getProdukAktifById(Pageable pageable, @Param("search") String search);
+
+    @Query("""
+            SELECT pro
+            FROM Produk pro
+            WHERE pro.deleteDate IS NULL
             AND pro.namaProduk = :search
             """)
     List<Produk> getProdukByName(Pageable pageable, @Param("search") String search);
+
+    @Query("""
+            SELECT pro
+            FROM Produk pro
+            WHERE pro.deleteDate IS NULL
+            AND pro.status = true
+            AND pro.namaProduk = :search
+            """)
+    List<Produk> getProdukAktifByName(Pageable pageable, @Param("search") String search);
 
     @Query("""
             SELECT pro
@@ -91,6 +152,14 @@ public interface ProdukRepository extends JpaRepository<Produk, Integer> {
 
     @Query(value = "SELECT CASE WHEN pro.status = 1 THEN 'Aktif' ELSE 'Tidak Aktif' END FROM Produk pro", nativeQuery = true)
     List<String> getProdukItemsByStatus();
+
+    @Query("""
+            SELECT pro
+            FROM Produk pro
+            WHERE pro.deleteDate IS NULL
+            AND pro.status = true
+            """)
+    List<Produk> getAllProduk();
 
 
     @Query("""

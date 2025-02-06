@@ -2,14 +2,16 @@ package com.sales.service.cabang;
 
 import com.sales.dto.OptionDTO;
 import com.sales.dto.cabang.*;
-import com.sales.dto.produk.ProdukIndexDTO;
+import com.sales.dto.mitraAgen.KelurahanOptionDTO;
+import com.sales.dto.pot.CabangPotGridDTO;
+import com.sales.dto.produk.ProdukIndexOptionDTO;
 import com.sales.entity.Cabang;
+import com.sales.entity.Kelurahan;
 import com.sales.entity.Produk;
 import com.sales.helper.DateHelper;
 import com.sales.repository.CabangRepository;
+import com.sales.repository.KelurahanRepository;
 import com.sales.repository.ProdukRepository;
-import jakarta.persistence.EntityNotFoundException;
-import org.hibernate.boot.jaxb.hbm.internal.CacheAccessTypeConverter;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,11 +24,13 @@ import java.util.*;
 public class CabangServiceImplementation implements CabangService{
     private final CabangRepository cabangRepository;
     private final ProdukRepository produkRepository;
-    private final int rowInPage = 10;
+    private final KelurahanRepository kelurahanRepository;
+    private final int rowInPage = 4;
 
-    public CabangServiceImplementation(CabangRepository cabangRepository, ProdukRepository produkRepository) {
+    public CabangServiceImplementation(CabangRepository cabangRepository, ProdukRepository produkRepository, KelurahanRepository kelurahanRepository) {
         this.cabangRepository = cabangRepository;
         this.produkRepository = produkRepository;
+        this.kelurahanRepository = kelurahanRepository;
     }
 
     @Override
@@ -55,6 +59,34 @@ public class CabangServiceImplementation implements CabangService{
             }
         }
         return (int) Math.ceil(page/rowInPage);
+    }
+
+    @Override
+    public int getTotalPagesAktif(String filter, String search) {
+        double page = 0;
+        if(filter.isEmpty()){
+            page = cabangRepository.getTotalPagesAktif();
+        } else {
+            switch (filter){
+                case "id":
+                    page = cabangRepository.getTotalPagesByIdAktif(search);
+                    break;
+                case "namaCabang":
+                    page = cabangRepository.getTotalpagesByNameAktif(search);
+                    break;
+                case "tipeStruktur":
+                    page = cabangRepository.getTotalpagesByTipeStrukturAktif(search);
+                    break;
+                case "alamat":
+                    page = cabangRepository.getTotalpagesByAlamatAktif(search);
+                    break;
+                case "status":
+                    search = search.equalsIgnoreCase("Aktif") ? String.valueOf(true) : String.valueOf(false);
+                    page = cabangRepository.getTotalpagesByStatusAktif(Boolean.parseBoolean(search));
+                    break;
+            }
+        }
+        return (int) Math.ceil(page/rowInPage) == 0 ? 1 : (int) Math.ceil(page/rowInPage);
     }
 
     @Override
@@ -243,12 +275,149 @@ public class CabangServiceImplementation implements CabangService{
     }
 
     @Override
+    public List<KelurahanOptionDTO> getKelurahanOption() {
+        List<Kelurahan> kelurahanList = kelurahanRepository.getAllKelurahan();
+        List<KelurahanOptionDTO> kelurahanOptionDTOS = new LinkedList<>();
+        for (Kelurahan kelurahan: kelurahanList
+        ) {
+            KelurahanOptionDTO kelurahanOptionDTO = new KelurahanOptionDTO();
+            kelurahanOptionDTO.setId(kelurahan.getId());
+            kelurahanOptionDTO.setNamaKelurahan(kelurahan.getNamaKelurahan());
+            kelurahanOptionDTO.setKecamatan(kelurahan.getKecamatan().getNamaKecamatan());
+            kelurahanOptionDTO.setProvinsi(kelurahan.getProvinsi().getNamaProvinsi());
+            kelurahanOptionDTO.setKodePos(kelurahan.getKodePos());
+            kelurahanOptionDTO.setKotaKabupaten(kelurahan.getKabupaten().getNamaKabupatenKota());
+            kelurahanOptionDTOS.add(kelurahanOptionDTO);
+        }
+        return kelurahanOptionDTOS;
+    }
+
+    @Override
+    public List<ProdukIndexOptionDTO> getSearchProdukItems(String filter) {
+        List<String> searchItems = new LinkedList<>();
+        if(!filter.isBlank()){
+            switch (filter){
+                case "id":
+                    searchItems = produkRepository.getProdukItemsById();
+                    break;
+                case "namaProduk":
+                    searchItems = produkRepository.getProdukItemsByName();
+                    break;
+            }
+        }
+        List<ProdukIndexOptionDTO> searchsItems = new LinkedList<>();
+        for (var searchItem : searchItems){
+            ProdukIndexOptionDTO item = new ProdukIndexOptionDTO(searchItem, searchItem);
+            searchsItems.add(item);
+        }
+        return searchsItems;
+    }
+
+    @Override
     public List<OptionDTO> getfilterAsItem() {
         return List.of(
                 new OptionDTO("Kode Cabang", "id"),
                 new OptionDTO("Nama Cabang", "namaCabang"),
                 new OptionDTO("Tipe Struktur", "tipeStruktur")
         );
+    }
+
+    @Override
+    public List<CabangIndexDTO> getAllAktif(int page, String filter, String search) {
+        int totalPages = getTotalPagesAktif(filter, search);
+        if (page < 1) {
+            page = 1;
+        }
+        if (page > totalPages && totalPages > 0){
+            page = totalPages;
+        }
+        Pageable pageable = PageRequest.of(page - 1, rowInPage, Sort.by("id"));
+
+        List<Cabang> cabangList = new LinkedList<>();
+        if (filter.isEmpty()){
+            cabangList = cabangRepository.getAllCabangAktif(pageable);
+        }else {
+            switch (filter){
+                case "id":
+                    cabangList = cabangRepository.getCabangByIdAktif(pageable, search);
+                    break;
+                case "namaCabang":
+                    cabangList = cabangRepository.getCabangByNameAktif(pageable, search);
+                    break;
+                case "tipeStruktur":
+                    cabangList = cabangRepository.getCabangByTipeStrukturAktif(pageable, search);
+                    break;
+                case "alamat":
+                    cabangList = cabangRepository.getCabangByAlamatAktif(pageable, search);
+                    break;
+                case "status":
+                    search = search.equalsIgnoreCase("Aktif") ? String.valueOf(true) : String.valueOf(false);
+                    cabangList = cabangRepository.getCabangByStatusAktif(pageable, Boolean.parseBoolean(search));
+                    break;
+            }
+        }
+
+        List<CabangIndexDTO> cabangIndexDTOS = new LinkedList<>();
+        for (Cabang cabang : cabangList){
+            CabangIndexDTO cabangIndexDTO = new CabangIndexDTO();
+            cabangIndexDTO.setKodeCabang(cabang.getId());
+            cabangIndexDTO.setNamaCabang(cabang.getNamaCabang());
+            cabangIndexDTO.setTipeStruktur(cabang.getTipeStruktur().getNamaStruktur());
+            cabangIndexDTO.setAlamat(cabang.getAlamat());
+            String statusCabang = !cabang.getStatus() ? "Tidak Aktif" : "Aktif";
+            cabangIndexDTO.setStatus(statusCabang);
+
+            cabangIndexDTOS.add(cabangIndexDTO);
+        }
+        return cabangIndexDTOS;
+    }
+
+    @Override
+    public CabangPotGridDTO getAllCabang(int page, String filter, String search) {
+        List<CabangIndexDTO> cabangIndexDTOS = this.getAllAktif(page, filter, search);
+        CabangPotGridDTO cabangPotGridDTO = new CabangPotGridDTO();
+        cabangPotGridDTO.setCabangIndexDTOS(cabangIndexDTOS);
+        cabangPotGridDTO.setCurrentPage(page);
+        cabangPotGridDTO.setTotalPages(this.getTotalPagesAktif(filter, search));
+        return cabangPotGridDTO;
+    }
+
+    @Override
+    public List<CabangIndexDTO> getAllCabangs() {
+        List<Cabang> cabangList = cabangRepository.getAllCabangs();
+        List<CabangIndexDTO> cabangIndexDTOS = new LinkedList<>();
+        for (Cabang cabang: cabangList) {
+            CabangIndexDTO cabangIndexDTO = new CabangIndexDTO();
+            cabangIndexDTO.setKodeCabang(cabang.getId());
+            cabangIndexDTO.setNamaCabang(cabang.getNamaCabang());
+            cabangIndexDTO.setTipeStruktur(cabang.getTipeStruktur().getNamaStruktur());
+            cabangIndexDTOS.add(cabangIndexDTO);
+        }
+        return cabangIndexDTOS;
+    }
+
+    @Override
+    public List<OptionDTO> getSearchCabangItems(String filter) {
+        List<String > searchItems = new LinkedList<>();
+        if(!filter.isBlank()){
+            switch (filter){
+                case "id":
+                    searchItems = cabangRepository.getCabangItemsById();
+                    break;
+                case "namaCabang":
+                    searchItems = cabangRepository.getCabangItemsByName();
+                    break;
+                case "tipeStruktur":
+                    searchItems = cabangRepository.getCabangItemsByTipeStruktur();
+                    break;
+            }
+        }
+        List<OptionDTO> searchsItems = new LinkedList<>();
+        for (var searchItem : searchItems){
+            OptionDTO item = new OptionDTO(searchItem, searchItem);
+            searchsItems.add(item);
+        }
+        return searchsItems;
     }
 
 

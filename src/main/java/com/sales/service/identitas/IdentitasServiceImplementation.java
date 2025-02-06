@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public class IdentitasServiceImplementation implements IdentitasService{
     private final IdentitasRepository repository;
-    private final int rowInPage = 1;
+    private final int rowInPage = 4;
 
     public IdentitasServiceImplementation(IdentitasRepository repository) {
         this.repository = repository;
