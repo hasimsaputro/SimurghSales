@@ -33,8 +33,8 @@ public class HargaPasar {
     @Column(name = "IdJenis", length = 10, nullable = false)
     private String idJenis;
 
-    @Column(name = "TipeJenis", length = 10, nullable = false)
-    private String tipeJenis;
+    @Column(name = "TipeUnit", length = 10, nullable = false)
+    private String tipeUnit;
 
     @Column(name = "Tahun", length = 5, nullable = false)
     private String tahun;
@@ -71,4 +71,7 @@ public class HargaPasar {
     @ManyToOne
     @JoinColumn(name = "IdJenis",insertable = false,updatable = false)
     private Jenis jenisHargaPasar;
+
+    @Column(name = "DeleteDate")
+    private LocalDate deleteDate;
 }
